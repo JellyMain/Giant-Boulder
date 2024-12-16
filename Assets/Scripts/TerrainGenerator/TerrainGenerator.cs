@@ -1,5 +1,4 @@
 using System.Collections.Generic;
-using System.Linq;
 using Sirenix.OdinInspector;
 using UnityEngine;
 using Random = UnityEngine.Random;
@@ -32,6 +31,9 @@ namespace TerrainGenerator
 
         [SerializeField, Range(1, 10), ShowIf("@generationMode == GenerationMode.PoissonDiskSampling ")]
         private float minimumDistance = 5;
+
+        [SerializeField, ShowIf("@generationMode == GenerationMode.PoissonDiskSampling ")]
+        private int attemptsNumber = 10;
 
         [SerializeField, Range(10, 1000), ShowIf("@generationMode == GenerationMode.RandomPoints")]
         private int verticesCount = 500;
@@ -82,6 +84,8 @@ namespace TerrainGenerator
             {
                 case GenerationMode.RandomPoints:
                 {
+                    allVertices = new List<Vector3>(verticesCount);
+
                     for (int i = 0; i < verticesCount; i++)
                     {
                         float xPosition = Random.Range(-size / 2, size / 2);
@@ -95,14 +99,14 @@ namespace TerrainGenerator
                     break;
                 }
                 case GenerationMode.PoissonDiskSampling:
-                    allVertices = PoissonDiskSampling.GetPoints(size, minimumDistance, 30);
+                    allVertices = PoissonDiskSampling.GetPoints(size, minimumDistance, attemptsNumber);
                     break;
             }
 
             newTriangles = delaunayTriangulation.Triangulate(size, allVertices);
         }
-
-
+        
+        
 
         private void ShapeTerrain()
         {
@@ -236,6 +240,15 @@ namespace TerrainGenerator
             }
 
             GenerateTerrain();
+        }
+
+
+        private void Update()
+        {
+            if (UnityEngine.Input.GetKeyDown(KeyCode.Tab))
+            {
+                RegenerateMesh();
+            }
         }
     }
 }

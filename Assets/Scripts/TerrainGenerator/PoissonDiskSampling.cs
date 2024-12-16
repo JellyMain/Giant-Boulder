@@ -11,6 +11,7 @@ namespace TerrainGenerator
             List<Vector3> placedPoints = new List<Vector3>();
             List<Vector3> activePoints = new List<Vector3>();
 
+
             float cellSize = radius / Mathf.Sqrt(2);
             int gridSize = Mathf.CeilToInt(boxSize / cellSize);
             Vector3[,] grid = new Vector3[gridSize, gridSize];
@@ -19,7 +20,7 @@ namespace TerrainGenerator
             activePoints.Add(startingPoint);
             placedPoints.Add(startingPoint);
             int gridX = Mathf.FloorToInt(startingPoint.x / cellSize);
-            int gridY = Mathf.FloorToInt(startingPoint.z / cellSize);   
+            int gridY = Mathf.FloorToInt(startingPoint.z / cellSize);
             grid[gridX, gridY] = startingPoint;
 
             while (activePoints.Count > 0)
@@ -43,6 +44,7 @@ namespace TerrainGenerator
                         int candidateGridY = Mathf.FloorToInt(candidate.z / cellSize);
                         grid[candidateGridX, candidateGridY] = candidate;
                         isValid = true;
+
                         break;
                     }
                 }
@@ -62,10 +64,12 @@ namespace TerrainGenerator
             int gridX = Mathf.FloorToInt(candidatePoint.x / cellSize);
             int gridY = Mathf.FloorToInt(candidatePoint.z / cellSize);
 
-            if (gridX < 0 || gridY < 0 || gridX >= gridSize || gridY >= gridSize)
+
+            if (gridX < 0 || gridY < 0 || gridX >= gridSize || gridY >= gridSize || grid[gridX, gridY] != Vector3.zero)
             {
                 return false;
             }
+
 
             int searchingRadius = 2;
 
@@ -77,7 +81,8 @@ namespace TerrainGenerator
                     {
                         Vector3 neighborPoint = grid[x, y];
 
-                        if (neighborPoint != Vector3.zero && Vector3.Distance(candidatePoint, neighborPoint) < radius)
+                        if (neighborPoint != Vector3.zero &&
+                            (candidatePoint - neighborPoint).sqrMagnitude < radius * radius)
                         {
                             return false;
                         }

@@ -437,7 +437,8 @@ MonoBehaviour:
     m_NumAlphaKeys: 2
   size: 800
   minimumDistance: 10
-  verticesCount: 50
+  attemptsNumber: 10
+  verticesCount: 1000
   heightScale: 600
   scale: 200
   heightSmoothing: 0.21
