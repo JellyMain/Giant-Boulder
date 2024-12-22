@@ -13,12 +13,12 @@ namespace TerrainGenerator
 
 
         public TerrainChunk(NoiseGenerator noiseGenerator, TextureGenerator textureGenerator,
-            MeshGenerator meshGenerator, int size, float scale,
-            float persistance, float lacunarity, int octaves, int seed, Vector2 offset, float noiseMultiplier,
-            AnimationCurve heightCurve, int lod, Material material, Gradient gradient, Vector3 position)
+            MeshGenerator meshGenerator, int size, float noiseMultiplier, AnimationCurve heightCurve, int lod,
+            Material material, Gradient gradient, Vector3 position, float[,] heightMap, TerrainRegion[] terrainRegions)
         {
             this.noiseGenerator = noiseGenerator;
             this.meshGenerator = meshGenerator;
+
             chunkGameObject = new GameObject("Terrain Chunk");
             chunkGameObject.transform.position = position;
 
@@ -26,16 +26,17 @@ namespace TerrainGenerator
             meshFilter = chunkGameObject.AddComponent<MeshFilter>();
 
 
-            float[,] heightMap =
-                this.noiseGenerator.GenerateHeightMap(size, scale, persistance, lacunarity, octaves, seed,
-                    new Vector2(position.x, position.z) + offset);
-
-            MeshData meshData = meshGenerator.CreateMeshData(heightMap, noiseMultiplier, heightCurve, lod);
+            MeshData meshData = meshGenerator.CreateMeshData(heightMap, noiseMultiplier, heightCurve, lod, gradient);
 
             meshFilter.mesh = meshData.CreateMesh();
+            
             meshRenderer.material = material;
-            meshRenderer.material.mainTexture =
-                textureGenerator.CreateTextureFromGradient(heightMap, gradient, size);
+            
+            // meshRenderer.material.mainTexture =
+            //     textureGenerator.CreateTextureFromGradient(heightMap, gradient, size);
+
+            // meshRenderer.material.mainTexture =
+            //     textureGenerator.CreateTextureFromRegions(heightMap, terrainRegions, size);
         }
     }
 }

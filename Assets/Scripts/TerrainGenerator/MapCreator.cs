@@ -1,21 +1,31 @@
 using System;
 using System.Collections.Generic;
 using Sirenix.OdinInspector;
+using StaticData.Data;
+using StaticData.Services;
 using UnityEngine;
+using Zenject;
 
 
 namespace TerrainGenerator
 {
     public class MapCreator : MonoBehaviour
     {
-        [SerializeField] private int mapSize = 10;
         private ChunkGenerator chunkGenerator;
-        private List<TerrainChunk> createdChunks = new List<TerrainChunk>();
+        private NoiseGenerator noiseGenerator;
+        private MapGenerationConfig mapGenerationConfig;
+        private int chunkSize;
 
 
-        private void Awake()
+        [Inject]
+        private void Construct(ChunkGenerator chunkGenerator, NoiseGenerator noiseGenerator,
+            StaticDataService staticDataService)
         {
-            chunkGenerator = GetComponent<ChunkGenerator>();
+            this.chunkGenerator = chunkGenerator;
+            this.noiseGenerator = noiseGenerator;
+
+            mapGenerationConfig = staticDataService.MapGenerationConfig;
+            chunkSize = mapGenerationConfig.chunkSize - 1;
         }
 
 
@@ -24,44 +34,34 @@ namespace TerrainGenerator
             CreateMap();
         }
 
-
-
-        [Button]
-        private void CreateMapEditor()
-        {
-            chunkGenerator = GetComponent<ChunkGenerator>();
-
-            if (createdChunks.Count != 0)
-            {
-                foreach (TerrainChunk chunk in createdChunks)
-                {
-                    DestroyImmediate(chunk.chunkGameObject);
-                }
-
-                createdChunks.Clear();
-            }
-
-            for (int y = 0; y < mapSize; y++)
-            {
-                for (int x = 0; x < mapSize; x++)
-                {
-                    Vector3 position = new Vector3(x * chunkGenerator.Size, 0, y * chunkGenerator.Size);
-                    createdChunks.Add(chunkGenerator.CreateChunk(position));
-                }
-            }
-        }
-
-
+        
         private void CreateMap()
         {
-            chunkGenerator = GetComponent<ChunkGenerator>();
+            Vector3[] allChunkPositions = new Vector3[mapGenerationConfig.mapSize * mapGenerationConfig.mapSize];
 
-            for (int y = 0; y < mapSize; y++)
+            for (int y = 0; y < mapGenerationConfig.mapSize; y++)
             {
-                for (int x = 0; x < mapSize; x++)
+                for (int x = 0; x < mapGenerationConfig.mapSize; x++)
                 {
-                    Vector3 position = new Vector3(x * chunkGenerator.Size, 0, y * chunkGenerator.Size);
-                    chunkGenerator.CreateChunk(position);
+                    Vector3 chunkPosition = new Vector3(x * chunkSize, 0, y * chunkSize);
+
+                    allChunkPositions[y * mapGenerationConfig.mapSize + x] = chunkPosition;
+                }
+            }
+
+            float[][,] allTerrainHeightMaps = noiseGenerator.GenerateAllTerrainHeightMaps(mapGenerationConfig.mapSize,
+                mapGenerationConfig.chunkSize,
+                mapGenerationConfig.noiseScale, mapGenerationConfig.persistance, mapGenerationConfig.lacunarity,
+                mapGenerationConfig.octaves, mapGenerationConfig.seed, mapGenerationConfig.offset, allChunkPositions);
+
+
+            for (int y = 0; y < mapGenerationConfig.mapSize; y++)
+            {
+                for (int x = 0; x < mapGenerationConfig.mapSize; x++)
+                {
+                    Vector3 position = allChunkPositions[y * mapGenerationConfig.mapSize + x];
+                    float[,] heightMap = allTerrainHeightMaps[y * mapGenerationConfig.mapSize + x];
+                    chunkGenerator.CreateChunk(position, heightMap);
                 }
             }
         }

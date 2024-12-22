@@ -1,76 +1,41 @@
 using Sirenix.OdinInspector;
+using StaticData.Data;
+using StaticData.Services;
 using UnityEngine;
+using Zenject;
 
 
 namespace TerrainGenerator
 {
-    public class ChunkGenerator : MonoBehaviour
+    public class ChunkGenerator
     {
-        [SerializeField] private AnimationCurve heightCurve;
-
-        [SerializeField] private Material chunkMaterial;
-
-        [SerializeField] private Gradient heightGradient;
-
-        [SerializeField, ValueDropdown("sizeVariants"), OnValueChanged("CreateChunkEditor")]
-        private int size = 100;
-
-        [SerializeField, ValueDropdown("levelsOfDetail"), OnValueChanged("CreateChunkEditor")]
-        private int lod;
-
-        [SerializeField, Range(0.001f, 100), OnValueChanged("CreateChunkEditor")]
-        private float noiseScale = 10;
-
-        [SerializeField, Range(1, 100), OnValueChanged("CreateChunkEditor")]
-        private float noiseMultiplier = 10;
-
-        [SerializeField, Range(1, 20), OnValueChanged("CreateChunkEditor")]
-        private int octaves = 5;
-
-        [SerializeField, Range(0, 1), OnValueChanged("CreateChunkEditor")]
-        private float persistance;
-
-        [SerializeField, Range(1, 10), OnValueChanged("CreateChunkEditor")]
-        private float lacunarity;
-
-        [SerializeField] private int seed;
-
-        [SerializeField, OnValueChanged("CreateChunkEditor")]
-        private Vector2 offset;
-
-        private readonly NoiseGenerator noiseGenerator = new NoiseGenerator();
-        private readonly TextureGenerator textureGenerator = new TextureGenerator();
-        private readonly MeshGenerator meshGenerator = new MeshGenerator();
-
-        private int[] levelsOfDetail = new[] { 1, 2, 4, 5, 10, 20, 25, 50 };
-        private int[] sizeVariants = new[] { 100, 200, 400 };
-
-        private TerrainChunk editorTerrainChunk;
-        public int Size => size;
+        private readonly MapGenerationConfig mapGenerationConfig;
+        private StaticDataService staticDataService;
+        private readonly NoiseGenerator noiseGenerator;
+        private readonly TextureGenerator textureGenerator;
+        private readonly MeshGenerator meshGenerator;
 
 
-
-        public TerrainChunk CreateChunk(Vector3 position)
+        public ChunkGenerator(StaticDataService staticDataService, NoiseGenerator noiseGenerator,
+            TextureGenerator textureGenerator, MeshGenerator meshGenerator)
         {
-            editorTerrainChunk = new TerrainChunk(noiseGenerator, textureGenerator, meshGenerator, size, noiseScale,
-                persistance,
-                lacunarity, octaves, seed, offset, noiseMultiplier, heightCurve, lod, chunkMaterial,
-                heightGradient, position);
-
-            return editorTerrainChunk;
+            this.staticDataService = staticDataService;
+            this.noiseGenerator = noiseGenerator;
+            this.textureGenerator = textureGenerator;
+            this.meshGenerator = meshGenerator;
+            mapGenerationConfig = staticDataService.MapGenerationConfig;
         }
 
 
-        [Button]
-        private void CreateChunkEditor()
+        public TerrainChunk CreateChunk(Vector3 position, float[,] heightMap)
         {
-            // if (editorTerrainChunk != null)
-            // {
-            //     DestroyImmediate(editorTerrainChunk.chunkGameObject);
-            //     editorTerrainChunk = null;
-            // }
+            TerrainChunk terrainChunk = new TerrainChunk(noiseGenerator, textureGenerator, meshGenerator,
+                mapGenerationConfig.chunkSize,
+                mapGenerationConfig.noiseMultiplier, mapGenerationConfig.heightCurve,
+                mapGenerationConfig.lod, mapGenerationConfig.chunkMaterial,
+                mapGenerationConfig.heightGradient, position, heightMap, mapGenerationConfig.terrainRegions);
 
-            CreateChunk(Vector3.zero);
+            return terrainChunk;
         }
     }
 }

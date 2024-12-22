@@ -6,8 +6,10 @@ namespace TerrainGenerator
     public class MeshData
     {
         public Vector3[] vertices;
-        private int[] triangles;
+        public int[] triangles;
         public Vector2[] uvs;
+        public Color[] colors;
+        public Vector3[] normals;
         private int triangleIndex;
 
 
@@ -16,6 +18,8 @@ namespace TerrainGenerator
             vertices = new Vector3[meshSize * meshSize];
             uvs = new Vector2[meshSize * meshSize];
             triangles = new int[(meshSize - 1) * (meshSize - 1) * 6];
+            colors = new Color[meshSize * meshSize];
+            normals = new Vector3[meshSize * meshSize];
         }
 
 
@@ -24,10 +28,10 @@ namespace TerrainGenerator
             Mesh mesh = new Mesh();
 
             mesh.vertices = vertices;
-            mesh.triangles = triangles;
             mesh.uv = uvs;
-
-            mesh.RecalculateNormals();
+            mesh.triangles = triangles;
+            mesh.colors = colors;
+            mesh.normals = normals;
 
             return mesh;
         }
@@ -41,6 +45,5 @@ namespace TerrainGenerator
             
             triangleIndex += 3;
         }
-        
     }
 }

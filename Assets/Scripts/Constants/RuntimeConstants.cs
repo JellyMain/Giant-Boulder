@@ -17,7 +17,7 @@ namespace Constants
 
         public static class StaticDataPaths
         {
-            
+            public const string MAP_GENERATION_CONFIG = "StaticData/MapGenerationConfig";
         }
 
 

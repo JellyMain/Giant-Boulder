@@ -5,6 +5,7 @@ using Input;
 using Input.Interfaces;
 using Input.Services;
 using StaticData.Services;
+using TerrainGenerator;
 using UI;
 using UnityEngine;
 using Zenject;
@@ -28,6 +29,35 @@ namespace Infrastructure.Installers.Global
             BindGameStatesFactory();
             BindLoadStates();
             BindGameStateMachine();
+            BindNoiseGenerator();
+            BindChunkGenerator();
+            BindTextureGenerator();
+            BindFalloffGenerator();
+            BindMeshGenerator();
+        }
+
+
+        private void BindMeshGenerator()
+        {
+            Container.Bind<MeshGenerator>().AsSingle();
+        }
+
+
+        private void BindFalloffGenerator()
+        {
+            Container.Bind<FalloffGenerator>().AsSingle();
+        }
+
+
+        private void BindTextureGenerator()
+        {
+            Container.Bind<TextureGenerator>().AsSingle();
+        }
+
+
+        private void BindChunkGenerator()
+        {
+            Container.Bind<ChunkGenerator>().AsSingle();
         }
 
 
@@ -93,6 +123,12 @@ namespace Infrastructure.Installers.Global
         private void BindStaticDataService()
         {
             Container.BindInterfacesAndSelfTo<StaticDataService>().AsSingle();
+        }
+
+
+        private void BindNoiseGenerator()
+        {
+            Container.Bind<NoiseGenerator>().AsSingle();
         }
     }
 }
