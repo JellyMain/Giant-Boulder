@@ -6,18 +6,12 @@ using Zenject;
 
 namespace StaticData.Services
 {
-    public class StaticDataService : IInitializable
+    public class StaticDataService 
     {
         public MapGenerationConfig MapGenerationConfig { get; private set; }
 
-
-        public void Initialize()
-        {
-            LoadStaticData();
-        }
-
-
-        private void LoadStaticData()
+        
+        public void LoadStaticData()
         {
             LoadMapChunkConfig();
         }

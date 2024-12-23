@@ -2,6 +2,7 @@ using Constants;
 using Factories;
 using Infrastructure.GameStates.Interfaces;
 using Infrastructure.Services;
+using TerrainGenerator;
 using UI;
 
 
@@ -10,12 +11,13 @@ namespace Infrastructure.GameStates
     public class LoadLevelState : IGameState
     {
         private readonly SceneLoader sceneLoader;
+        private readonly MapCreator mapCreator;
 
 
-        public LoadLevelState(GameStateMachine gameStateMachine, SceneLoader sceneLoader,
-            UIFactory uiFactory, PlayerFactory playerFactory)
+        public LoadLevelState(SceneLoader sceneLoader, MapCreator mapCreator)
         {
             this.sceneLoader = sceneLoader;
+            this.mapCreator = mapCreator;
         }
 
 
@@ -27,6 +29,7 @@ namespace Infrastructure.GameStates
 
         private void CreateLevel()
         {
+            mapCreator.CreateMap();
         }
     }
 }

@@ -68,8 +68,8 @@ MonoBehaviour:
   - name: Deep Water
     regionColor: {r: 0, g: 0.33535403, b: 0.4339623, a: 1}
     regionHeight: 0.1
-  mapSize: 10
-  seed: 4121
+  mapSize: 30
+  seed: 4389
   offset: {x: -15.1, y: 8.15}
   heightCurve:
     serializedVersion: 2
@@ -104,11 +104,11 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
-  chunkMaterial: {fileID: 2100000, guid: d63674ad6852e7e489c4fafcf161e6ab, type: 2}
-  chunkSize: 201
+  chunkMaterial: {fileID: 2100000, guid: a7fb4acd26546ab4fb987852bd9199e4, type: 2}
+  chunkSize: 101
   lod: 5
   noiseScale: 84.9
-  noiseMultiplier: 83.4
+  noiseMultiplier: 91.3
   octaves: 20
   persistance: 0.653
   lacunarity: 1.55

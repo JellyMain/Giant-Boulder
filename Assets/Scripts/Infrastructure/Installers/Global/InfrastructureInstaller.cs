@@ -30,10 +30,23 @@ namespace Infrastructure.Installers.Global
             BindLoadStates();
             BindGameStateMachine();
             BindNoiseGenerator();
-            BindChunkGenerator();
             BindTextureGenerator();
             BindFalloffGenerator();
             BindMeshGenerator();
+            BindChunkFactory();
+            BindMapCreator();
+        }
+
+
+        private void BindMapCreator()
+        {
+            Container.Bind<MapCreator>().AsSingle();
+        }
+
+
+        private void BindChunkFactory()
+        {
+            Container.Bind<ChunkFactory>().AsSingle();
         }
 
 
@@ -52,12 +65,6 @@ namespace Infrastructure.Installers.Global
         private void BindTextureGenerator()
         {
             Container.Bind<TextureGenerator>().AsSingle();
-        }
-
-
-        private void BindChunkGenerator()
-        {
-            Container.Bind<ChunkGenerator>().AsSingle();
         }
 
 
@@ -122,7 +129,7 @@ namespace Infrastructure.Installers.Global
 
         private void BindStaticDataService()
         {
-            Container.BindInterfacesAndSelfTo<StaticDataService>().AsSingle();
+            Container.Bind<StaticDataService>().AsSingle();
         }
 
 
