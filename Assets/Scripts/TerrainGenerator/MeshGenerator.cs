@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using StaticData.Services;
 using UnityEngine;
 
@@ -15,64 +16,41 @@ namespace TerrainGenerator
             float topLeftX = (width - 1) / -2f;
             float topLeftY = (height - 1) / 2f;
 
-            int verticesPerLine = (width - 1) / lod + 1;
+            int verticesPerLine = (width - 1) / lod ;
 
             MeshData meshData = new MeshData(verticesPerLine);
 
-            int currentIndex = 0;
-
-            float[] heightMultipliers = new float[verticesPerLine * verticesPerLine];
-
-            for (int y = 0; y < height; y += lod)
+            
+            for (int y = 0; y < height - 1; y += lod)
             {
-                for (int x = 0; x < width; x += lod)
+                for (int x = 0; x < width - 1; x += lod)
                 {
-                    float currentMultiplier = animationCurve.Evaluate(heightMap[x, y]) * noiseMultiplier;
-                    heightMultipliers[currentIndex] = currentMultiplier;
+                    float vertexAMultiplier = animationCurve.Evaluate(heightMap[x, y]) * noiseMultiplier;
+                    float vertexBMultiplier = animationCurve.Evaluate(heightMap[x + lod, y]) * noiseMultiplier;
+                    float vertexCMultiplier = animationCurve.Evaluate(heightMap[x, y + lod]) * noiseMultiplier;
+                    float vertexDMultiplier = animationCurve.Evaluate(heightMap[x + lod, y + lod]) * noiseMultiplier;
 
-                    meshData.vertices[currentIndex] =
-                        new Vector3(topLeftX + x, heightMap[x, y] * currentMultiplier, topLeftY - y);
+                    Vector3 vertexA = new Vector3(topLeftX + x, heightMap[x, y] * vertexAMultiplier, topLeftY - y);
+                    Vector3 vertexB = new Vector3(topLeftX + x + lod, heightMap[x + lod, y] * vertexBMultiplier,
+                        topLeftY - y);
+                    Vector3 vertexC = new Vector3(topLeftX + x, heightMap[x, y + lod] * vertexCMultiplier,
+                        topLeftY - y - lod);
+                    Vector3 vertexD = new Vector3(topLeftX + x + lod, heightMap[x + lod, y + lod] * vertexDMultiplier,
+                        topLeftY - y - lod);
 
-                    if (x < width - lod && y < height - lod)
-                    {
-                        meshData.AddTriangle(currentIndex, currentIndex + verticesPerLine + 1,
-                            currentIndex + verticesPerLine);
-                        meshData.AddTriangle(currentIndex + verticesPerLine + 1, currentIndex, currentIndex + 1);
-                    }
 
-                    currentIndex++;
+                    Color firstTriangleColor = EvaluateVertexColor(vertexA, vertexB, vertexD, vertexAMultiplier,
+                        vertexBMultiplier, vertexDMultiplier, gradient);
+
+                    meshData.AddTriangle(vertexA, vertexB, vertexD, firstTriangleColor);
+
+
+                    Color secondTriangleColor = EvaluateVertexColor(vertexC, vertexA, vertexD, vertexCMultiplier,
+                        vertexAMultiplier, vertexDMultiplier, gradient);
+
+                    meshData.AddTriangle(vertexC, vertexA, vertexD, secondTriangleColor);
+                    
                 }
-            }
-
-
-            for (int i = 0; i < meshData.triangles.Length; i += 3)
-            {
-                int vertexIndexA = meshData.triangles[i];
-                int vertexIndexB = meshData.triangles[i + 1];
-                int vertexIndexC = meshData.triangles[i + 2];
-
-                float vertexHeightA = meshData.vertices[vertexIndexA].y / heightMultipliers[vertexIndexA];
-                float vertexHeightB = meshData.vertices[vertexIndexB].y / heightMultipliers[vertexIndexB];
-                float vertexHeightC = meshData.vertices[vertexIndexC].y / heightMultipliers[vertexIndexC];
-
-                var normal = Vector3.Cross(meshData.vertices[vertexIndexB] - meshData.vertices[vertexIndexA],
-                    meshData.vertices[vertexIndexC] - meshData.vertices[vertexIndexA]);
-
-                float averageHeight = (vertexHeightA + vertexHeightB + vertexHeightC) / 3;
-
-                Color triangleColor = gradient.Evaluate(averageHeight);
-
-                meshData.uvs[vertexIndexA] = Vector2.zero;
-                meshData.uvs[vertexIndexB] = Vector2.zero;
-                meshData.uvs[vertexIndexC] = Vector2.zero;
-
-                meshData.normals[vertexIndexA] = normal;
-                meshData.normals[vertexIndexB] = normal;
-                meshData.normals[vertexIndexC] = normal;
-
-                meshData.colors[vertexIndexA] = triangleColor;
-                meshData.colors[vertexIndexB] = triangleColor;
-                meshData.colors[vertexIndexC] = triangleColor;
             }
 
 
@@ -80,12 +58,12 @@ namespace TerrainGenerator
         }
 
 
-        private Color EvaluateVertexColor(float vertexHeightA, float vertexHeightB, float vertexHeightC,
-            Gradient gradient, float vertexScaleA, float vertexScaleB, float vertexScaleC)
+        private Color EvaluateVertexColor(Vector3 vertexA, Vector3 vertexB, Vector3 vertexC,
+            float vertexScaleA, float vertexScaleB, float vertexScaleC, Gradient gradient)
         {
-            float heightA = vertexHeightA / vertexScaleA;
-            float heightB = vertexHeightB / vertexScaleB;
-            float heightC = vertexHeightC / vertexScaleC;
+            float heightA = vertexA.y / vertexScaleA;
+            float heightB = vertexB.y / vertexScaleB;
+            float heightC = vertexC.y / vertexScaleC;
 
             float averageHeight = (heightA + heightB + heightC) / 3;
 

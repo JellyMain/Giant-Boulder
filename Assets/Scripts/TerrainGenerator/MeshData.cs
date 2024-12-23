@@ -1,49 +1,49 @@
+using System.Collections.Generic;
 using UnityEngine;
 
 
-namespace TerrainGenerator
+public class MeshData
 {
-    public class MeshData
+    public Vector3[] vertices;
+    public int[] triangles;
+    public Color[] colors;
+
+    private int vertexCount = 0;
+
+
+    public MeshData(int verticesPerLine)
     {
-        public Vector3[] vertices;
-        public int[] triangles;
-        public Vector2[] uvs;
-        public Color[] colors;
-        public Vector3[] normals;
-        private int triangleIndex;
+        vertices = new Vector3[verticesPerLine * verticesPerLine * 6];
+        triangles = new int[verticesPerLine * verticesPerLine * 6];
+        colors = new Color[verticesPerLine * verticesPerLine * 6];
+    }
 
 
-        public MeshData(int meshSize)
-        {
-            vertices = new Vector3[meshSize * meshSize];
-            uvs = new Vector2[meshSize * meshSize];
-            triangles = new int[(meshSize - 1) * (meshSize - 1) * 6];
-            colors = new Color[meshSize * meshSize];
-            normals = new Vector3[meshSize * meshSize];
-        }
+    public void AddTriangle(Vector3 v1, Vector3 v2, Vector3 v3, Color color)
+    {
+        vertices[vertexCount] = v1;
+        vertices[vertexCount + 1] = v2;
+        vertices[vertexCount + 2] = v3;
+
+        triangles[vertexCount] = vertexCount;
+        triangles[vertexCount + 1] = vertexCount + 1;
+        triangles[vertexCount + 2] = vertexCount + 2;
+
+        colors[vertexCount] = color;
+        colors[vertexCount + 1] = color;
+        colors[vertexCount + 2] = color;
+
+        vertexCount += 3;
+    }
 
 
-        public Mesh CreateMesh()
-        {
-            Mesh mesh = new Mesh();
+    public Mesh CreateMesh()
+    {
+        Mesh mesh = new Mesh();
+        mesh.vertices = vertices;
+        mesh.triangles = triangles;
+        mesh.colors = colors;
 
-            mesh.vertices = vertices;
-            mesh.uv = uvs;
-            mesh.triangles = triangles;
-            mesh.colors = colors;
-            mesh.normals = normals;
-
-            return mesh;
-        }
-
-
-        public void AddTriangle(int a, int b, int c)
-        {
-            triangles[triangleIndex] = a;
-            triangles[triangleIndex + 1] = b;
-            triangles[triangleIndex + 2] = c;
-            
-            triangleIndex += 3;
-        }
+        return mesh;
     }
 }
