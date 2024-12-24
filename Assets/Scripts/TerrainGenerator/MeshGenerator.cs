@@ -14,8 +14,6 @@ namespace TerrainGenerator
             int width = heightMap.GetLength(0);
             int height = heightMap.GetLength(1);
             
-            Debug.Log(width);
-
             float topLeftX = (width - 1) / -2f;
             float topLeftY = (height - 1) / 2f;
 

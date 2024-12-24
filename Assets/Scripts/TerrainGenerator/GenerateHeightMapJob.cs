@@ -2,6 +2,7 @@ using Unity.Burst;
 using Unity.Collections;
 using Unity.Jobs;
 using Unity.Mathematics;
+using UnityEngine;
 
 
 namespace TerrainGenerator
@@ -15,7 +16,6 @@ namespace TerrainGenerator
         public float lacunarity;
         public int octaves;
         [ReadOnly] public NativeArray<float2> octaveOffsets;
-
         public NativeArray<float> heightMap;
 
 

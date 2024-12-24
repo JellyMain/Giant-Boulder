@@ -33,9 +33,9 @@ namespace StaticData.Data
 
         [ValueDropdown("levelsOfDetail")] public int lod;
 
-        [Range(0.001f, 100)] public float noiseScale = 10;
+        [Range(0.001f, 1000)] public float noiseScale = 10;
 
-        [Range(1, 100)] public float noiseMultiplier = 10;
+        [Range(1, 500)] public float noiseMultiplier = 10;
 
         [Range(1, 20)] public int octaves = 5;
 

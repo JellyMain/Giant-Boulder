@@ -31,7 +31,6 @@ namespace Infrastructure.Installers.Global
             BindGameStateMachine();
             BindNoiseGenerator();
             BindTextureGenerator();
-            BindFalloffGenerator();
             BindMeshGenerator();
             BindChunkFactory();
             BindMapCreator();
@@ -54,13 +53,7 @@ namespace Infrastructure.Installers.Global
         {
             Container.Bind<MeshGenerator>().AsSingle();
         }
-
-
-        private void BindFalloffGenerator()
-        {
-            Container.Bind<FalloffGenerator>().AsSingle();
-        }
-
+        
 
         private void BindTextureGenerator()
         {

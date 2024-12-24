@@ -1,6 +1,5 @@
 using System.Collections;
 using System.Collections.Generic;
-using Unity.Burst;
 using Unity.Collections;
 using Unity.Jobs;
 using Unity.Mathematics;
@@ -12,19 +11,10 @@ namespace TerrainGenerator
 {
     public class NoiseGenerator
     {
-        private readonly FalloffGenerator falloffGenerator;
         private float maxNoiseHeight = float.MinValue;
         private float minNoiseHeight = float.MaxValue;
-        private float maxNoiseHeightParallel = float.MinValue;
-        private float minNoiseHeightParallel = float.MaxValue;
         private readonly List<NativeArray<float2>> jobOctaveOffsetsList = new List<NativeArray<float2>>();
 
-
-
-        public NoiseGenerator(FalloffGenerator falloffGenerator)
-        {
-            this.falloffGenerator = falloffGenerator;
-        }
 
 
         public float[,] GenerateHeightMap(int size, float scale, float persistance, float lacunarity, int octaves,
@@ -33,7 +23,6 @@ namespace TerrainGenerator
             Random rng = new Random(seed);
 
             Vector2[] octaveOffsets = new Vector2[octaves];
-
 
             for (int i = 0; i < octaves; i++)
             {
@@ -166,6 +155,7 @@ namespace TerrainGenerator
             {
                 float[,] currentHeightMap = terrainHeightMaps[i];
 
+
                 for (int y = 0; y < chunkSize; y++)
                 {
                     for (int x = 0; x < chunkSize; x++)
@@ -223,7 +213,7 @@ namespace TerrainGenerator
                         octaves = octaves,
                         persistance = persistance,
                         scale = scale,
-                        octaveOffsets = octaveOffsets
+                        octaveOffsets = octaveOffsets,
                     };
 
                     jobHandles[index] = heightMapJob.Schedule();
@@ -232,7 +222,7 @@ namespace TerrainGenerator
 
             JobHandle.CompleteAll(jobHandles);
 
-            
+
             float[][] terrainHeightMaps = new float[terrainMapSize * terrainMapSize][];
 
             for (int i = 0; i < terrainHeightMapsNative.Length; i++)
@@ -252,15 +242,30 @@ namespace TerrainGenerator
                     }
                 }
             }
-            
+
+
+            // Texture2D heightMapCorrectionTexture =
+            //     Resources.Load<Texture2D>("BaseHeightMaps/map2");
+            //
+            // Color[] heightMapCorrection = heightMapCorrectionTexture.GetPixels();
+            //
+            //
+            // Color[][] chunkedHeightMapCorrection =
+            //     HeightMapCorrectionHelper.DivideCorrectionMap(heightMapCorrection, chunkSize, terrainMapSize);
+
             for (int i = 0; i < terrainHeightMapsNative.Length; i++)
             {
                 terrainHeightMaps[i] = new float[terrainHeightMapsNative[i].Length];
+                // Color[] correctionMap = chunkedHeightMapCorrection[i];
 
                 for (int j = 0; j < terrainHeightMaps[i].Length; j++)
                 {
                     terrainHeightMaps[i][j] = Mathf.InverseLerp(globalMinNoiseHeight, globalMaxNoiseHeight,
                         terrainHeightMapsNative[i][j]);
+
+                    // terrainHeightMaps[i][j] += (1f - correctionMap[j].grayscale) * 0.1f;
+                    //
+                    // terrainHeightMaps[i][j] = Mathf.Clamp01(terrainHeightMaps[i][j]);
                 }
 
                 terrainHeightMapsNative[i].Dispose();
@@ -276,52 +281,5 @@ namespace TerrainGenerator
 
             return terrainHeightMaps;
         }
-    }
-}
-
-
-[BurstCompile]
-public struct GenerateHeightMapJob : IJob
-{
-    public int chunkSize;
-    public float scale;
-    public float persistance;
-    public float lacunarity;
-    public int octaves;
-    [ReadOnly] public NativeArray<float2> octaveOffsets;
-
-    public NativeArray<float> heightMap;
-
-
-    public void Execute()
-    {
-        for (int y = 0; y < chunkSize; y++)
-        {
-            for (int x = 0; x < chunkSize; x++)
-            {
-                float noiseHeight = 0f;
-                float frequency = 1f;
-                float amplitude = 1f;
-
-                for (int i = 0; i < octaves; i++)
-                {
-                    float positionX = (x + octaveOffsets[i].x) / scale * frequency;
-                    float positionY = (y - octaveOffsets[i].y) / scale * frequency;
-
-                    float2 position = new float2(positionX, positionY);
-
-                    float perlinValue = noise.pnoise(position, new float2(1000, 1000)) * 2 - 1;
-
-                    noiseHeight += perlinValue * amplitude;
-
-                    frequency *= lacunarity;
-                    amplitude *= persistance;
-                }
-
-                int index = y * chunkSize + x;
-                heightMap[index] = noiseHeight;
-            }
-        }
-        
     }
 }

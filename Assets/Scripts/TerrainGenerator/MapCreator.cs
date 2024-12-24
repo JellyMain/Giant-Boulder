@@ -16,7 +16,7 @@ namespace TerrainGenerator
         private readonly NoiseGenerator noiseGenerator;
         private readonly StaticDataService staticDataService;
         private readonly ChunkFactory chunkFactory;
-        private  MapGenerationConfig mapGenerationConfig;
+        private MapGenerationConfig mapGenerationConfig;
         private int chunkSize;
 
 
@@ -26,7 +26,6 @@ namespace TerrainGenerator
             this.noiseGenerator = noiseGenerator;
             this.staticDataService = staticDataService;
             this.chunkFactory = chunkFactory;
-
         }
 
 
@@ -57,7 +56,7 @@ namespace TerrainGenerator
                 mapGenerationConfig.chunkSize,
                 mapGenerationConfig.noiseScale, mapGenerationConfig.persistance, mapGenerationConfig.lacunarity,
                 mapGenerationConfig.octaves, mapGenerationConfig.seed, mapGenerationConfig.offset, allChunkPositions);
-            
+
             
 
             for (int y = 0; y < mapGenerationConfig.mapSize; y++)

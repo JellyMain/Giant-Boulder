@@ -464,8 +464,8 @@ MonoBehaviour:
   bendVerticalOffset: 0
   bendHorizontalSize: 0
   bendHorizontalOffset: 0
-  bendCurvatureSize: 1
-  bendCurvatureOffset: 3
+  bendCurvatureSize: 0
+  bendCurvatureOffset: 0
   bendAngle: 0
   bendAngle2: 0
   bendMinimumRadius: 0
