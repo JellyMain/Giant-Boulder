@@ -4,7 +4,7 @@ Shader "Amazing Assets/Curved World/Sprites/Diffuse"
 {
     Properties
     {
-        [HideInInspector][CurvedWorldBendSettings]	  _CurvedWorldBendSettings("0|1", Vector) = (0, 0, 0, 0)
+        [HideInInspector][CurvedWorldBendSettings]	  _CurvedWorldBendSettings("0,5|1", Vector) = (0, 0, 0, 0)
 
         [PerRendererData] _MainTex ("Sprite Texture", 2D) = "white" {}
         _Color ("Tint", Color) = (1,1,1,1)
@@ -40,7 +40,7 @@ Shader "Amazing Assets/Curved World/Sprites/Diffuse"
         #pragma multi_compile _ ETC1_EXTERNAL_ALPHA
 
 
-#define CURVEDWORLD_BEND_TYPE_CLASSICRUNNER_X_POSITIVE
+#pragma shader_feature_local CURVEDWORLD_BEND_TYPE_CLASSICRUNNER_X_POSITIVE CURVEDWORLD_BEND_TYPE_LITTLEPLANET_Y
 #define CURVEDWORLD_BEND_ID_1
 #pragma shader_feature_local CURVEDWORLD_DISABLED_ON
 #include "../../Core/CurvedWorldTransform.cginc" 

@@ -32,20 +32,22 @@ namespace Factories
             mapGenerationConfig = staticDataService.MapGenerationConfig;
 
             MeshData meshData = meshGenerator.CreateMeshData(heightMap, mapGenerationConfig.noiseMultiplier,
-                mapGenerationConfig.heightCurve, mapGenerationConfig.lod, mapGenerationConfig.heightGradient);
+                mapGenerationConfig.heightCurve, mapGenerationConfig.lod, mapGenerationConfig.heightGradient,
+                mapGenerationConfig.terrainRegions);
 
             TerrainChunk terrainChunk = new TerrainChunk(mapGenerationConfig.chunkMaterial, position, meshData);
 
             return terrainChunk;
         }
-        
-        
+
+
         public TerrainChunk CreateChunk(Vector3 position, float[] heightMap)
         {
             mapGenerationConfig = staticDataService.MapGenerationConfig;
 
             MeshData meshData = meshGenerator.CreateMeshData(heightMap, mapGenerationConfig.noiseMultiplier,
-                mapGenerationConfig.heightCurve, mapGenerationConfig.lod, mapGenerationConfig.heightGradient);
+                mapGenerationConfig.heightCurve, mapGenerationConfig.lod, mapGenerationConfig.heightGradient,
+                mapGenerationConfig.terrainRegions);
 
             TerrainChunk terrainChunk = new TerrainChunk(mapGenerationConfig.chunkMaterial, position, meshData);
 

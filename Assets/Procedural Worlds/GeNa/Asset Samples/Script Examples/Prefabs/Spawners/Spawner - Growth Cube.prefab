@@ -1,0 +1,2163 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &8686452338116086661
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 8686452338116086660}
+  - component: {fileID: 8686452338116086667}
+  m_Layer: 0
+  m_Name: Spawner - Growth Cube
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &8686452338116086660
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8686452338116086661}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &8686452338116086667
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8686452338116086661}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7285ababe3c85bb44a974b12a335b4a7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_version: 2
+  m_palette: {fileID: 11400000, guid: 50bb1353b1f286a4eac628b5aaaea1e2, type: 2}
+  m_data:
+    version: 1
+    m_data: 
+    m_file: {fileID: 0}
+    m_serializeToFile: 0
+  m_spawnerData: {fileID: -3268170034897042730}
+  m_prototypeRootPrefabs:
+  - {fileID: 3865310106599925793, guid: 861efcc419ad14a46b465ef7a3af2234, type: 3}
+--- !u!114 &-3268170034897042730
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a29c0690fd982034994ed5ebc81f639e, type: 3}
+  m_Name: Spawner Data (Main)
+  m_EditorClassIdentifier: 
+  m_palette: {fileID: 11400000, guid: 50bb1353b1f286a4eac628b5aaaea1e2, type: 2}
+  m_spawnTimeInterval: 1000
+  m_defaultsSet: 1
+  m_terrainYPos: 0
+  m_terrainHeight: 1024
+  m_nextProtoId: 8
+  m_groundLayer:
+    serializedVersion: 2
+    m_Bits: 1
+  m_settings:
+    m_autoProbe: 1
+    m_minProbeGroupDistance: 100
+    m_minProbeDistance: 15
+    m_autoOptimise: 0
+    m_maxSizeToOptimise: 10
+    m_visualizationActive: 0
+    m_maxVisualizationDimensions: 32
+    m_maxSubSpawnerDepth: 5
+    m_showQuickStart: 1
+    m_showOverview: 1
+    m_showSpawnCriteria: 1
+    m_showPlacementCriteria: 0
+    m_showPrototypes: 1
+    m_showAdvancedSettings: 0
+    m_showCritMinSpawnHeight: 0
+    m_showCritMaxSpawnHeight: 0
+    m_advanced:
+      m_performUndoAtRuntime: 0
+      m_showMouseOverHelp: 1
+      m_showDetailedHelp: 1
+      m_addColliderToSpawnedPrefabs: 0
+      m_spawnCheckOffset: 2000
+      m_boundsOffset: 1.5
+      m_debugEnabled: 0
+  m_placementCriteria:
+    m_spawnAlgorithm: 3
+    m_maxFailCount: 10
+    m_globalSpawnJitterPct: 0.75
+    m_seedThrowJitter: 1
+    m_rotationAlgorithm: 0
+    m_minRotationY: 0
+    m_maxRotationY: 360
+    m_enableRotationDragUpdate: 1
+    m_sameScale: 1
+    m_scaleToNearestInt: 0
+    m_minScale: {x: 0.7, y: 0.7, z: 0.7}
+    m_maxScale: {x: 1.3, y: 1.3, z: 1.3}
+    m_useGravity: 0
+    m_scaleFalloff:
+      serializedVersion: 2
+      m_Curve:
+      - serializedVersion: 3
+        time: 0
+        value: 1
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: 0
+        outWeight: 0
+      - serializedVersion: 3
+        time: 0.8
+        value: 0.8
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: 0
+        outWeight: 0
+      - serializedVersion: 3
+        time: 1
+        value: 0
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: 0
+        outWeight: 0
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+  m_spawnCriteria:
+    m_checkRange: 0
+    m_forceSpawn: 1
+    m_checkCollisionType: 2
+    m_spawnCollisionLayers:
+      serializedVersion: 2
+      m_Bits: 55
+    m_blendAmount: 0.001
+    m_boundsExtents: 0.001
+    m_checkSlopeType: 1
+    m_minSpawnSlope: 0
+    m_maxSpawnSlope: 52.125435
+    m_minSlope: 0
+    m_maxSlope: 90
+    m_slopeRange: 90
+    m_checkHeightType: 3
+    m_minSpawnHeight: 38.054104
+    m_maxSpawnHeight: 68.05411
+    m_minHeight: -20
+    m_maxHeight: 5000
+    m_heightRange: 30
+    m_bottomBoundary: -100
+    m_topBoundary: 5024
+    m_checkTextures: 0
+    m_textureStrength: 0.7411765
+    m_textureRange: 0
+    m_selectedTextureIdx: 2
+    m_selectedTextureName: PW_Grass_Mountain_01_D
+    m_maxSelectedTexture: 7
+    m_checkMask: 0
+    m_checkMaskType: 0
+    m_maskFractal:
+      m_seed: 0
+      m_octaves: 8
+      m_persistence: 0.65
+      m_frequency: 0.05
+      m_lacunarity: 1.5
+      m_XOffset: 0
+      m_ZOffset: 0
+      m_YOffset: 0
+    m_midMaskFractal: 0.5
+    m_maskFractalRange: 0.5
+    m_maskImagePaletteID: -2147483648
+    m_generateBufferData: 0
+    m_maskImage: {fileID: 0}
+    m_maskInvert: 0
+    m_imageFilterColor: {r: 0, g: 0, b: 0, a: 0}
+    m_imageFilterFuzzyMatch: 0
+    m_constrainWithinMaskedBounds: 0
+    m_invertMaskedAlpha: 0
+    m_successOnMaskedAlpha: 0
+    m_scaleOnMaskedAlpha: 0
+    m_minScaleOnMaskedAlpha: 0
+    m_maxScaleOnMaskedAlpha: 0
+    m_overrideChildren: 0
+    m_overrideForceSpawn: 0
+    m_overrideApplies: 0
+    m_overrideVirginCheckType: 0
+    m_overrideCheckChildren: 0
+    m_overrideSpawnCollisionLayers: 0
+    m_overrideBoundsBorder: 0
+    m_overrideRayExtents: 0
+    m_overrideCheckHeight: 0
+    m_overrideMinMaxHeight: 0
+    m_overrideMinMaxSpawnHeight: 0
+    m_overrideHeightVariance: 0
+    m_overrideCheckSlope: 0
+    m_overrideMinMaxSlope: 0
+    m_overrideMinMaxSpawnSlope: 0
+    m_overrideSlopeVariance: 0
+    m_overrideCheckTextures: 0
+    m_overrideSelectedTextureIdx: 0
+    m_overrideTextureStrength: 0
+    m_overrideTextureVariance: 0
+    m_overrideCheckMask: 0
+    m_overrideCheckMaskType: 0
+    m_overrideMaskFractalSeed: 0
+    m_overrideMaskFractalOctaves: 0
+    m_overrideMaskFractalFrequency: 0
+    m_overrideMaskFractalPersistence: 0
+    m_overrideMaskFractalLacunarity: 0
+    m_overrideMidMaskFractal: 0
+    m_overrideMaskFractalRange: 0
+    m_overrideMaskInvert: 0
+    m_overrideMaskImage: 0
+    m_overrideImageFilterColor: 0
+    m_overrideImageFilterFuzzyMatch: 0
+    m_overrideConstrainWithinMaskedBounds: 0
+    m_overrideInvertMaskedAlpha: 0
+    m_overrideSuccessOnMaskedAlpha: 0
+    m_overrideScaleOnMaskedAlpha: 0
+    m_overrideMinScaleOnMaskedAlpha: 0
+    m_overrideMaxScaleOnMaskedAlpha: 0
+    m_disableCheckMask: 0
+    m_isDirty: 1
+    m_isMaskDirty: 0
+  m_rangesOriginLocation: {x: 139.91376, y: 53.054104, z: -25.906921}
+  m_rangesOriginNormal: {x: 0, y: 0.99227697, z: 0.12404219}
+  m_spawnType: 1
+  m_spawnMode: 0
+  m_flowRate: 1
+  m_rotationY: 0
+  m_name: Growth Cube
+  m_mergeSpawns: 1
+  m_spawnToTarget: 1
+  m_sortPrototypes: 0
+  m_spawnPrototypes:
+  - m_palette: {fileID: 11400000, guid: 50bb1353b1f286a4eac628b5aaaea1e2, type: 2}
+    m_spawnerPaletteID: -2147483648
+    m_spawnerData: {fileID: -3268170034897042730}
+    m_id: 0
+    m_name: Growth Cube
+    m_isActive: 1
+    m_size: {x: 0, y: 0, z: 0}
+    m_extents: {x: 0, y: 0, z: 0}
+    m_boundsBorder: 0
+    m_forwardRotation: 0
+    m_hasColliders: 0
+    m_hasMeshes: 0
+    m_hasRigidBody: 0
+    m_instancesSpawned: 1
+    m_displayedInEditor: 0
+    m_showAdvancedOptions: 0
+    m_resourceIDs: 00000000
+    m_resources:
+    - m_palette: {fileID: 11400000, guid: 50bb1353b1f286a4eac628b5aaaea1e2, type: 2}
+      m_name: Growth Cube
+      m_assetID: 861efcc419ad14a46b465ef7a3af2234
+      m_prefabPaletteID: -2147483639
+      m_assetName: Growth Cube
+      m_resourceType: 0
+      m_successRate: 1
+      m_conformToSlope: 0
+      m_snapToGround: 1
+      m_minOffset: {x: 0, y: 0, z: 0}
+      m_maxOffset: {x: 0, y: 0, z: 0}
+      m_minRotation: {x: 0, y: 0, z: 0}
+      m_maxRotation: {x: 0, y: 0, z: 0}
+      m_sameScale: 1
+      m_minScale: {x: 1, y: 1, z: 1}
+      m_maxScale: {x: 1, y: 1, z: 1}
+      m_detailPrototypeData:
+        bendFactor: 0
+        prototypeTexturePaletteID: -2147483648
+        prototypeGameObjectPaletteID: -2147483648
+        prototypeTexture: {fileID: 0}
+        dryColor: {r: 0, g: 0, b: 0, a: 0}
+        healthyColor: {r: 0, g: 0, b: 0, a: 0}
+        maxHeight: 0
+        maxWidth: 0
+        minHeight: 0
+        minWidth: 0
+        noiseSpread: 0
+        prototype: {fileID: 0}
+        renderMode: 0
+        usePrototypeMesh: 0
+      m_texturePrototypeData:
+        terrainTextureAssetPaletteID: -2147483648
+        terrainTexture2DAsset: {fileID: 0}
+      m_addColliderToAabb: 1
+      m_spawnCriteria:
+        m_checkRange: 0
+        m_forceSpawn: 1
+        m_checkCollisionType: 2
+        m_spawnCollisionLayers:
+          serializedVersion: 2
+          m_Bits: 55
+        m_blendAmount: 0.001
+        m_boundsExtents: 0.001
+        m_checkSlopeType: 1
+        m_minSpawnSlope: 0
+        m_maxSpawnSlope: 52.125435
+        m_minSlope: 0
+        m_maxSlope: 90
+        m_slopeRange: 90
+        m_checkHeightType: 3
+        m_minSpawnHeight: 38.054104
+        m_maxSpawnHeight: 68.05411
+        m_minHeight: -20
+        m_maxHeight: 5000
+        m_heightRange: 30
+        m_bottomBoundary: -20
+        m_topBoundary: 5000
+        m_checkTextures: 0
+        m_textureStrength: 0.8705883
+        m_textureRange: 0
+        m_selectedTextureIdx: 2
+        m_selectedTextureName: 
+        m_maxSelectedTexture: 1
+        m_checkMask: 0
+        m_checkMaskType: 0
+        m_maskFractal:
+          m_seed: 0
+          m_octaves: 8
+          m_persistence: 0.65
+          m_frequency: 0.05
+          m_lacunarity: 1.5
+          m_XOffset: 0
+          m_ZOffset: 0
+          m_YOffset: 0
+        m_midMaskFractal: 0.5
+        m_maskFractalRange: 0.5
+        m_maskImagePaletteID: -2147483648
+        m_generateBufferData: 0
+        m_maskImage: {fileID: 0}
+        m_maskInvert: 0
+        m_imageFilterColor: {r: 0, g: 0, b: 0, a: 0}
+        m_imageFilterFuzzyMatch: 0
+        m_constrainWithinMaskedBounds: 0
+        m_invertMaskedAlpha: 0
+        m_successOnMaskedAlpha: 0
+        m_scaleOnMaskedAlpha: 0
+        m_minScaleOnMaskedAlpha: 0
+        m_maxScaleOnMaskedAlpha: 0
+        m_overrideChildren: 0
+        m_overrideForceSpawn: 0
+        m_overrideApplies: 0
+        m_overrideVirginCheckType: 0
+        m_overrideCheckChildren: 0
+        m_overrideSpawnCollisionLayers: 0
+        m_overrideBoundsBorder: 0
+        m_overrideRayExtents: 0
+        m_overrideCheckHeight: 0
+        m_overrideMinMaxHeight: 0
+        m_overrideMinMaxSpawnHeight: 0
+        m_overrideHeightVariance: 0
+        m_overrideCheckSlope: 0
+        m_overrideMinMaxSlope: 0
+        m_overrideMinMaxSpawnSlope: 0
+        m_overrideSlopeVariance: 0
+        m_overrideCheckTextures: 0
+        m_overrideSelectedTextureIdx: 0
+        m_overrideTextureStrength: 0
+        m_overrideTextureVariance: 0
+        m_overrideCheckMask: 0
+        m_overrideCheckMaskType: 0
+        m_overrideMaskFractalSeed: 0
+        m_overrideMaskFractalOctaves: 0
+        m_overrideMaskFractalFrequency: 0
+        m_overrideMaskFractalPersistence: 0
+        m_overrideMaskFractalLacunarity: 0
+        m_overrideMidMaskFractal: 0
+        m_overrideMaskFractalRange: 0
+        m_overrideMaskInvert: 0
+        m_overrideMaskImage: 0
+        m_overrideImageFilterColor: 0
+        m_overrideImageFilterFuzzyMatch: 0
+        m_overrideConstrainWithinMaskedBounds: 0
+        m_overrideInvertMaskedAlpha: 0
+        m_overrideSuccessOnMaskedAlpha: 0
+        m_overrideScaleOnMaskedAlpha: 0
+        m_overrideMinScaleOnMaskedAlpha: 0
+        m_overrideMaxScaleOnMaskedAlpha: 0
+        m_disableCheckMask: 0
+        m_isDirty: 1
+        m_isMaskDirty: 0
+      m_decoratorTypes: []
+      m_decoratorEntries:
+      - TypeName: GeNaGrowthDecorator
+        Data: '{"speed":5.0,"startScale":{"x":0.0,"y":0.0,"z":0.0},"endScale":{"x":1.0,"y":1.0,"z":1.0}}'
+      m_physicsEnabled: 0
+      m_hasHeights: 0
+      m_hasSubSpawner: 0
+      m_oneChildOf: 0
+      m_oneChildOfWeight: 1
+      m_spawnerPaletteID: -2147483648
+      m_subSpawnerPaletteID: -2147483648
+      m_spawnerData: {fileID: -3268170034897042730}
+      m_subSpawnerData: {fileID: 0}
+      m_static: 1
+      m_opacity: 1
+      m_targetStrength: 1
+      m_terrainProtoIdx: 0
+      m_hasColliders: 1
+      m_hasRootCollider: 1
+      m_hasMeshes: 1
+      m_hasRigidbody: 0
+      m_spawnFlags:
+        m_flagLightmapStatic: 0
+        m_flagBatchingStatic: 0
+        m_flagOccludeeStatic: 0
+        m_flagOccluderStatic: 0
+        m_flagNavigationStatic: 0
+        m_flagOffMeshLinkGeneration: 0
+        m_flagReflectionProbeStatic: 0
+        m_flagMovingObject: 0
+        m_flagCanBeOptimised: 1
+        m_flagForceOptimise: 0
+        m_flagIsOutdoorObject: 1
+        m_useColliderBounds: 0
+      m_basePosition: {x: 0, y: 0, z: 0}
+      m_baseRotation: {x: 0, y: 0, z: 0}
+      m_baseScale: {x: 1, y: 1, z: 1}
+      m_baseSize: {x: 1, y: 1, z: 1}
+      m_boundsCenter: {x: 0, y: 0, z: 0}
+      m_baseColliderCenter: {x: 0, y: 0, z: 0}
+      m_baseColliderUseConstScale: 1
+      m_baseColliderConstScaleAmount: 0.75
+      m_baseColliderScale: {x: 1, y: 1, z: 1}
+      m_instancesSpawned: 15
+      m_containerOnly: 0
+      m_parentID: -1
+      m_id: 0
+      m_childrenIDs: 
+      m_brushTextureIDs: 
+      m_brushTextures: []
+      m_brushTXIndex: 0
+      m_baseBrush:
+        m_size: 0
+        m_strength: []
+        m_brush: {fileID: 0}
+      m_prefab: {fileID: 3865310106599925793, guid: 861efcc419ad14a46b465ef7a3af2234,
+        type: 3}
+      m_template: {fileID: 0}
+      m_nextSuccess: 1
+      m_nextPosition: {x: 0, y: 0, z: 0}
+      m_nextRotation: {x: 0, y: 0, z: 0}
+      m_nextScale: {x: 1, y: 1, z: 1}
+      m_abortSpawn: 0
+      m_showSpawnCriteriaOverrides: 0
+    m_resourceIDCount: 1
+  m_hasGameObjectProtos: 1
+  m_hasTerrainTrees: 0
+  m_hasTerrainGrass: 0
+  m_hasTerrainTextures: 0
+  m_hasTerrainHeights: 0
+  m_hasActiveGameObjects: 1
+  m_hasActiveTerrainTrees: 0
+  m_hasActiveTerrainGrass: 0
+  m_hasActiveTerrainTextures: 0
+  m_hasActiveTerrainHeights: 0
+  m_spawnTarget: {fileID: 0}
+  m_spawnOriginLocation: {x: 139.91376, y: 53.054104, z: -25.906921}
+  m_spawnOriginNormal: {x: 0, y: 0.99227697, z: 0.12404219}
+  m_spawnOriginObjectID: 16804
+  m_spawnOriginIsTerrain: 1
+  m_spawnOriginGroundTransform: {fileID: 0}
+  m_minInstances: 1
+  m_maxInstances: 1
+  m_throwDistance: 0
+  m_spawnRange: 16
+  m_spawnRangeShape: 0
+  m_hasSeaLevelBeenSet: 0
+  m_getSeaLevel: 0
+  m_extraSeaLevelHeight: 0
+  m_useLargeRanges: 0
+  m_randomSeed: 522326
+  m_physicsType: 0
+  m_isProcessing: 0
+  m_spawnParent: {fileID: 0}
+  m_spawnProgress: {fileID: 0}
+  m_turnedOnAutoSyncTransforms: 0
+  m_spawnDirty: 0
+  m_lastSpawnPosition: {x: 139.91376, y: 53.054104, z: -25.906921}
+  m_spawnCalls:
+  - m_parent: {fileID: 0}
+    m_ground: {fileID: 0}
+    m_target: {fileID: 0}
+    m_bounds:
+      m_Center: {x: 0, y: 0, z: 0}
+      m_Extent: {x: 0, y: 0, z: 0}
+    m_geNaSample:
+      m_location: {x: 0, y: 0, z: 0}
+      m_tangent: {x: 0, y: 0, z: 0}
+      m_scale: {x: 1, y: 1, z: 1}
+      m_roll: 0
+      m_distanceInCurve: 0
+      m_timeInCurve: 0
+      m_rotation: {x: 0, y: 0, z: 0, w: 1}
+    m_spawnedInstances: []
+    m_spawner: {fileID: -3268170034897042730}
+    m_resourceEntities:
+    - {fileID: 0}
+    m_generated: 1
+    m_isActive: 1
+    m_alignToRotation: 0
+    m_alignChildrenToRotation: 0
+    m_conformToSlope: 0
+    m_conformChildrenToSlope: 0
+    m_snapToGround: 0
+    m_snapChildrenToGround: 0
+    m_useSpawnCriteria: 0
+    m_spawnedLocation: {x: 139.91376, y: 53.054104, z: -25.906921}
+    m_spawnDepth: 0
+    m_location: {x: 139.91376, y: 53.054104, z: -25.906921}
+    m_rotation: {x: 0, y: 0, z: 0}
+    m_normal: {x: 0, y: 0.99227697, z: 0.12404219}
+    m_spawnDistance: 0
+    m_spawnRange: 16
+    m_throwDistance: -1
+    m_flowRate: -1
+    m_parentScale: {x: 1, y: 1, z: 1}
+    m_randomRotationY: 0.059377544
+    m_parentRotationY: 0
+    m_instancesToSpawn: 1
+    m_instancesSpawned: 1
+    m_spawnerType: 1
+    m_milliseconds: 1000
+    m_canSpawn: 0
+  m_lastSpawnedObject: {fileID: 0}
+  m_probeParent: {fileID: 0}
+  m_spawnOriginBounds:
+    m_Center: {x: 139.91376, y: 53.054104, z: -25.906921}
+    m_Extent: {x: 8, y: 2500, z: 8}
+  m_visualizationActive: 0
+  m_visualizationFixed: 0
+  m_physicsSettings:
+    m_iterations: 1000
+    m_stepSize: 0.05
+    m_spawnOffsetY: 0.3
+  m_prototypeIDPool: 
+  m_lastSpawnCalls:
+  - m_parent: {fileID: 0}
+    m_ground: {fileID: 0}
+    m_target: {fileID: 0}
+    m_bounds:
+      m_Center: {x: 0, y: 0, z: 0}
+      m_Extent: {x: 0, y: 0, z: 0}
+    m_geNaSample:
+      m_location: {x: 0, y: 0, z: 0}
+      m_tangent: {x: 0, y: 0, z: 0}
+      m_scale: {x: 1, y: 1, z: 1}
+      m_roll: 0
+      m_distanceInCurve: 0
+      m_timeInCurve: 0
+      m_rotation: {x: 0, y: 0, z: 0, w: 1}
+    m_spawnedInstances: []
+    m_spawner: {fileID: -3268170034897042730}
+    m_resourceEntities:
+    - {fileID: 0}
+    m_generated: 1
+    m_isActive: 1
+    m_alignToRotation: 0
+    m_alignChildrenToRotation: 0
+    m_conformToSlope: 0
+    m_conformChildrenToSlope: 0
+    m_snapToGround: 0
+    m_snapChildrenToGround: 0
+    m_useSpawnCriteria: 0
+    m_spawnedLocation: {x: 139.91376, y: 53.054104, z: -25.906921}
+    m_spawnDepth: 0
+    m_location: {x: 139.91376, y: 53.054104, z: -25.906921}
+    m_rotation: {x: 0, y: 0, z: 0}
+    m_normal: {x: 0, y: 0.99227697, z: 0.12404219}
+    m_spawnDistance: 0
+    m_spawnRange: 16
+    m_throwDistance: -1
+    m_flowRate: -1
+    m_parentScale: {x: 1, y: 1, z: 1}
+    m_randomRotationY: 0.059377544
+    m_parentRotationY: 0
+    m_instancesToSpawn: 1
+    m_instancesSpawned: 1
+    m_spawnerType: 1
+    m_milliseconds: 1000
+    m_canSpawn: 0
+--- !u!114 &1755672802258694304
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a29c0690fd982034994ed5ebc81f639e, type: 3}
+  m_Name: Spawner Data (Main)
+  m_EditorClassIdentifier: 
+  m_palette: {fileID: 11400000, guid: 50bb1353b1f286a4eac628b5aaaea1e2, type: 2}
+  m_spawnTimeInterval: 1000
+  m_defaultsSet: 1
+  m_terrainYPos: 0
+  m_terrainHeight: 1024
+  m_nextProtoId: 8
+  m_groundLayer:
+    serializedVersion: 2
+    m_Bits: 1
+  m_settings:
+    m_autoProbe: 1
+    m_minProbeGroupDistance: 100
+    m_minProbeDistance: 15
+    m_autoOptimise: 0
+    m_maxSizeToOptimise: 10
+    m_visualizationActive: 0
+    m_maxVisualizationDimensions: 32
+    m_maxSubSpawnerDepth: 5
+    m_showQuickStart: 1
+    m_showOverview: 1
+    m_showSpawnCriteria: 1
+    m_showPlacementCriteria: 0
+    m_showPrototypes: 1
+    m_showAdvancedSettings: 0
+    m_showCritMinSpawnHeight: 0
+    m_showCritMaxSpawnHeight: 0
+    m_advanced:
+      m_performUndoAtRuntime: 0
+      m_showMouseOverHelp: 1
+      m_showDetailedHelp: 1
+      m_addColliderToSpawnedPrefabs: 0
+      m_spawnCheckOffset: 2000
+      m_boundsOffset: 1.5
+      m_debugEnabled: 0
+  m_placementCriteria:
+    m_spawnAlgorithm: 3
+    m_maxFailCount: 10
+    m_globalSpawnJitterPct: 0.75
+    m_seedThrowJitter: 1
+    m_rotationAlgorithm: 0
+    m_minRotationY: 0
+    m_maxRotationY: 360
+    m_enableRotationDragUpdate: 1
+    m_sameScale: 1
+    m_scaleToNearestInt: 0
+    m_minScale: {x: 0.7, y: 0.7, z: 0.7}
+    m_maxScale: {x: 1.3, y: 1.3, z: 1.3}
+    m_useGravity: 0
+    m_scaleFalloff:
+      serializedVersion: 2
+      m_Curve:
+      - serializedVersion: 3
+        time: 0
+        value: 1
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: 0
+        outWeight: 0
+      - serializedVersion: 3
+        time: 0.8
+        value: 0.8
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: 0
+        outWeight: 0
+      - serializedVersion: 3
+        time: 1
+        value: 0
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: 0
+        outWeight: 0
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+  m_spawnCriteria:
+    m_checkRange: 0
+    m_forceSpawn: 1
+    m_checkCollisionType: 2
+    m_spawnCollisionLayers:
+      serializedVersion: 2
+      m_Bits: 55
+    m_blendAmount: 0.001
+    m_boundsExtents: 0.001
+    m_checkSlopeType: 1
+    m_minSpawnSlope: 0
+    m_maxSpawnSlope: 57.700043
+    m_minSlope: 0
+    m_maxSlope: 90
+    m_slopeRange: 90
+    m_checkHeightType: 3
+    m_minSpawnHeight: 38.13508
+    m_maxSpawnHeight: 68.13508
+    m_minHeight: -20
+    m_maxHeight: 5000
+    m_heightRange: 30
+    m_bottomBoundary: -100
+    m_topBoundary: 5024
+    m_checkTextures: 0
+    m_textureStrength: 0.8705883
+    m_textureRange: 0
+    m_selectedTextureIdx: 2
+    m_selectedTextureName: PW_Grass_Mountain_01_D
+    m_maxSelectedTexture: 7
+    m_checkMask: 0
+    m_checkMaskType: 0
+    m_maskFractal:
+      m_seed: 0
+      m_octaves: 8
+      m_persistence: 0.65
+      m_frequency: 0.05
+      m_lacunarity: 1.5
+      m_XOffset: 0
+      m_ZOffset: 0
+      m_YOffset: 0
+    m_midMaskFractal: 0.5
+    m_maskFractalRange: 0.5
+    m_maskImagePaletteID: -2147483648
+    m_generateBufferData: 0
+    m_maskImage: {fileID: 0}
+    m_maskInvert: 0
+    m_imageFilterColor: {r: 0, g: 0, b: 0, a: 0}
+    m_imageFilterFuzzyMatch: 0
+    m_constrainWithinMaskedBounds: 0
+    m_invertMaskedAlpha: 0
+    m_successOnMaskedAlpha: 0
+    m_scaleOnMaskedAlpha: 0
+    m_minScaleOnMaskedAlpha: 0
+    m_maxScaleOnMaskedAlpha: 0
+    m_overrideChildren: 0
+    m_overrideForceSpawn: 0
+    m_overrideApplies: 0
+    m_overrideVirginCheckType: 0
+    m_overrideCheckChildren: 0
+    m_overrideSpawnCollisionLayers: 0
+    m_overrideBoundsBorder: 0
+    m_overrideRayExtents: 0
+    m_overrideCheckHeight: 0
+    m_overrideMinMaxHeight: 0
+    m_overrideMinMaxSpawnHeight: 0
+    m_overrideHeightVariance: 0
+    m_overrideCheckSlope: 0
+    m_overrideMinMaxSlope: 0
+    m_overrideMinMaxSpawnSlope: 0
+    m_overrideSlopeVariance: 0
+    m_overrideCheckTextures: 0
+    m_overrideSelectedTextureIdx: 0
+    m_overrideTextureStrength: 0
+    m_overrideTextureVariance: 0
+    m_overrideCheckMask: 0
+    m_overrideCheckMaskType: 0
+    m_overrideMaskFractalSeed: 0
+    m_overrideMaskFractalOctaves: 0
+    m_overrideMaskFractalFrequency: 0
+    m_overrideMaskFractalPersistence: 0
+    m_overrideMaskFractalLacunarity: 0
+    m_overrideMidMaskFractal: 0
+    m_overrideMaskFractalRange: 0
+    m_overrideMaskInvert: 0
+    m_overrideMaskImage: 0
+    m_overrideImageFilterColor: 0
+    m_overrideImageFilterFuzzyMatch: 0
+    m_overrideConstrainWithinMaskedBounds: 0
+    m_overrideInvertMaskedAlpha: 0
+    m_overrideSuccessOnMaskedAlpha: 0
+    m_overrideScaleOnMaskedAlpha: 0
+    m_overrideMinScaleOnMaskedAlpha: 0
+    m_overrideMaxScaleOnMaskedAlpha: 0
+    m_disableCheckMask: 0
+    m_isDirty: 1
+    m_isMaskDirty: 0
+  m_rangesOriginLocation: {x: 138.85675, y: 53.13508, z: -26.107605}
+  m_rangesOriginNormal: {x: 0.12194923, y: 0.9755343, z: 0.18292385}
+  m_spawnType: 1
+  m_spawnMode: 0
+  m_flowRate: 1
+  m_rotationY: 0
+  m_name: Growth Cube
+  m_mergeSpawns: 1
+  m_spawnToTarget: 1
+  m_sortPrototypes: 0
+  m_spawnPrototypes:
+  - m_palette: {fileID: 11400000, guid: 50bb1353b1f286a4eac628b5aaaea1e2, type: 2}
+    m_spawnerPaletteID: -2147483648
+    m_spawnerData: {fileID: 1755672802258694304}
+    m_id: 0
+    m_name: Growth Cube
+    m_isActive: 1
+    m_size: {x: 0, y: 0, z: 0}
+    m_extents: {x: 0, y: 0, z: 0}
+    m_boundsBorder: 0
+    m_forwardRotation: 0
+    m_hasColliders: 0
+    m_hasMeshes: 0
+    m_hasRigidBody: 0
+    m_instancesSpawned: 0
+    m_displayedInEditor: 0
+    m_showAdvancedOptions: 0
+    m_resourceIDs: 00000000
+    m_resources:
+    - m_palette: {fileID: 11400000, guid: 50bb1353b1f286a4eac628b5aaaea1e2, type: 2}
+      m_name: Growth Cube
+      m_assetID: 861efcc419ad14a46b465ef7a3af2234
+      m_prefabPaletteID: -2147483639
+      m_assetName: Growth Cube
+      m_resourceType: 0
+      m_successRate: 1
+      m_conformToSlope: 0
+      m_snapToGround: 1
+      m_minOffset: {x: 0, y: 0, z: 0}
+      m_maxOffset: {x: 0, y: 0, z: 0}
+      m_minRotation: {x: 0, y: 0, z: 0}
+      m_maxRotation: {x: 0, y: 0, z: 0}
+      m_sameScale: 1
+      m_minScale: {x: 1, y: 1, z: 1}
+      m_maxScale: {x: 1, y: 1, z: 1}
+      m_detailPrototypeData:
+        bendFactor: 0
+        prototypeTexturePaletteID: -2147483648
+        prototypeGameObjectPaletteID: -2147483648
+        prototypeTexture: {fileID: 0}
+        dryColor: {r: 0, g: 0, b: 0, a: 0}
+        healthyColor: {r: 0, g: 0, b: 0, a: 0}
+        maxHeight: 0
+        maxWidth: 0
+        minHeight: 0
+        minWidth: 0
+        noiseSpread: 0
+        prototype: {fileID: 0}
+        renderMode: 0
+        usePrototypeMesh: 0
+      m_texturePrototypeData:
+        terrainTextureAssetPaletteID: -2147483648
+        terrainTexture2DAsset: {fileID: 0}
+      m_addColliderToAabb: 1
+      m_spawnCriteria:
+        m_checkRange: 0
+        m_forceSpawn: 1
+        m_checkCollisionType: 2
+        m_spawnCollisionLayers:
+          serializedVersion: 2
+          m_Bits: 55
+        m_blendAmount: 0.001
+        m_boundsExtents: 0.001
+        m_checkSlopeType: 1
+        m_minSpawnSlope: 0
+        m_maxSpawnSlope: 57.700043
+        m_minSlope: 0
+        m_maxSlope: 90
+        m_slopeRange: 90
+        m_checkHeightType: 3
+        m_minSpawnHeight: 38.13508
+        m_maxSpawnHeight: 68.13508
+        m_minHeight: -20
+        m_maxHeight: 5000
+        m_heightRange: 30
+        m_bottomBoundary: -20
+        m_topBoundary: 5000
+        m_checkTextures: 0
+        m_textureStrength: 0.5294118
+        m_textureRange: 0
+        m_selectedTextureIdx: 1
+        m_selectedTextureName: 
+        m_maxSelectedTexture: 1
+        m_checkMask: 0
+        m_checkMaskType: 0
+        m_maskFractal:
+          m_seed: 0
+          m_octaves: 8
+          m_persistence: 0.65
+          m_frequency: 0.05
+          m_lacunarity: 1.5
+          m_XOffset: 0
+          m_ZOffset: 0
+          m_YOffset: 0
+        m_midMaskFractal: 0.5
+        m_maskFractalRange: 0.5
+        m_maskImagePaletteID: -2147483648
+        m_generateBufferData: 0
+        m_maskImage: {fileID: 0}
+        m_maskInvert: 0
+        m_imageFilterColor: {r: 0, g: 0, b: 0, a: 0}
+        m_imageFilterFuzzyMatch: 0
+        m_constrainWithinMaskedBounds: 0
+        m_invertMaskedAlpha: 0
+        m_successOnMaskedAlpha: 0
+        m_scaleOnMaskedAlpha: 0
+        m_minScaleOnMaskedAlpha: 0
+        m_maxScaleOnMaskedAlpha: 0
+        m_overrideChildren: 0
+        m_overrideForceSpawn: 0
+        m_overrideApplies: 0
+        m_overrideVirginCheckType: 0
+        m_overrideCheckChildren: 0
+        m_overrideSpawnCollisionLayers: 0
+        m_overrideBoundsBorder: 0
+        m_overrideRayExtents: 0
+        m_overrideCheckHeight: 0
+        m_overrideMinMaxHeight: 0
+        m_overrideMinMaxSpawnHeight: 0
+        m_overrideHeightVariance: 0
+        m_overrideCheckSlope: 0
+        m_overrideMinMaxSlope: 0
+        m_overrideMinMaxSpawnSlope: 0
+        m_overrideSlopeVariance: 0
+        m_overrideCheckTextures: 0
+        m_overrideSelectedTextureIdx: 0
+        m_overrideTextureStrength: 0
+        m_overrideTextureVariance: 0
+        m_overrideCheckMask: 0
+        m_overrideCheckMaskType: 0
+        m_overrideMaskFractalSeed: 0
+        m_overrideMaskFractalOctaves: 0
+        m_overrideMaskFractalFrequency: 0
+        m_overrideMaskFractalPersistence: 0
+        m_overrideMaskFractalLacunarity: 0
+        m_overrideMidMaskFractal: 0
+        m_overrideMaskFractalRange: 0
+        m_overrideMaskInvert: 0
+        m_overrideMaskImage: 0
+        m_overrideImageFilterColor: 0
+        m_overrideImageFilterFuzzyMatch: 0
+        m_overrideConstrainWithinMaskedBounds: 0
+        m_overrideInvertMaskedAlpha: 0
+        m_overrideSuccessOnMaskedAlpha: 0
+        m_overrideScaleOnMaskedAlpha: 0
+        m_overrideMinScaleOnMaskedAlpha: 0
+        m_overrideMaxScaleOnMaskedAlpha: 0
+        m_disableCheckMask: 0
+        m_isDirty: 1
+        m_isMaskDirty: 0
+      m_decoratorTypes: []
+      m_decoratorEntries:
+      - TypeName: GeNaGrowthDecorator
+        Data: '{"speed":5.0,"startScale":{"x":0.0,"y":0.0,"z":0.0},"endScale":{"x":1.0,"y":1.0,"z":1.0}}'
+      m_physicsEnabled: 0
+      m_hasHeights: 0
+      m_hasSubSpawner: 0
+      m_oneChildOf: 0
+      m_oneChildOfWeight: 1
+      m_spawnerPaletteID: -2147483648
+      m_subSpawnerPaletteID: -2147483648
+      m_spawnerData: {fileID: 1755672802258694304}
+      m_subSpawnerData: {fileID: 0}
+      m_static: 1
+      m_opacity: 1
+      m_targetStrength: 1
+      m_terrainProtoIdx: 0
+      m_hasColliders: 1
+      m_hasRootCollider: 1
+      m_hasMeshes: 1
+      m_hasRigidbody: 0
+      m_spawnFlags:
+        m_flagLightmapStatic: 0
+        m_flagBatchingStatic: 0
+        m_flagOccludeeStatic: 0
+        m_flagOccluderStatic: 0
+        m_flagNavigationStatic: 0
+        m_flagOffMeshLinkGeneration: 0
+        m_flagReflectionProbeStatic: 0
+        m_flagMovingObject: 0
+        m_flagCanBeOptimised: 1
+        m_flagForceOptimise: 0
+        m_flagIsOutdoorObject: 1
+        m_useColliderBounds: 0
+      m_basePosition: {x: 0, y: 0, z: 0}
+      m_baseRotation: {x: 0, y: 0, z: 0}
+      m_baseScale: {x: 1, y: 1, z: 1}
+      m_baseSize: {x: 1, y: 1, z: 1}
+      m_boundsCenter: {x: 0, y: 0, z: 0}
+      m_baseColliderCenter: {x: 0, y: 0, z: 0}
+      m_baseColliderUseConstScale: 1
+      m_baseColliderConstScaleAmount: 0.75
+      m_baseColliderScale: {x: 1, y: 1, z: 1}
+      m_instancesSpawned: 14
+      m_containerOnly: 0
+      m_parentID: -1
+      m_id: 0
+      m_childrenIDs: 
+      m_brushTextureIDs: 
+      m_brushTextures: []
+      m_brushTXIndex: 0
+      m_baseBrush:
+        m_size: 0
+        m_strength: []
+        m_brush: {fileID: 0}
+      m_prefab: {fileID: 3865310106599925793, guid: 861efcc419ad14a46b465ef7a3af2234,
+        type: 3}
+      m_template: {fileID: 0}
+      m_nextSuccess: 1
+      m_nextPosition: {x: 0, y: 0, z: 0}
+      m_nextRotation: {x: 0, y: 0, z: 0}
+      m_nextScale: {x: 1, y: 1, z: 1}
+      m_abortSpawn: 0
+      m_showSpawnCriteriaOverrides: 0
+    m_resourceIDCount: 1
+  m_hasGameObjectProtos: 1
+  m_hasTerrainTrees: 0
+  m_hasTerrainGrass: 0
+  m_hasTerrainTextures: 0
+  m_hasTerrainHeights: 0
+  m_hasActiveGameObjects: 1
+  m_hasActiveTerrainTrees: 0
+  m_hasActiveTerrainGrass: 0
+  m_hasActiveTerrainTextures: 0
+  m_hasActiveTerrainHeights: 0
+  m_spawnTarget: {fileID: 0}
+  m_spawnOriginLocation: {x: 139.90051, y: 53.038692, z: -25.78363}
+  m_spawnOriginNormal: {x: 0.12194923, y: 0.9755343, z: 0.18292385}
+  m_spawnOriginObjectID: 16804
+  m_spawnOriginIsTerrain: 1
+  m_spawnOriginGroundTransform: {fileID: 0}
+  m_minInstances: 1
+  m_maxInstances: 1
+  m_throwDistance: 0
+  m_spawnRange: 16
+  m_spawnRangeShape: 0
+  m_hasSeaLevelBeenSet: 0
+  m_getSeaLevel: 0
+  m_extraSeaLevelHeight: 0
+  m_useLargeRanges: 0
+  m_randomSeed: 522326
+  m_physicsType: 0
+  m_isProcessing: 0
+  m_spawnParent: {fileID: 0}
+  m_spawnProgress: {fileID: 0}
+  m_turnedOnAutoSyncTransforms: 0
+  m_spawnDirty: 0
+  m_lastSpawnPosition: {x: -165.42365, y: 50.94061, z: 313.55536}
+  m_spawnCalls:
+  - m_parent: {fileID: 0}
+    m_ground: {fileID: 0}
+    m_target: {fileID: 0}
+    m_bounds:
+      m_Center: {x: 0, y: 0, z: 0}
+      m_Extent: {x: 0, y: 0, z: 0}
+    m_geNaSample:
+      m_location: {x: 0, y: 0, z: 0}
+      m_tangent: {x: 0, y: 0, z: 0}
+      m_scale: {x: 1, y: 1, z: 1}
+      m_roll: 0
+      m_distanceInCurve: 0
+      m_timeInCurve: 0
+      m_rotation: {x: 0, y: 0, z: 0, w: 1}
+    m_spawnedInstances: []
+    m_spawner: {fileID: 1755672802258694304}
+    m_resourceEntities:
+    - {fileID: 0}
+    m_generated: 1
+    m_isActive: 1
+    m_alignToRotation: 0
+    m_alignChildrenToRotation: 0
+    m_conformToSlope: 0
+    m_conformChildrenToSlope: 0
+    m_snapToGround: 0
+    m_snapChildrenToGround: 0
+    m_useSpawnCriteria: 0
+    m_spawnedLocation: {x: -165.42365, y: 50.94061, z: 313.55536}
+    m_spawnDepth: 0
+    m_location: {x: -165.42365, y: 50.94061, z: 313.55536}
+    m_rotation: {x: 0, y: 0, z: 0}
+    m_normal: {x: 0, y: 1, z: 0}
+    m_spawnDistance: 0
+    m_spawnRange: 100
+    m_throwDistance: -1
+    m_flowRate: -1
+    m_parentScale: {x: 1, y: 1, z: 1}
+    m_randomRotationY: 227.30891
+    m_parentRotationY: 0
+    m_instancesToSpawn: 1
+    m_instancesSpawned: 1
+    m_spawnerType: 1
+    m_milliseconds: 1000
+    m_canSpawn: 0
+  m_lastSpawnedObject: {fileID: 0}
+  m_probeParent: {fileID: 0}
+  m_spawnOriginBounds:
+    m_Center: {x: 139.90051, y: 53.03869, z: -25.78363}
+    m_Extent: {x: 8, y: 2500, z: 8}
+  m_visualizationActive: 0
+  m_visualizationFixed: 0
+  m_physicsSettings:
+    m_iterations: 1000
+    m_stepSize: 0.05
+    m_spawnOffsetY: 0.3
+  m_prototypeIDPool: 
+  m_lastSpawnCalls:
+  - m_parent: {fileID: 0}
+    m_ground: {fileID: 0}
+    m_target: {fileID: 0}
+    m_bounds:
+      m_Center: {x: 0, y: 0, z: 0}
+      m_Extent: {x: 0, y: 0, z: 0}
+    m_geNaSample:
+      m_location: {x: 0, y: 0, z: 0}
+      m_tangent: {x: 0, y: 0, z: 0}
+      m_scale: {x: 1, y: 1, z: 1}
+      m_roll: 0
+      m_distanceInCurve: 0
+      m_timeInCurve: 0
+      m_rotation: {x: 0, y: 0, z: 0, w: 1}
+    m_spawnedInstances: []
+    m_spawner: {fileID: 1755672802258694304}
+    m_resourceEntities:
+    - {fileID: 0}
+    m_generated: 1
+    m_isActive: 1
+    m_alignToRotation: 0
+    m_alignChildrenToRotation: 0
+    m_conformToSlope: 0
+    m_conformChildrenToSlope: 0
+    m_snapToGround: 0
+    m_snapChildrenToGround: 0
+    m_useSpawnCriteria: 0
+    m_spawnedLocation: {x: -165.42365, y: 50.94061, z: 313.55536}
+    m_spawnDepth: 0
+    m_location: {x: -165.42365, y: 50.94061, z: 313.55536}
+    m_rotation: {x: 0, y: 0, z: 0}
+    m_normal: {x: 0, y: 1, z: 0}
+    m_spawnDistance: 0
+    m_spawnRange: 100
+    m_throwDistance: -1
+    m_flowRate: -1
+    m_parentScale: {x: 1, y: 1, z: 1}
+    m_randomRotationY: 227.30891
+    m_parentRotationY: 0
+    m_instancesToSpawn: 1
+    m_instancesSpawned: 1
+    m_spawnerType: 1
+    m_milliseconds: 1000
+    m_canSpawn: 0
+--- !u!114 &6942233314720594413
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a29c0690fd982034994ed5ebc81f639e, type: 3}
+  m_Name: Spawner Data (Main)
+  m_EditorClassIdentifier: 
+  m_palette: {fileID: 11400000, guid: 50bb1353b1f286a4eac628b5aaaea1e2, type: 2}
+  m_spawnTimeInterval: 1000
+  m_defaultsSet: 1
+  m_terrainYPos: NaN
+  m_terrainHeight: NaN
+  m_nextProtoId: 8
+  m_groundLayer:
+    serializedVersion: 2
+    m_Bits: 1
+  m_settings:
+    m_autoProbe: 1
+    m_minProbeGroupDistance: 100
+    m_minProbeDistance: 15
+    m_autoOptimise: 0
+    m_maxSizeToOptimise: 10
+    m_visualizationActive: 0
+    m_maxVisualizationDimensions: 32
+    m_maxSubSpawnerDepth: 5
+    m_showQuickStart: 1
+    m_showOverview: 1
+    m_showSpawnCriteria: 1
+    m_showPlacementCriteria: 0
+    m_showPrototypes: 1
+    m_showAdvancedSettings: 0
+    m_showCritMinSpawnHeight: 0
+    m_showCritMaxSpawnHeight: 0
+    m_advanced:
+      m_performUndoAtRuntime: 0
+      m_showMouseOverHelp: 1
+      m_showDetailedHelp: 1
+      m_addColliderToSpawnedPrefabs: 0
+      m_spawnCheckOffset: 2000
+      m_boundsOffset: 1.5
+      m_debugEnabled: 0
+  m_placementCriteria:
+    m_spawnAlgorithm: 3
+    m_maxFailCount: 10
+    m_globalSpawnJitterPct: 0.75
+    m_seedThrowJitter: 1
+    m_rotationAlgorithm: 0
+    m_minRotationY: 0
+    m_maxRotationY: 360
+    m_enableRotationDragUpdate: 1
+    m_sameScale: 1
+    m_scaleToNearestInt: 0
+    m_minScale: {x: 0.7, y: 0.7, z: 0.7}
+    m_maxScale: {x: 1.3, y: 1.3, z: 1.3}
+    m_useGravity: 0
+    m_scaleFalloff:
+      serializedVersion: 2
+      m_Curve:
+      - serializedVersion: 3
+        time: 0
+        value: 1
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: 0
+        outWeight: 0
+      - serializedVersion: 3
+        time: 0.8
+        value: 0.8
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: 0
+        outWeight: 0
+      - serializedVersion: 3
+        time: 1
+        value: 0
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: 0
+        outWeight: 0
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+  m_spawnCriteria:
+    m_checkRange: 0
+    m_forceSpawn: 1
+    m_checkCollisionType: 2
+    m_spawnCollisionLayers:
+      serializedVersion: 2
+      m_Bits: 55
+    m_blendAmount: 0.001
+    m_boundsExtents: 0.001
+    m_checkSlopeType: 1
+    m_minSpawnSlope: 0
+    m_maxSpawnSlope: 45
+    m_minSlope: 0
+    m_maxSlope: 90
+    m_slopeRange: 90
+    m_checkHeightType: 3
+    m_minSpawnHeight: -15
+    m_maxSpawnHeight: 15
+    m_minHeight: -20
+    m_maxHeight: 5000
+    m_heightRange: 30
+    m_bottomBoundary: -20
+    m_topBoundary: 5000
+    m_checkTextures: 0
+    m_textureStrength: 0
+    m_textureRange: 0
+    m_selectedTextureIdx: 0
+    m_selectedTextureName: 
+    m_maxSelectedTexture: 1
+    m_checkMask: 0
+    m_checkMaskType: 0
+    m_maskFractal:
+      m_seed: 0
+      m_octaves: 8
+      m_persistence: 0.65
+      m_frequency: 0.05
+      m_lacunarity: 1.5
+      m_XOffset: 0
+      m_ZOffset: 0
+      m_YOffset: 0
+    m_midMaskFractal: 0.5
+    m_maskFractalRange: 0.5
+    m_maskImagePaletteID: -2147483648
+    m_generateBufferData: 0
+    m_maskImage: {fileID: 0}
+    m_maskInvert: 0
+    m_imageFilterColor: {r: 0, g: 0, b: 0, a: 0}
+    m_imageFilterFuzzyMatch: 0
+    m_constrainWithinMaskedBounds: 0
+    m_invertMaskedAlpha: 0
+    m_successOnMaskedAlpha: 0
+    m_scaleOnMaskedAlpha: 0
+    m_minScaleOnMaskedAlpha: 0
+    m_maxScaleOnMaskedAlpha: 0
+    m_overrideChildren: 0
+    m_overrideForceSpawn: 0
+    m_overrideApplies: 0
+    m_overrideVirginCheckType: 0
+    m_overrideCheckChildren: 0
+    m_overrideSpawnCollisionLayers: 0
+    m_overrideBoundsBorder: 0
+    m_overrideRayExtents: 0
+    m_overrideCheckHeight: 0
+    m_overrideMinMaxHeight: 0
+    m_overrideMinMaxSpawnHeight: 0
+    m_overrideHeightVariance: 0
+    m_overrideCheckSlope: 0
+    m_overrideMinMaxSlope: 0
+    m_overrideMinMaxSpawnSlope: 0
+    m_overrideSlopeVariance: 0
+    m_overrideCheckTextures: 0
+    m_overrideSelectedTextureIdx: 0
+    m_overrideTextureStrength: 0
+    m_overrideTextureVariance: 0
+    m_overrideCheckMask: 0
+    m_overrideCheckMaskType: 0
+    m_overrideMaskFractalSeed: 0
+    m_overrideMaskFractalOctaves: 0
+    m_overrideMaskFractalFrequency: 0
+    m_overrideMaskFractalPersistence: 0
+    m_overrideMaskFractalLacunarity: 0
+    m_overrideMidMaskFractal: 0
+    m_overrideMaskFractalRange: 0
+    m_overrideMaskInvert: 0
+    m_overrideMaskImage: 0
+    m_overrideImageFilterColor: 0
+    m_overrideImageFilterFuzzyMatch: 0
+    m_overrideConstrainWithinMaskedBounds: 0
+    m_overrideInvertMaskedAlpha: 0
+    m_overrideSuccessOnMaskedAlpha: 0
+    m_overrideScaleOnMaskedAlpha: 0
+    m_overrideMinScaleOnMaskedAlpha: 0
+    m_overrideMaxScaleOnMaskedAlpha: 0
+    m_disableCheckMask: 0
+    m_isDirty: 1
+    m_isMaskDirty: 0
+  m_rangesOriginLocation: {x: 0, y: 0, z: 0}
+  m_rangesOriginNormal: {x: 0, y: 1, z: 0}
+  m_spawnType: 1
+  m_spawnMode: 0
+  m_flowRate: 1
+  m_rotationY: 0
+  m_name: Growth Cube
+  m_mergeSpawns: 1
+  m_spawnToTarget: 1
+  m_sortPrototypes: 0
+  m_spawnPrototypes:
+  - m_palette: {fileID: 11400000, guid: 50bb1353b1f286a4eac628b5aaaea1e2, type: 2}
+    m_spawnerPaletteID: -2147483648
+    m_spawnerData: {fileID: 6942233314720594413}
+    m_id: 0
+    m_name: Growth Cube
+    m_isActive: 1
+    m_size: {x: 0, y: 0, z: 0}
+    m_extents: {x: 0, y: 0, z: 0}
+    m_boundsBorder: 0
+    m_forwardRotation: 0
+    m_hasColliders: 0
+    m_hasMeshes: 0
+    m_hasRigidBody: 0
+    m_instancesSpawned: 0
+    m_displayedInEditor: 0
+    m_showAdvancedOptions: 0
+    m_resourceIDs: 00000000
+    m_resources:
+    - m_palette: {fileID: 11400000, guid: 50bb1353b1f286a4eac628b5aaaea1e2, type: 2}
+      m_name: Growth Cube
+      m_assetID: 861efcc419ad14a46b465ef7a3af2234
+      m_prefabPaletteID: -2147483639
+      m_assetName: Growth Cube
+      m_resourceType: 0
+      m_successRate: 1
+      m_conformToSlope: 0
+      m_snapToGround: 1
+      m_minOffset: {x: 0, y: 0, z: 0}
+      m_maxOffset: {x: 0, y: 0, z: 0}
+      m_minRotation: {x: 0, y: 0, z: 0}
+      m_maxRotation: {x: 0, y: 0, z: 0}
+      m_sameScale: 1
+      m_minScale: {x: 1, y: 1, z: 1}
+      m_maxScale: {x: 1, y: 1, z: 1}
+      m_detailPrototypeData:
+        bendFactor: 0
+        prototypeTexturePaletteID: -2147483648
+        prototypeGameObjectPaletteID: -2147483648
+        prototypeTexture: {fileID: 0}
+        dryColor: {r: 0, g: 0, b: 0, a: 0}
+        healthyColor: {r: 0, g: 0, b: 0, a: 0}
+        maxHeight: 0
+        maxWidth: 0
+        minHeight: 0
+        minWidth: 0
+        noiseSpread: 0
+        prototype: {fileID: 0}
+        renderMode: 0
+        usePrototypeMesh: 0
+      m_texturePrototypeData:
+        terrainTextureAssetPaletteID: -2147483648
+        terrainTexture2DAsset: {fileID: 0}
+      m_addColliderToAabb: 1
+      m_spawnCriteria:
+        m_checkRange: 0
+        m_forceSpawn: 1
+        m_checkCollisionType: 2
+        m_spawnCollisionLayers:
+          serializedVersion: 2
+          m_Bits: 55
+        m_blendAmount: 0.001
+        m_boundsExtents: 0.001
+        m_checkSlopeType: 1
+        m_minSpawnSlope: 0
+        m_maxSpawnSlope: 45
+        m_minSlope: 0
+        m_maxSlope: 90
+        m_slopeRange: 90
+        m_checkHeightType: 3
+        m_minSpawnHeight: -15
+        m_maxSpawnHeight: 15
+        m_minHeight: -20
+        m_maxHeight: 5000
+        m_heightRange: 30
+        m_bottomBoundary: -20
+        m_topBoundary: 5000
+        m_checkTextures: 0
+        m_textureStrength: 0
+        m_textureRange: 0
+        m_selectedTextureIdx: 0
+        m_selectedTextureName: 
+        m_maxSelectedTexture: 1
+        m_checkMask: 0
+        m_checkMaskType: 0
+        m_maskFractal:
+          m_seed: 0
+          m_octaves: 8
+          m_persistence: 0.65
+          m_frequency: 0.05
+          m_lacunarity: 1.5
+          m_XOffset: 0
+          m_ZOffset: 0
+          m_YOffset: 0
+        m_midMaskFractal: 0.5
+        m_maskFractalRange: 0.5
+        m_maskImagePaletteID: -2147483648
+        m_generateBufferData: 0
+        m_maskImage: {fileID: 0}
+        m_maskInvert: 0
+        m_imageFilterColor: {r: 0, g: 0, b: 0, a: 0}
+        m_imageFilterFuzzyMatch: 0
+        m_constrainWithinMaskedBounds: 0
+        m_invertMaskedAlpha: 0
+        m_successOnMaskedAlpha: 0
+        m_scaleOnMaskedAlpha: 0
+        m_minScaleOnMaskedAlpha: 0
+        m_maxScaleOnMaskedAlpha: 0
+        m_overrideChildren: 0
+        m_overrideForceSpawn: 0
+        m_overrideApplies: 0
+        m_overrideVirginCheckType: 0
+        m_overrideCheckChildren: 0
+        m_overrideSpawnCollisionLayers: 0
+        m_overrideBoundsBorder: 0
+        m_overrideRayExtents: 0
+        m_overrideCheckHeight: 0
+        m_overrideMinMaxHeight: 0
+        m_overrideMinMaxSpawnHeight: 0
+        m_overrideHeightVariance: 0
+        m_overrideCheckSlope: 0
+        m_overrideMinMaxSlope: 0
+        m_overrideMinMaxSpawnSlope: 0
+        m_overrideSlopeVariance: 0
+        m_overrideCheckTextures: 0
+        m_overrideSelectedTextureIdx: 0
+        m_overrideTextureStrength: 0
+        m_overrideTextureVariance: 0
+        m_overrideCheckMask: 0
+        m_overrideCheckMaskType: 0
+        m_overrideMaskFractalSeed: 0
+        m_overrideMaskFractalOctaves: 0
+        m_overrideMaskFractalFrequency: 0
+        m_overrideMaskFractalPersistence: 0
+        m_overrideMaskFractalLacunarity: 0
+        m_overrideMidMaskFractal: 0
+        m_overrideMaskFractalRange: 0
+        m_overrideMaskInvert: 0
+        m_overrideMaskImage: 0
+        m_overrideImageFilterColor: 0
+        m_overrideImageFilterFuzzyMatch: 0
+        m_overrideConstrainWithinMaskedBounds: 0
+        m_overrideInvertMaskedAlpha: 0
+        m_overrideSuccessOnMaskedAlpha: 0
+        m_overrideScaleOnMaskedAlpha: 0
+        m_overrideMinScaleOnMaskedAlpha: 0
+        m_overrideMaxScaleOnMaskedAlpha: 0
+        m_disableCheckMask: 0
+        m_isDirty: 1
+        m_isMaskDirty: 0
+      m_decoratorTypes: []
+      m_decoratorEntries:
+      - TypeName: GeNaGrowthDecorator
+        Data: '{"speed":5.0,"startScale":{"x":0.0,"y":0.0,"z":0.0},"endScale":{"x":1.0,"y":1.0,"z":1.0}}'
+      m_physicsEnabled: 0
+      m_hasHeights: 0
+      m_hasSubSpawner: 0
+      m_oneChildOf: 0
+      m_oneChildOfWeight: 1
+      m_spawnerPaletteID: -2147483648
+      m_subSpawnerPaletteID: -2147483648
+      m_spawnerData: {fileID: 6942233314720594413}
+      m_subSpawnerData: {fileID: 0}
+      m_static: 1
+      m_opacity: 1
+      m_targetStrength: 1
+      m_terrainProtoIdx: 0
+      m_hasColliders: 1
+      m_hasRootCollider: 1
+      m_hasMeshes: 1
+      m_hasRigidbody: 0
+      m_spawnFlags:
+        m_flagLightmapStatic: 0
+        m_flagBatchingStatic: 0
+        m_flagOccludeeStatic: 0
+        m_flagOccluderStatic: 0
+        m_flagNavigationStatic: 0
+        m_flagOffMeshLinkGeneration: 0
+        m_flagReflectionProbeStatic: 0
+        m_flagMovingObject: 0
+        m_flagCanBeOptimised: 1
+        m_flagForceOptimise: 0
+        m_flagIsOutdoorObject: 1
+        m_useColliderBounds: 0
+      m_basePosition: {x: 0, y: 0, z: 0}
+      m_baseRotation: {x: 0, y: 0, z: 0}
+      m_baseScale: {x: 1, y: 1, z: 1}
+      m_baseSize: {x: 1, y: 1, z: 1}
+      m_boundsCenter: {x: 0, y: 0, z: 0}
+      m_baseColliderCenter: {x: 0, y: 0, z: 0}
+      m_baseColliderUseConstScale: 1
+      m_baseColliderConstScaleAmount: 0.75
+      m_baseColliderScale: {x: 1, y: 1, z: 1}
+      m_instancesSpawned: 0
+      m_containerOnly: 0
+      m_parentID: -1
+      m_id: 0
+      m_childrenIDs: 
+      m_brushTextureIDs: 
+      m_brushTextures: []
+      m_brushTXIndex: 0
+      m_baseBrush:
+        m_size: 0
+        m_strength: []
+        m_brush: {fileID: 0}
+      m_prefab: {fileID: 3865310106599925793, guid: 861efcc419ad14a46b465ef7a3af2234,
+        type: 3}
+      m_template: {fileID: 0}
+      m_nextSuccess: 0
+      m_nextPosition: {x: 0, y: 0, z: 0}
+      m_nextRotation: {x: 0, y: 0, z: 0}
+      m_nextScale: {x: 0, y: 0, z: 0}
+      m_abortSpawn: 0
+      m_showSpawnCriteriaOverrides: 0
+    m_resourceIDCount: 1
+  m_hasGameObjectProtos: 1
+  m_hasTerrainTrees: 0
+  m_hasTerrainGrass: 0
+  m_hasTerrainTextures: 0
+  m_hasTerrainHeights: 0
+  m_hasActiveGameObjects: 1
+  m_hasActiveTerrainTrees: 0
+  m_hasActiveTerrainGrass: 0
+  m_hasActiveTerrainTextures: 0
+  m_hasActiveTerrainHeights: 0
+  m_spawnTarget: {fileID: 0}
+  m_spawnOriginLocation: {x: 0, y: 0, z: 30}
+  m_spawnOriginNormal: {x: 0, y: 1, z: 0}
+  m_spawnOriginObjectID: 21956
+  m_spawnOriginIsTerrain: 0
+  m_spawnOriginGroundTransform: {fileID: 0}
+  m_minInstances: 1
+  m_maxInstances: 1
+  m_throwDistance: 0
+  m_spawnRange: 100
+  m_spawnRangeShape: 0
+  m_hasSeaLevelBeenSet: 0
+  m_getSeaLevel: 0
+  m_extraSeaLevelHeight: 0
+  m_useLargeRanges: 0
+  m_randomSeed: 522326
+  m_physicsType: 0
+  m_isProcessing: 0
+  m_spawnParent: {fileID: 0}
+  m_spawnProgress: {fileID: 0}
+  m_turnedOnAutoSyncTransforms: 0
+  m_spawnDirty: 0
+  m_lastSpawnPosition: {x: 0, y: 0, z: 0}
+  m_spawnCalls: []
+  m_lastSpawnedObject: {fileID: 0}
+  m_probeParent: {fileID: 0}
+  m_spawnOriginBounds:
+    m_Center: {x: 0, y: 0, z: 30}
+    m_Extent: {x: 50, y: 2500, z: 50}
+  m_visualizationActive: 0
+  m_visualizationFixed: 0
+  m_physicsSettings:
+    m_iterations: 1000
+    m_stepSize: 0.05
+    m_spawnOffsetY: 0.3
+  m_prototypeIDPool: 
+  m_lastSpawnCalls: []
+--- !u!114 &8161699722207318878
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a29c0690fd982034994ed5ebc81f639e, type: 3}
+  m_Name: Spawner Data (Main)
+  m_EditorClassIdentifier: 
+  m_palette: {fileID: 11400000, guid: 50bb1353b1f286a4eac628b5aaaea1e2, type: 2}
+  m_spawnTimeInterval: 1000
+  m_defaultsSet: 1
+  m_terrainYPos: 0
+  m_terrainHeight: 1024
+  m_nextProtoId: 8
+  m_groundLayer:
+    serializedVersion: 2
+    m_Bits: 1
+  m_settings:
+    m_autoProbe: 1
+    m_minProbeGroupDistance: 100
+    m_minProbeDistance: 15
+    m_autoOptimise: 0
+    m_maxSizeToOptimise: 10
+    m_visualizationActive: 0
+    m_maxVisualizationDimensions: 32
+    m_maxSubSpawnerDepth: 5
+    m_showQuickStart: 1
+    m_showOverview: 1
+    m_showSpawnCriteria: 1
+    m_showPlacementCriteria: 0
+    m_showPrototypes: 1
+    m_showAdvancedSettings: 0
+    m_showCritMinSpawnHeight: 0
+    m_showCritMaxSpawnHeight: 0
+    m_advanced:
+      m_performUndoAtRuntime: 0
+      m_showMouseOverHelp: 1
+      m_showDetailedHelp: 1
+      m_addColliderToSpawnedPrefabs: 0
+      m_spawnCheckOffset: 2000
+      m_boundsOffset: 1.5
+      m_debugEnabled: 0
+  m_placementCriteria:
+    m_spawnAlgorithm: 3
+    m_maxFailCount: 10
+    m_globalSpawnJitterPct: 0.75
+    m_seedThrowJitter: 1
+    m_rotationAlgorithm: 0
+    m_minRotationY: 0
+    m_maxRotationY: 360
+    m_enableRotationDragUpdate: 1
+    m_sameScale: 1
+    m_scaleToNearestInt: 0
+    m_minScale: {x: 0.7, y: 0.7, z: 0.7}
+    m_maxScale: {x: 1.3, y: 1.3, z: 1.3}
+    m_useGravity: 0
+    m_scaleFalloff:
+      serializedVersion: 2
+      m_Curve:
+      - serializedVersion: 3
+        time: 0
+        value: 1
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: 0
+        outWeight: 0
+      - serializedVersion: 3
+        time: 0.8
+        value: 0.8
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: 0
+        outWeight: 0
+      - serializedVersion: 3
+        time: 1
+        value: 0
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: 0
+        outWeight: 0
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+  m_spawnCriteria:
+    m_checkRange: 0
+    m_forceSpawn: 1
+    m_checkCollisionType: 2
+    m_spawnCollisionLayers:
+      serializedVersion: 2
+      m_Bits: 55
+    m_blendAmount: 0.001
+    m_boundsExtents: 0.001
+    m_checkSlopeType: 1
+    m_minSpawnSlope: 0
+    m_maxSpawnSlope: 73.265945
+    m_minSlope: 0
+    m_maxSlope: 90
+    m_slopeRange: 90
+    m_checkHeightType: 3
+    m_minSpawnHeight: 38.390137
+    m_maxSpawnHeight: 68.39014
+    m_minHeight: -20
+    m_maxHeight: 5000
+    m_heightRange: 30
+    m_bottomBoundary: -100
+    m_topBoundary: 5024
+    m_checkTextures: 0
+    m_textureStrength: 0.4156863
+    m_textureRange: 0
+    m_selectedTextureIdx: 2
+    m_selectedTextureName: PW_Grass_Mountain_01_D
+    m_maxSelectedTexture: 7
+    m_checkMask: 0
+    m_checkMaskType: 0
+    m_maskFractal:
+      m_seed: 0
+      m_octaves: 8
+      m_persistence: 0.65
+      m_frequency: 0.05
+      m_lacunarity: 1.5
+      m_XOffset: 0
+      m_ZOffset: 0
+      m_YOffset: 0
+    m_midMaskFractal: 0.5
+    m_maskFractalRange: 0.5
+    m_maskImagePaletteID: -2147483648
+    m_generateBufferData: 0
+    m_maskImage: {fileID: 0}
+    m_maskInvert: 0
+    m_imageFilterColor: {r: 0, g: 0, b: 0, a: 0}
+    m_imageFilterFuzzyMatch: 0
+    m_constrainWithinMaskedBounds: 0
+    m_invertMaskedAlpha: 0
+    m_successOnMaskedAlpha: 0
+    m_scaleOnMaskedAlpha: 0
+    m_minScaleOnMaskedAlpha: 0
+    m_maxScaleOnMaskedAlpha: 0
+    m_overrideChildren: 0
+    m_overrideForceSpawn: 0
+    m_overrideApplies: 0
+    m_overrideVirginCheckType: 0
+    m_overrideCheckChildren: 0
+    m_overrideSpawnCollisionLayers: 0
+    m_overrideBoundsBorder: 0
+    m_overrideRayExtents: 0
+    m_overrideCheckHeight: 0
+    m_overrideMinMaxHeight: 0
+    m_overrideMinMaxSpawnHeight: 0
+    m_overrideHeightVariance: 0
+    m_overrideCheckSlope: 0
+    m_overrideMinMaxSlope: 0
+    m_overrideMinMaxSpawnSlope: 0
+    m_overrideSlopeVariance: 0
+    m_overrideCheckTextures: 0
+    m_overrideSelectedTextureIdx: 0
+    m_overrideTextureStrength: 0
+    m_overrideTextureVariance: 0
+    m_overrideCheckMask: 0
+    m_overrideCheckMaskType: 0
+    m_overrideMaskFractalSeed: 0
+    m_overrideMaskFractalOctaves: 0
+    m_overrideMaskFractalFrequency: 0
+    m_overrideMaskFractalPersistence: 0
+    m_overrideMaskFractalLacunarity: 0
+    m_overrideMidMaskFractal: 0
+    m_overrideMaskFractalRange: 0
+    m_overrideMaskInvert: 0
+    m_overrideMaskImage: 0
+    m_overrideImageFilterColor: 0
+    m_overrideImageFilterFuzzyMatch: 0
+    m_overrideConstrainWithinMaskedBounds: 0
+    m_overrideInvertMaskedAlpha: 0
+    m_overrideSuccessOnMaskedAlpha: 0
+    m_overrideScaleOnMaskedAlpha: 0
+    m_overrideMinScaleOnMaskedAlpha: 0
+    m_overrideMaxScaleOnMaskedAlpha: 0
+    m_disableCheckMask: 0
+    m_isDirty: 1
+    m_isMaskDirty: 0
+  m_rangesOriginLocation: {x: 140.14874, y: 53.390137, z: -27.229767}
+  m_rangesOriginNormal: {x: -0.38535553, y: 0.8807589, z: 0.27525395}
+  m_spawnType: 1
+  m_spawnMode: 0
+  m_flowRate: 1
+  m_rotationY: 0
+  m_name: Growth Cube
+  m_mergeSpawns: 1
+  m_spawnToTarget: 1
+  m_sortPrototypes: 0
+  m_spawnPrototypes:
+  - m_palette: {fileID: 11400000, guid: 50bb1353b1f286a4eac628b5aaaea1e2, type: 2}
+    m_spawnerPaletteID: -2147483648
+    m_spawnerData: {fileID: 8161699722207318878}
+    m_id: 0
+    m_name: Growth Cube
+    m_isActive: 1
+    m_size: {x: 0, y: 0, z: 0}
+    m_extents: {x: 0, y: 0, z: 0}
+    m_boundsBorder: 0
+    m_forwardRotation: 0
+    m_hasColliders: 0
+    m_hasMeshes: 0
+    m_hasRigidBody: 0
+    m_instancesSpawned: 0
+    m_displayedInEditor: 0
+    m_showAdvancedOptions: 0
+    m_resourceIDs: 00000000
+    m_resources:
+    - m_palette: {fileID: 11400000, guid: 50bb1353b1f286a4eac628b5aaaea1e2, type: 2}
+      m_name: Growth Cube
+      m_assetID: 861efcc419ad14a46b465ef7a3af2234
+      m_prefabPaletteID: -2147483639
+      m_assetName: Growth Cube
+      m_resourceType: 0
+      m_successRate: 1
+      m_conformToSlope: 0
+      m_snapToGround: 1
+      m_minOffset: {x: 0, y: 0, z: 0}
+      m_maxOffset: {x: 0, y: 0, z: 0}
+      m_minRotation: {x: 0, y: 0, z: 0}
+      m_maxRotation: {x: 0, y: 0, z: 0}
+      m_sameScale: 1
+      m_minScale: {x: 1, y: 1, z: 1}
+      m_maxScale: {x: 1, y: 1, z: 1}
+      m_detailPrototypeData:
+        bendFactor: 0
+        prototypeTexturePaletteID: -2147483648
+        prototypeGameObjectPaletteID: -2147483648
+        prototypeTexture: {fileID: 0}
+        dryColor: {r: 0, g: 0, b: 0, a: 0}
+        healthyColor: {r: 0, g: 0, b: 0, a: 0}
+        maxHeight: 0
+        maxWidth: 0
+        minHeight: 0
+        minWidth: 0
+        noiseSpread: 0
+        prototype: {fileID: 0}
+        renderMode: 0
+        usePrototypeMesh: 0
+      m_texturePrototypeData:
+        terrainTextureAssetPaletteID: -2147483648
+        terrainTexture2DAsset: {fileID: 0}
+      m_addColliderToAabb: 1
+      m_spawnCriteria:
+        m_checkRange: 0
+        m_forceSpawn: 1
+        m_checkCollisionType: 2
+        m_spawnCollisionLayers:
+          serializedVersion: 2
+          m_Bits: 55
+        m_blendAmount: 0.001
+        m_boundsExtents: 0.001
+        m_checkSlopeType: 1
+        m_minSpawnSlope: 0
+        m_maxSpawnSlope: 73.265945
+        m_minSlope: 0
+        m_maxSlope: 90
+        m_slopeRange: 90
+        m_checkHeightType: 3
+        m_minSpawnHeight: 38.390137
+        m_maxSpawnHeight: 68.39014
+        m_minHeight: -20
+        m_maxHeight: 5000
+        m_heightRange: 30
+        m_bottomBoundary: -20
+        m_topBoundary: 5000
+        m_checkTextures: 0
+        m_textureStrength: 0.8705883
+        m_textureRange: 0
+        m_selectedTextureIdx: 2
+        m_selectedTextureName: 
+        m_maxSelectedTexture: 1
+        m_checkMask: 0
+        m_checkMaskType: 0
+        m_maskFractal:
+          m_seed: 0
+          m_octaves: 8
+          m_persistence: 0.65
+          m_frequency: 0.05
+          m_lacunarity: 1.5
+          m_XOffset: 0
+          m_ZOffset: 0
+          m_YOffset: 0
+        m_midMaskFractal: 0.5
+        m_maskFractalRange: 0.5
+        m_maskImagePaletteID: -2147483648
+        m_generateBufferData: 0
+        m_maskImage: {fileID: 0}
+        m_maskInvert: 0
+        m_imageFilterColor: {r: 0, g: 0, b: 0, a: 0}
+        m_imageFilterFuzzyMatch: 0
+        m_constrainWithinMaskedBounds: 0
+        m_invertMaskedAlpha: 0
+        m_successOnMaskedAlpha: 0
+        m_scaleOnMaskedAlpha: 0
+        m_minScaleOnMaskedAlpha: 0
+        m_maxScaleOnMaskedAlpha: 0
+        m_overrideChildren: 0
+        m_overrideForceSpawn: 0
+        m_overrideApplies: 0
+        m_overrideVirginCheckType: 0
+        m_overrideCheckChildren: 0
+        m_overrideSpawnCollisionLayers: 0
+        m_overrideBoundsBorder: 0
+        m_overrideRayExtents: 0
+        m_overrideCheckHeight: 0
+        m_overrideMinMaxHeight: 0
+        m_overrideMinMaxSpawnHeight: 0
+        m_overrideHeightVariance: 0
+        m_overrideCheckSlope: 0
+        m_overrideMinMaxSlope: 0
+        m_overrideMinMaxSpawnSlope: 0
+        m_overrideSlopeVariance: 0
+        m_overrideCheckTextures: 0
+        m_overrideSelectedTextureIdx: 0
+        m_overrideTextureStrength: 0
+        m_overrideTextureVariance: 0
+        m_overrideCheckMask: 0
+        m_overrideCheckMaskType: 0
+        m_overrideMaskFractalSeed: 0
+        m_overrideMaskFractalOctaves: 0
+        m_overrideMaskFractalFrequency: 0
+        m_overrideMaskFractalPersistence: 0
+        m_overrideMaskFractalLacunarity: 0
+        m_overrideMidMaskFractal: 0
+        m_overrideMaskFractalRange: 0
+        m_overrideMaskInvert: 0
+        m_overrideMaskImage: 0
+        m_overrideImageFilterColor: 0
+        m_overrideImageFilterFuzzyMatch: 0
+        m_overrideConstrainWithinMaskedBounds: 0
+        m_overrideInvertMaskedAlpha: 0
+        m_overrideSuccessOnMaskedAlpha: 0
+        m_overrideScaleOnMaskedAlpha: 0
+        m_overrideMinScaleOnMaskedAlpha: 0
+        m_overrideMaxScaleOnMaskedAlpha: 0
+        m_disableCheckMask: 0
+        m_isDirty: 1
+        m_isMaskDirty: 0
+      m_decoratorTypes: []
+      m_decoratorEntries:
+      - TypeName: GeNaGrowthDecorator
+        Data: '{"speed":5.0,"startScale":{"x":0.0,"y":0.0,"z":0.0},"endScale":{"x":1.0,"y":1.0,"z":1.0}}'
+      m_physicsEnabled: 0
+      m_hasHeights: 0
+      m_hasSubSpawner: 0
+      m_oneChildOf: 0
+      m_oneChildOfWeight: 1
+      m_spawnerPaletteID: -2147483648
+      m_subSpawnerPaletteID: -2147483648
+      m_spawnerData: {fileID: 8161699722207318878}
+      m_subSpawnerData: {fileID: 0}
+      m_static: 1
+      m_opacity: 1
+      m_targetStrength: 1
+      m_terrainProtoIdx: 0
+      m_hasColliders: 1
+      m_hasRootCollider: 1
+      m_hasMeshes: 1
+      m_hasRigidbody: 0
+      m_spawnFlags:
+        m_flagLightmapStatic: 0
+        m_flagBatchingStatic: 0
+        m_flagOccludeeStatic: 0
+        m_flagOccluderStatic: 0
+        m_flagNavigationStatic: 0
+        m_flagOffMeshLinkGeneration: 0
+        m_flagReflectionProbeStatic: 0
+        m_flagMovingObject: 0
+        m_flagCanBeOptimised: 1
+        m_flagForceOptimise: 0
+        m_flagIsOutdoorObject: 1
+        m_useColliderBounds: 0
+      m_basePosition: {x: 0, y: 0, z: 0}
+      m_baseRotation: {x: 0, y: 0, z: 0}
+      m_baseScale: {x: 1, y: 1, z: 1}
+      m_baseSize: {x: 1, y: 1, z: 1}
+      m_boundsCenter: {x: 0, y: 0, z: 0}
+      m_baseColliderCenter: {x: 0, y: 0, z: 0}
+      m_baseColliderUseConstScale: 1
+      m_baseColliderConstScaleAmount: 0.75
+      m_baseColliderScale: {x: 1, y: 1, z: 1}
+      m_instancesSpawned: 14
+      m_containerOnly: 0
+      m_parentID: -1
+      m_id: 0
+      m_childrenIDs: 
+      m_brushTextureIDs: 
+      m_brushTextures: []
+      m_brushTXIndex: 0
+      m_baseBrush:
+        m_size: 0
+        m_strength: []
+        m_brush: {fileID: 0}
+      m_prefab: {fileID: 3865310106599925793, guid: 861efcc419ad14a46b465ef7a3af2234,
+        type: 3}
+      m_template: {fileID: 0}
+      m_nextSuccess: 1
+      m_nextPosition: {x: 0, y: 0, z: 0}
+      m_nextRotation: {x: 0, y: 0, z: 0}
+      m_nextScale: {x: 1, y: 1, z: 1}
+      m_abortSpawn: 0
+      m_showSpawnCriteriaOverrides: 0
+    m_resourceIDCount: 1
+  m_hasGameObjectProtos: 1
+  m_hasTerrainTrees: 0
+  m_hasTerrainGrass: 0
+  m_hasTerrainTextures: 0
+  m_hasTerrainHeights: 0
+  m_hasActiveGameObjects: 1
+  m_hasActiveTerrainTrees: 0
+  m_hasActiveTerrainGrass: 0
+  m_hasActiveTerrainTextures: 0
+  m_hasActiveTerrainHeights: 0
+  m_spawnTarget: {fileID: 0}
+  m_spawnOriginLocation: {x: 140.14874, y: 53.390137, z: -27.229767}
+  m_spawnOriginNormal: {x: -0.38535553, y: 0.8807589, z: 0.27525395}
+  m_spawnOriginObjectID: 16804
+  m_spawnOriginIsTerrain: 1
+  m_spawnOriginGroundTransform: {fileID: 0}
+  m_minInstances: 1
+  m_maxInstances: 1
+  m_throwDistance: 0
+  m_spawnRange: 16
+  m_spawnRangeShape: 0
+  m_hasSeaLevelBeenSet: 0
+  m_getSeaLevel: 0
+  m_extraSeaLevelHeight: 0
+  m_useLargeRanges: 0
+  m_randomSeed: 522326
+  m_physicsType: 0
+  m_isProcessing: 0
+  m_spawnParent: {fileID: 0}
+  m_spawnProgress: {fileID: 0}
+  m_turnedOnAutoSyncTransforms: 0
+  m_spawnDirty: 0
+  m_lastSpawnPosition: {x: -165.42365, y: 50.94061, z: 313.55536}
+  m_spawnCalls:
+  - m_parent: {fileID: 0}
+    m_ground: {fileID: 0}
+    m_target: {fileID: 0}
+    m_bounds:
+      m_Center: {x: 0, y: 0, z: 0}
+      m_Extent: {x: 0, y: 0, z: 0}
+    m_geNaSample:
+      m_location: {x: 0, y: 0, z: 0}
+      m_tangent: {x: 0, y: 0, z: 0}
+      m_scale: {x: 1, y: 1, z: 1}
+      m_roll: 0
+      m_distanceInCurve: 0
+      m_timeInCurve: 0
+      m_rotation: {x: 0, y: 0, z: 0, w: 1}
+    m_spawnedInstances: []
+    m_spawner: {fileID: 8161699722207318878}
+    m_resourceEntities:
+    - {fileID: 0}
+    m_generated: 1
+    m_isActive: 1
+    m_alignToRotation: 0
+    m_alignChildrenToRotation: 0
+    m_conformToSlope: 0
+    m_conformChildrenToSlope: 0
+    m_snapToGround: 0
+    m_snapChildrenToGround: 0
+    m_useSpawnCriteria: 0
+    m_spawnedLocation: {x: -165.42365, y: 50.94061, z: 313.55536}
+    m_spawnDepth: 0
+    m_location: {x: -165.42365, y: 50.94061, z: 313.55536}
+    m_rotation: {x: 0, y: 0, z: 0}
+    m_normal: {x: 0, y: 1, z: 0}
+    m_spawnDistance: 0
+    m_spawnRange: 100
+    m_throwDistance: -1
+    m_flowRate: -1
+    m_parentScale: {x: 1, y: 1, z: 1}
+    m_randomRotationY: 227.30891
+    m_parentRotationY: 0
+    m_instancesToSpawn: 1
+    m_instancesSpawned: 1
+    m_spawnerType: 1
+    m_milliseconds: 1000
+    m_canSpawn: 0
+  m_lastSpawnedObject: {fileID: 0}
+  m_probeParent: {fileID: 0}
+  m_spawnOriginBounds:
+    m_Center: {x: 140.14874, y: 53.390137, z: -27.229767}
+    m_Extent: {x: 8, y: 2500, z: 8}
+  m_visualizationActive: 0
+  m_visualizationFixed: 0
+  m_physicsSettings:
+    m_iterations: 1000
+    m_stepSize: 0.05
+    m_spawnOffsetY: 0.3
+  m_prototypeIDPool: 
+  m_lastSpawnCalls:
+  - m_parent: {fileID: 0}
+    m_ground: {fileID: 0}
+    m_target: {fileID: 0}
+    m_bounds:
+      m_Center: {x: 0, y: 0, z: 0}
+      m_Extent: {x: 0, y: 0, z: 0}
+    m_geNaSample:
+      m_location: {x: 0, y: 0, z: 0}
+      m_tangent: {x: 0, y: 0, z: 0}
+      m_scale: {x: 1, y: 1, z: 1}
+      m_roll: 0
+      m_distanceInCurve: 0
+      m_timeInCurve: 0
+      m_rotation: {x: 0, y: 0, z: 0, w: 1}
+    m_spawnedInstances: []
+    m_spawner: {fileID: 8161699722207318878}
+    m_resourceEntities:
+    - {fileID: 0}
+    m_generated: 1
+    m_isActive: 1
+    m_alignToRotation: 0
+    m_alignChildrenToRotation: 0
+    m_conformToSlope: 0
+    m_conformChildrenToSlope: 0
+    m_snapToGround: 0
+    m_snapChildrenToGround: 0
+    m_useSpawnCriteria: 0
+    m_spawnedLocation: {x: -165.42365, y: 50.94061, z: 313.55536}
+    m_spawnDepth: 0
+    m_location: {x: -165.42365, y: 50.94061, z: 313.55536}
+    m_rotation: {x: 0, y: 0, z: 0}
+    m_normal: {x: 0, y: 1, z: 0}
+    m_spawnDistance: 0
+    m_spawnRange: 100
+    m_throwDistance: -1
+    m_flowRate: -1
+    m_parentScale: {x: 1, y: 1, z: 1}
+    m_randomRotationY: 227.30891
+    m_parentRotationY: 0
+    m_instancesToSpawn: 1
+    m_instancesSpawned: 1
+    m_spawnerType: 1
+    m_milliseconds: 1000
+    m_canSpawn: 0

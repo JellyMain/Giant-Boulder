@@ -1,0 +1,29 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: -1460817625, guid: b23c226377283a141b3d7e1ffca2bdb5, type: 3}
+  m_Name: GenaDefaults
+  m_EditorClassIdentifier: 
+  m_keyDeleteSpawnedResources: 8
+  m_keyLeft: 276
+  m_keyRight: 275
+  m_keyForward: 273
+  m_keyBackward: 274
+  m_autoLightProbe: 1
+  m_minProbeGroupDistance: 100
+  m_minProbeDistance: 15
+  m_autoOptimize: 0
+  m_maxOptimizeSize: 10
+  m_showTooltips: 1
+  m_showDetailedHelp: 1
+  m_critSpawnCollisionLayers:
+    serializedVersion: 2
+    m_Bits: 1

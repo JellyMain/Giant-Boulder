@@ -1,0 +1,35 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f715ac1a6249cea42a18c9b0c849cbc1, type: 3}
+  m_Name: Roads
+  m_EditorClassIdentifier: 
+  m_isSelected: 0
+  m_isActive: 1
+  m_spline: {fileID: 0}
+  m_roadProfile: {fileID: 11400000, guid: 7e1d0173ab1d34c4f8a1f1e3910e1d39, type: 2}
+  m_width: 6.2
+  m_separateYScale: 0
+  m_height: 1
+  m_intersectionSize: 1
+  m_groundAttractDistance: 0
+  m_conformToGround: 0
+  m_addRoadCollider: 1
+  m_shadowsCast: 0
+  m_shadowsReceive: 1
+  m_raycastTerrainOnly: 1
+  m_useSlopedCrossection: 0
+  m_tag: Untagged
+  m_layer: 0
+  m_splitAtTerrains: 1
+  m_postProcess: 0
+  m_bakedMeshes: []
+  m_crossSectionOverrideComponent: {fileID: 0}

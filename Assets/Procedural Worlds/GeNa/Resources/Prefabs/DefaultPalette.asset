@@ -1,0 +1,789 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8c477de684ee10c4082f9fddf19a75ce, type: 3}
+  m_Name: DefaultPalette
+  m_EditorClassIdentifier: 
+  m_paletteEntryIDCount: -2147483472
+  m_paletteEntries:
+  - m_name: Pref_Barn1_A
+    m_id: -2147483647
+    m_guid: 0fc50555950415449accccb0f5ea514d
+    m_object: {fileID: 4650327508682477391, guid: 0fc50555950415449accccb0f5ea514d,
+      type: 3}
+  - m_name: BrickHouse_Mid_C
+    m_id: -2147483646
+    m_guid: 3a7314dcf081b7f40a4bf8fc185bc9ad
+    m_object: {fileID: 107892, guid: 3a7314dcf081b7f40a4bf8fc185bc9ad, type: 3}
+  - m_name: BrickHouse_Deco_IntColumn_A
+    m_id: -2147483645
+    m_guid: 91aa488086ba1864bac8975b7b13487b
+    m_object: {fileID: 178788, guid: 91aa488086ba1864bac8975b7b13487b, type: 3}
+  - m_name: BrickHouse_Mid_A
+    m_id: -2147483644
+    m_guid: a169505b1ca79d04e97789db788de88c
+    m_object: {fileID: 182950, guid: a169505b1ca79d04e97789db788de88c, type: 3}
+  - m_name: BrickHouse_End_B
+    m_id: -2147483643
+    m_guid: 60a191e2da86e1544948ebd2bc4c7a69
+    m_object: {fileID: 107484, guid: 60a191e2da86e1544948ebd2bc4c7a69, type: 3}
+  - m_name: BrickHouse_IntStairs_A
+    m_id: -2147483642
+    m_guid: f20c46319d796fd49812eef9f80d87a6
+    m_object: {fileID: 111180, guid: f20c46319d796fd49812eef9f80d87a6, type: 3}
+  - m_name: BrickHouse_Deco_Handrail_A
+    m_id: -2147483641
+    m_guid: 6a8ddc2ca1fe3f642beafd6fdd154d77
+    m_object: {fileID: 139110, guid: 6a8ddc2ca1fe3f642beafd6fdd154d77, type: 3}
+  - m_name: BrickHouse_IntWall_A
+    m_id: -2147483640
+    m_guid: 32d75b8d1b966c6489dd7b9cea692094
+    m_object: {fileID: 143610, guid: 32d75b8d1b966c6489dd7b9cea692094, type: 3}
+  - m_name: BrickHouse_Mid_B
+    m_id: -2147483639
+    m_guid: f4d2356b6ba44cd408e5e133a4a1f2cd
+    m_object: {fileID: 153880, guid: f4d2356b6ba44cd408e5e133a4a1f2cd, type: 3}
+  - m_name: BrickHouse_Floor_Mid_A
+    m_id: -2147483638
+    m_guid: 241fefb01734dcb4bb0b659e97880922
+    m_object: {fileID: 193184, guid: 241fefb01734dcb4bb0b659e97880922, type: 3}
+  - m_name: BrickHouse_Base_Stairs_A
+    m_id: -2147483637
+    m_guid: 5400facbffd6b5443b144ee5f7c15a1c
+    m_object: {fileID: 142614, guid: 5400facbffd6b5443b144ee5f7c15a1c, type: 3}
+  - m_name: BrickHouse_IntWall_C
+    m_id: -2147483636
+    m_guid: 9e6595faa92cb044993f2ce0fedd7047
+    m_object: {fileID: 130912, guid: 9e6595faa92cb044993f2ce0fedd7047, type: 3}
+  - m_name: BrickHouse_Ext_A
+    m_id: -2147483635
+    m_guid: 84c0630e2101a764bb50018ae3b3ae41
+    m_object: {fileID: 108946, guid: 84c0630e2101a764bb50018ae3b3ae41, type: 3}
+  - m_name: BrickHouse_Door_A
+    m_id: -2147483634
+    m_guid: 7c026980fc17fa642b7a22557ebb0007
+    m_object: {fileID: 166910, guid: 7c026980fc17fa642b7a22557ebb0007, type: 3}
+  - m_name: BrickHouse_Deco_IntColumn_B
+    m_id: -2147483633
+    m_guid: f8fde9bffcef94e43beea47e6903b1f0
+    m_object: {fileID: 105894, guid: f8fde9bffcef94e43beea47e6903b1f0, type: 3}
+  - m_name: BrickHouse_End_A
+    m_id: -2147483632
+    m_guid: fa3b1e3b9faf39b4cbc9301d3dd1c175
+    m_object: {fileID: 162692, guid: fa3b1e3b9faf39b4cbc9301d3dd1c175, type: 3}
+  - m_name: BrickHouse_Floor_End_A
+    m_id: -2147483631
+    m_guid: 7144982b2dbf65f4ab9f5f9ce98309e5
+    m_object: {fileID: 196444, guid: 7144982b2dbf65f4ab9f5f9ce98309e5, type: 3}
+  - m_name: BrickHouse_Floor_Mid_B
+    m_id: -2147483630
+    m_guid: 3f9bb54b0ba0f5a4b8aa264f45880ffc
+    m_object: {fileID: 101802, guid: 3f9bb54b0ba0f5a4b8aa264f45880ffc, type: 3}
+  - m_name: Cabin2_Door_A
+    m_id: -2147483629
+    m_guid: ea087b00cc97e5e44bdedeeccb899e05
+    m_object: {fileID: 112554, guid: ea087b00cc97e5e44bdedeeccb899e05, type: 3}
+  - m_name: GeNa Prop_Sofa_A
+    m_id: -2147483628
+    m_guid: f75a3c4506d9e274a9d42aed3d8cbe67
+    m_object: {fileID: 8790576851453368825, guid: f75a3c4506d9e274a9d42aed3d8cbe67,
+      type: 3}
+  - m_name: Prop_Cabinet_B
+    m_id: -2147483627
+    m_guid: 6dc78eb22702ea84296ffaf6e8826c15
+    m_object: {fileID: 126718, guid: 6dc78eb22702ea84296ffaf6e8826c15, type: 3}
+  - m_name: Prop_Cabinet_A
+    m_id: -2147483626
+    m_guid: d5d4dde01c76a7e4397910ce96898cb1
+    m_object: {fileID: 190816, guid: d5d4dde01c76a7e4397910ce96898cb1, type: 3}
+  - m_name: GeNa Prop_Clock_A
+    m_id: -2147483625
+    m_guid: 4190172dcfc85d24f9618368096e9a68
+    m_object: {fileID: 4333649901777268347, guid: 4190172dcfc85d24f9618368096e9a68,
+      type: 3}
+  - m_name: Prop_Rug_A
+    m_id: -2147483624
+    m_guid: 210d38b43ba064d418e74fe6c3791d87
+    m_object: {fileID: 122088, guid: 210d38b43ba064d418e74fe6c3791d87, type: 3}
+  - m_name: Prop_Rug_B
+    m_id: -2147483623
+    m_guid: fac85779e5fda1c4493c6d5276271dde
+    m_object: {fileID: 199316, guid: fac85779e5fda1c4493c6d5276271dde, type: 3}
+  - m_name: Prop_Rug_C
+    m_id: -2147483622
+    m_guid: 8280470fa5800964fa583bd96da6eff8
+    m_object: {fileID: 107462, guid: 8280470fa5800964fa583bd96da6eff8, type: 3}
+  - m_name: Prop_Rug_D
+    m_id: -2147483621
+    m_guid: e33a26c53858bbd42ae3880d4443fc61
+    m_object: {fileID: 198172, guid: e33a26c53858bbd42ae3880d4443fc61, type: 3}
+  - m_name: GeNa Painting
+    m_id: -2147483620
+    m_guid: f8d33ce3e43af1e438a65ed78be7ca14
+    m_object: {fileID: 3124446532855585472, guid: f8d33ce3e43af1e438a65ed78be7ca14,
+      type: 3}
+  - m_name: Prop_LargeTable_A
+    m_id: -2147483619
+    m_guid: a11e981b37ff86749a7a41b2999e3199
+    m_object: {fileID: 172672, guid: a11e981b37ff86749a7a41b2999e3199, type: 3}
+  - m_name: GeNa Prop_Chair_A
+    m_id: -2147483618
+    m_guid: 5df06f0d553dc45448cf8c124df5597c
+    m_object: {fileID: 8882286328049756092, guid: 5df06f0d553dc45448cf8c124df5597c,
+      type: 3}
+  - m_name: Prop_Bed_B
+    m_id: -2147483617
+    m_guid: 91365c327d21a0343b4fa73a722f938d
+    m_object: {fileID: 113680, guid: 91365c327d21a0343b4fa73a722f938d, type: 3}
+  - m_name: Prop_Bed_A
+    m_id: -2147483616
+    m_guid: 46aad46494938c844a7bfbbcb53b98e1
+    m_object: {fileID: 194242, guid: 46aad46494938c844a7bfbbcb53b98e1, type: 3}
+  - m_name: Prop_SmallTable_B
+    m_id: -2147483615
+    m_guid: de989d50c4fd676479d25b597fc65314
+    m_object: {fileID: 145104, guid: de989d50c4fd676479d25b597fc65314, type: 3}
+  - m_name: GeNa Prop_Lamp_A
+    m_id: -2147483614
+    m_guid: dee693995b5ad5945aa538301c15e219
+    m_object: {fileID: 3025337230242362015, guid: dee693995b5ad5945aa538301c15e219,
+      type: 3}
+  - m_name: GeNa Ceiling Light
+    m_id: -2147483613
+    m_guid: ebc92c8ca80696a4eb4e57179ffa981e
+    m_object: {fileID: 6645470782204181761, guid: ebc92c8ca80696a4eb4e57179ffa981e,
+      type: 3}
+  - m_name: Prop_Painting_B
+    m_id: -2147483612
+    m_guid: cc89d4ad779dae14eacc18ea2aef32b1
+    m_object: {fileID: 196004, guid: cc89d4ad779dae14eacc18ea2aef32b1, type: 3}
+  - m_name: Prop_Painting_D
+    m_id: -2147483611
+    m_guid: 00941ab5dd3500748ac6e339132b3596
+    m_object: {fileID: 151588, guid: 00941ab5dd3500748ac6e339132b3596, type: 3}
+  - m_name: Prop_Painting_C
+    m_id: -2147483610
+    m_guid: 8b04cd075f5ebc74a866cece42007aed
+    m_object: {fileID: 135080, guid: 8b04cd075f5ebc74a866cece42007aed, type: 3}
+  - m_name: Prop_Painting_A
+    m_id: -2147483609
+    m_guid: 041b5985f303614469cc18a9f5eca9d3
+    m_object: {fileID: 109590, guid: 041b5985f303614469cc18a9f5eca9d3, type: 3}
+  - m_name: Prop_Lamp_B
+    m_id: -2147483608
+    m_guid: 1af0db9dd761a20438b768454e885318
+    m_object: {fileID: 2208200204382889367, guid: 1af0db9dd761a20438b768454e885318,
+      type: 3}
+  - m_name: Prop_Lamp_C
+    m_id: -2147483607
+    m_guid: ab20a3600fffcb749b78c8334dde21e2
+    m_object: {fileID: 8381737412522047337, guid: ab20a3600fffcb749b78c8334dde21e2,
+      type: 3}
+  - m_name: Prop_Lamp_D
+    m_id: -2147483606
+    m_guid: aaee051e7c188f846b7cfbb53e15850e
+    m_object: {fileID: 5566450020463662956, guid: aaee051e7c188f846b7cfbb53e15850e,
+      type: 3}
+  - m_name: Cabin1
+    m_id: -2147483605
+    m_guid: 872b20cc32c99e94d8ecb02c49606f59
+    m_object: {fileID: 132748, guid: 872b20cc32c99e94d8ecb02c49606f59, type: 3}
+  - m_name: Cabin1_Stairs
+    m_id: -2147483604
+    m_guid: 2bf6f50fca3051b4e89bd91d63c3f247
+    m_object: {fileID: 161288, guid: 2bf6f50fca3051b4e89bd91d63c3f247, type: 3}
+  - m_name: Root
+    m_id: -2147483603
+    m_guid: 86d51ab547181f0408f2bffe988b32df
+    m_object: {fileID: 7684789839771805157, guid: 86d51ab547181f0408f2bffe988b32df,
+      type: 3}
+  - m_name: Reflection Probe
+    m_id: -2147483602
+    m_guid: d1ee2b79b83c2094896a8ec721bb9de0
+    m_object: {fileID: 6085356562219630995, guid: d1ee2b79b83c2094896a8ec721bb9de0,
+      type: 3}
+  - m_name: Cube
+    m_id: -2147483601
+    m_guid: 41f83803daee9ba4a8b5333cb43236d7
+    m_object: {fileID: 6128695661542099873, guid: 41f83803daee9ba4a8b5333cb43236d7,
+      type: 3}
+  - m_name: Cube 1
+    m_id: -2147483600
+    m_guid: bb299c988d5478d449bfe33acb2964cd
+    m_object: {fileID: 4633179947085631935, guid: bb299c988d5478d449bfe33acb2964cd,
+      type: 3}
+  - m_name: Cube 2
+    m_id: -2147483599
+    m_guid: f1edd921f223e324c827d6575712731e
+    m_object: {fileID: 3292575316095327611, guid: f1edd921f223e324c827d6575712731e,
+      type: 3}
+  - m_name: Cube 3
+    m_id: -2147483598
+    m_guid: 080e0277b528d5045bf2ae03f59326c7
+    m_object: {fileID: 8071479746137173445, guid: 080e0277b528d5045bf2ae03f59326c7,
+      type: 3}
+  - m_name: Reflection Probe
+    m_id: -2147483597
+    m_guid: ebebecebfa93b7949ab4d419f14aa482
+    m_object: {fileID: 6708415767972922797, guid: ebebecebfa93b7949ab4d419f14aa482,
+      type: 3}
+  - m_name: PW_Tree_Small_02
+    m_id: -2147483596
+    m_guid: 5c9a2885c7c9875499df798ba88f40ca
+    m_object: {fileID: 3403012897276277082, guid: 5c9a2885c7c9875499df798ba88f40ca,
+      type: 3}
+  - m_name: PW_Tree_Small_01
+    m_id: -2147483595
+    m_guid: 5c3e2e2b86255524181ad3ee5982cc65
+    m_object: {fileID: 4241361742752720050, guid: 5c3e2e2b86255524181ad3ee5982cc65,
+      type: 3}
+  - m_name: PW_Tree_Spruce_06
+    m_id: -2147483594
+    m_guid: a4cb8c2a723ad6c4998e2c6a4ace99ca
+    m_object: {fileID: 6847023277904564872, guid: a4cb8c2a723ad6c4998e2c6a4ace99ca,
+      type: 3}
+  - m_name: PW_Tree_Spruce_05
+    m_id: -2147483593
+    m_guid: 7a69b0670b5c0e149863a33410944c9a
+    m_object: {fileID: 3971247770807929274, guid: 7a69b0670b5c0e149863a33410944c9a,
+      type: 3}
+  - m_name: PW_Tree_Dead_05
+    m_id: -2147483592
+    m_guid: 1d61760017c5cc24797605b6bda04c32
+    m_object: {fileID: 7440958064129538928, guid: 1d61760017c5cc24797605b6bda04c32,
+      type: 3}
+  - m_name: PW_Tree_Stump_03
+    m_id: -2147483591
+    m_guid: 3212fc94a2d38204d94c8406d3582fbf
+    m_object: {fileID: 6510997350315865958, guid: 3212fc94a2d38204d94c8406d3582fbf,
+      type: 3}
+  - m_name: PW_Tree_Log_01_01
+    m_id: -2147483590
+    m_guid: b6b427d6336c57942859bb577b0f2cb2
+    m_object: {fileID: 7662368191403676667, guid: b6b427d6336c57942859bb577b0f2cb2,
+      type: 3}
+  - m_name: PW_Stone_01
+    m_id: -2147483589
+    m_guid: 35348ac853f10584a9e52b978af197f9
+    m_object: {fileID: 3242204568188846338, guid: 35348ac853f10584a9e52b978af197f9,
+      type: 3}
+  - m_name: PW_Tree_Dead_03_Fallen
+    m_id: -2147483588
+    m_guid: 590108cb2be2b74448b0a64a7755a8de
+    m_object: {fileID: 8087235739683421648, guid: 590108cb2be2b74448b0a64a7755a8de,
+      type: 3}
+  - m_name: PW_Tree_Stump_02
+    m_id: -2147483587
+    m_guid: 7bab64068a1a0bb45958ca85fe27c7a8
+    m_object: {fileID: 3263238312297119654, guid: 7bab64068a1a0bb45958ca85fe27c7a8,
+      type: 3}
+  - m_name: PW_Stone_02_01_01 + Trunk Layout_01_02
+    m_id: -2147483586
+    m_guid: fd4b95f358279cb4186af19df34cd781
+    m_object: {fileID: 7944491279301227243, guid: fd4b95f358279cb4186af19df34cd781,
+      type: 3}
+  - m_name: PW_Stone_01_01_01 + Trunk Layout_01_01
+    m_id: -2147483585
+    m_guid: 018744760a5751844a1c5598e9f3834b
+    m_object: {fileID: 389122838365257840, guid: 018744760a5751844a1c5598e9f3834b,
+      type: 3}
+  - m_name: PW_Plant_Fern_02
+    m_id: -2147483584
+    m_guid: 9e42153ee58d32041b031ccf0de992da
+    m_object: {fileID: 3926372882901288413, guid: 9e42153ee58d32041b031ccf0de992da,
+      type: 3}
+  - m_name: PW_Plant_Fern_01
+    m_id: -2147483583
+    m_guid: ed035562929f56d4eb82f3f4effc1166
+    m_object: {fileID: 3803426106304524782, guid: ed035562929f56d4eb82f3f4effc1166,
+      type: 3}
+  - m_name: PW_Tree_Pine_01_Long
+    m_id: -2147483582
+    m_guid: 2ecb4b22618ef6545af524e4fc6e24e1
+    m_object: {fileID: 1490523839772519690, guid: 2ecb4b22618ef6545af524e4fc6e24e1,
+      type: 3}
+  - m_name: PW_Plant_Bush_02
+    m_id: -2147483581
+    m_guid: 22c87c01f3456714f979901ae60c3026
+    m_object: {fileID: 7925783570752469250, guid: 22c87c01f3456714f979901ae60c3026,
+      type: 3}
+  - m_name: PW_Plant_Bush_06
+    m_id: -2147483580
+    m_guid: 0d10c9a77fefad04e89660457fbc05c3
+    m_object: {fileID: 8802334351857891039, guid: 0d10c9a77fefad04e89660457fbc05c3,
+      type: 3}
+  - m_name: PW_Plant_Bush_01
+    m_id: -2147483579
+    m_guid: 0195048848036f3428d33d445d16b71a
+    m_object: {fileID: 2176402563728498265, guid: 0195048848036f3428d33d445d16b71a,
+      type: 3}
+  - m_name: PW_Plant_Bush_05
+    m_id: -2147483578
+    m_guid: 6bb51860d1bd44140b5705050031cad8
+    m_object: {fileID: 6513692307377639098, guid: 6bb51860d1bd44140b5705050031cad8,
+      type: 3}
+  - m_name: PW_Tree_Pine_02 Long
+    m_id: -2147483577
+    m_guid: 37f4d2edca172904ba264bff7ad88d8a
+    m_object: {fileID: 3527719764134866729, guid: 37f4d2edca172904ba264bff7ad88d8a,
+      type: 3}
+  - m_name: PW_Tree_Sequoia_02
+    m_id: -2147483576
+    m_guid: f8783d0d4b154c24aab3f8f3f4ca2d3f
+    m_object: {fileID: 3907657317906885401, guid: f8783d0d4b154c24aab3f8f3f4ca2d3f,
+      type: 3}
+  - m_name: PW_Tree_Dead_03
+    m_id: -2147483575
+    m_guid: 1f3c3557da78589429dabdac221802bf
+    m_object: {fileID: 6445112374126249560, guid: 1f3c3557da78589429dabdac221802bf,
+      type: 3}
+  - m_name: PW_Stone_02
+    m_id: -2147483574
+    m_guid: 4eb6c3c55d1939d4387b3e98abe7f058
+    m_object: {fileID: 5007570772090632443, guid: 4eb6c3c55d1939d4387b3e98abe7f058,
+      type: 3}
+  - m_name: PW_Stone_01_01_01 + Trunk Layout_02
+    m_id: -2147483573
+    m_guid: 0fe926e7dd9c6434bbebaf406397e4ad
+    m_object: {fileID: 4613703798815553737, guid: 0fe926e7dd9c6434bbebaf406397e4ad,
+      type: 3}
+  - m_name: PW_Plant_Bush_04
+    m_id: -2147483572
+    m_guid: d3df4d0b8baaec346aceb0f057c20e3d
+    m_object: {fileID: 3255635229305653702, guid: d3df4d0b8baaec346aceb0f057c20e3d,
+      type: 3}
+  - m_name: PW_Tree_Dead_02
+    m_id: -2147483571
+    m_guid: 2f62588bd219bbb4fbdeaa968193b4e0
+    m_object: {fileID: 1482127389088731988, guid: 2f62588bd219bbb4fbdeaa968193b4e0,
+      type: 3}
+  - m_name: PW_Tree_Sequoia_01
+    m_id: -2147483570
+    m_guid: 1e2f6dd72897bec489ebfe35226bbaf7
+    m_object: {fileID: 5244156249065330910, guid: 1e2f6dd72897bec489ebfe35226bbaf7,
+      type: 3}
+  - m_name: PW_Stone_01_01_01 + Trunk Layout_03
+    m_id: -2147483569
+    m_guid: 578952d90a568f44aa9e518ed9c512ba
+    m_object: {fileID: 6499598038516465756, guid: 578952d90a568f44aa9e518ed9c512ba,
+      type: 3}
+  - m_name: PW_Stone_01_01_01 + Trunk Layout_04
+    m_id: -2147483568
+    m_guid: 532ca70b96b6973498cfdc463d646f91
+    m_object: {fileID: 8897060967580100266, guid: 532ca70b96b6973498cfdc463d646f91,
+      type: 3}
+  - m_name: PW_Stone_01_01_01 + Trunk Layout_05
+    m_id: -2147483567
+    m_guid: 513c27d3db50729408239c4c0c155183
+    m_object: {fileID: 4162134413941800455, guid: 513c27d3db50729408239c4c0c155183,
+      type: 3}
+  - m_name: PW_Tree_Stump_01
+    m_id: -2147483566
+    m_guid: 05a9865a1a4eaa04b93b31a330a6724c
+    m_object: {fileID: 2218003813693277364, guid: 05a9865a1a4eaa04b93b31a330a6724c,
+      type: 3}
+  - m_name: Pref_Barn1_B
+    m_id: -2147483565
+    m_guid: c7dcaf7c9f075384c9049614b9b42be5
+    m_object: {fileID: 1318797229614196677, guid: c7dcaf7c9f075384c9049614b9b42be5,
+      type: 3}
+  - m_name: Pref_Barn2_A
+    m_id: -2147483564
+    m_guid: 35684a00da3f0f5459d8376bf2a45c70
+    m_object: {fileID: 9175015663164510008, guid: 35684a00da3f0f5459d8376bf2a45c70,
+      type: 3}
+  - m_name: Pref_Barn2_B
+    m_id: -2147483563
+    m_guid: bfd828007a445194eae1512cde128938
+    m_object: {fileID: 6396102153710314387, guid: bfd828007a445194eae1512cde128938,
+      type: 3}
+  - m_name: Cube 1
+    m_id: -2147483562
+    m_guid: bb299c988d5478d449bfe33acb2964cd
+    m_object: {fileID: 4633179947085631935, guid: bb299c988d5478d449bfe33acb2964cd,
+      type: 3}
+  - m_name: fi_vil_GaiaFenseFull
+    m_id: -2147483561
+    m_guid: fa19b006e8152af4d8c1ebee85ff13fa
+    m_object: {fileID: 100000, guid: fa19b006e8152af4d8c1ebee85ff13fa, type: 3}
+  - m_name: fi_vil_GaiaFenseCrossingHalf
+    m_id: -2147483560
+    m_guid: fdc563315018d384fa38ac8b344aa35c
+    m_object: {fileID: 128142, guid: fdc563315018d384fa38ac8b344aa35c, type: 3}
+  - m_name: Cube
+    m_id: -2147483559
+    m_guid: 012554e0fae763145adb4fa242e8b35d
+    m_object: {fileID: 2158439911312679361, guid: 012554e0fae763145adb4fa242e8b35d,
+      type: 3}
+  - m_name: fi_vil_GaiaHouse02B
+    m_id: -2147483558
+    m_guid: 86fee95da60b3e447a5446d0481f297e
+    m_object: {fileID: 169268, guid: 86fee95da60b3e447a5446d0481f297e, type: 3}
+  - m_name: pwub_builtin_1_c4
+    m_id: -2147483557
+    m_guid: 6144e4fa6abf45e47a0e25c89e041520
+    m_object: {fileID: 2800000, guid: 6144e4fa6abf45e47a0e25c89e041520, type: 3}
+  - m_name: pwub_builtin_2_c4
+    m_id: -2147483556
+    m_guid: 770a6f924e7a18048926af895e9c2462
+    m_object: {fileID: 2800000, guid: 770a6f924e7a18048926af895e9c2462, type: 3}
+  - m_name: pwub_builtin_3_c4
+    m_id: -2147483555
+    m_guid: 0b46ea345e1103d45af8bd1faeae6f99
+    m_object: {fileID: 2800000, guid: 0b46ea345e1103d45af8bd1faeae6f99, type: 3}
+  - m_name: pwub_builtin_4_c4
+    m_id: -2147483554
+    m_guid: 558b31e916ac28e4dba496aa68a921a8
+    m_object: {fileID: 2800000, guid: 558b31e916ac28e4dba496aa68a921a8, type: 3}
+  - m_name: pwub_builtin_5_c4
+    m_id: -2147483553
+    m_guid: 78ddd658e1e59494192ac0287c59cff1
+    m_object: {fileID: 2800000, guid: 78ddd658e1e59494192ac0287c59cff1, type: 3}
+  - m_name: pwub_builtin_6_c4
+    m_id: -2147483552
+    m_guid: 4c1b8bc23d293594f8a4c8f55cfcb374
+    m_object: {fileID: 2800000, guid: 4c1b8bc23d293594f8a4c8f55cfcb374, type: 3}
+  - m_name: pwub_builtin_7_c4
+    m_id: -2147483551
+    m_guid: 54b8e4a4ed569594fb452569c1082aa2
+    m_object: {fileID: 2800000, guid: 54b8e4a4ed569594fb452569c1082aa2, type: 3}
+  - m_name: pwub_builtin_8_c4
+    m_id: -2147483550
+    m_guid: 7d9d89548a732fc43a8261e60423a5a1
+    m_object: {fileID: 2800000, guid: 7d9d89548a732fc43a8261e60423a5a1, type: 3}
+  - m_name: pwub_builtin_9_c4
+    m_id: -2147483549
+    m_guid: ef846195897836548a0b41e3e67cc4c4
+    m_object: {fileID: 2800000, guid: ef846195897836548a0b41e3e67cc4c4, type: 3}
+  - m_name: pwub_builtin_10_c4
+    m_id: -2147483548
+    m_guid: a755b8ffd2e13984b8576a7097a3afc9
+    m_object: {fileID: 2800000, guid: a755b8ffd2e13984b8576a7097a3afc9, type: 3}
+  - m_name: pwub_builtin_11_c4
+    m_id: -2147483547
+    m_guid: a3366d98f9576ae4885f7547a6e71e00
+    m_object: {fileID: 2800000, guid: a3366d98f9576ae4885f7547a6e71e00, type: 3}
+  - m_name: pwub_builtin_12_c4
+    m_id: -2147483546
+    m_guid: 83447bb85a3bc19448b818a87c999ee2
+    m_object: {fileID: 2800000, guid: 83447bb85a3bc19448b818a87c999ee2, type: 3}
+  - m_name: pwub_builtin_13_c4
+    m_id: -2147483545
+    m_guid: 4b0df7bf64d3810499ca07af112e6633
+    m_object: {fileID: 2800000, guid: 4b0df7bf64d3810499ca07af112e6633, type: 3}
+  - m_name: pwub_builtin_14_c4
+    m_id: -2147483544
+    m_guid: 19e70cad51cc06145a5191bd42f4fda1
+    m_object: {fileID: 2800000, guid: 19e70cad51cc06145a5191bd42f4fda1, type: 3}
+  - m_name: pwub_builtin_15_c4
+    m_id: -2147483543
+    m_guid: 4c66d5c4fcbc1254bb69717cdeff7fe5
+    m_object: {fileID: 2800000, guid: 4c66d5c4fcbc1254bb69717cdeff7fe5, type: 3}
+  - m_name: pwub_builtin_16_c4
+    m_id: -2147483542
+    m_guid: dde3b700e69b83141a1c40b58b6f0eb8
+    m_object: {fileID: 2800000, guid: dde3b700e69b83141a1c40b58b6f0eb8, type: 3}
+  - m_name: pwub_builtin_17_c4
+    m_id: -2147483541
+    m_guid: 31b40143d7b51e14abbdeecaa40ef6fb
+    m_object: {fileID: 2800000, guid: 31b40143d7b51e14abbdeecaa40ef6fb, type: 3}
+  - m_name: pwub_builtin_18_c4
+    m_id: -2147483540
+    m_guid: 7e9442242b78f9b45b65003041675690
+    m_object: {fileID: 2800000, guid: 7e9442242b78f9b45b65003041675690, type: 3}
+  - m_name: pwub_builtin_19_c4
+    m_id: -2147483539
+    m_guid: 4289489bd7b48514294474fe2bfac7a6
+    m_object: {fileID: 2800000, guid: 4289489bd7b48514294474fe2bfac7a6, type: 3}
+  - m_name: pwub_builtin_20_c4
+    m_id: -2147483538
+    m_guid: 79873ab2a42cb0740884092a5342d5d9
+    m_object: {fileID: 2800000, guid: 79873ab2a42cb0740884092a5342d5d9, type: 3}
+  - m_name: Mountain Square Mask 01
+    m_id: -2147483537
+    m_guid: 900942c80dc8d9647802994982a65998
+    m_object: {fileID: 2800000, guid: 900942c80dc8d9647802994982a65998, type: 3}
+  - m_name: Square 02_Terrain_Mask
+    m_id: -2147483536
+    m_guid: ddc8190dd44c471488513958612a2546
+    m_object: {fileID: 2800000, guid: ddc8190dd44c471488513958612a2546, type: 3}
+  - m_name: Square 03_Terrain_Mask
+    m_id: -2147483535
+    m_guid: c124cffdc593cac468238c001baed6f0
+    m_object: {fileID: 2800000, guid: c124cffdc593cac468238c001baed6f0, type: 3}
+  - m_name: Pref_Barn1_A
+    m_id: -2147483534
+    m_guid: 0fc50555950415449accccb0f5ea514d
+    m_object: {fileID: 4650327508682477391, guid: 0fc50555950415449accccb0f5ea514d,
+      type: 3}
+  - m_name: Pref_Barn1_B
+    m_id: -2147483533
+    m_guid: c7dcaf7c9f075384c9049614b9b42be5
+    m_object: {fileID: 1318797229614196677, guid: c7dcaf7c9f075384c9049614b9b42be5,
+      type: 3}
+  - m_name: Pref_Barn2_A
+    m_id: -2147483532
+    m_guid: 35684a00da3f0f5459d8376bf2a45c70
+    m_object: {fileID: 9175015663164510008, guid: 35684a00da3f0f5459d8376bf2a45c70,
+      type: 3}
+  - m_name: Pref_Barn2_B
+    m_id: -2147483531
+    m_guid: bfd828007a445194eae1512cde128938
+    m_object: {fileID: 6396102153710314387, guid: bfd828007a445194eae1512cde128938,
+      type: 3}
+  - m_name: Struct_BillBoard_A
+    m_id: -2147483530
+    m_guid: 96d3d3f155ce5f945b77b4bfd101f7c3
+    m_object: {fileID: 154060, guid: 96d3d3f155ce5f945b77b4bfd101f7c3, type: 3}
+  - m_name: Struct_Fence2_Mid_A
+    m_id: -2147483529
+    m_guid: 48a907058000acc4da8ac9293b565679
+    m_object: {fileID: 182002, guid: 48a907058000acc4da8ac9293b565679, type: 3}
+  - m_name: Struct_Fence2_Mid_A_DM
+    m_id: -2147483528
+    m_guid: c1f58f0ed2ff6124d8a34bc65d503041
+    m_object: {fileID: 166440, guid: c1f58f0ed2ff6124d8a34bc65d503041, type: 3}
+  - m_name: Struct_WoodPath_A
+    m_id: -2147483527
+    m_guid: 3852c07710f30b64c9aea4fdd03eb915
+    m_object: {fileID: 121634, guid: 3852c07710f30b64c9aea4fdd03eb915, type: 3}
+  - m_name: GeNa_Struct_Pole_B_Light
+    m_id: -2147483526
+    m_guid: 0b230a059b4858a4d906f6b4b84763bf
+    m_object: {fileID: 5020326941722346964, guid: 0b230a059b4858a4d906f6b4b84763bf,
+      type: 3}
+  - m_name: Square 01_Terrain_Mask
+    m_id: -2147483525
+    m_guid: 15a68bd6d12f24f48a9c03d395219b1e
+    m_object: {fileID: 2800000, guid: 15a68bd6d12f24f48a9c03d395219b1e, type: 3}
+  - m_name: Square 04_Terrain_Mask
+    m_id: -2147483524
+    m_guid: 3e16f5bbd1aac754c9be4311670091af
+    m_object: {fileID: 2800000, guid: 3e16f5bbd1aac754c9be4311670091af, type: 3}
+  - m_name: Cabin1
+    m_id: -2147483523
+    m_guid: 872b20cc32c99e94d8ecb02c49606f59
+    m_object: {fileID: 132748, guid: 872b20cc32c99e94d8ecb02c49606f59, type: 3}
+  - m_name: Cabin1_Stairs
+    m_id: -2147483522
+    m_guid: 2bf6f50fca3051b4e89bd91d63c3f247
+    m_object: {fileID: 161288, guid: 2bf6f50fca3051b4e89bd91d63c3f247, type: 3}
+  - m_name: Prop_Bed_B
+    m_id: -2147483521
+    m_guid: 91365c327d21a0343b4fa73a722f938d
+    m_object: {fileID: 113680, guid: 91365c327d21a0343b4fa73a722f938d, type: 3}
+  - m_name: Prop_Bed_A
+    m_id: -2147483520
+    m_guid: 46aad46494938c844a7bfbbcb53b98e1
+    m_object: {fileID: 194242, guid: 46aad46494938c844a7bfbbcb53b98e1, type: 3}
+  - m_name: Prop_Cabinet_B
+    m_id: -2147483519
+    m_guid: 6dc78eb22702ea84296ffaf6e8826c15
+    m_object: {fileID: 126718, guid: 6dc78eb22702ea84296ffaf6e8826c15, type: 3}
+  - m_name: Prop_Cabinet_A
+    m_id: -2147483518
+    m_guid: d5d4dde01c76a7e4397910ce96898cb1
+    m_object: {fileID: 190816, guid: d5d4dde01c76a7e4397910ce96898cb1, type: 3}
+  - m_name: GeNa Prop_Clock_A
+    m_id: -2147483517
+    m_guid: 4190172dcfc85d24f9618368096e9a68
+    m_object: {fileID: 4333649901777268347, guid: 4190172dcfc85d24f9618368096e9a68,
+      type: 3}
+  - m_name: Prop_Rug_A
+    m_id: -2147483516
+    m_guid: 210d38b43ba064d418e74fe6c3791d87
+    m_object: {fileID: 122088, guid: 210d38b43ba064d418e74fe6c3791d87, type: 3}
+  - m_name: Prop_Rug_B
+    m_id: -2147483515
+    m_guid: fac85779e5fda1c4493c6d5276271dde
+    m_object: {fileID: 199316, guid: fac85779e5fda1c4493c6d5276271dde, type: 3}
+  - m_name: Prop_Rug_C
+    m_id: -2147483514
+    m_guid: 8280470fa5800964fa583bd96da6eff8
+    m_object: {fileID: 107462, guid: 8280470fa5800964fa583bd96da6eff8, type: 3}
+  - m_name: Prop_Rug_D
+    m_id: -2147483513
+    m_guid: e33a26c53858bbd42ae3880d4443fc61
+    m_object: {fileID: 198172, guid: e33a26c53858bbd42ae3880d4443fc61, type: 3}
+  - m_name: Prop_Painting_B
+    m_id: -2147483512
+    m_guid: cc89d4ad779dae14eacc18ea2aef32b1
+    m_object: {fileID: 196004, guid: cc89d4ad779dae14eacc18ea2aef32b1, type: 3}
+  - m_name: Prop_Painting_D
+    m_id: -2147483511
+    m_guid: 00941ab5dd3500748ac6e339132b3596
+    m_object: {fileID: 151588, guid: 00941ab5dd3500748ac6e339132b3596, type: 3}
+  - m_name: Prop_Painting_C
+    m_id: -2147483510
+    m_guid: 8b04cd075f5ebc74a866cece42007aed
+    m_object: {fileID: 135080, guid: 8b04cd075f5ebc74a866cece42007aed, type: 3}
+  - m_name: Prop_Painting_A
+    m_id: -2147483509
+    m_guid: 041b5985f303614469cc18a9f5eca9d3
+    m_object: {fileID: 109590, guid: 041b5985f303614469cc18a9f5eca9d3, type: 3}
+  - m_name: GeNa Prop_Lamp_A
+    m_id: -2147483508
+    m_guid: dee693995b5ad5945aa538301c15e219
+    m_object: {fileID: 3025337230242362015, guid: dee693995b5ad5945aa538301c15e219,
+      type: 3}
+  - m_name: Prop_Vase_A
+    m_id: -2147483507
+    m_guid: 67b0685a76617c84b94a58742fdf5e77
+    m_object: {fileID: 113612, guid: 67b0685a76617c84b94a58742fdf5e77, type: 3}
+  - m_name: Prop_Vase_B
+    m_id: -2147483506
+    m_guid: d56462b3ff64676458a7fead7cda0e5f
+    m_object: {fileID: 108810, guid: d56462b3ff64676458a7fead7cda0e5f, type: 3}
+  - m_name: Prop_SmallTable_B
+    m_id: -2147483505
+    m_guid: de989d50c4fd676479d25b597fc65314
+    m_object: {fileID: 145104, guid: de989d50c4fd676479d25b597fc65314, type: 3}
+  - m_name: GeNa Prop_LargeTable_A
+    m_id: -2147483504
+    m_guid: 8fd233f388a499442924cb5852d1496c
+    m_object: {fileID: 8599192746869143053, guid: 8fd233f388a499442924cb5852d1496c,
+      type: 3}
+  - m_name: GeNa Prop_Chair_B
+    m_id: -2147483503
+    m_guid: 7bbc37d0e0a1f434d936aad83b5ec365
+    m_object: {fileID: 3508826481393027120, guid: 7bbc37d0e0a1f434d936aad83b5ec365,
+      type: 3}
+  - m_name: GeNa Prop_Sofa_A
+    m_id: -2147483502
+    m_guid: f75a3c4506d9e274a9d42aed3d8cbe67
+    m_object: {fileID: 8790576851453368825, guid: f75a3c4506d9e274a9d42aed3d8cbe67,
+      type: 3}
+  - m_name: Cabin1_Door_A
+    m_id: -2147483501
+    m_guid: bbe3e65d308bf7b4bba358ca68dac3f9
+    m_object: {fileID: 126568, guid: bbe3e65d308bf7b4bba358ca68dac3f9, type: 3}
+  - m_name: Cabin1_DM
+    m_id: -2147483500
+    m_guid: 89f79f1bf5f167d4298cf43d900f56c1
+    m_object: {fileID: 110802, guid: 89f79f1bf5f167d4298cf43d900f56c1, type: 3}
+  - m_name: Church1_Deco_Column_A
+    m_id: -2147483499
+    m_guid: f8515ca20eba062499108c590879972d
+    m_object: {fileID: 108230, guid: f8515ca20eba062499108c590879972d, type: 3}
+  - m_name: Church1_Mid_A
+    m_id: -2147483498
+    m_guid: 5700c2dc6724c3a4fb462b0001e31742
+    m_object: {fileID: 115328, guid: 5700c2dc6724c3a4fb462b0001e31742, type: 3}
+  - m_name: Church1_End_A
+    m_id: -2147483497
+    m_guid: 536c47ed6c4df7448adae963b41045e3
+    m_object: {fileID: 192102, guid: 536c47ed6c4df7448adae963b41045e3, type: 3}
+  - m_name: Church1_End_B
+    m_id: -2147483496
+    m_guid: 19d091357490f6840bc24462233284ae
+    m_object: {fileID: 160078, guid: 19d091357490f6840bc24462233284ae, type: 3}
+  - m_name: Church1_Base_Stairs_A
+    m_id: -2147483495
+    m_guid: 2808d115c4ff0204e9ba7859b1ba3ec9
+    m_object: {fileID: 191530, guid: 2808d115c4ff0204e9ba7859b1ba3ec9, type: 3}
+  - m_name: Church1_Door_A
+    m_id: -2147483494
+    m_guid: 0894e59934291c64d9041c5d75db1750
+    m_object: {fileID: 132574, guid: 0894e59934291c64d9041c5d75db1750, type: 3}
+  - m_name: Church1_Door_B
+    m_id: -2147483493
+    m_guid: 3ed882138e89c274888d1f686dc75f29
+    m_object: {fileID: 116752, guid: 3ed882138e89c274888d1f686dc75f29, type: 3}
+  - m_name: Church1_Door_C
+    m_id: -2147483492
+    m_guid: 44822f52b3d42e7419e7730aa641a6c2
+    m_object: {fileID: 133762, guid: 44822f52b3d42e7419e7730aa641a6c2, type: 3}
+  - m_name: Prop_ChurchBench_A
+    m_id: -2147483491
+    m_guid: 51e1ec27a31e16a4ba99622c680fd8ec
+    m_object: {fileID: 144546, guid: 51e1ec27a31e16a4ba99622c680fd8ec, type: 3}
+  - m_name: Prop_ChurchBench_A_DM
+    m_id: -2147483490
+    m_guid: fe816015a58e629439b27ecca9cdb110
+    m_object: {fileID: 199228, guid: fe816015a58e629439b27ecca9cdb110, type: 3}
+  - m_name: Prop_Pulpit_A
+    m_id: -2147483489
+    m_guid: c2e8a3a68e2bc204b950f65c7c7ecef6
+    m_object: {fileID: 119784, guid: c2e8a3a68e2bc204b950f65c7c7ecef6, type: 3}
+  - m_name: GeNa WoodBoard_A
+    m_id: -2147483488
+    m_guid: 5da45eeefdcafa4438b89bea9b29007a
+    m_object: {fileID: 7196776321640184858, guid: 5da45eeefdcafa4438b89bea9b29007a,
+      type: 3}
+  - m_name: GreenHouse1_Mid_A
+    m_id: -2147483487
+    m_guid: cbd0b3ad55adbb2449d91dce8172900a
+    m_object: {fileID: 160176, guid: cbd0b3ad55adbb2449d91dce8172900a, type: 3}
+  - m_name: GreenHouse1_End_A
+    m_id: -2147483486
+    m_guid: d18477f28fb30864d83758989554e271
+    m_object: {fileID: 142990, guid: d18477f28fb30864d83758989554e271, type: 3}
+  - m_name: Struct_WoodBoard_A
+    m_id: -2147483485
+    m_guid: 6d668391662efbf43ac29d9224a0b6d9
+    m_object: {fileID: 104646, guid: 6d668391662efbf43ac29d9224a0b6d9, type: 3}
+  - m_name: GreenHouse1_Deco_RoofPiece_A
+    m_id: -2147483484
+    m_guid: 8285c49f490dd444382201a065d5f98b
+    m_object: {fileID: 139764, guid: 8285c49f490dd444382201a065d5f98b, type: 3}
+  - m_name: GreenHouse1_Deco_RoofPiece_B
+    m_id: -2147483483
+    m_guid: 53e8e843102523b459d75c4b0ca32ad9
+    m_object: {fileID: 111862, guid: 53e8e843102523b459d75c4b0ca32ad9, type: 3}
+  - m_name: Struct_FlowerBox_A
+    m_id: -2147483482
+    m_guid: 8996c8680be073342a111a684ca95e17
+    m_object: {fileID: 174394, guid: 8996c8680be073342a111a684ca95e17, type: 3}
+  - m_name: Struct_FlowerBox_B
+    m_id: -2147483481
+    m_guid: c8bc0302c0ec56c4c9b94683f171d4be
+    m_object: {fileID: 184394, guid: c8bc0302c0ec56c4c9b94683f171d4be, type: 3}
+  - m_name: Struct_Fence1_Gate_A_Door
+    m_id: -2147483480
+    m_guid: 1a8e8c5796893174693ddb47655a8805
+    m_object: {fileID: 135036, guid: 1a8e8c5796893174693ddb47655a8805, type: 3}
+  - m_name: Struct_Fence1_Gate_A_Door_DM
+    m_id: -2147483479
+    m_guid: ae5e9162a10cdef48b4b713665bfee7a
+    m_object: {fileID: 117666, guid: ae5e9162a10cdef48b4b713665bfee7a, type: 3}
+  - m_name: Struct_Fence1_Gate_A
+    m_id: -2147483478
+    m_guid: 5ef9b8247006c384f8209c0e0018d51e
+    m_object: {fileID: 195380, guid: 5ef9b8247006c384f8209c0e0018d51e, type: 3}
+  - m_name: Struct_Fence1_Mid_B
+    m_id: -2147483477
+    m_guid: 04c36f15bbecd854cab50deedb5c594f
+    m_object: {fileID: 190928, guid: 04c36f15bbecd854cab50deedb5c594f, type: 3}
+  - m_name: GeNa Prop_ParkBench_A
+    m_id: -2147483476
+    m_guid: 8165e3cbb2fbb8745a68e61b65730001
+    m_object: {fileID: 1326487922032590528, guid: 8165e3cbb2fbb8745a68e61b65730001,
+      type: 3}
+  - m_name: Spawner - GeNa Grave Stone Sub Spawner
+    m_id: -2147483475
+    m_guid: 87e7664a92415354589b755868926c9e
+    m_object: {fileID: 1436395774180027514, guid: 87e7664a92415354589b755868926c9e,
+      type: 3}
+  - m_name: Spawner - GeNa Grave Stone
+    m_id: -2147483474
+    m_guid: 6298015c7fc22b34281e6610d6e5c5d9
+    m_object: {fileID: 5222056240357583265, guid: 6298015c7fc22b34281e6610d6e5c5d9,
+      type: 3}
+  - m_name: Reflection Probe
+    m_id: -2147483473
+    m_guid: ebebecebfa93b7949ab4d419f14aa482
+    m_object: {fileID: 6708415767972922797, guid: ebebecebfa93b7949ab4d419f14aa482,
+      type: 3}
+  - m_name: Reflection Probe
+    m_id: -2147483472
+    m_guid: ebebecebfa93b7949ab4d419f14aa482
+    m_object: {fileID: 6708415767972922797, guid: ebebecebfa93b7949ab4d419f14aa482,
+      type: 3}

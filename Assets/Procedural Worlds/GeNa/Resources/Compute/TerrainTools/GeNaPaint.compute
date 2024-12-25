@@ -1,0 +1,81 @@
+﻿// Each #kernel tells which function to compile; you can have many kernels
+#pragma kernel Paint
+#include "../Includes/GPUNoiseParams.cginc"
+#include "../Includes/GPUNoise.cginc"
+
+Texture2D<float> _InputDisplacement;
+Texture2D<float> _InputBrushTexture;
+RWTexture2D<float> _OutputDisplacement;
+
+int _EffectType = 0; // Raise = 0, Lower = 1, Flatten = 2, ClearTrees = 3, ClearDetails = 4, Texture = 5, Detail = 6
+float _PaintStrength;
+float _FlattenHeight = 0.0f;
+float _wResolution = 1000.0f;
+float2 _iResolution = 513.0f;
+float2 _Offset = 0.0f;
+
+float MoveTowards(float current, float target, float maxDelta)
+{
+    if (abs(target - current) <= maxDelta)
+        return target;
+    return current + sign(target - current) * maxDelta;
+}
+
+[numthreads(16,16,1)]
+void Paint(uint3 id : SV_DispatchThreadID)
+{
+    const uint2 coord = id.xy;
+    //---------------
+    float height = _InputDisplacement[coord];
+    float brush = _InputBrushTexture[coord] * 2.0f;
+    // const uint2 mid = _iResolution.xy / 2;
+    // float2 center = ((float2)mid + _Offset) / _iResolution.xy;
+    // float2 coordinate = ((float2)coord + _Offset) / _iResolution.xy;
+    // const float xRes = _iResolution.x;
+    // const float yRes = _iResolution.y;
+    // float xPos = coordinate.x * xRes;
+    // float yPos = coordinate.y * yRes;
+    // const float2 worldPos = float2(xPos, yPos);
+
+    float2 coordinate = (float2)id.xy + _Offset;
+    // calculate the subpixel offset (to compensate for 257x257 vs 256x256 thing).
+    float2 offset = coordinate * (float2(1.0f, 1.0f) / _iResolution.xy);
+    coordinate += offset;
+    coordinate /= _iResolution.xy;
+    float xRes = coordinate.x * _wResolution;
+    float yRes = coordinate.y * _wResolution;
+    const float2 worldPos = float3(xRes, 0.f, yRes);
+
+    // if (_NoisemapEnabled)
+    // {
+    //     const float distance = length(center.xy - coordinate.xy);
+    //     const float falloff = EvaluateFalloff(distance, _NoiseFalloff, _NoiseFalloffCount);
+    //     const float noise = GetNoise(worldPos) * falloff * _NoisemapStrength;
+    //     brush *= 1.0f + noise;
+    // }
+    
+    const float displacement = brush * _PaintStrength;
+    switch (_EffectType)
+    {
+    case 0: // Raise
+        height += displacement;
+        break;
+    case 1: // Lower
+        height -= displacement;
+        break;
+    case 2: // Flatten
+        //height = MoveTowards(height, flattenHeight * .5f, brush * strength);
+        const float delta = clamp(displacement, 0.f, 1.f);
+        height = lerp(height, _FlattenHeight * .5f, delta);
+        break;
+    case 3: // Clear Trees
+    case 4: // Clear Details
+    case 5: // Texture
+    case 6: // Details
+        height = displacement;
+        break;
+    default:
+        break;
+    }
+    _OutputDisplacement[coord] = height;
+}

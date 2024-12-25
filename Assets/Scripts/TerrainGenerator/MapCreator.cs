@@ -45,11 +45,7 @@ namespace TerrainGenerator
                     allChunkPositions[y * mapGenerationConfig.mapSize + x] = chunkPosition;
                 }
             }
-
-            // float[][,] allTerrainHeightMaps = noiseGenerator.GenerateAllTerrainHeightMaps(mapGenerationConfig.mapSize,
-            //     mapGenerationConfig.chunkSize,
-            //     mapGenerationConfig.noiseScale, mapGenerationConfig.persistance, mapGenerationConfig.lacunarity,
-            //     mapGenerationConfig.octaves, mapGenerationConfig.seed, mapGenerationConfig.offset, allChunkPositions);
+            
 
             float[][] allTerrainHeightMapsParallel = noiseGenerator.GenerateAllHeightMapsParallel(
                 mapGenerationConfig.mapSize,

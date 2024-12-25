@@ -1,4 +1,4 @@
-using Constants;
+using Const;
 using Infrastructure.GameStates.Interfaces;
 using Infrastructure.Services;
 using UI;

@@ -1,0 +1,161 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8c477de684ee10c4082f9fddf19a75ce, type: 3}
+  m_Name: PWRoadPropsPalette
+  m_EditorClassIdentifier: 
+  m_paletteEntryIDCount: -2147483619
+  m_paletteEntries:
+  - m_name: PW_FenceMesh
+    m_id: -2147483647
+    m_guid: 2000b24f9d360894fa789aebd13b7c97
+    m_object: {fileID: 6396071787999019817, guid: 2000b24f9d360894fa789aebd13b7c97,
+      type: 3}
+  - m_name: PW_RoadWarnBoard_2
+    m_id: -2147483646
+    m_guid: 26efa8756a9b9f348be14423f048dd8a
+    m_object: {fileID: 7010110448043363399, guid: 26efa8756a9b9f348be14423f048dd8a,
+      type: 3}
+  - m_name: PW_RoadWarnCone_2
+    m_id: -2147483645
+    m_guid: 96c4d53d378f3534a977c3c63674bc40
+    m_object: {fileID: 4904119364586906909, guid: 96c4d53d378f3534a977c3c63674bc40,
+      type: 3}
+  - m_name: PW_Trailer_Pointer
+    m_id: -2147483644
+    m_guid: cc470c6d084547d408373d75849cbf54
+    m_object: {fileID: 4059997760496943660, guid: cc470c6d084547d408373d75849cbf54,
+      type: 3}
+  - m_name: PW_Concrete_2_Master
+    m_id: -2147483643
+    m_guid: e7279ba004ad9cc459543ff63e98f231
+    m_object: {fileID: 613133326282920791, guid: e7279ba004ad9cc459543ff63e98f231,
+      type: 3}
+  - m_name: PW_Road_Sign_01
+    m_id: -2147483642
+    m_guid: c60e89b3984f4814a9f0f1dd9b3d836b
+    m_object: {fileID: 482793476238250872, guid: c60e89b3984f4814a9f0f1dd9b3d836b,
+      type: 3}
+  - m_name: PW_Road_Sign_02
+    m_id: -2147483641
+    m_guid: 41f5c3017ee0dab498a640077b23638a
+    m_object: {fileID: 1343862910752130344, guid: 41f5c3017ee0dab498a640077b23638a,
+      type: 3}
+  - m_name: PW_Road_Sign_03
+    m_id: -2147483640
+    m_guid: 719916db0bf4c4e43aabd050bb1c84cb
+    m_object: {fileID: 4971719605868266391, guid: 719916db0bf4c4e43aabd050bb1c84cb,
+      type: 3}
+  - m_name: PW_Road_Sign_04
+    m_id: -2147483639
+    m_guid: b1662467895c71449b8f932d141cd8fb
+    m_object: {fileID: 1199855622974735960, guid: b1662467895c71449b8f932d141cd8fb,
+      type: 3}
+  - m_name: PW_Road_Sign_05
+    m_id: -2147483638
+    m_guid: 3038dc28383ba07448f67df565541928
+    m_object: {fileID: 8173545665621169923, guid: 3038dc28383ba07448f67df565541928,
+      type: 3}
+  - m_name: PW_Road_Sign_06
+    m_id: -2147483637
+    m_guid: 7a80bb1b608bc134ea7389a0ab159aa3
+    m_object: {fileID: 6827579018918263041, guid: 7a80bb1b608bc134ea7389a0ab159aa3,
+      type: 3}
+  - m_name: PW_Road_Sign_07
+    m_id: -2147483636
+    m_guid: 6a78c4b151341924882f633d2368f943
+    m_object: {fileID: 7481215023251334704, guid: 6a78c4b151341924882f633d2368f943,
+      type: 3}
+  - m_name: PW_Road_Sign_08
+    m_id: -2147483635
+    m_guid: 1aeb1f3dd0d4da845a1f4d73e2adbb02
+    m_object: {fileID: 1111289273005946065, guid: 1aeb1f3dd0d4da845a1f4d73e2adbb02,
+      type: 3}
+  - m_name: PW_Road_Sign_09
+    m_id: -2147483634
+    m_guid: e9b5a3fd36310cd4989a7748faea4043
+    m_object: {fileID: 4156184665455711761, guid: e9b5a3fd36310cd4989a7748faea4043,
+      type: 3}
+  - m_name: PW_Road_Sign_10
+    m_id: -2147483633
+    m_guid: 325b2fbaddeb4ea4290037d65a737a24
+    m_object: {fileID: 5774239710036299856, guid: 325b2fbaddeb4ea4290037d65a737a24,
+      type: 3}
+  - m_name: PW_Road_Sign_11
+    m_id: -2147483632
+    m_guid: 165bc81ced30da741b385b98eeb7b9bc
+    m_object: {fileID: 5747416315274771898, guid: 165bc81ced30da741b385b98eeb7b9bc,
+      type: 3}
+  - m_name: PW_Road_Sign_12
+    m_id: -2147483631
+    m_guid: 199d97b41be727a4eb46310b1e77cffb
+    m_object: {fileID: 6318485994425028646, guid: 199d97b41be727a4eb46310b1e77cffb,
+      type: 3}
+  - m_name: PW_Road_Sign_13
+    m_id: -2147483630
+    m_guid: 5ab1458cb437821428d2db28b88a3b3c
+    m_object: {fileID: 8764025371913204723, guid: 5ab1458cb437821428d2db28b88a3b3c,
+      type: 3}
+  - m_name: PW_Road_Sign_14
+    m_id: -2147483629
+    m_guid: 19093cda0cb33d14a9057a898bc0d3f8
+    m_object: {fileID: 7632074221199254616, guid: 19093cda0cb33d14a9057a898bc0d3f8,
+      type: 3}
+  - m_name: PW_Road_Sign_15
+    m_id: -2147483628
+    m_guid: c69b1bfeb9aa9f54fbbf6537379a6f32
+    m_object: {fileID: 8499263556382413424, guid: c69b1bfeb9aa9f54fbbf6537379a6f32,
+      type: 3}
+  - m_name: PW_BumpBorder_1
+    m_id: -2147483627
+    m_guid: de6f5aff0e5ae404a93539e8b6751b2e
+    m_object: {fileID: 105860152798817040, guid: de6f5aff0e5ae404a93539e8b6751b2e,
+      type: 3}
+  - m_name: PW_Street_Lamp_01
+    m_id: -2147483626
+    m_guid: ec8025adc0496d242a640be43e6c1607
+    m_object: {fileID: 3330552484794139484, guid: ec8025adc0496d242a640be43e6c1607,
+      type: 3}
+  - m_name: PW_SpeedBump
+    m_id: -2147483625
+    m_guid: 8f78a657a1fff0a46850a61c6fad19df
+    m_object: {fileID: 8929437380717668161, guid: 8f78a657a1fff0a46850a61c6fad19df,
+      type: 3}
+  - m_name: Traffic Lights
+    m_id: -2147483624
+    m_guid: 6d391ac2f616f9e4eb8081124a3aaeaa
+    m_object: {fileID: 5844844053782500797, guid: 6d391ac2f616f9e4eb8081124a3aaeaa,
+      type: 3}
+  - m_name: PW_Traffic_light_01
+    m_id: -2147483623
+    m_guid: e64a1b6d4fb13494b8ea59319bdf3f6a
+    m_object: {fileID: 4209643177477094740, guid: e64a1b6d4fb13494b8ea59319bdf3f6a,
+      type: 3}
+  - m_name: PW_Traffic_light_02
+    m_id: -2147483622
+    m_guid: f4a713d4abce4b84a8c9791254b03f26
+    m_object: {fileID: 1477798692014937521, guid: f4a713d4abce4b84a8c9791254b03f26,
+      type: 3}
+  - m_name: PW_Traffic_light_03
+    m_id: -2147483621
+    m_guid: 876cf6db07cf2e14e986cb0d5ac32c2f
+    m_object: {fileID: 8843503393954104596, guid: 876cf6db07cf2e14e986cb0d5ac32c2f,
+      type: 3}
+  - m_name: PW_Traffic_light_04
+    m_id: -2147483620
+    m_guid: deec07f128c55a140b4edea89132437b
+    m_object: {fileID: 1907474047258916168, guid: deec07f128c55a140b4edea89132437b,
+      type: 3}
+  - m_name: PW_Traffic_light_05
+    m_id: -2147483619
+    m_guid: 6598580460064934987795b8ae2c36dd
+    m_object: {fileID: 2479469933438335227, guid: 6598580460064934987795b8ae2c36dd,
+      type: 3}

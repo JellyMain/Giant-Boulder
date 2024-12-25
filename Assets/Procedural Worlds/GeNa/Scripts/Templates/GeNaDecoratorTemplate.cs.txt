@@ -1,0 +1,29 @@
+﻿using System.Collections;
+using UnityEngine;
+using GeNa.Core;
+public class #SCRIPTNAME# : MonoBehaviour, IDecorator
+{
+    // Determines whether this Decorator should Unpack if it is a Prefab.
+    public bool UnpackPrefab => false;
+
+    // Called when Decorator is Ingested into GeNa
+    public void OnIngest(Resource resource)
+    {
+    }
+
+    // Runs once this Decorator is Spawned
+    public IEnumerator OnSelfSpawned(Resource resource)
+    {
+        yield return null;
+    }
+
+    // Runs directly after Spawning Children Decorators
+    public void OnChildrenSpawned(Resource resource)
+    {
+    }
+
+    // Runs when Spawner has requested to load references from a Palette
+    public void LoadReferences(Palette palette)
+    {
+    }
+}

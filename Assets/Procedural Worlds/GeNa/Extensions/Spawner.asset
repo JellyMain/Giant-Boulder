@@ -1,0 +1,72 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2d46d93f5b9e4f80bc7fb7d63765b932, type: 3}
+  m_Name: Spawner
+  m_EditorClassIdentifier: 
+  m_isSelected: 0
+  m_isActive: 1
+  m_spline: {fileID: 0}
+  m_spawnerEntry:
+    m_title: GeNa
+    m_info: Please wait...
+    m_target: {fileID: 0}
+    m_ground: {fileID: 0}
+    m_description: Single Spawn
+    m_isActive: 1
+    m_isSelected: 0
+    m_initialize: 1
+    m_recordUndo: 1
+    m_spawner: {fileID: 0}
+    m_flowRate: 50
+    m_spawnRange: 50
+    m_throwDistance: 10
+    m_offsetPosition: {x: 0, y: 0, z: 0}
+    m_offsetRotation: {x: 0, y: 0, z: 0}
+    m_useLargeRanges: 0
+    m_rootSpawnCall:
+      m_location: {x: 0, y: 0, z: 0}
+      m_rotation: {x: 0, y: 0, z: 0}
+      m_normal: {x: 0, y: 0, z: 0}
+      m_parent: {fileID: 0}
+      m_ground: {fileID: 0}
+      m_target: {fileID: 0}
+      m_alignEntitiesToRotation: 0
+      m_conformEntitiesToSlope: 0
+      m_snapEntitiesToGround: 0
+      m_resourceEntities: []
+      m_generated: 0
+      m_isActive: 1
+      m_spawnedLocation: {x: 0, y: 0, z: 0}
+      m_spawnDepth: 0
+      m_spawnRange: -1
+      m_throwDistance: -1
+      m_parentScale: {x: 1, y: 1, z: 1}
+      m_randomRotationY: 0
+      m_parentRotationY: 0
+      m_instancesToSpawn: 0
+      m_instancesSpawned: 0
+      m_spawnerType: 0
+      m_milliseconds: 0
+      m_canSpawn: 0
+      m_groundIsTerrain: 0
+    m_spawnCalls: []
+    m_flowRateAssigned: 1
+  m_autoIterate: 0
+  m_alignToSpline: 0
+  m_alignChildrenToSpline: 0
+  m_conformToSlope: 0
+  m_conformChildrenToSlope: 0
+  m_snapToGround: 0
+  m_snapChildrenToGround: 0
+  m_undoRecord: {fileID: 0}
+  m_intersectionBoundsSize: {x: 10, y: 10, z: 10}
+  m_checkIntersectionBounds: 0

@@ -1,4 +1,4 @@
-using Constants;
+using Const;
 using StaticData.Data;
 using UnityEngine;
 using Zenject;

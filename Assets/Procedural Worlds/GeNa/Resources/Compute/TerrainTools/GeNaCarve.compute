@@ -1,0 +1,320 @@
+﻿// Each #kernel tells which function to compile; you can have many kernels
+#pragma kernel Carve
+#include "../Includes/GPUNoiseParams.cginc"
+#include "../Includes/GPUNoise.cginc"
+#include "../Includes/Keyframes.cginc"
+
+struct LUT
+{
+    float3 position;
+    float3 tangent;
+    float time;
+};
+
+struct Curve
+{
+    float3 P0;
+    float3 P1;
+    float3 P2;
+    float3 P3;
+};
+
+Texture2D<float> _InputDisplacement;
+RWTexture2D<float> _OutputDisplacement;
+StructuredBuffer<LUT> _LUT;
+StructuredBuffer<Curve> _Curves;
+StructuredBuffer<Keyframe> _ShoulderFalloff;
+uint _LUTCount = 0;
+uint _CurveCount = 0;
+uint _ShoulderFalloffCount = 0;
+float _DetectionRadius = 10.0f;
+float _LUTSpacing = 1.0f;
+float _Edge = 0.03f;
+float _Shoulder = 0.0f;
+float _Strength = 1.0f;
+float _wResolution = 1000.0f;
+float2 _iResolution = 513.0f;
+float2 _Offset = 0.0f;
+float _HeightOffset = 0.0f;
+bool _RoadLike = false;
+
+float _HalfEdge = 0.0f;
+float _Cuttoff = 0.0f;
+float _Width = 0.0f;
+float _Proximity = 0.0f;
+bool _Flat = false;
+
+float3 Bezier(float t)
+{
+    const int index = (int)floor(t);
+    t = t - index;
+    const Curve curve = _Curves[index];
+    const float omt = 1.0f - t;
+    const float omt2 = omt * omt;
+    const float t2 = t * t;
+    float3 b = curve.P0 * (omt2 * omt) +
+        curve.P1 * (3.0f * omt2 * t) +
+        curve.P2 * (3.0f * omt * t2) +
+        curve.P3 * (t2 * t);
+    return b;
+}
+float3 Tangent(float t)
+{
+    const int index = (int)floor(t);
+    t = t - index;
+    const Curve curve = _Curves[index];
+    const float omt = 1.0f - t;
+    const float omt2 = omt * omt;
+    const float t2 = t * t;
+    const float3 vel =
+        curve.P0 * -omt2 +
+        curve.P1 * (3.0f * omt2 - 2.0f * omt) +
+        curve.P2 * (-3.0f * t2 + 2.0f * t) +
+        curve.P3 * t2;
+    return normalize(vel);
+}
+bool WithinRange(float2 pos1, float2 pos2, float range)
+{
+    const float distance = length(pos1 - pos2);
+    return distance <= range;
+}
+LUT GetLUTAtTime(float time)
+{
+    LUT result;
+    result.position = Bezier(time);
+    result.tangent = Tangent(time);
+    result.tangent.y = 0.0f;
+    result.tangent = normalize(result.tangent);
+    result.time = time;
+    return result;
+}
+bool FindNearestPoint(float2 position, LUT startLeft, LUT startRight, out LUT perpendicular)
+{
+    LUT luts[5];
+    luts[0] = startLeft;
+    luts[0].tangent = normalize(float3(luts[0].tangent.x, 0.0f, luts[0].tangent.z));
+    luts[4] = startRight;
+    luts[4].tangent = normalize(float3(luts[4].tangent.x, 0.0f, luts[4].tangent.z));
+    perpendicular = luts[0]; // initialize to prevent warning.
+    int loopCount = 0;
+    bool result = false;
+    bool searching = true;
+    while (searching)
+    {
+        loopCount++;
+        // Find center (luts[2]) of left and right (luts[0] and luts[4]).
+        luts[2] = GetLUTAtTime((luts[0].time + luts[4].time) * 0.5f);
+        // Find the mid left (luts[1]).
+        luts[1] = GetLUTAtTime((luts[0].time + luts[2].time) * 0.5f);
+        // Find the mid right (luts[3]).
+        luts[3] = GetLUTAtTime((luts[2].time + luts[4].time) * 0.5f);
+        float minDist = 1e10f;
+        int minIndex = 0;
+        for (int i = 0; i < 5; i++)
+        {
+            const float dist = length(luts[i].position.xz - position);
+            if (dist < minDist)
+            {
+                minDist = dist;
+                minIndex = i;
+            }
+        }
+        // Check for end of loop
+        // (distance between left point and right point is less than some small value).
+        float maxWidth = length(luts[0].position.xz - luts[4].position.xz);
+        if (luts[0].time == luts[4].time || maxWidth < 0.00005f)
+        {
+            perpendicular = luts[minIndex];
+            result = true; //(abs(dot(luts[minIndex].tangent.xz, normalize(luts[minIndex].position.xz - position) < 0.1f)));
+            searching = false;
+        }
+        if (loopCount > 100)
+        {
+            perpendicular = luts[minIndex];
+            result = (abs(dot(luts[minIndex].tangent.xz, normalize(luts[minIndex].position.xz - position) < 0.1f)));
+            searching = false;
+        }
+
+        // Prepare left and right
+        if (minIndex > 0)
+        {
+            // Select minIndex - 1 as Left
+            luts[0] = luts[minIndex - 1];
+            // (luts[0], luts[minIndex - 1]) = (luts[minIndex - 1], luts[0]);
+        }
+        if (minIndex < 4)
+        {
+            // select minIndex + 1 as Right
+            luts[4] = luts[minIndex + 1];
+            // (luts[4], luts[minIndex + 1]) = (luts[minIndex + 1], luts[4]);
+        }
+    }
+    return result;
+}
+float GetFalloff(float noise, float normalizedDistance)
+{
+    float falloff = 1.0f;
+    float denormDistance = normalizedDistance * _wResolution;
+    if (denormDistance < _Cuttoff && _Shoulder > 0.0f)
+    {
+        float shoulderPos = denormDistance - _HalfEdge;
+        if (shoulderPos >= 0.0f)
+        {
+            float normalizedShoulderPos = (_Shoulder - shoulderPos) / _Shoulder;
+            if (normalizedShoulderPos >= 0.0f)
+            {
+                if (_NoisemapEnabled)
+                {
+                    falloff += noise * _NoisemapStrength * EvaluateFalloff(normalizedShoulderPos, _NoiseFalloff, _NoiseFalloffCount); // noise falloff
+                }
+
+                falloff *= EvaluateFalloff(1.0f - normalizedShoulderPos, _ShoulderFalloff, _ShoulderFalloffCount);
+            }
+        }
+    }
+    return falloff;
+}
+// Find the height of the result at the current position
+float2 FindHeight(float noise, float baseHeight, float2 position)
+{
+    float2 retVal;
+    bool withinWidth = false;
+    float minHeight = 1e10f;
+    float height = 0.0f;
+    float avgFalloff = 0.0f;
+    uint contiguousLUTCount = 1;
+
+    // GetClosestLUTs
+    for (uint i = 0; i < _LUTCount; i += contiguousLUTCount)
+    {
+        contiguousLUTCount = 1;
+
+        if (WithinRange(_LUT[i].position.xz, position, _DetectionRadius))
+        {
+            for (uint j = i + 1; j < _LUTCount; j++)
+            {
+                if (WithinRange(_LUT[j].position.xz, position, _DetectionRadius))
+                    contiguousLUTCount++;
+                else
+                    break;
+            }
+            // Ensure we haven't jumped backwards to a different curve way off somewhere.
+            int leftIndex = (i > 0) ? i - 1 : i;
+            if (!WithinRange(_LUT[leftIndex].position.xz, position, _DetectionRadius + _LUTSpacing))
+                leftIndex = i;
+            // Ensure we haven't jumped forward to a different curve way off somewhere.
+            int rightIndex = (i + contiguousLUTCount < _LUTCount) ? i + contiguousLUTCount : i + contiguousLUTCount - 1;
+            if (!WithinRange(_LUT[rightIndex].position.xz, position, _DetectionRadius + _LUTSpacing))
+                rightIndex = i + contiguousLUTCount - 1;
+            LUT left = _LUT[leftIndex];
+            LUT right = _LUT[rightIndex];
+            LUT lut;
+            if (FindNearestPoint(position, left, right, lut))
+            {
+                // Filter for proximity
+                float distance = length(lut.position.xz - position);
+                if (distance > _Proximity)
+                {
+                    //i += contiguousLUTCount;
+                    continue;
+                }
+                if (_RoadLike)
+                {
+                    // Filter for Width
+                    if (distance <= _Width)
+                    {
+                        float2 tangent = normalize(lut.tangent.xz);
+                        bool havePerp = abs(dot(normalize(lut.position.xz - position), tangent)) < 0.04f || (distance < 0.01f);
+                        // Make sure it is perpendicular if we already have one that is.
+                        if (!withinWidth || havePerp)
+                        {
+                            withinWidth = true;
+                            if (lut.position.y < minHeight)
+                            {
+                                minHeight = lut.position.y;
+                                height = ((lut.position.y + _HeightOffset) * 0.5f) - baseHeight;
+                                avgFalloff = 1.0f;
+                            }
+                            else
+                            {
+                                //i += contiguousLUTCount;
+                                continue;
+                            }
+                        }
+                        if (!havePerp) // CLYDE: might need more checks here, was checking if there was more in the array also.
+                        {
+                            //i += contiguousLUTCount;
+                            continue;
+                        }
+                        withinWidth = true;
+                    }
+                    else if (withinWidth)
+                    {
+                        // We already have a point that is within width
+                        // so we throw away anything else.
+                        //i += contiguousLUTCount;
+                        continue;
+                    }
+                    else
+                    {
+                        float falloff = GetFalloff(noise, distance);
+                        float y = (lut.position.y + _HeightOffset) * 0.5f;
+                        height += ((y - baseHeight) - height) * falloff;
+                        avgFalloff += (1.0f - avgFalloff) * falloff;
+                    }
+                }
+                else // Not RoadLike
+                {
+                    // Compute this lut's contribution to the overall height.
+                    if (distance <= _Width)
+                    {
+                        height = ((lut.position.y + _HeightOffset) * 0.5f) - baseHeight;
+                        avgFalloff = 1.0f;
+                    }
+                    else
+                    {
+                        float falloff = GetFalloff(noise, distance);
+                        float y = (lut.position.y + _HeightOffset) * 0.5f;
+                        height += ((y - baseHeight) - height) * falloff;
+                        avgFalloff += (1.0f - avgFalloff) * falloff;
+                    }
+                }
+            }
+        }
+        if (contiguousLUTCount < 1)
+            contiguousLUTCount = 1;
+        //i += contiguousLUTCount;
+    }
+    retVal.x = height + baseHeight;
+    retVal.y = avgFalloff;
+    return retVal;
+}
+
+[numthreads(16,16,1)]
+void Carve(uint3 id : SV_DispatchThreadID)
+{
+    float2 coordinate = (float2)id.xy + _Offset;
+    // calculate the subpixel offset (to compensate for 257x257 vs 256x256 thing).
+    float2 offset = coordinate * (float2(1.0f, 1.0f) / _iResolution.xy);
+    coordinate += offset;
+    coordinate /= _iResolution.xy;
+    float xRes = coordinate.x * _wResolution;
+    float yRes = coordinate.y * _wResolution;
+    float3 worldPos = float3(xRes, 0.f, yRes);
+    const float baseHeight = _InputDisplacement[id.xy];
+    //---------------
+    float noise = GetNoise(worldPos.xz);
+    float2 result = FindHeight(noise, baseHeight, coordinate.xy);
+    float height = result.x;
+    float solidDisplacement = result.y * _Strength;
+    if(_Flat)
+    {
+        // Used by Clear Trees, Clear Details, Textures and Details
+        _OutputDisplacement[id.xy] = solidDisplacement * _Strength;        
+    }
+    else
+    {
+        // Used by Carve
+        _OutputDisplacement[id.xy] = height;
+    }
+}

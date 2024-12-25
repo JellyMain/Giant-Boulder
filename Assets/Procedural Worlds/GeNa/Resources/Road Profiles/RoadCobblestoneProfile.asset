@@ -1,0 +1,137 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: acbb3e111325f3042af92ccb976277fc, type: 3}
+  m_Name: RoadCobblestoneProfile
+  m_EditorClassIdentifier: 
+  m_roadParameters:
+    m_renderMode: 0
+    m_builtInRoadMaterial: {fileID: 2100000, guid: 8d9c0d1a255e826499d4245548bbc5ff, type: 2}
+    m_universalRoadMaterial: {fileID: 2100000, guid: 9e142c6707f7aab44bc257808a570be0, type: 2}
+    m_highDefinitionRoadMaterial: {fileID: 2100000, guid: 8820681aabd3f3144ab7444b969a7b54, type: 2}
+    m_builtInIntersectionMaterial: {fileID: 2100000, guid: 19c62ad1949a3dc45843c7a92aa9c1a2, type: 2}
+    m_universalIntersectionMaterial: {fileID: 2100000, guid: 5b7c71896a6d9be4e9758d55dd641d61, type: 2}
+    m_highDefinitionIntersectionMaterial: {fileID: 2100000, guid: 2b49926d11b4be040a792577c2e366e4, type: 2}
+    m_builtInRoadShaderName: Custom/PW_Road_LitBasic_BuiltIn
+    m_universalRoadShaderName: Shader Graphs/PW_Road_LitBasic_URP
+    m_highDefinitionRoadShaderName: Shader Graphs/PW_Road_LitBasic_HDRP
+    m_builtInIntersectionShaderName: Custom/PW_Road_LitBasic_BuiltIn
+    m_universalIntersectionShaderName: Shader Graphs/PW_Road_LitBasic_URP
+    m_highDefinitionIntersectionShaderName: Shader Graphs/PW_Road_LitBasic_HDRP
+    m_buildInShader: {fileID: 4800000, guid: 71f47a652aefaa44cb2eb92ed6d38a71, type: 3}
+    m_universalRoadShader: {fileID: -6465566751694194690, guid: 753a7a42c1d4cf74c890dd25e23db433, type: 3}
+    m_highDefinitionRoadShader: {fileID: -6465566751694194690, guid: 1a3f3eccdb67348428424abe00a7a221, type: 3}
+    m_builtInIntersectionShader: {fileID: 4800000, guid: 71f47a652aefaa44cb2eb92ed6d38a71, type: 3}
+    m_universalIntersectionShader: {fileID: -6465566751694194690, guid: 753a7a42c1d4cf74c890dd25e23db433, type: 3}
+    m_highDefinitionIntersectionShader: {fileID: -6465566751694194690, guid: 1a3f3eccdb67348428424abe00a7a221, type: 3}
+    m_roadAlbedoMap: {fileID: 2800000, guid: 4f1e70290fea6f24388574bb982cc4e5, type: 3}
+    m_roadTintColor: {r: 1, g: 1, b: 1, a: 1}
+    m_roadMetallicMap: {fileID: 0}
+    m_roadMetallic: 0.99
+    m_roadMetallicURP: 0
+    m_roadSmoothness: 0.255
+    m_roadNormalMap: {fileID: 2800000, guid: c7407fdca692f0e4cad250916accdac0, type: 3}
+    m_roadNormalStrength: 1
+    m_roadHeightMap: {fileID: 0}
+    m_roadHeightStrength: 0.005
+    m_roadOcclusionMap: {fileID: 0}
+    m_roadOcclusionStrength: 0.792
+    m_roadMaskMap: {fileID: 2800000, guid: cf74357752cf2da4aa065dd0c70ebda2, type: 3}
+    m_intersectionAlbedoMap: {fileID: 2800000, guid: 4f1e70290fea6f24388574bb982cc4e5, type: 3}
+    m_intersectionTintColor: {r: 1, g: 1, b: 1, a: 1}
+    m_intersectionMetallicMap: {fileID: 0}
+    m_intersectionMetallic: 0.99
+    m_intersectionMetallicURP: 0
+    m_intersectionSmoothness: 0.255
+    m_intersectionNormalMap: {fileID: 2800000, guid: c7407fdca692f0e4cad250916accdac0, type: 3}
+    m_intersectionNormalStrength: 1
+    m_intersectionHeightMap: {fileID: 0}
+    m_intersectionHeightStrength: 0.005
+    m_intersectionOcclusionMap: {fileID: 0}
+    m_intersectionOcclusionStrength: 0.792
+    m_intersectionMaskMap: {fileID: 2800000, guid: cf74357752cf2da4aa065dd0c70ebda2, type: 3}
+    m_maskMapMetallicEnabled: 0
+    m_maskMapAOEnabled: 1
+    m_maskMapHeightEnabled: 1
+    m_maskMapSmoothnessEnabled: 1
+    m_maskMapMetallic: 1
+    m_maskMapAO: 1
+    m_maskMapHeight: 1
+    m_maskMapSmoothness: 1
+    m_MaskMapMod: {x: 1, y: 1, z: 1, w: 1}
+    m_surfaceBlend: 0
+    m_surfaceBlendPower: 0.4
+    m_terrainLODOffset: 5
+    m_terrainLODDistance: 2000
+    m_middleTrackPosition: 0.288
+    m_middleTrackRange: 1
+    m_heightContrast: 0
+    m_heightTransition: 5
+    m_edgeBlend: 0.352
+    m_edgeBlendPower: 20
+    m_roadShape: 0
+    m_doubleTrackPosition: 1
+    m_doubleTrackRange: 1
+    m_doubleTrackRoads: 0
+    m_uvTiling: {x: 1, y: 1}
+    m_scaleFromCenter: 1
+    m_blendWithGround: 0
+    m_inGroundPush: 0.5
+    m_noise:
+      m_enabled: 0
+      m_noiseFalloff:
+        serializedVersion: 2
+        m_Curve:
+        - serializedVersion: 3
+          time: 0
+          value: 0
+          inSlope: 0
+          outSlope: 0
+          tangentMode: 0
+          weightedMode: 0
+          inWeight: 0
+          outWeight: 0
+        - serializedVersion: 3
+          time: 0.5
+          value: 1
+          inSlope: 0
+          outSlope: 0
+          tangentMode: 0
+          weightedMode: 0
+          inWeight: 0
+          outWeight: 0
+        - serializedVersion: 3
+          time: 1
+          value: 0
+          inSlope: 0
+          outSlope: 0
+          tangentMode: 0
+          weightedMode: 0
+          inWeight: 0
+          outWeight: 0
+        m_PreInfinity: 2
+        m_PostInfinity: 2
+        m_RotationOrder: 4
+      m_noiseType: 0
+      m_strength: -0.07
+      m_seed: 5010
+      m_octaves: 15
+      m_persistence: 0.65
+      m_frequency: 1
+      m_lacunarity: 3
+      m_amplitude: 1
+      m_offset: {x: 0, y: 0}
+      m_warp: 0
+      m_warp0: 0
+      m_damp: 0
+      m_damp0: 0
+      m_dampScale: 0
+      m_ridgedOffset: 0

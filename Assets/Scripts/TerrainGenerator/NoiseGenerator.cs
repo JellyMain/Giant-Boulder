@@ -242,30 +242,17 @@ namespace TerrainGenerator
                     }
                 }
             }
-
-
-            // Texture2D heightMapCorrectionTexture =
-            //     Resources.Load<Texture2D>("BaseHeightMaps/map2");
-            //
-            // Color[] heightMapCorrection = heightMapCorrectionTexture.GetPixels();
-            //
-            //
-            // Color[][] chunkedHeightMapCorrection =
-            //     HeightMapCorrectionHelper.DivideCorrectionMap(heightMapCorrection, chunkSize, terrainMapSize);
+            
 
             for (int i = 0; i < terrainHeightMapsNative.Length; i++)
             {
                 terrainHeightMaps[i] = new float[terrainHeightMapsNative[i].Length];
-                // Color[] correctionMap = chunkedHeightMapCorrection[i];
 
                 for (int j = 0; j < terrainHeightMaps[i].Length; j++)
                 {
                     terrainHeightMaps[i][j] = Mathf.InverseLerp(globalMinNoiseHeight, globalMaxNoiseHeight,
                         terrainHeightMapsNative[i][j]);
 
-                    // terrainHeightMaps[i][j] += (1f - correctionMap[j].grayscale) * 0.1f;
-                    //
-                    // terrainHeightMaps[i][j] = Mathf.Clamp01(terrainHeightMaps[i][j]);
                 }
 
                 terrainHeightMapsNative[i].Dispose();

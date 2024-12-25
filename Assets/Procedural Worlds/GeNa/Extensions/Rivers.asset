@@ -1,0 +1,40 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 94a190627c291604fa2663e26d6cb787, type: 3}
+  m_Name: Rivers
+  m_EditorClassIdentifier: 
+  m_isSelected: 0
+  m_isActive: 1
+  m_spline: {fileID: 0}
+  m_riverProfile: {fileID: 11400000, guid: 997ef9f7640a9d04291630ee12a657a5, type: 2}
+  m_currentMaterial: {fileID: 0}
+  m_seaLevel: 25
+  m_useGaiaSeaLevel: 1
+  m_startFlow: 0.2
+  m_vertexDistance: 3
+  m_bankOverstep: 1
+  m_splineSmoothing: 0.82
+  m_riverWidth: 20
+  m_capDistance: 15
+  m_endCapDistance: 0
+  m_addCollider: 1
+  m_shadowsCast: 0
+  m_shadowsReceive: 0
+  m_raycastTerrainOnly: 1
+  m_useWorldspaceTextureWidth: 0
+  m_worldspaceWidth: 15
+  m_tag: Untagged
+  m_layer: 0
+  m_splitAtTerrains: 1
+  m_autoUpdateOnTerrainChange: 0
+  m_meshRenderer: {fileID: 0}
+  m_bakedMeshes: []

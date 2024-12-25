@@ -1,0 +1,114 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 683f1519800d3cb4ba28248dec3c71ef, type: 3}
+  m_Name: GeNa River Profile Green
+  m_EditorClassIdentifier: 
+  m_riverParamaters:
+    m_renderMode: 0
+    m_isUsedForWeather: 0
+    m_builtInRiverMaterial: {fileID: 2100000, guid: d9b32f8262a629a4baad4a2d14180f21,
+      type: 2}
+    m_universalRiverMaterial: {fileID: 0}
+    m_highDefinitionRiverMaterial: {fileID: 0}
+    m_builtInRiverShader: {fileID: 4800000, guid: 1c7c3d034fa35cf419f4e9a97c439544,
+      type: 3}
+    m_builtInRiverShaderName: 
+    m_universalRiverShader: {fileID: 0}
+    m_universalRiverShaderName: 
+    m_highDefinitionRiverShader: {fileID: 0}
+    m_highDefinitionRiverShaderName: 
+    m_mainColor: {r: 0.11, g: 0.169, b: 0.056, a: 1}
+    m_mainColorDepthStrength: 0.729
+    m_tintColor: {r: 0.716, g: 0.521, b: 0.375, a: 1}
+    m_tintStrength: 1
+    m_smoothness: 0.95
+    m_specularColor: {r: 0.423, g: 0.423, b: 0.423, a: 1}
+    m_speed: 0.158
+    m_normalShift: 0.05
+    m_shoreBlend: 0.13
+    m_shoreNormalBlend: 0.4
+    m_normalAndHeightMap: {fileID: 2800000, guid: a6b025576fde69d40adf6df65605f19d,
+      type: 3}
+    m_normalAndHeightMapTiling: {x: 2, y: 0.25}
+    m_normalStrength: 0.341
+    m_shoreRippleHeight: 0.16
+    m_refractionStrength: 0.1
+    m_foamColor: {r: 1, g: 1, b: 1, a: 0.219}
+    m_foamAlbedoMap: {fileID: 2800000, guid: e6f9644bcfc3b224fa5b9610f0f25b08, type: 3}
+    m_foamAlbedoMapTiling: {x: 2, y: 0.2}
+    m_foamNormalMap: {fileID: 2800000, guid: 621d23c98a986664dbacb7b51a392184, type: 3}
+    m_foamNormalStrength: 0.633
+    m_foamMaskMap: {fileID: 2800000, guid: ad86f7f9cdf718d4dacc75cfc0c4c803, type: 3}
+    m_foamShoreBlend: 0.115
+    m_foamHeight: 0.129
+    m_foamRipple: 0.09
+    m_foamSpeed: 0.182
+    m_seaLevelBlend: 0.5
+    m_seaLevelFoamColor: {r: 1, g: 1, b: 1, a: 0.78}
+    m_seaLevelFoamNormalStrength: 1
+    m_pBRColor:
+      serializedVersion: 2
+      rgba: 4076863239
+  m_riverFlowParamaters:
+    m_renderMode: 0
+    m_isUsedForWeather: 0
+    m_builtInRiverMaterial: {fileID: 0}
+    m_universalRiverMaterial: {fileID: 0}
+    m_highDefinitionRiverMaterial: {fileID: 0}
+    m_builtInRiverShader: {fileID: 0}
+    m_builtInRiverShaderName: 
+    m_universalRiverShader: {fileID: 0}
+    m_universalRiverShaderName: 
+    m_highDefinitionRiverShader: {fileID: 0}
+    m_highDefinitionRiverShaderName: 
+    m_waterFogColor: {r: 0.139, g: 0.236, b: 0.261, a: 1}
+    m_waterFogDensity: 2.5
+    m_fogBlurDepth: 1.3
+    m_fogBlurAmount: 0.0076
+    m_wetness: 0.6
+    m_refractionStrength: 0.5
+    m_smoothness: 0.9
+    m_useLUTColor: 0
+    m_colorLUT: {fileID: 0}
+    m_colorLUTDepth: 1.69
+    m_colorLUTShift: 0
+    m_colorLUTTint: {r: 1, g: 1, b: 1, a: 1}
+    m_derivMap: {fileID: 0}
+    m_foamMap: {fileID: 0}
+    m_noiseMap: {fileID: 0}
+    m_speed: 0.25
+    m_flowStrength: 0.1
+    m_normalIntensityConstant: 0.75
+    m_normalIntensityModulated: 0.9
+    m_scale: 5
+    m_randomAmount: 3.5
+    m_slopeStrength: 0.1
+    m_causticsMap: {fileID: 0}
+    m_causticsScale: 3
+    m_causticsDepth: 0.11
+    m_causticsIntensity: 0.7
+    m_causticsHeight: 0.3
+    m_causticsBrightness: 6
+    m_depthFalloff: 0.6
+    m_depthEdgePower: 7.5
+    m_foamDiffuse: {fileID: 0}
+    m_foamNormal: {fileID: 0}
+    m_foamScale: 30
+    m_foamSpeed: 0.05
+    m_foamSlopeStrength: 80
+    m_foamSlopeContrast: 1.8
+    m_seaLevelBlend: 0.5
+  m_weatherParamaters:
+    m_rainRiverProfile: {fileID: 11400000, guid: 53b278ff29553c34dbdadd4ebd11d9ad,
+      type: 2}
+    m_snowRiverProfile: {fileID: 11400000, guid: 822491e8e572bd644b0e1d9489b3a714,
+      type: 2}
