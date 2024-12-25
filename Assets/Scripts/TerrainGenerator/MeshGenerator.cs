@@ -39,18 +39,23 @@ namespace TerrainGenerator
                     Vector3 vertexD = new Vector3(topLeftX + x + lod, heightMap[x + lod, y + lod] * vertexDMultiplier,
                         topLeftY - y - lod);
 
+                    Vector2 uvA = new Vector2((float)x / (width - 1), (float)y / (height - 1));
+                    Vector2 uvB = new Vector2((float)(x + lod) / (width - 1), (float)y / (height - 1));
+                    Vector2 uvC = new Vector2((float)x / (width - 1), (float)(y + lod) / (height - 1));
+                    Vector2 uvD = new Vector2((float)(x + lod) / (width - 1), (float)(y + lod) / (height - 1));
+
 
                     Color firstTriangleColor = EvaluateVertexColorGradient(vertexA, vertexB, vertexD, vertexAMultiplier,
                         vertexBMultiplier, vertexDMultiplier, gradient);
 
-                    meshData.AddTriangle(vertexA, vertexB, vertexD, firstTriangleColor);
+                    meshData.AddTriangle(vertexA, vertexB, vertexD, firstTriangleColor, uvA, uvB, uvD);
 
 
                     Color secondTriangleColor = EvaluateVertexColorGradient(vertexC, vertexA, vertexD,
                         vertexCMultiplier,
                         vertexAMultiplier, vertexDMultiplier, gradient);
 
-                    meshData.AddTriangle(vertexC, vertexA, vertexD, secondTriangleColor);
+                    meshData.AddTriangle(vertexC, vertexA, vertexD, secondTriangleColor, uvC, uvA, uvD);
                 }
             }
 
@@ -100,17 +105,22 @@ namespace TerrainGenerator
                         topLeftY - y - lod);
 
 
+                    Vector2 uvA = new Vector2((float)x / (width - 1), (float)y / (height - 1));
+                    Vector2 uvB = new Vector2((float)(x + lod) / (width - 1), (float)y / (height - 1));
+                    Vector2 uvC = new Vector2((float)x / (width - 1), (float)(y + lod) / (height - 1));
+                    Vector2 uvD = new Vector2((float)(x + lod) / (width - 1), (float)(y + lod) / (height - 1));
+
                     Color firstTriangleColor = EvaluateVertexColorGradient(vertexA, vertexB, vertexD, vertexAMultiplier,
                         vertexBMultiplier, vertexDMultiplier, gradient);
 
-                    meshData.AddTriangle(vertexA, vertexB, vertexD, firstTriangleColor);
+                    meshData.AddTriangle(vertexA, vertexB, vertexD, firstTriangleColor, uvA, uvB, uvD);
 
 
                     Color secondTriangleColor = EvaluateVertexColorGradient(vertexC, vertexA, vertexD,
                         vertexCMultiplier,
                         vertexAMultiplier, vertexDMultiplier, gradient);
 
-                    meshData.AddTriangle(vertexC, vertexA, vertexD, secondTriangleColor);
+                    meshData.AddTriangle(vertexC, vertexA, vertexD, secondTriangleColor, uvC, uvA, uvD);
                 }
             }
 
