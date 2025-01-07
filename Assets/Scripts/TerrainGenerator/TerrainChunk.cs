@@ -1,3 +1,4 @@
+using UnityEditor;
 using UnityEngine;
 
 
@@ -6,8 +7,9 @@ namespace TerrainGenerator
     public class TerrainChunk
     {
         private MeshRenderer meshRenderer;
-        private MeshFilter meshFilter;
+        public MeshFilter meshFilter;
         private readonly GameObject chunkGameObject;
+        private readonly MeshCollider meshCollider;
 
 
         public TerrainChunk(Material material, Vector3 position, MeshData meshData)
@@ -19,6 +21,9 @@ namespace TerrainGenerator
             meshFilter = chunkGameObject.AddComponent<MeshFilter>();
 
             meshFilter.mesh = meshData.CreateMesh();
+            
+           meshCollider =  chunkGameObject.AddComponent<MeshCollider>();
+           meshCollider.sharedMesh = meshFilter.mesh;
 
             meshRenderer.material = material;
         }

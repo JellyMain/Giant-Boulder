@@ -1,0 +1,272 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8c477de684ee10c4082f9fddf19a75ce, type: 3}
+  m_Name: WesternTownPallet
+  m_EditorClassIdentifier: 
+  m_paletteEntryIDCount: -2147483584
+  m_paletteEntries:
+  - m_name: bank-western
+    m_id: -2147483647
+    m_guid: 4138da760334c734d865ce44a176d88d
+    m_object: {fileID: 1000012009205010, guid: 4138da760334c734d865ce44a176d88d, type: 3}
+  - m_name: church-western
+    m_id: -2147483646
+    m_guid: 8c2c1fd0d61eae24cb2cb408db963916
+    m_object: {fileID: 1000012591523224, guid: 8c2c1fd0d61eae24cb2cb408db963916, type: 3}
+  - m_name: hotel-western
+    m_id: -2147483645
+    m_guid: 2aca6dbea451ee24f8a98fa0d936b533
+    m_object: {fileID: 1000012643304872, guid: 2aca6dbea451ee24f8a98fa0d936b533, type: 3}
+  - m_name: scheriff-western
+    m_id: -2147483644
+    m_guid: 48191631eca8d334ea2fa2c6e89e13a4
+    m_object: {fileID: 1000012824497580, guid: 48191631eca8d334ea2fa2c6e89e13a4, type: 3}
+  - m_name: gunsmith-western
+    m_id: -2147483643
+    m_guid: 4bef31f7cfb0377419e6b7da307a0a28
+    m_object: {fileID: 1000011644842564, guid: 4bef31f7cfb0377419e6b7da307a0a28, type: 3}
+  - m_name: house-medieval-medium
+    m_id: -2147483642
+    m_guid: be44107002abe0046a8a7f08bbf0eef1
+    m_object: {fileID: 1000012383013900, guid: be44107002abe0046a8a7f08bbf0eef1, type: 3}
+  - m_name: house-medieval-small
+    m_id: -2147483641
+    m_guid: d9f771127f198ea40869d419a85f3b89
+    m_object: {fileID: 1000012625864402, guid: d9f771127f198ea40869d419a85f3b89, type: 3}
+  - m_name: house-medieval-big
+    m_id: -2147483640
+    m_guid: 02b6852f899a15d44957b934349e7e9a
+    m_object: {fileID: 1000012191212250, guid: 02b6852f899a15d44957b934349e7e9a, type: 3}
+  - m_name: tent-teepee
+    m_id: -2147483639
+    m_guid: 4c8d7c28857a2ee4981cc7cc5ddf53f9
+    m_object: {fileID: 1000012523339018, guid: 4c8d7c28857a2ee4981cc7cc5ddf53f9, type: 3}
+  - m_name: water-tower-western
+    m_id: -2147483638
+    m_guid: 0bd3cd68ddcbf744ea73b61ba2b530e8
+    m_object: {fileID: 1000010031337160, guid: 0bd3cd68ddcbf744ea73b61ba2b530e8, type: 3}
+  - m_name: windmill-western
+    m_id: -2147483637
+    m_guid: 20b5ed52db7a0be43a1faa03583f0863
+    m_object: {fileID: 1000012363713174, guid: 20b5ed52db7a0be43a1faa03583f0863, type: 3}
+  - m_name: windmill-medieval
+    m_id: -2147483636
+    m_guid: f22da9d86c091ed469941d5241e1945f
+    m_object: {fileID: 6781617192719903493, guid: f22da9d86c091ed469941d5241e1945f, type: 3}
+  - m_name: pole-electric
+    m_id: -2147483635
+    m_guid: 4b66b3e95c9654989b606017f52bb4b4
+    m_object: {fileID: 1000012229542692, guid: 4b66b3e95c9654989b606017f52bb4b4, type: 3}
+  - m_name: well
+    m_id: -2147483634
+    m_guid: a95afc340b7d21348a22207edba026df
+    m_object: {fileID: 1000013729230236, guid: a95afc340b7d21348a22207edba026df, type: 3}
+  - m_name: gibbet
+    m_id: -2147483633
+    m_guid: 36352eff376f1694ca6d9fc2d59acc45
+    m_object: {fileID: 1000011749444418, guid: 36352eff376f1694ca6d9fc2d59acc45, type: 3}
+  - m_name: crate-box
+    m_id: -2147483632
+    m_guid: 862cc76e7c4d26a46a30c4bb7290d771
+    m_object: {fileID: 164854, guid: 862cc76e7c4d26a46a30c4bb7290d771, type: 3}
+  - m_name: crate-box-traingle
+    m_id: -2147483631
+    m_guid: 1ed82242ee4ea44a5bf1ba69defa1e46
+    m_object: {fileID: 1224550385178844, guid: 1ed82242ee4ea44a5bf1ba69defa1e46, type: 3}
+  - m_name: table-crafting-wood
+    m_id: -2147483630
+    m_guid: 6566e9a37c11d844ba0dd05e39e15e3c
+    m_object: {fileID: 8440594398049631203, guid: 6566e9a37c11d844ba0dd05e39e15e3c, type: 3}
+  - m_name: table-wood
+    m_id: -2147483629
+    m_guid: 8036420a35be94a7fb651ad06f9c6a7d
+    m_object: {fileID: 1988507828170952, guid: 8036420a35be94a7fb651ad06f9c6a7d, type: 3}
+  - m_name: revolver
+    m_id: -2147483628
+    m_guid: c11754706658c4b47aefdcd5c852b0d5
+    m_object: {fileID: 1000010616077926, guid: c11754706658c4b47aefdcd5c852b0d5, type: 3}
+  - m_name: baseball-bat-nails
+    m_id: -2147483627
+    m_guid: d91a048114de88342b96a5a61cc0dd11
+    m_object: {fileID: 5288618211303558801, guid: d91a048114de88342b96a5a61cc0dd11, type: 3}
+  - m_name: dynamite-pack
+    m_id: -2147483626
+    m_guid: 840654092ea6040168a5a9773c5ce7d5
+    m_object: {fileID: 1628708006133404, guid: 840654092ea6040168a5a9773c5ce7d5, type: 3}
+  - m_name: pipe-peace
+    m_id: -2147483625
+    m_guid: b2391208d93464be6bd31bd635d6e3e0
+    m_object: {fileID: 1872319973368928, guid: b2391208d93464be6bd31bd635d6e3e0, type: 3}
+  - m_name: horse-wagon
+    m_id: -2147483624
+    m_guid: ee8b582e8f62b4b95bf43dbcfbba3aa1
+    m_object: {fileID: 1000014059375746, guid: ee8b582e8f62b4b95bf43dbcfbba3aa1, type: 3}
+  - m_name: dryer
+    m_id: -2147483623
+    m_guid: 924970bfe2c944f4ab65a7a48c9386cc
+    m_object: {fileID: 1000012271056116, guid: 924970bfe2c944f4ab65a7a48c9386cc, type: 3}
+  - m_name: totem
+    m_id: -2147483622
+    m_guid: be9b2e01588664462a44d348c51d20b2
+    m_object: {fileID: 1000012214322604, guid: be9b2e01588664462a44d348c51d20b2, type: 3}
+  - m_name: horse-rest
+    m_id: -2147483621
+    m_guid: 7e75cb804980a4d96be574092277be0f
+    m_object: {fileID: 1644517415283858, guid: 7e75cb804980a4d96be574092277be0f, type: 3}
+  - m_name: barrel-old
+    m_id: -2147483620
+    m_guid: ef4fcc24e9a681a45bf87bec627dd9fd
+    m_object: {fileID: 150946, guid: ef4fcc24e9a681a45bf87bec627dd9fd, type: 3}
+  - m_name: rocket-launcher
+    m_id: -2147483619
+    m_guid: 0358544021a109240bc4c35dcf1aa51c
+    m_object: {fileID: 2535124974906821252, guid: 0358544021a109240bc4c35dcf1aa51c, type: 3}
+  - m_name: thompson
+    m_id: -2147483618
+    m_guid: 952dfbbbbc76a4680b816fcb74d9dff6
+    m_object: {fileID: 1496263855615430, guid: 952dfbbbbc76a4680b816fcb74d9dff6, type: 3}
+  - m_name: fence
+    m_id: -2147483617
+    m_guid: 1be5e82b1cbc5d243947fbcf678997fa
+    m_object: {fileID: 145726, guid: 1be5e82b1cbc5d243947fbcf678997fa, type: 3}
+  - m_name: sheep-white
+    m_id: -2147483616
+    m_guid: 528266c03dd795f41abf9cdbd9f22723
+    m_object: {fileID: 2907478182625398450, guid: 528266c03dd795f41abf9cdbd9f22723, type: 3}
+  - m_name: cow
+    m_id: -2147483615
+    m_guid: 9a815260d221d5148a6982446170b26c
+    m_object: {fileID: 5344190259458742212, guid: 9a815260d221d5148a6982446170b26c, type: 3}
+  - m_name: frog
+    m_id: -2147483614
+    m_guid: 97d75f20596b09648b884878a1d6c055
+    m_object: {fileID: 8709855728906446092, guid: 97d75f20596b09648b884878a1d6c055, type: 3}
+  - m_name: house-medieval-big
+    m_id: -2147483613
+    m_guid: c6b691ccc7c344c26be1a221941cf784
+    m_object: {fileID: 1000012436410748, guid: c6b691ccc7c344c26be1a221941cf784, type: 3}
+  - m_name: house-medieval-small
+    m_id: -2147483612
+    m_guid: a7bf118bac2814243a2a537f2d30b464
+    m_object: {fileID: 1000012220655982, guid: a7bf118bac2814243a2a537f2d30b464, type: 3}
+  - m_name: house-medieval-medium
+    m_id: -2147483611
+    m_guid: 8fa9ef72a3d914a1e9dbf40348df8d36
+    m_object: {fileID: 1000012889458254, guid: 8fa9ef72a3d914a1e9dbf40348df8d36, type: 3}
+  - m_name: house-medieval-large
+    m_id: -2147483610
+    m_guid: 522e2469cc151224b98a6a4beec9e9b7
+    m_object: {fileID: 3621070163841809328, guid: 522e2469cc151224b98a6a4beec9e9b7, type: 3}
+  - m_name: bench-wood
+    m_id: -2147483609
+    m_guid: 681e08f5119d043f7a9aff81be0e6642
+    m_object: {fileID: 1570793367774316, guid: 681e08f5119d043f7a9aff81be0e6642, type: 3}
+  - m_name: books-pile
+    m_id: -2147483608
+    m_guid: 177f6a0f913834b7b8238a6779aaeadb
+    m_object: {fileID: 1757951304376804, guid: 177f6a0f913834b7b8238a6779aaeadb, type: 3}
+  - m_name: book-open
+    m_id: -2147483607
+    m_guid: 0bafe321caa3d475daa026d61222d930
+    m_object: {fileID: 1534926244138248, guid: 0bafe321caa3d475daa026d61222d930, type: 3}
+  - m_name: house-medieval-big
+    m_id: -2147483606
+    m_guid: c6b691ccc7c344c26be1a221941cf784
+    m_object: {fileID: 1000012436410748, guid: c6b691ccc7c344c26be1a221941cf784, type: 3}
+  - m_name: house-medieval-small
+    m_id: -2147483605
+    m_guid: a7bf118bac2814243a2a537f2d30b464
+    m_object: {fileID: 1000012220655982, guid: a7bf118bac2814243a2a537f2d30b464, type: 3}
+  - m_name: house-medieval-medium
+    m_id: -2147483604
+    m_guid: 8fa9ef72a3d914a1e9dbf40348df8d36
+    m_object: {fileID: 1000012889458254, guid: 8fa9ef72a3d914a1e9dbf40348df8d36, type: 3}
+  - m_name: house-medieval-large
+    m_id: -2147483603
+    m_guid: 522e2469cc151224b98a6a4beec9e9b7
+    m_object: {fileID: 3621070163841809328, guid: 522e2469cc151224b98a6a4beec9e9b7, type: 3}
+  - m_name: bench-wood
+    m_id: -2147483602
+    m_guid: 681e08f5119d043f7a9aff81be0e6642
+    m_object: {fileID: 1570793367774316, guid: 681e08f5119d043f7a9aff81be0e6642, type: 3}
+  - m_name: books-pile
+    m_id: -2147483601
+    m_guid: 177f6a0f913834b7b8238a6779aaeadb
+    m_object: {fileID: 1757951304376804, guid: 177f6a0f913834b7b8238a6779aaeadb, type: 3}
+  - m_name: book-open
+    m_id: -2147483600
+    m_guid: 0bafe321caa3d475daa026d61222d930
+    m_object: {fileID: 1534926244138248, guid: 0bafe321caa3d475daa026d61222d930, type: 3}
+  - m_name: house-medieval-big
+    m_id: -2147483599
+    m_guid: c6b691ccc7c344c26be1a221941cf784
+    m_object: {fileID: 1000012436410748, guid: c6b691ccc7c344c26be1a221941cf784, type: 3}
+  - m_name: house-medieval-small
+    m_id: -2147483598
+    m_guid: a7bf118bac2814243a2a537f2d30b464
+    m_object: {fileID: 1000012220655982, guid: a7bf118bac2814243a2a537f2d30b464, type: 3}
+  - m_name: house-medieval-medium
+    m_id: -2147483597
+    m_guid: 8fa9ef72a3d914a1e9dbf40348df8d36
+    m_object: {fileID: 1000012889458254, guid: 8fa9ef72a3d914a1e9dbf40348df8d36, type: 3}
+  - m_name: house-medieval-large
+    m_id: -2147483596
+    m_guid: 522e2469cc151224b98a6a4beec9e9b7
+    m_object: {fileID: 3621070163841809328, guid: 522e2469cc151224b98a6a4beec9e9b7, type: 3}
+  - m_name: bench-wood
+    m_id: -2147483595
+    m_guid: 681e08f5119d043f7a9aff81be0e6642
+    m_object: {fileID: 1570793367774316, guid: 681e08f5119d043f7a9aff81be0e6642, type: 3}
+  - m_name: books-pile
+    m_id: -2147483594
+    m_guid: 177f6a0f913834b7b8238a6779aaeadb
+    m_object: {fileID: 1757951304376804, guid: 177f6a0f913834b7b8238a6779aaeadb, type: 3}
+  - m_name: book-open
+    m_id: -2147483593
+    m_guid: 0bafe321caa3d475daa026d61222d930
+    m_object: {fileID: 1534926244138248, guid: 0bafe321caa3d475daa026d61222d930, type: 3}
+  - m_name: WesternTownVillegersArea
+    m_id: -2147483592
+    m_guid: 0dc4ae9ddbf229144882d49c9e549d50
+    m_object: {fileID: 4559416941746211221, guid: 0dc4ae9ddbf229144882d49c9e549d50, type: 3}
+  - m_name: house-medieval-big
+    m_id: -2147483591
+    m_guid: c6b691ccc7c344c26be1a221941cf784
+    m_object: {fileID: 1000012436410748, guid: c6b691ccc7c344c26be1a221941cf784, type: 3}
+  - m_name: house-medieval-small
+    m_id: -2147483590
+    m_guid: a7bf118bac2814243a2a537f2d30b464
+    m_object: {fileID: 1000012220655982, guid: a7bf118bac2814243a2a537f2d30b464, type: 3}
+  - m_name: bank-western
+    m_id: -2147483589
+    m_guid: a932dbbd6768144428ec400b1dca7411
+    m_object: {fileID: 1000011502659446, guid: a932dbbd6768144428ec400b1dca7411, type: 3}
+  - m_name: gunsmith-western
+    m_id: -2147483588
+    m_guid: 61dd0c3629dc34f0782b09f899b1a8b4
+    m_object: {fileID: 1000011634981670, guid: 61dd0c3629dc34f0782b09f899b1a8b4, type: 3}
+  - m_name: hotel-western
+    m_id: -2147483587
+    m_guid: 70858a3dc1d9b4c9bb832a19460a57ca
+    m_object: {fileID: 1000012818912820, guid: 70858a3dc1d9b4c9bb832a19460a57ca, type: 3}
+  - m_name: WesternTownReadHeadTents
+    m_id: -2147483586
+    m_guid: 0d88d3511b14c6c45a257f0145615f2b
+    m_object: {fileID: 7217475856691539529, guid: 0d88d3511b14c6c45a257f0145615f2b, type: 3}
+  - m_name: bank-western
+    m_id: -2147483585
+    m_guid: a932dbbd6768144428ec400b1dca7411
+    m_object: {fileID: 1000011502659446, guid: a932dbbd6768144428ec400b1dca7411, type: 3}
+  - m_name: gunsmith-western
+    m_id: -2147483584
+    m_guid: 61dd0c3629dc34f0782b09f899b1a8b4
+    m_object: {fileID: 1000011634981670, guid: 61dd0c3629dc34f0782b09f899b1a8b4, type: 3}

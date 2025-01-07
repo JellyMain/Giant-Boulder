@@ -5,7 +5,9 @@ using Sirenix.OdinInspector;
 using StaticData.Data;
 using StaticData.Services;
 using Unity.Collections;
+using UnityEditor;
 using UnityEngine;
+using Utils;
 using Zenject;
 
 
@@ -19,8 +21,7 @@ namespace TerrainGenerator
         private MapGenerationConfig mapGenerationConfig;
         private int chunkSize;
 
-
-
+        
         public MapCreator(NoiseGenerator noiseGenerator, StaticDataService staticDataService, ChunkFactory chunkFactory)
         {
             this.noiseGenerator = noiseGenerator;
@@ -31,7 +32,10 @@ namespace TerrainGenerator
 
         public void CreateMap()
         {
-            mapGenerationConfig = staticDataService.MapGenerationConfig;
+            TerrainSeason randomMapSeason = DataUtility.GetRandomEnumValue<TerrainSeason>(true);
+            
+            mapGenerationConfig = staticDataService.MapConfigForSeason(TerrainSeason.Summer);
+            
             chunkSize = mapGenerationConfig.chunkSize - 1;
 
             Vector3[] allChunkPositions = new Vector3[mapGenerationConfig.mapSize * mapGenerationConfig.mapSize];
@@ -45,7 +49,7 @@ namespace TerrainGenerator
                     allChunkPositions[y * mapGenerationConfig.mapSize + x] = chunkPosition;
                 }
             }
-            
+
 
             float[][] allTerrainHeightMapsParallel = noiseGenerator.GenerateAllHeightMapsParallel(
                 mapGenerationConfig.mapSize,
@@ -53,7 +57,6 @@ namespace TerrainGenerator
                 mapGenerationConfig.noiseScale, mapGenerationConfig.persistance, mapGenerationConfig.lacunarity,
                 mapGenerationConfig.octaves, mapGenerationConfig.seed, mapGenerationConfig.offset, allChunkPositions);
 
-            
 
             for (int y = 0; y < mapGenerationConfig.mapSize; y++)
             {
@@ -61,7 +64,13 @@ namespace TerrainGenerator
                 {
                     Vector3 position = allChunkPositions[y * mapGenerationConfig.mapSize + x];
                     float[] heightMap = allTerrainHeightMapsParallel[y * mapGenerationConfig.mapSize + x];
-                    chunkFactory.CreateChunk(position, heightMap);
+                    TerrainChunk terrainChunk = chunkFactory.CreateChunk(position, heightMap, mapGenerationConfig);
+
+                    // if (terrainChunk.meshFilter != null)
+                    // {
+                    //     string path = $"Assets/Resources/Prefabs/Terrain/TerrainChunk{x}_{y}.asset"; 
+                    //     AssetDatabase.CreateAsset(terrainChunk.meshFilter.mesh, path);
+                    // }
                 }
             }
         }

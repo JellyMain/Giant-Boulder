@@ -43,6 +43,48 @@ namespace TerrainGenerator
             vertexCount += 3;
         }
 
+
+        private Vector3[] CalculateNormals()
+        {
+            Vector3[] vertexNormals = new Vector3[vertices.Length];
+            int triangleCount = triangles.Length;
+
+            for (int i = 0; i < triangleCount; i += 3) 
+            {
+                int vertexIndexA = triangles[i];
+                int vertexIndexB = triangles[i + 1];
+                int vertexIndexC = triangles[i + 2];
+
+                Vector3 triangleNormal = SurfaceNormalFromIndices(vertexIndexA, vertexIndexB, vertexIndexC);
+
+                vertexNormals[vertexIndexA] += triangleNormal;
+                vertexNormals[vertexIndexB] += triangleNormal;
+                vertexNormals[vertexIndexC] += triangleNormal;
+            }
+
+            for (int i = 0; i < vertexNormals.Length; i++)
+            {
+                vertexNormals[i] = vertexNormals[i].normalized; 
+            }
+
+            return vertexNormals;
+        }
+
+
+
+        private Vector3 SurfaceNormalFromIndices(int indexA, int indexB, int indexC)
+        {
+            Vector3 pointA = vertices[indexA];
+            Vector3 pointB = vertices[indexB];
+            Vector3 pointC = vertices[indexC];
+
+            Vector3 sideAB = pointB - pointA;
+            Vector3 sideAC = pointC - pointA;
+
+            return Vector3.Cross(sideAB, sideAC).normalized;
+        }
+
+
         public Mesh CreateMesh()
         {
             Mesh mesh = new Mesh();
@@ -50,9 +92,10 @@ namespace TerrainGenerator
             mesh.triangles = triangles;
             mesh.colors = colors;
             mesh.uv = uvs;
-
-            mesh.RecalculateNormals();
-
+            
+            mesh.normals = CalculateNormals();
+            mesh.RecalculateBounds();
+            
             return mesh;
         }
     }
