@@ -107,7 +107,7 @@ MonoBehaviour:
     m_RotationOrder: 4
   chunkMaterial: {fileID: 2100000, guid: a7fb4acd26546ab4fb987852bd9199e4, type: 2}
   chunkSize: 101
-  lod: 1
+  lod: 5
   noiseScale: 430
   noiseMultiplier: 249
   octaves: 20
