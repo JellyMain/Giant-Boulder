@@ -1,9 +1,8 @@
 using Factories;
 using Infrastructure.GameStates;
 using Infrastructure.Services;
-using Input;
-using Input.Interfaces;
-using Input.Services;
+using PlayerInput.Interfaces;
+using PlayerInput.Services;
 using StaticData.Services;
 using TerrainGenerator;
 using UI;
@@ -34,6 +33,20 @@ namespace Infrastructure.Installers.Global
             BindMeshGenerator();
             BindChunkFactory();
             BindMapCreator();
+            BindCameraCreator();
+            BindCoinFactory();
+        }
+
+
+        private void BindCoinFactory()
+        {
+            Container.Bind<CoinsFactory>().AsSingle().NonLazy();
+        }
+
+
+        private void BindCameraCreator()
+        {
+            Container.Bind<CameraCreator>().AsSingle();
         }
 
 

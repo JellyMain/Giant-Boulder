@@ -1,0 +1,46 @@
+{\rtf1\ansi\ansicpg1252\deff0\nouicompat{\fonttbl{\f0\fswiss\fcharset0 Calibri;}{\f1\fswiss\fcharset204 Calibri;}}
+{\*\generator Riched20 10.0.19041}\viewkind4\uc1 
+\pard\nowidctlpar\sl276\slmult1\qc\ul\b\f0\fs52\lang9 How to convert Mesh object to Connectivity structure.\ulnone\b0\fs24\lang1033\par
+
+\pard\nowidctlpar\sl276\slmult1\fs22\lang9\par
+\lang1033 I\lang9 f you want to use MeshRoot/Connectivity setup you should prefragment object, export fragment meshes into asset file, then setup Rigid component, use Editor Setup to cache all connections and finally create prefab. Depends on amount of fragments, Prefab and Mesh assets size can be too big for your game. \par
+\par
+In order to avoid creating prefab and mesh assets but still use MeshRoot/Connectivity setup, you can use Convert feature. It allows to demolish mesh object to fragments, but then automatically convert these fragments to MeshRoot/Connectivity setup. In this case you will not need to store heavy asset files, but in other hand, you will need to fragment and cache all connections every time.\par
+\par
+\par
+
+\pard 
+{\pntext\f0 1.\tab}{\*\pn\pnlvlbody\pnf0\pnindent0\pnstart1\pndec{\pntxta.}}
+\nowidctlpar\fi-360\li720\sl276\slmult1 Create \b Cube\b0 , \lang1033 s\lang9 et its \b name \b0 to "\i Ground\i0 ", \b position \b0 to [0,0,0] and \b scale \b0 to [15,1,10]\line\par
+{\pntext\f0 2.\tab}Create another \b Cube\b0 , \lang1033 s\lang9 et its \b name \b0 to "\i Pillar\i0 ", \b position \b0 to [0,5.5,0] and \b scale \b0 to [1,10,1]\line\par
+{\pntext\f0 3.\tab}Add \b RayFire Rigid \b0 component to Pillar.\line\par
+{\pntext\f0 4.\tab}Set Rigid \b Initialization \b0 to \b At Start.\b0\line\par
+{\pntext\f0 5.\tab}Set \b Demolition \b0 type to \b Runtime\b0 .\line\par
+{\pntext\f0 6.\tab}In \b Mesh Demolition \b0 properties set \b Amount \b0 to 100.\line\par
+{\pntext\f0 7.\tab}In \b Damage \b0 properties, toggle On \b Enable \b0 property and set \b Max Damage \b0 to 10\lang1033 .\lang9  Damage feature should be enabled so it will be possible to demolish Pillar object using \b Bomb \b0 component.\line\par
+{\pntext\f0 8.\tab}Create \b empty gameobject\b0 , \lang1033 s\lang9 et its \b name \b0 to "\i Bomb\i0 " and \b position \b0 to [0,5,2]\line\par
+{\pntext\f0 9.\tab}Add \b RayFire Bomb \b0 component to Bomb object, set \b Range \b0 to 3, in \b Damage \b0 properties toggle On \b Apply \b0 property and set value to \b 100\b0 .\line\par
+{\pntext\f0 10.\tab}\b Start \b0 Play Mode. \line\par
+{\pntext\f0 11.\tab}\b Select \b0 Bomb object and click on \b Explode \b0 button on top of \b Rayfire Bomb \b0 component.\line\line Pillar object will be demolished to fragments and fragments at the middle will be exploded.\line\par
+{\pntext\f0 12.\tab}\b Turn off \b0 Play Mode. \line\par
+{\pntext\f0 13.\tab}\b Select \b0 Pillar object and in \b Mesh Demolition\b0  properties set \b Convert \b0 property to \b Connectivity.\b0  \line\line In order to convert fragments to Connectivity structure, you need to provide Connectivity component that will be used as source of properties.\line\par
+{\pntext\f0 14.\tab}Add \b Rayfire Connectivity \b0 component to Pillar object.\line\line Connectivity structures can have only Inactive or Kinematik simulation type.\line\par
+{\pntext\f0 15.\tab}In \b Rayfire Rigid \b0 component set \b Simulation Type \b0 to \b Kinematik\b0 .\line\line But fragments that will be created will get default \b Fragments Sim Type \b0 property value, which is \b Dynamic\b0 . So this property should be set to \b Inactive \b0 as well.\line\line It may looks like extra step that can be avoided, but such workflow provides more possibilities. For instance, you may start with Kinematik original object, so nothing will be able to push it. Then demolish object and use Inactive simulation type for fragments, so after demolition there will be cracks and some fragments will be possible to push and then finally activate and turn them to dynamic.\line\par
+{\pntext\f0 16.\tab}In \b Mesh Demolition \b0 properties set \b Fragments Sim Type \b0 property to \b Inactive\b0 .\line\line By default Bomb doesn't affect Inactive and Kinematik objects, so you should enable this as well.\line\par
+{\pntext\f0 17.\tab}\b Select \b0 Bomb object and enable \b Inactive \b0 activation.\line\par
+{\pntext\f0 18.\tab}\b Start \b0 Play Mode. \line\par
+{\pntext\f0 19.\tab}\b Select \b0 Bomb object and click on \b Explode \b0 button.\line\line This time Mesh object will be demolished to fragments, but instead of separately exploded fragments you will get two Connected Clusters at the bottom and on top and a bunch of separated fragments at the middle. \line\line You got these two clusters because after demolition original object was replaced by MeshRoot/Connectivity structure with Inactive Simulation Type, since fragments at the middle were exploded and activated, they destroyed all their connections in Connectivity structure. \line\line Top and bottom groups of fragments were unable to connect with each other and were grouped in two clusters, but since original object has no any Unyielding components, these two clusters are not connected to anything that can be considered as unyielding, so they were activated and turned to dynamic objects.\line\line Notice that fragments of these two clusters were pushed and revealed some cracks, because they were Inactive for some time because of Fragments Sim Type property and only after that they were grouped into rigid Dynamic Connected Clusters\line\line Depends on platform, you may get FPS drop at demolition, because there are too many heavy calculations\lang1033 : original mesh fragmentation and connection establishment among fragments. In order to avoid such FPS drop, you can use Awake Prefragment demolition type instead of Runtime demolition type.\lang9\line\par
+{\pntext\f0 20.\tab}\b Turn off \b0 Play Mode. \line\par
+{\pntext\f0 21.\tab}\b Select \b0 Pillar object and set \b Demolition Type \b0 property to \b Awake Prefragment\b0  to avoid FPS drop.\line\par
+{\pntext\f0 22.\tab}\b Start \b0 Play Mode.\fs24\lang1033\line\fs22\lang9  \fs24\lang1033\par
+{\pntext\f0 23.\tab}\fs22\lang9 In \b Hierarchy \b0 window, reveal children of \b RayFireMan \b0 object, then reveal children of \b Storage_Fragments \b0 object. \fs24\lang1033\line\line You can see that deactivated Pillar_root object with all fragments and cached connections is already there.\line\par
+{\pntext\f0 24.\tab}\b\fs22\lang9 Select \b0 Bomb object and click on \b Explode \b0 button.\line\fs24\lang1033\line This time, when you explode bomb, original object swaps with deactivated MeshRoot/Connectivity structure and there is no FPS drop because all calculation were performed at Start.\line\par
+{\pntext\f0 25.\tab}\b\fs22\lang9 Turn off \b0 Play Mode. \fs24\lang1033\line\line\f1\lang1049 L\f0\lang1033 et's say you want to attach pillar to ceiling, so some fragments will stay attached to ceiling after demolition.\line\fs22\lang9\par
+{\pntext\f0 26.\tab}\b Select \b0 Pillar and \b add Rayfire Unyielding \b0 component, \b Size \b0 to [1,0.1,1] and \b Center \b0 to [0,0.45,0] so it will overlap upper fragments by its gizmo. Set Simulation Type to \b Kinematik.\b0\fs24\lang1033\line\par
+{\pntext\f0 27.\tab}\b\fs22\lang9 Start \b0 Play Mode.\fs24\lang1033\line\par
+{\pntext\f0 28.\tab}\b\fs22\lang9 Select \b0 Bomb object and click on \b Explode \b0 button.\fs24\lang1033\par
+
+\pard\nowidctlpar\sl276\slmult1\line This time, you will explode \fs22\lang9 fragments at the middle of Pillar object but fragments on top will stay. You can move Bomb object upper and explode it again. Notice that fragments with red connections, defined by Unyielding gizmo, can not be demolished.\fs24\lang1033  \fs22\lang9 This behavior can be changed in \b Rayfire Unyielding \b0 component by enabling Activatable property. In this case connections will be purple and it will be possible to explode even unyielding fragments, but make sure that Kienamtik Activation in Bomb is enabled as well because unyielding fragments can be Kinematik.\fs24\lang1033\par
+\par
+}
+ 

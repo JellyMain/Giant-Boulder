@@ -4,7 +4,9 @@ namespace Const
     {
         public static class PrefabPaths
         {
-           
+            public const string PLAYER = "RuntimePrefabs/Player/PlayerBoulder";
+            public const string CAMERA = "RuntimePrefabs/Camera/VirtualCamera";
+            public const string COIN = "RuntimePrefabs/Coin/Coin";
         }
 
 

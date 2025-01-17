@@ -21,7 +21,7 @@ namespace TerrainGenerator
         private MapGenerationConfig mapGenerationConfig;
         private int chunkSize;
 
-        
+
         public MapCreator(NoiseGenerator noiseGenerator, StaticDataService staticDataService, ChunkFactory chunkFactory)
         {
             this.noiseGenerator = noiseGenerator;
@@ -32,10 +32,12 @@ namespace TerrainGenerator
 
         public void CreateMap()
         {
+            GameObject chunksParent = new GameObject("TerrainChunks");
+
             TerrainSeason randomMapSeason = DataUtility.GetRandomEnumValue<TerrainSeason>(true);
-            
+
             mapGenerationConfig = staticDataService.MapConfigForSeason(TerrainSeason.Summer);
-            
+
             chunkSize = mapGenerationConfig.chunkSize - 1;
 
             Vector3[] allChunkPositions = new Vector3[mapGenerationConfig.mapSize * mapGenerationConfig.mapSize];
@@ -64,7 +66,8 @@ namespace TerrainGenerator
                 {
                     Vector3 position = allChunkPositions[y * mapGenerationConfig.mapSize + x];
                     float[] heightMap = allTerrainHeightMapsParallel[y * mapGenerationConfig.mapSize + x];
-                    TerrainChunk terrainChunk = chunkFactory.CreateChunk(position, heightMap, mapGenerationConfig);
+                    TerrainChunk terrainChunk = chunkFactory.CreateChunk(position, heightMap, mapGenerationConfig,
+                        chunksParent.transform);
 
                     // if (terrainChunk.meshFilter != null)
                     // {

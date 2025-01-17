@@ -1,0 +1,56 @@
+{\rtf1\ansi\ansicpg1252\deff0\nouicompat{\fonttbl{\f0\fswiss\fcharset0 Calibri;}{\f1\fmodern Consolas;}{\f2\fmodern\fcharset0 Consolas;}{\f3\fswiss\fcharset204 Calibri;}}
+{\colortbl ;\red108\green149\blue235;\red248\green113\blue39;\red189\green189\blue189;}
+{\*\generator Riched20 10.0.19041}\viewkind4\uc1 
+\pard\nowidctlpar\sl276\slmult1\qc\ul\b\f0\fs52\lang9 How to shoot and demolish Mesh window in runtime\ulnone\b0\fs22\line\par
+
+\pard 
+{\pntext\f0 1.\tab}{\*\pn\pnlvlbody\pnf0\pnindent0\pnstart1\pndec{\pntxta.}}
+\nowidctlpar\fi-360\li720\sl276\slmult1 Create \b Cube\b0 , this will be a ground cube which will be used for collision.\line\par
+{\pntext\f0 2.\tab}Set its \b name \b0 to "\i Ground\i0 ", \b position \b0 to [0, 0, 0] and \b scale \b0 to [10, 1, 10]\line\par
+{\pntext\f0 3.\tab}Create another \b Cube\b0 . \line\par
+{\pntext\f0 4.\tab}Set its \b name \b0 to "\i Window\i0 ", \b position \b0 to [0, 2, 0] and \b scale \b0 to [0.05, 3, 3]\line\par
+{\pntext\f0 5.\tab}Right click on \b Project \b0 window, then click on \b Create / Material \b0 to create transparent material for Window, set its \b name \b0 to "\i Glass\i0 ". \line\par
+{\pntext\f0 6.\tab}In Inspector set Glass material \b Rendering Mode \b0 to \b Transparent\b0 , then click on \b Albedo \b0 Color and set RGBA values to (70, 150, 255, \b 40\b0 ) to make it transparent.\line\par
+{\pntext\f0 7.\tab}\b Drag and drop \b0 Glass material to Window object in scene view.\line\line Refractive objects like windows can not be prefragmented and used as fragments from the start because in such case all cracks will be visible. There are two ways to demolish such objects: demolishing solid object using \b Runtime Demolition \b0 type or prefragment original object and use \b Reference Demolition \b0 type to swap original object with Prefragmented version at demolition.\line\par
+{\pntext\f0 8.\tab}In this How To we will demolish window to fragments in runtime.\line\par
+{\pntext\f0 9.\tab}Select Window object and add \b Rayfire Rigid \b0 component, set \b Initialization \b0 type to \b At Start\b0 , \b Simulation type \b0 to \b Kinematic\b0 . In Physics properties set \b Collider Type \b0 to \b Box\b0 .\line\par
+{\pntext\f0 10.\tab}Set \b Demolition type \b0 to \b Runtime\b0 , in \b Mesh Demolition \b0 type set \b Amount \b0 to \b 20 \b0 and \b Contact Bias \b0 to \b 0.8 \b0 to create more tiny fragments at contact point.\line\par
+{\pntext\f0 11.\tab}Since we are going to Shoot Window using Rayfire Gun component we do not need it to check for all collisions. In \b Limitations \b0 properties \b disable By Collision \b0 property. If you are going to demolish window by throwing physical objects into it then keep this property enabled.\line\par
+{\pntext\f0 12.\tab}Create \b Cylinder \b0 object, this will be our gun barrel.\line\par
+
+\pard 
+{\pntext\f0 13.\tab}{\*\pn\pnlvlbody\pnf0\pnindent0\pnstart1\pndec{\pntxta.}}
+\nowidctlpar\fi-360\li720\ri-72\sl276\slmult1\tx8236\tx8378 Set its \b name \b0 to "\i Gun\i0 ", \b position \b0 to [4, 2, 0], \b rotation \b0 to [0, 0 ,90] and \b scale \b0 to [0.1, 0.2, 0.1] \line\par
+
+\pard 
+{\pntext\f0 14.\tab}{\*\pn\pnlvlbody\pnf0\pnindent0\pnstart1\pndec{\pntxta.}}
+\nowidctlpar\fi-360\li720\sl276\slmult1 Add \b Rayfire Gun \b0 component and set \b Axis \b0 property to \b Y Green\b0 , set \b Impact Radius \b0 to \b 0.5 \b0 and \b disable Show \b0 property. Set \b Impact Strength \b0 property to \b 10.\b0\line\line Gun component can demolish Rayfire Rigid objects only via Rigid's \b Damage \b0 feature. Default Gun's Damage value is 100, if you want to make several shots to demolish object decrease this value. For now we will demolish Window with single shot.\line\par
+{\pntext\f0 15.\tab}\b Select \b0 Window object and in its Rigid component \b Enable Damage \b0 feature in Damage properties, set \b Max Damage \b0 value to \b 10\b0 .\line\par
+{\pntext\f0 16.\tab}\b Start \b0 Play Mode. \line\par
+{\pntext\f0 17.\tab}\b Select \b0 Gun object and click on \b Single Shot \b0 button on top, the same can be initiated using \cf1\f1\fs18 public \b void \cf2 Shoot\cf3\b0 ()\f2\lang1033  \cf0\f0\fs22\lang9 method.\line\line Window object will be demolished, but all fragments will stay at their positions, this because we det original object Simulation Type to Kinematic and all fragments inherited this simulation type. \line\par
+{\pntext\f0 18.\tab}\b Turn Off \b0 Play Mode. \line\par
+{\pntext\f0 19.\tab}\b Select \b0 Window object and in Rigid component \b Mesh demolition \b0 properties in Advanced group change \b Sim Type \b0 from Inherit to \b Dynamic\b0 .\line\par
+{\pntext\f0 20.\tab}\b Start \b0 Play Mode and make a Shot again.\line\line This time Window object will be demolished and all fragments will fall to the ground. In Some cases you may need to keep some fragments at the border in case there is a frame or other objects that should hold some fragments. To do this, you need to use Rayfire Unyielding component.\line\par
+{\pntext\f0 21.\tab}\b Turn Off \b0 Play Mode. \line\par
+{\pntext\f0 22.\tab}\b Select \b0 Window object and add \b Rayfire Unyielding \b0 component. \line\par
+{\pntext\f0 23.\tab}Set its \b Gizmo Size \b0 properties to (1, 1, 0.1) and \b Center \b0 to (0, 0, -0.5). You need to position Gizmo over fragments which you want to hold on their position after demolition.\line\par
+{\pntext\f0 24.\tab}\b Start \b0 Play Mode and make a Shot again.\line\line This time Window object will be demolished and fragments which are not overlapped by Unyielding component gizmo will fall to the ground and fragments which overlapped by gizmo will stay kinematic. \line\line Such fragments can be activated later and turned to dynamic as well. To do this enable Activation properties on original object, then you will be able to activate fragments depends on which activation you enabled on original object.\line\line By default, Rigid component demolish objects using Voronoi fragmentation type. Now lets shoot window and demolish it with Radial fragmentation type.\line\par
+{\pntext\f0 25.\tab}\b Turn Off \b0 Play Mode. \line\par
+{\pntext\f0 26.\tab}\b Select \b0 Window object and add \b Rayfire Shatter \b0 component. \line\par
+{\pntext\f0 27.\tab}Set its Fragments \b Type \b0 to \b Radial\b0 , \b Center Axis \b0 to \b X Red\b0 , \b Radius \b0 to \b 0.6 \b0 and \b Divergence \b0 to \b 0.02.\b0\line\par
+{\pntext\f0 28.\tab}Default Radial fragmentation type values can be too resourceful for Runtime demolition, set \b Rings \b0 to \b 5\b0  and \b Rays \b0 to \b 7\b0 .\line\par
+{\pntext\f0 29.\tab}In Rigid component Mesh Demolition properties enable \b Use Shatter \b0 property.\line\par
+{\pntext\f0 30.\tab}\b Select \b0 Gun and set \b Impact Strength \b0 to \b 1\b0 , otherwise you won't be able to notice radial pattern because all fragments will be exploded quickly.\line\par
+{\pntext\f0 31.\tab}\b Start \b0 Play Mode and make a Shot again.\line\par
+{\pntext\f0 32.\tab}\f3\lang1049 W\f0\lang1033 indow will be demolished and you will see radial fragmentation pattern with center at the point where you shot window. Also fragments at the left will stay intact and will not fall down. Even if you will move Gun so its shooting ray will intersect these fragments and click on Single Shot they will still stay intact. In order to shoot them and make them dynamic you should use Activation.\lang9\line\par
+{\pntext\f0 33.\tab}\b Turn Off \b0 Play Mode. \line\par
+{\pntext\f0 34.\tab}\b Select \b0 Window object and in \b Activation \b0 properties enable \b By Impact \b0 activation. Impact means that only Rayfire Gun's Impact feature will activate such objects.\line\par
+{\pntext\f0 35.\tab}\b Start \b0 Play Mode and make a Shot again.\line\line You will see that this time even some of the fragments on the left will be turned to dynamic and will fall down. This depends on fragmentation pattern and Impact Radius.\line\par
+{\pntext\f0 36.\tab}\b Move \b0 Gun so its shooting ray will intersect one of the intact fragments and click on \b Single Shot \b0 again.\line\line You will see that Kinematic fragments will be activated and will fall down to the ground.\par
+
+\pard\nowidctlpar\sl276\slmult1\par
+\line\par
+\par
+\par
+}
+ 

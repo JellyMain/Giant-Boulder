@@ -24,27 +24,27 @@ namespace Factories
         }
 
 
-        public TerrainChunk CreateChunk(Vector3 position, float[,] heightMap, MapGenerationConfig mapGenerationConfig)
+        public TerrainChunk CreateChunk(Vector3 position, float[,] heightMap, MapGenerationConfig mapGenerationConfig, Transform parent)
         {
 
             MeshData meshData = meshGenerator.CreateMeshData(heightMap, mapGenerationConfig.noiseMultiplier,
                 mapGenerationConfig.heightCurve, mapGenerationConfig.lod, mapGenerationConfig.heightGradient,
                 mapGenerationConfig.terrainRegions);
 
-            TerrainChunk terrainChunk = new TerrainChunk(mapGenerationConfig.chunkMaterial, position, meshData);
+            TerrainChunk terrainChunk = new TerrainChunk(mapGenerationConfig.chunkMaterial, position, meshData, parent);
 
             return terrainChunk;
         }
 
  
-        public TerrainChunk CreateChunk(Vector3 position, float[] heightMap, MapGenerationConfig mapGenerationConfig)
+        public TerrainChunk CreateChunk(Vector3 position, float[] heightMap, MapGenerationConfig mapGenerationConfig, Transform parent)
         {
 
             MeshData meshData = meshGenerator.CreateMeshData(heightMap, mapGenerationConfig.noiseMultiplier,
                 mapGenerationConfig.heightCurve, mapGenerationConfig.lod, mapGenerationConfig.heightGradient,
                 mapGenerationConfig.terrainRegions);
 
-            TerrainChunk terrainChunk = new TerrainChunk(mapGenerationConfig.chunkMaterial, position, meshData);
+            TerrainChunk terrainChunk = new TerrainChunk(mapGenerationConfig.chunkMaterial, position, meshData, parent);
 
             return terrainChunk;
         }

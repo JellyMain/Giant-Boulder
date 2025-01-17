@@ -22,6 +22,5 @@ namespace Infrastructure
         {
             gameStateMachine.Enter<BootstrapState>();
         }
-        
     }
 }
