@@ -15,7 +15,7 @@ namespace Structures
         [SerializeField] private float spawnCircleDiameter = 5;
         [SerializeField] private float explosionForce = 10;
         private CoinsFactory coinsFactory;
-        private StructureBase structureBase;
+        private DestructibleObjectBase destructibleObjectBase;
         private Vector3 objectCenter;
 
 
@@ -28,19 +28,19 @@ namespace Structures
 
         private void OnEnable()
         {
-            structureBase.OnBuildingDestroyed += SpawnCoins;
+            destructibleObjectBase.OnBuildingDestroyed += SpawnCoins;
         }
 
 
         private void OnDisable()
         {
-            structureBase.OnBuildingDestroyed -= SpawnCoins;
+            destructibleObjectBase.OnBuildingDestroyed -= SpawnCoins;
         }
 
 
         private void Awake()
         {
-            structureBase = GetComponent<StructureBase>();
+            destructibleObjectBase = GetComponent<DestructibleObjectBase>();
         }
 
 

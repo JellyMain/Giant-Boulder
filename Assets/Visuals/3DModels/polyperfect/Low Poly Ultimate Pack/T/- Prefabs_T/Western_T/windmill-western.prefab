@@ -9,7 +9,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4000012845756472}
-  m_Layer: 0
+  - component: {fileID: 7910370173424629465}
+  m_Layer: 6
   m_Name: windmill-western
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -33,6 +34,21 @@ Transform:
   - {fileID: 4262582590921414}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &7910370173424629465
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1000012363713174}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cec9fc72c4684330b006f9df605168c0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  rotationModifier: {x: 0, y: 0}
+  spawnChance: 100
+  snapToGround: 1
 --- !u!1 &1126909396633346
 GameObject:
   m_ObjectHideFlags: 0
@@ -45,7 +61,7 @@ GameObject:
   - component: {fileID: 33384276410645052}
   - component: {fileID: 23765631512201460}
   - component: {fileID: 8045251899473654955}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: windmill-westen-tail
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -151,7 +167,7 @@ GameObject:
   - component: {fileID: 33111823941833780}
   - component: {fileID: 23733844663685294}
   - component: {fileID: 4479587921079354832}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: windmill-western-propeller
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -256,7 +272,7 @@ GameObject:
   - component: {fileID: 33730953924475116}
   - component: {fileID: 23064853023173994}
   - component: {fileID: 65689388232561246}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: windmill-western-base
   m_TagString: Untagged
   m_Icon: {fileID: 0}

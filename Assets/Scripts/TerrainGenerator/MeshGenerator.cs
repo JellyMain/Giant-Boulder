@@ -143,26 +143,6 @@ namespace TerrainGenerator
 
             return color;
         }
-
-
-        private Color EvaluateVertexColorRegions(Vector3 vertexA, Vector3 vertexB, Vector3 vertexC,
-            float vertexScaleA, float vertexScaleB, float vertexScaleC, TerrainRegion[] regions)
-        {
-            float heightA = vertexA.y / vertexScaleA;
-            float heightB = vertexB.y / vertexScaleB;
-            float heightC = vertexC.y / vertexScaleC;
-
-            float averageHeight = (heightA + heightB + heightC) / 3;
-
-            foreach (TerrainRegion region in regions)
-            {
-                if (region.regionHeight > averageHeight)
-                {
-                    return region.regionColor;
-                }
-            }
-
-            return Color.magenta;
-        }
+      
     }
 }

@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8c477de684ee10c4082f9fddf19a75ce, type: 3}
   m_Name: DefaultPalette
   m_EditorClassIdentifier: 
-  m_paletteEntryIDCount: -2147483467
+  m_paletteEntryIDCount: -2147483466
   m_paletteEntries:
   - m_name: Pref_Barn1_A
     m_id: -2147483647
@@ -738,3 +738,7 @@ MonoBehaviour:
     m_id: -2147483467
     m_guid: b90ab88447080d54fbd76f56bb32dca8
     m_object: {fileID: 5562761738805776311, guid: b90ab88447080d54fbd76f56bb32dca8, type: 3}
+  - m_name: Barrels
+    m_id: -2147483466
+    m_guid: 881392e50aed38e4a81b1d43a1c8114f
+    m_object: {fileID: 5242374942665762097, guid: 881392e50aed38e4a81b1d43a1c8114f, type: 3}

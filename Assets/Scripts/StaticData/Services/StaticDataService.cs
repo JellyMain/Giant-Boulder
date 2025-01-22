@@ -11,11 +11,13 @@ namespace StaticData.Services
     public class StaticDataService
     {
         public Dictionary<TerrainSeason, MapGenerationConfig> MapGenerationConfigs { get; private set; }
+        public StructureSpawnerConfig StructureSpawnerConfig { get; private set; }
 
 
         public void LoadStaticData()
         {
             LoadMapChunkConfig();
+            LoadStructureSpawnerConfig();
         }
 
 
@@ -36,6 +38,14 @@ namespace StaticData.Services
             MapGenerationConfigs =
                 Resources.LoadAll<MapGenerationConfig>(RuntimeConstants.StaticDataPaths.MAP_GENERATION_CONFIGS)
                     .ToDictionary(x => x.terrainSeason, x => x);
+        }
+
+
+
+        private void LoadStructureSpawnerConfig()
+        {
+            StructureSpawnerConfig =
+                Resources.Load<StructureSpawnerConfig>(RuntimeConstants.StaticDataPaths.STRUCTURE_SPAWNER_CONFIG);
         }
     }
 }

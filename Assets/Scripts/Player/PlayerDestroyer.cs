@@ -36,7 +36,7 @@ namespace Player
 
         private void OnCollisionEnter(Collision other)
         {
-            if (other.gameObject.TryGetComponent(out StructureBase structure))
+            if (other.gameObject.TryGetComponent(out DestructibleObjectBase structure))
             {
                 structure.Destroy();
             }

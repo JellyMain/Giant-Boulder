@@ -6,7 +6,7 @@ using UnityEngine;
 
 namespace Structures
 {
-    public abstract class StructureBase: MonoBehaviour
+    public abstract class DestructibleObjectBase: MonoBehaviour
     {
         [SerializeField] private GameObject fragmentsRoot;
         private MeshRenderer meshRenderer;

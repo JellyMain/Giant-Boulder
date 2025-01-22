@@ -20,6 +20,7 @@ namespace Const
         public static class StaticDataPaths
         {
             public const string MAP_GENERATION_CONFIGS = "StaticData/MapConfigs";
+            public const string STRUCTURE_SPAWNER_CONFIG = "StaticData/StructureSpawnerConfig";
         }
 
 

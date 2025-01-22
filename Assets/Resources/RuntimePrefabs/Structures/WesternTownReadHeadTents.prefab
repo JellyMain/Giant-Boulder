@@ -9,7 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 337607310627234392}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Other
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -47,7 +47,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6369838590180778709}
-  m_Layer: 0
+  - component: {fileID: 6135054258492294117}
+  m_Layer: 6
   m_Name: Tents
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -88,6 +89,21 @@ Transform:
   - {fileID: 2956970393885944149}
   m_Father: {fileID: 4052302685776707962}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &6135054258492294117
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3825230904076894000}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cec9fc72c4684330b006f9df605168c0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  rotationModifier: {x: -3.8308167, y: -2.8357708}
+  spawnChance: 100
+  snapToGround: 1
 --- !u!1 &7217475856691539529
 GameObject:
   m_ObjectHideFlags: 0
@@ -97,10 +113,11 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4052302685776707962}
-  m_Layer: 0
+  - component: {fileID: 7978626888366868926}
+  m_Layer: 6
   m_Name: WesternTownReadHeadTents
   m_TagString: Untagged
-  m_Icon: {fileID: 6519382022992737161, guid: 0000000000000000d000000000000000, type: 0}
+  m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
@@ -121,6 +138,22 @@ Transform:
   - {fileID: 337607310627234392}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &7978626888366868926
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7217475856691539529}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cf134e57eeac4992a0b3196e16bc20a6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  structureRadius: 26
+  maxSlopeAngle: 30
+  structureChildSettings:
+  - {fileID: 6135054258492294117}
 --- !u!1001 &1441270179390839679
 PrefabInstance:
   m_ObjectHideFlags: 0

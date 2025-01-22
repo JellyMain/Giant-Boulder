@@ -20,7 +20,8 @@ namespace TerrainGenerator
         private readonly ChunkFactory chunkFactory;
         private MapGenerationConfig mapGenerationConfig;
         private int chunkSize;
-
+        
+        
 
         public MapCreator(NoiseGenerator noiseGenerator, StaticDataService staticDataService, ChunkFactory chunkFactory)
         {
@@ -68,12 +69,7 @@ namespace TerrainGenerator
                     float[] heightMap = allTerrainHeightMapsParallel[y * mapGenerationConfig.mapSize + x];
                     TerrainChunk terrainChunk = chunkFactory.CreateChunk(position, heightMap, mapGenerationConfig,
                         chunksParent.transform);
-
-                    // if (terrainChunk.meshFilter != null)
-                    // {
-                    //     string path = $"Assets/Resources/Prefabs/Terrain/TerrainChunk{x}_{y}.asset"; 
-                    //     AssetDatabase.CreateAsset(terrainChunk.meshFilter.mesh, path);
-                    // }
+                    
                 }
             }
         }

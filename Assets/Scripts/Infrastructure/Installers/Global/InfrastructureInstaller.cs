@@ -4,6 +4,7 @@ using Infrastructure.Services;
 using PlayerInput.Interfaces;
 using PlayerInput.Services;
 using StaticData.Services;
+using StructuresSpawner;
 using TerrainGenerator;
 using UI;
 using UnityEngine;
@@ -35,6 +36,13 @@ namespace Infrastructure.Installers.Global
             BindMapCreator();
             BindCameraCreator();
             BindCoinFactory();
+            BindStructureSpawner();
+        }
+
+
+        private void BindStructureSpawner()
+        {
+            Container.Bind<StructureSpawner>().AsSingle();
         }
 
 

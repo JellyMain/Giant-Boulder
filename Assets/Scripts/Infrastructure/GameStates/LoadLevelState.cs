@@ -3,6 +3,7 @@ using Const;
 using Factories;
 using Infrastructure.GameStates.Interfaces;
 using Infrastructure.Services;
+using StructuresSpawner;
 using TerrainGenerator;
 using UI;
 using UnityEngine;
@@ -16,15 +17,17 @@ namespace Infrastructure.GameStates
         private readonly MapCreator mapCreator;
         private readonly PlayerFactory playerFactory;
         private readonly CameraCreator cameraCreator;
+        private readonly StructureSpawner structureSpawner;
 
 
         public LoadLevelState(SceneLoader sceneLoader, MapCreator mapCreator, PlayerFactory playerFactory,
-            CameraCreator cameraCreator)
+            CameraCreator cameraCreator, StructureSpawner structureSpawner)
         {
             this.sceneLoader = sceneLoader;
             this.mapCreator = mapCreator;
             this.playerFactory = playerFactory;
             this.cameraCreator = cameraCreator;
+            this.structureSpawner = structureSpawner;
         }
 
 
@@ -41,6 +44,8 @@ namespace Infrastructure.GameStates
             Transform cameraPivot = GameObject.FindWithTag("CameraPivot").transform;
             
             SetCamera(cameraPivot);
+            
+            structureSpawner.SpawnAllStructures();
         }
 
 
