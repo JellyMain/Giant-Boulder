@@ -25,7 +25,11 @@ namespace StructuresSpawner
         public StructureSpawner(StaticDataService staticDataService)
         {
             this.staticDataService = staticDataService;
-            
+        }
+
+
+        private void Init()
+        {
             structureSpawnerConfig = staticDataService.StructureSpawnerConfig;
             MapGenerationConfig mapGenerationConfig = staticDataService.MapConfigForSeason(TerrainSeason.Summer);
 
@@ -40,6 +44,8 @@ namespace StructuresSpawner
 
         public void SpawnAllStructures()
         {
+            Init();
+            
             for (int i = 0; i < structureSpawnerConfig.structuresCount; i++)
             {
                 SpawnRandomStructure();

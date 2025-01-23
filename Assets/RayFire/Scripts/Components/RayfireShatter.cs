@@ -7,81 +7,83 @@ using UnityEngine;
 using RayFire.DotNet;
 #endif
 
+
 namespace RayFire
 {
-    [AddComponentMenu ("RayFire/Rayfire Shatter")]
-    [HelpURL ("https://rayfirestudios.com/unity-online-help/components/unity-shatter-component/")]
+    [AddComponentMenu("RayFire/Rayfire Shatter")]
+    [HelpURL("https://rayfirestudios.com/unity-online-help/components/unity-shatter-component/")]
     public class RayfireShatter : MonoBehaviour
     {
         public enum FragLastMode
         {
-            New    = 0,
+            New = 0,
             ToLast = 1
         }
 
         // UI
-        public FragType          type      = FragType.Voronoi;
-        public RFVoronoi         voronoi   = new RFVoronoi();
-        public RFSplinters       splinters = new RFSplinters();
-        public RFSplinters       slabs     = new RFSplinters();
-        public RFRadial          radial    = new RFRadial();
-        public RFHexagon         hexagon   = new RFHexagon();
-        public RFCustom          custom    = new RFCustom();
-        public RFMirrored        mirrored  = new RFMirrored();
-        public RFSlice           slice     = new RFSlice();
-        public RFBricks          bricks    = new RFBricks();
-        public RFVoxels          voxels    = new RFVoxels();
-        public RFTets            tets      = new RFTets();
-        public RFSurface         material  = new RFSurface();
-        public RFShatterCluster  clusters  = new RFShatterCluster();
-        public FragmentMode      mode      = FragmentMode.Editor;
-        public RFShatterAdvanced advanced  = new RFShatterAdvanced();
-        public RFMeshExport      export    = new RFMeshExport();
+        public FragType type = FragType.Voronoi;
+        public RFVoronoi voronoi = new RFVoronoi();
+        public RFSplinters splinters = new RFSplinters();
+        public RFSplinters slabs = new RFSplinters();
+        public RFRadial radial = new RFRadial();
+        public RFHexagon hexagon = new RFHexagon();
+        public RFCustom custom = new RFCustom();
+        public RFMirrored mirrored = new RFMirrored();
+        public RFSlice slice = new RFSlice();
+        public RFBricks bricks = new RFBricks();
+        public RFVoxels voxels = new RFVoxels();
+        public RFTets tets = new RFTets();
+        public RFSurface material = new RFSurface();
+        public RFShatterCluster clusters = new RFShatterCluster();
+        public FragmentMode mode = FragmentMode.Editor;
+        public RFShatterAdvanced advanced = new RFShatterAdvanced();
+        public RFMeshExport export = new RFMeshExport();
 
         // Center
-        public bool       showCenter;
-        public Vector3    centerPosition;
+        public bool showCenter;
+        public Vector3 centerPosition;
         public Quaternion centerDirection;
 
         // Components
-        public Transform           transForm;
-        public MeshFilter          meshFilter;
-        public MeshRenderer        meshRenderer;
+        public Transform transForm;
+        public MeshFilter meshFilter;
+        public MeshRenderer meshRenderer;
         public SkinnedMeshRenderer skinnedMeshRend;
-        public List<MeshFilter>    meshFilters;
+        public List<MeshFilter> meshFilters;
 
         // Vars
-        [NonSerialized] public Mesh[]           meshes;
-        [NonSerialized] public Vector3[]        pivots;
-        [NonSerialized] public RFDictionary[]   rfOrigSubMeshIds;
-        public                 List<Transform>  rootChildList = new List<Transform>();
-        public                 List<GameObject> fragmentsAll  = new List<GameObject>();
-        public                 List<GameObject> fragmentsLast = new List<GameObject>();
-        public                 Material[]       materials;
+        [NonSerialized] public Mesh[] meshes;
+        [NonSerialized] public Vector3[] pivots;
+        [NonSerialized] public RFDictionary[] rfOrigSubMeshIds;
+        public List<Transform> rootChildList = new List<Transform>();
+        public List<GameObject> fragmentsAll = new List<GameObject>();
+        public List<GameObject> fragmentsLast = new List<GameObject>();
+        public Material[] materials;
 
         // Hidden
-        public int     shatterMode = 1;
-        public bool    colorPreview;
-        public bool    scalePreview = true;
-        public float   previewScale;
-        public float   size;
-        public float   rescaleFix = 1f;
+        public int shatterMode = 1;
+        public bool colorPreview;
+        public bool scalePreview = true;
+        public float previewScale;
+        public float size;
+        public float rescaleFix = 1f;
         public Vector3 originalScale;
-        public Bounds  bound;
-        public bool    resetState;
+        public Bounds bound;
+        public bool resetState;
 
         // Interactive
-        public bool         interactive;
-        public RFShatter    shatterInt;
-        public GameObject   intGo;
-        public MeshFilter   intMf;
+        public bool interactive;
+        public RFShatter shatterInt;
+        public GameObject intGo;
+        public MeshFilter intMf;
         public MeshRenderer intMr;
 
         // Static
-        static float  minSize    = 0.01f;
+        static float minSize = 0.01f;
         public string fragAddStr = "_sh_";
         public string shatterStr = "RayFire Shatter: ";
-        
+
+
         /// /////////////////////////////////////////////////////////
         /// Common
         /// /////////////////////////////////////////////////////////
@@ -93,14 +95,16 @@ namespace RayFire
             ResetCenter();
         }
 
+
         // Set default vars before fragment
         void SetVariables()
         {
-            size             = 0f;
-            rescaleFix       = 1f;
-            originalScale    = transForm.localScale;
+            size = 0f;
+            rescaleFix = 1f;
+            originalScale = transForm.localScale;
             rfOrigSubMeshIds = null;
         }
+
 
         /// /////////////////////////////////////////////////////////
         /// Checks
@@ -112,7 +116,10 @@ namespace RayFire
             // Check if prefab
             if (gameObject.scene.rootCount == 0)
             {
-                Debug.Log (shatterStr + name + " Can't fragment prefab because prefab unable to store Unity mesh. Fragment prefab in scene.", gameObject);
+                Debug.Log(
+                    shatterStr + name +
+                    " Can't fragment prefab because prefab unable to store Unity mesh. Fragment prefab in scene.",
+                    gameObject);
                 return false;
             }
 
@@ -134,8 +141,9 @@ namespace RayFire
                     for (int i = meshFilters.Count - 1; i >= 0; i--)
                         if (meshFilters[i].sharedMesh == null)
                         {
-                            Debug.Log (shatterStr + meshFilters[i].name + " MeshFilter has no Mesh, object excluded.", meshFilters[i].gameObject);
-                            meshFilters.RemoveAt (i);
+                            Debug.Log(shatterStr + meshFilters[i].name + " MeshFilter has no Mesh, object excluded.",
+                                meshFilters[i].gameObject);
+                            meshFilters.RemoveAt(i);
                         }
 
                 // Remove no readable meshes
@@ -143,8 +151,9 @@ namespace RayFire
                     for (int i = meshFilters.Count - 1; i >= 0; i--)
                         if (meshFilters[i].sharedMesh.isReadable == false)
                         {
-                            Debug.Log (shatterStr + meshFilters[i].name + " Mesh is not Readable, object excluded.", meshFilters[i].gameObject);
-                            meshFilters.RemoveAt (i);
+                            Debug.Log(shatterStr + meshFilters[i].name + " Mesh is not Readable, object excluded.",
+                                meshFilters[i].gameObject);
+                            meshFilters.RemoveAt(i);
                         }
 
                 // No meshes left
@@ -155,13 +164,14 @@ namespace RayFire
             return true;
         }
 
+
         // Single mesh mode checks
         bool SingleMeshCheck()
         {
             // No mesh storage components
             if (meshFilter == null && skinnedMeshRend == null)
             {
-                Debug.Log (shatterStr + name + " Object has no mesh to fragment.", gameObject);
+                Debug.Log(shatterStr + name + " Object has no mesh to fragment.", gameObject);
                 return false;
             }
 
@@ -171,14 +181,16 @@ namespace RayFire
                 // No shared mesh
                 if (meshFilter.sharedMesh == null)
                 {
-                    Debug.Log (shatterStr + name + " Object has no mesh to fragment.", gameObject);
+                    Debug.Log(shatterStr + name + " Object has no mesh to fragment.", gameObject);
                     return false;
                 }
 
                 // Not readable mesh
                 if (meshFilter.sharedMesh.isReadable == false)
                 {
-                    Debug.Log (shatterStr + name + "Mesh is not readable. Open Import Settings and turn On Read/Write Enabled", gameObject);
+                    Debug.Log(
+                        shatterStr + name + "Mesh is not readable. Open Import Settings and turn On Read/Write Enabled",
+                        gameObject);
                     return false;
                 }
             }
@@ -186,12 +198,13 @@ namespace RayFire
             // Has skinned mesh
             if (skinnedMeshRend != null && skinnedMeshRend.sharedMesh == null)
             {
-                Debug.Log (shatterStr + name + " Object has no mesh to fragment.", gameObject);
+                Debug.Log(shatterStr + name + " Object has no mesh to fragment.", gameObject);
                 return false;
             }
 
             return true;
         }
+
 
         /// /////////////////////////////////////////////////////////
         /// Methods
@@ -201,9 +214,9 @@ namespace RayFire
         bool DefineComponents()
         {
             // Mesh storage 
-            transForm       = GetComponent<Transform>();
-            meshFilter      = GetComponent<MeshFilter>();
-            meshRenderer    = GetComponent<MeshRenderer>();
+            transForm = GetComponent<Transform>();
+            meshFilter = GetComponent<MeshFilter>();
+            meshRenderer = GetComponent<MeshRenderer>();
             skinnedMeshRend = GetComponent<SkinnedMeshRenderer>();
 
             // Multymesh fragmentation
@@ -230,6 +243,7 @@ namespace RayFire
             return true;
         }
 
+
         // Get bounds
         public Bounds GetBound()
         {
@@ -254,6 +268,7 @@ namespace RayFire
             return new Bounds();
         }
 
+
         /// /////////////////////////////////////////////////////////
         /// Methods
         /// /////////////////////////////////////////////////////////
@@ -269,7 +284,7 @@ namespace RayFire
                 return;
 
             // Cache
-            RFFragment.CacheMeshes (ref meshes, ref pivots, ref rfOrigSubMeshIds, this);
+            RFFragment.CacheMeshes(ref meshes, ref pivots, ref rfOrigSubMeshIds, this);
 
             // Stop
             if (meshes == null)
@@ -279,21 +294,73 @@ namespace RayFire
             if (fragmentMode == FragLastMode.ToLast)
             {
                 if (rootChildList[rootChildList.Count - 1] != null)
-                    fragmentsLast = CreateFragments (rootChildList[rootChildList.Count - 1]);
+                {
+                    fragmentsLast = CreateFragments(rootChildList[rootChildList.Count - 1]);
+                }
                 else
+                {
                     fragmentMode = FragLastMode.New;
+                }
             }
 
             // Create new fragments
             if (fragmentMode == FragLastMode.New)
+            {
                 fragmentsLast = CreateFragments();
+            }
 
             // Post create fragments operations
             PostFragments();
-            
+
             stopWatch.Stop();
             Debug.Log("Total Time == " + stopWatch.Elapsed.TotalMilliseconds + " ms)");
         }
+
+
+
+        public void Fragment(Transform parent, FragLastMode fragmentMode = FragLastMode.New)
+        {
+            System.Diagnostics.Stopwatch stopWatch = new System.Diagnostics.Stopwatch();
+            stopWatch.Start();
+
+            // Prepare to cache fragments
+            if (PreCache() == false)
+                return;
+
+            // Cache
+            RFFragment.CacheMeshes(ref meshes, ref pivots, ref rfOrigSubMeshIds, this);
+
+            // Stop
+            if (meshes == null)
+                return;
+
+            // Create fragments
+            if (fragmentMode == FragLastMode.ToLast)
+            {
+                if (rootChildList[rootChildList.Count - 1] != null)
+                {
+                    fragmentsLast = CreateFragments(rootChildList[rootChildList.Count - 1]);
+                }
+                else
+                {
+                    fragmentMode = FragLastMode.New;
+                }
+            }
+
+            // Create new fragments
+            if (fragmentMode == FragLastMode.New)
+            {
+                fragmentsLast = CreateFragments(parent);
+            }
+
+
+            // Post create fragments operations
+            PostFragments();
+
+            stopWatch.Stop();
+            Debug.Log("Total Time == " + stopWatch.Elapsed.TotalMilliseconds + " ms)");
+        }
+
 
         // Prepare and cache fragments
         public bool PreCache()
@@ -311,6 +378,7 @@ namespace RayFire
             return true;
         }
 
+
         // Create fragments by mesh and pivots array
         List<GameObject> CreateFragments(Transform root = null)
         {
@@ -324,25 +392,26 @@ namespace RayFire
             // Create root object
             if (root == null)
             {
-                GameObject rootGo = new GameObject (gameObject.name + "_root");
+                GameObject rootGo = new GameObject(gameObject.name + "_root");
                 rootGo.transform.position = transForm.position;
                 rootGo.transform.rotation = transForm.rotation;
-                rootGo.tag                = gameObject.tag;
-                rootGo.layer              = gameObject.layer;
-                root                      = rootGo.transform;
-                rootChildList.Add (root);
+                rootGo.tag = gameObject.tag;
+                rootGo.layer = gameObject.layer;
+                root = rootGo.transform;
+                rootChildList.Add(root);
             }
 
             // Create instance for fragments
             GameObject fragInstance;
+
             if (advanced.copyComponents == true)
             {
-                fragInstance                      = Instantiate (gameObject);
-                fragInstance.transform.rotation   = Quaternion.identity;
+                fragInstance = Instantiate(gameObject);
+                fragInstance.transform.rotation = Quaternion.identity;
                 fragInstance.transform.localScale = Vector3.one;
 
                 // Destroy shatter
-                DestroyImmediate (fragInstance.GetComponent<RayfireShatter>());
+                DestroyImmediate(fragInstance.GetComponent<RayfireShatter>());
             }
             else
             {
@@ -361,34 +430,35 @@ namespace RayFire
             string baseName = gameObject.name + fragAddStr;
 
             // Create fragment objects
-            MeshFilter   mf;
-            GameObject   go;
+            MeshFilter mf;
+            GameObject go;
             MeshCollider mc;
             MeshRenderer rn;
+
             for (int i = 0; i < meshes.Length; ++i)
             {
                 // Rescale mesh
                 if (rescaleFix != 1f)
-                    RFFragment.RescaleMesh (meshes[i], rescaleFix);
+                    RFFragment.RescaleMesh(meshes[i], rescaleFix);
 
                 // Instantiate. IMPORTANT do not parent when Instantiate
-                go                      = Instantiate (fragInstance);
+                go = Instantiate(fragInstance);
                 go.transform.localScale = Vector3.one;
 
                 // Set multymaterial
                 rn = go.GetComponent<MeshRenderer>();
-                RFSurface.SetMaterial (rfOrigSubMeshIds, materials, material, rn, i, meshes.Length);
+                RFSurface.SetMaterial(rfOrigSubMeshIds, materials, material, rn, i, meshes.Length);
 
                 // Set fragment object name and tm
-                go.name               = baseName + (i + 1);
+                go.name = baseName + (i + 1);
                 go.transform.position = root.transform.position + (pivots[i] / rescaleFix);
-                go.transform.parent   = root.transform;
-                go.tag                = gameObject.tag;
-                go.layer              = gameObject.layer;
+                go.transform.parent = root.transform;
+                go.tag = gameObject.tag;
+                go.layer = gameObject.layer;
 
                 // Set fragment mesh
-                mf                 = go.GetComponent<MeshFilter>();
-                mf.sharedMesh      = meshes[i];
+                mf = go.GetComponent<MeshFilter>();
+                mf.sharedMesh = meshes[i];
                 mf.sharedMesh.name = go.name;
 
                 // Set mesh collider
@@ -403,33 +473,37 @@ namespace RayFire
             // Root back to original parent
             root.transform.parent = transForm.parent;
 
+            
+            
             // Reset scale for mesh fragments. IMPORTANT: skinned mesh fragments root should not be rescaled 
             if (skinnedMeshRend == null)
                 root.transform.localScale = Vector3.one;
 
             // Destroy instance
-            DestroyImmediate (fragInstance);
+            DestroyImmediate(fragInstance);
 
             // Empty lists
-            meshes           = null;
-            pivots           = null;
+            meshes = null;
+            pivots = null;
             rfOrigSubMeshIds = null;
 
             return fragArray.ToList();
         }
 
+
         // Post create fragments operations
         void PostFragments()
         {
             // Limitation fragment
-            RFShatterAdvanced.Limitations (this);
+            RFShatterAdvanced.Limitations(this);
 
             // Collect to all fragments
-            fragmentsAll.AddRange (fragmentsLast);
+            fragmentsAll.AddRange(fragmentsLast);
 
             // Reset original object back if it was scaled
             transForm.localScale = originalScale;
         }
+
 
         // Fragment by limitations
         public void LimitationFragment(int ind)
@@ -441,16 +515,17 @@ namespace RayFire
 
             if (shat.fragmentsLast.Count > 0)
             {
-                fragmentsLast.AddRange (shat.fragmentsLast);
-                DestroyImmediate (shat.gameObject);
-                fragmentsLast.RemoveAt (ind);
+                fragmentsLast.AddRange(shat.fragmentsLast);
+                DestroyImmediate(shat.gameObject);
+                fragmentsLast.RemoveAt(ind);
 
                 // Parent and destroy root
                 foreach (var frag in shat.fragmentsLast)
                     frag.transform.parent = rootChildList[rootChildList.Count - 1];
-                DestroyImmediate (shat.rootChildList[rootChildList.Count - 1].gameObject);
+                DestroyImmediate(shat.rootChildList[rootChildList.Count - 1].gameObject);
             }
         }
+
 
         /// /////////////////////////////////////////////////////////
         /// Deleting
@@ -463,18 +538,18 @@ namespace RayFire
             if (destroyMode == 1)
                 for (int i = fragmentsLast.Count - 1; i >= 0; i--)
                     if (fragmentsLast[i] != null)
-                        DestroyImmediate (fragmentsLast[i]);
+                        DestroyImmediate(fragmentsLast[i]);
 
             // Clean fragments list pre
             fragmentsLast.Clear();
             for (int i = fragmentsAll.Count - 1; i >= 0; i--)
                 if (fragmentsAll[i] == null)
-                    fragmentsAll.RemoveAt (i);
+                    fragmentsAll.RemoveAt(i);
 
             // Check for all roots
             for (int i = rootChildList.Count - 1; i >= 0; i--)
                 if (rootChildList[i] == null)
-                    rootChildList.RemoveAt (i);
+                    rootChildList.RemoveAt(i);
 
             // No roots
             if (rootChildList.Count == 0)
@@ -484,17 +559,18 @@ namespace RayFire
             if (destroyMode == 0)
             {
                 // Destroy root with fragments
-                DestroyImmediate (rootChildList[rootChildList.Count - 1].gameObject);
+                DestroyImmediate(rootChildList[rootChildList.Count - 1].gameObject);
 
                 // Remove from list
-                rootChildList.RemoveAt (rootChildList.Count - 1);
+                rootChildList.RemoveAt(rootChildList.Count - 1);
             }
 
             // Clean all fragments list post
             for (int i = fragmentsAll.Count - 1; i >= 0; i--)
                 if (fragmentsAll[i] == null)
-                    fragmentsAll.RemoveAt (i);
+                    fragmentsAll.RemoveAt(i);
         }
+
 
         // Delete all fragments and roots
         public void DeleteFragmentsAll()
@@ -506,20 +582,22 @@ namespace RayFire
             // Check for all roots
             for (int i = rootChildList.Count - 1; i >= 0; i--)
                 if (rootChildList[i] != null)
-                    DestroyImmediate (rootChildList[i].gameObject);
+                    DestroyImmediate(rootChildList[i].gameObject);
             rootChildList.Clear();
         }
+
 
         // Reset center helper
         public void ResetCenter()
         {
-            centerPosition  = Vector3.zero;
+            centerPosition = Vector3.zero;
             centerDirection = Quaternion.identity;
 
             Renderer rend = GetComponent<Renderer>();
             if (rend != null)
-                centerPosition = transform.InverseTransformPoint (rend.bounds.center);
+                centerPosition = transform.InverseTransformPoint(rend.bounds.center);
         }
+
 
         /// /////////////////////////////////////////////////////////
         /// Scale
@@ -545,9 +623,10 @@ namespace RayFire
                 transForm.localScale = newScale;
 
                 // Warning
-                Debug.Log ("Warning. Object " + name + " is too small.");
+                Debug.Log("Warning. Object " + name + " is too small.");
             }
         }
+
 
         // Reset original object and fragments scale
         public void ResetScale(float scaleValue)
@@ -570,6 +649,7 @@ namespace RayFire
             }
         }
 
+
         /// /////////////////////////////////////////////////////////
         /// Copy
         /// /////////////////////////////////////////////////////////
@@ -585,28 +665,30 @@ namespace RayFire
             for (int i = 0; i < targets.Count; i++)
             {
                 targets[i].mshDemol.sht = targets[i].gameObject.AddComponent<RayfireShatter>();
-                targets[i].mshDemol.sht.CopyFrom (source.mshDemol.sht);
+                targets[i].mshDemol.sht.CopyFrom(source.mshDemol.sht);
             }
         }
+
 
         // Copy from
         void CopyFrom(RayfireShatter shatter)
         {
             type = shatter.type;
 
-            voronoi   = new RFVoronoi (shatter.voronoi);
-            splinters = new RFSplinters (shatter.splinters);
-            slabs     = new RFSplinters (shatter.slabs);
-            radial    = new RFRadial (shatter.radial);
-            custom    = new RFCustom (shatter.custom);
-            slice     = new RFSlice (shatter.slice);
-            tets      = new RFTets (shatter.tets);
+            voronoi = new RFVoronoi(shatter.voronoi);
+            splinters = new RFSplinters(shatter.splinters);
+            slabs = new RFSplinters(shatter.slabs);
+            radial = new RFRadial(shatter.radial);
+            custom = new RFCustom(shatter.custom);
+            slice = new RFSlice(shatter.slice);
+            tets = new RFTets(shatter.tets);
 
             mode = shatter.mode;
-            material.CopyFrom (shatter.material);
-            clusters = new RFShatterCluster (shatter.clusters);
-            advanced = new RFShatterAdvanced (shatter.advanced);
+            material.CopyFrom(shatter.material);
+            clusters = new RFShatterCluster(shatter.clusters);
+            advanced = new RFShatterAdvanced(shatter.advanced);
         }
+
 
         /// /////////////////////////////////////////////////////////
         /// Interactive
@@ -617,28 +699,28 @@ namespace RayFire
         {
             if (intGo == null)
             {
-                intGo = new GameObject (name + "_Interactive");
+                intGo = new GameObject(name + "_Interactive");
                 intMf = intGo.AddComponent<MeshFilter>();
             }
-            
+
             if (intMf == null)
             {
                 intMf = intGo.GetComponent<MeshFilter>();
                 if (intMf == null)
                     intMf = intGo.AddComponent<MeshFilter>();
             }
-            
+
             // Copy tm
             intGo.transform.position = transForm.position;
-                
-            intGo.tag   = gameObject.tag;
+
+            intGo.tag = gameObject.tag;
             intGo.layer = gameObject.layer;
-            
+
             if (meshRenderer != null)
             {
                 if (intMr == null)
                 {
-                    intMr                 = intGo.AddComponent<MeshRenderer>();
+                    intMr = intGo.AddComponent<MeshRenderer>();
                     intMr.sharedMaterials = meshRenderer.sharedMaterials;
                 }
             }
@@ -648,17 +730,20 @@ namespace RayFire
             }
         }
 
+
         // Fragment all meshes into own mesh
         public void InteractiveStart()
         {
-            RFFragment.InteractiveStart (this);
+            RFFragment.InteractiveStart(this);
         }
+
 
         // Property changed
         public void InteractiveChange()
         {
-            RFFragment.InteractiveChange (this);
+            RFFragment.InteractiveChange(this);
         }
+
 
         // Create interactively cached fragments
         public void InteractiveFragment()
@@ -673,23 +758,25 @@ namespace RayFire
             InteractiveStop();
         }
 
+
         // Revert original mesh
         public void InteractiveStop()
         {
             // Enable own Renderer
             OriginalRenderer(true);
-            
+
             // Destroy interactive object
             if (intGo != null)
-                DestroyImmediate (intGo);
-            
+                DestroyImmediate(intGo);
+
             // Reset
-            intGo       = null;
-            intMf       = null;
-            intMr       = null;
-            shatterInt  = null;
+            intGo = null;
+            intMf = null;
+            intMr = null;
+            shatterInt = null;
             interactive = false;
         }
+
 
         // Set original renderer state
         public void OriginalRenderer(bool state)
@@ -699,7 +786,8 @@ namespace RayFire
             if (skinnedMeshRend != null)
                 skinnedMeshRend.enabled = state;
         }
-        
+
+
         public void InteractiveReset()
         {
             if (interactive == true)
@@ -708,12 +796,13 @@ namespace RayFire
             }
         }
 
+
         // Final preview scale
         public float PreviewScale()
         {
             if (scalePreview == false)
                 return 1f;
-            return Mathf.Lerp (1f, 0.3f, previewScale);
+            return Mathf.Lerp(1f, 0.3f, previewScale);
         }
     }
 }

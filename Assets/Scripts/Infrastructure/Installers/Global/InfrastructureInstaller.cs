@@ -26,9 +26,6 @@ namespace Infrastructure.Installers.Global
             BindSceneLoader();
             BindUIFactory();
             BindInputService();
-            BindGameStatesFactory();
-            BindLoadStates();
-            BindGameStateMachine();
             BindNoiseGenerator();
             BindTextureGenerator();
             BindMeshGenerator();
@@ -79,28 +76,6 @@ namespace Infrastructure.Installers.Global
         private void BindTextureGenerator()
         {
             Container.Bind<TextureGenerator>().AsSingle();
-        }
-
-
-        private void BindGameStatesFactory()
-        {
-            Container.Bind<GameStatesFactory>().AsSingle();
-        }
-
-
-        private void BindGameStateMachine()
-        {
-            Container.BindInterfacesAndSelfTo<GameStateMachine>().AsSingle().NonLazy();
-        }
-
-
-        private void BindLoadStates()
-        {
-            Container.Bind<BootstrapState>().AsSingle().NonLazy();
-            Container.Bind<LoadProgressState>().AsSingle().NonLazy();
-            Container.Bind<LoadMetaState>().AsSingle().NonLazy();
-            Container.Bind<LoadLevelState>().AsSingle().NonLazy();
-            Container.Bind<GameLoopState>().AsSingle().NonLazy();
         }
 
 
