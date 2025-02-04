@@ -1,0 +1,17 @@
+{
+    "name": "GiantBoulder.Plugins",
+    "rootNamespace": "",
+    "references": [
+        "GUID:c677688ef3042284595272795d5b252d",
+        "GUID:136883ebb78e6644f988c0c871adcb21"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}

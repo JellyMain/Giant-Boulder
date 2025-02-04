@@ -5,6 +5,10 @@ TagManager:
   serializedVersion: 2
   tags:
   - CameraPivot
+  - Container
+  - FragmentsRoot
+  - Ignore
+  - Indestructible
   layers:
   - Default
   - TransparentFX
@@ -12,11 +16,11 @@ TagManager:
   - Ground
   - Water
   - UI
-  - Building
+  - StructureObject
   - Player
   - StructureFragmented
   - Coin
-  - 
+  - PhysicalObject
   - 
   - 
   - 

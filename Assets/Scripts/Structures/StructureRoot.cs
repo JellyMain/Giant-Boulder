@@ -11,7 +11,7 @@ namespace Structures
     {
         [SerializeField] private float structureRadius = 10;
         [SerializeField] private float maxSlopeAngle = 30;
-        public List<StructureChildSpawnSettings> structureChildSettings;
+        public List<StructureSpawnSettings> structureChildSettings;
 
         public float MaxSlopeAngle => maxSlopeAngle;
         public float StructureRadius => structureRadius;
@@ -19,11 +19,11 @@ namespace Structures
 
 
         [Button]
-        private void FindStructureChildObjects()
+        public void FindStructureChildObjects()
         {
-            structureChildSettings = new List<StructureChildSpawnSettings>();
+            structureChildSettings = new List<StructureSpawnSettings>();
 
-            StructureChildSpawnSettings[] structureChildren = GetComponentsInChildren<StructureChildSpawnSettings>();
+            StructureSpawnSettings[] structureChildren = GetComponentsInChildren<StructureSpawnSettings>();
 
             structureChildSettings = structureChildren.ToList();
         }

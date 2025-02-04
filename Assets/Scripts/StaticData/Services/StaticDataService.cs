@@ -11,13 +11,25 @@ namespace StaticData.Services
     public class StaticDataService
     {
         public Dictionary<TerrainSeason, MapGenerationConfig> MapGenerationConfigs { get; private set; }
-        public StructureSpawnerConfig StructureSpawnerConfig { get; private set; }
+        public Dictionary<int, SpawnerConfig> SpawnerConfigs { get; private set; }
 
 
         public void LoadStaticData()
         {
             LoadMapChunkConfig();
-            LoadStructureSpawnerConfig();
+            LoadSpawnerConfigs();
+        }
+
+
+        public SpawnerConfig SpawnerConfigForSpawnOrder(int spawnOrder)
+        {
+            if (SpawnerConfigs.TryGetValue(spawnOrder, out SpawnerConfig spawnerConfig))
+            {
+                return spawnerConfig;
+            }
+
+            Debug.LogError($"Couldn't find spawner config with order key {spawnOrder}");
+            return null;
         }
 
 
@@ -42,10 +54,11 @@ namespace StaticData.Services
 
 
 
-        private void LoadStructureSpawnerConfig()
+        private void LoadSpawnerConfigs()
         {
-            StructureSpawnerConfig =
-                Resources.Load<StructureSpawnerConfig>(RuntimeConstants.StaticDataPaths.STRUCTURE_SPAWNER_CONFIG);
+            SpawnerConfigs =
+                Resources.LoadAll<SpawnerConfig>(RuntimeConstants.StaticDataPaths.STRUCTURE_SPAWNER_CONFIGS)
+                    .ToDictionary(x => x.spawnOrder, x => x);
         }
     }
 }

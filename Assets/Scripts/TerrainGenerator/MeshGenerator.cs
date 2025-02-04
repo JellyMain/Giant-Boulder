@@ -63,8 +63,7 @@ namespace TerrainGenerator
             return meshData;
         }
 
-
-
+        
         public MeshData CreateMeshData(float[] heightMap, float noiseMultiplier, AnimationCurve heightCurve,
             int lod, Gradient gradient, TerrainRegion[] regions)
         {

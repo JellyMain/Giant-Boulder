@@ -22,6 +22,18 @@ namespace Structures
             meshRenderer = GetComponent<MeshRenderer>();
         }
 
+
+        public void FindFragmentsRoot()
+        {
+            foreach (Transform child in transform)
+            {
+                if (child.CompareTag("FragmentsRoot"))
+                {
+                    fragmentsRoot = child.gameObject;
+                }
+            }
+        }
+        
       
         public void Destroy()
         {

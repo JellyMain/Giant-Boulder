@@ -45,7 +45,7 @@ namespace Infrastructure.GameStates
             
             SetCamera(cameraPivot);
             
-            structureSpawner.SpawnAllStructures();
+            structureSpawner.ActivateAllSpawners();
         }
 
 
