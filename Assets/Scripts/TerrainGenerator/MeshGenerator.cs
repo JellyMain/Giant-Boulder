@@ -1,71 +1,105 @@
-using System.Collections.Generic;
-using StaticData.Services;
+using System.Diagnostics;
 using Unity.Collections;
+using Unity.Jobs;
+using Unity.Mathematics;
 using UnityEngine;
+using Debug = UnityEngine.Debug;
 
 
 namespace TerrainGenerator
 {
     public class MeshGenerator
     {
-        public MeshData CreateMeshData(float[,] heightMap, float noiseMultiplier, AnimationCurve heightCurve,
-            int lod, Gradient gradient, TerrainRegion[] regions)
+        public MeshData[] CreateAllMeshDataParallel(float[][] heightMaps, float noiseMultiplier,
+            AnimationCurve heightCurve,
+            int lod, Gradient gradient)
         {
-            int width = heightMap.GetLength(0);
-            int height = heightMap.GetLength(1);
+            Stopwatch stopwatch = new Stopwatch();
+            stopwatch.Start();
+            
+            NativeArray<JobHandle> jobHandles = new NativeArray<JobHandle>(heightMaps.GetLength(0), Allocator.Temp);
+            NativeArray<NativeArray<float>> nativeHeightMaps =
+                new NativeArray<NativeArray<float>>(heightMaps.GetLength(0), Allocator.Temp);
+            NativeArray<Keyframe> heightCurveKeys =
+                new NativeArray<Keyframe>(heightCurve.keys.Length, Allocator.TempJob);
+            NativeArray<MeshDataBurstCompatible> meshDataBurstCompatibles =
+                new NativeArray<MeshDataBurstCompatible>(heightMaps.GetLength(0), Allocator.Temp);
 
-            float topLeftX = (width - 1) / -2f;
-            float topLeftY = (height - 1) / 2f;
 
-            int verticesPerLine = (width - 1) / lod;
-
-            MeshData meshData = new MeshData(verticesPerLine);
-
-
-            for (int y = 0; y < height - 1; y += lod)
+            for (int i = 0; i < heightCurveKeys.Length; i++)
             {
-                for (int x = 0; x < width - 1; x += lod)
-                {
-                    float vertexAMultiplier = heightCurve.Evaluate(heightMap[x, y]) * noiseMultiplier;
-                    float vertexBMultiplier = heightCurve.Evaluate(heightMap[x + lod, y]) * noiseMultiplier;
-                    float vertexCMultiplier = heightCurve.Evaluate(heightMap[x, y + lod]) * noiseMultiplier;
-                    float vertexDMultiplier = heightCurve.Evaluate(heightMap[x + lod, y + lod]) * noiseMultiplier;
-
-                    Vector3 vertexA = new Vector3(topLeftX + x, heightMap[x, y] * vertexAMultiplier, topLeftY - y);
-                    Vector3 vertexB = new Vector3(topLeftX + x + lod, heightMap[x + lod, y] * vertexBMultiplier,
-                        topLeftY - y);
-                    Vector3 vertexC = new Vector3(topLeftX + x, heightMap[x, y + lod] * vertexCMultiplier,
-                        topLeftY - y - lod);
-                    Vector3 vertexD = new Vector3(topLeftX + x + lod, heightMap[x + lod, y + lod] * vertexDMultiplier,
-                        topLeftY - y - lod);
-
-                    Vector2 uvA = new Vector2((float)x / (width - 1), (float)y / (height - 1));
-                    Vector2 uvB = new Vector2((float)(x + lod) / (width - 1), (float)y / (height - 1));
-                    Vector2 uvC = new Vector2((float)x / (width - 1), (float)(y + lod) / (height - 1));
-                    Vector2 uvD = new Vector2((float)(x + lod) / (width - 1), (float)(y + lod) / (height - 1));
-
-
-                    Color firstTriangleColor = EvaluateVertexColorGradient(vertexA, vertexB, vertexD, vertexAMultiplier,
-                        vertexBMultiplier, vertexDMultiplier, gradient);
-
-                    meshData.AddTriangle(vertexA, vertexB, vertexD, firstTriangleColor, uvA, uvB, uvD);
-
-
-                    Color secondTriangleColor = EvaluateVertexColorGradient(vertexC, vertexA, vertexD,
-                        vertexCMultiplier,
-                        vertexAMultiplier, vertexDMultiplier, gradient);
-
-                    meshData.AddTriangle(vertexC, vertexA, vertexD, secondTriangleColor, uvC, uvA, uvD);
-                }
+                heightCurveKeys[i] = heightCurve[i];
             }
 
 
-            return meshData;
+            for (int i = 0; i < nativeHeightMaps.Length; i++)
+            {
+                nativeHeightMaps[i] = new NativeArray<float>(heightMaps[i].Length, Allocator.TempJob);
+                NativeArray<float> nativeHeightMap = nativeHeightMaps[i];
+
+                int verticesPerLine = (int)math.sqrt(heightMaps[i].Length) / lod;
+
+                MeshDataBurstCompatible meshDataBurstCompatible = new MeshDataBurstCompatible(verticesPerLine);
+
+                meshDataBurstCompatibles[i] = meshDataBurstCompatible;
+
+                for (int j = 0; j < heightMaps[i].Length; j++)
+                {
+                    nativeHeightMap[j] = heightMaps[i][j];
+                }
+
+
+                CreateMeshDataJob createMeshDataJob = new CreateMeshDataJob()
+                {
+                    heightCurveKeys = heightCurveKeys,
+                    heightMap = nativeHeightMap,
+                    lod = lod,
+                    noiseMultiplier = noiseMultiplier,
+                    meshDataBurstCompatible = meshDataBurstCompatibles[i]
+                };
+
+                jobHandles[i] = createMeshDataJob.Schedule();
+            }
+
+            JobHandle.CompleteAll(jobHandles);
+
+            MeshData[] allMeshData = new MeshData[heightMaps.GetLength(0)];
+
+            for (int i = 0; i < allMeshData.Length; i++)
+            {
+                MeshDataBurstCompatible meshDataBurstCompatible = meshDataBurstCompatibles[i];
+                MeshData meshData = new MeshData(meshDataBurstCompatible.verticesPerLine);
+
+                for (int j = 0; j < meshDataBurstCompatible.vertices.Length; j++)
+                {
+                    meshData.Vertices[j] = meshDataBurstCompatible.vertices[j];
+                    meshData.Triangles[j] = meshDataBurstCompatible.triangles[j];
+                    meshData.Uvs[j] = meshDataBurstCompatible.uvs[j];
+                    meshData.Colors[j] = meshDataBurstCompatible.colors[j];
+                }
+
+                allMeshData[i] = meshData;
+                nativeHeightMaps[i].Dispose();
+                meshDataBurstCompatible.Dispose();
+            }
+
+            jobHandles.Dispose();
+            heightCurveKeys.Dispose();
+            meshDataBurstCompatibles.Dispose();
+            nativeHeightMaps.Dispose();
+
+            stopwatch.Stop();
+            
+            Debug.Log(stopwatch.ElapsedMilliseconds);
+            
+            return allMeshData;
         }
 
-        
+
+
+
         public MeshData CreateMeshData(float[] heightMap, float noiseMultiplier, AnimationCurve heightCurve,
-            int lod, Gradient gradient, TerrainRegion[] regions)
+            int lod, Gradient gradient)
         {
             AnimationCurve currentHeightCurve = new AnimationCurve(heightCurve.keys);
 
@@ -128,7 +162,62 @@ namespace TerrainGenerator
         }
 
 
+        public MeshData CreateMeshData(float[,] heightMap, float noiseMultiplier, AnimationCurve heightCurve,
+            int lod, Gradient gradient)
+        {
+            int width = heightMap.GetLength(0);
+            int height = heightMap.GetLength(1);
 
+            float topLeftX = (width - 1) / -2f;
+            float topLeftY = (height - 1) / 2f;
+
+            int verticesPerLine = (width - 1) / lod;
+
+            MeshData meshData = new MeshData(verticesPerLine);
+
+
+            for (int y = 0; y < height - 1; y += lod)
+            {
+                for (int x = 0; x < width - 1; x += lod)
+                {
+                    float vertexAMultiplier = heightCurve.Evaluate(heightMap[x, y]) * noiseMultiplier;
+                    float vertexBMultiplier = heightCurve.Evaluate(heightMap[x + lod, y]) * noiseMultiplier;
+                    float vertexCMultiplier = heightCurve.Evaluate(heightMap[x, y + lod]) * noiseMultiplier;
+                    float vertexDMultiplier = heightCurve.Evaluate(heightMap[x + lod, y + lod]) * noiseMultiplier;
+
+                    Vector3 vertexA = new Vector3(topLeftX + x, heightMap[x, y] * vertexAMultiplier, topLeftY - y);
+                    Vector3 vertexB = new Vector3(topLeftX + x + lod, heightMap[x + lod, y] * vertexBMultiplier,
+                        topLeftY - y);
+                    Vector3 vertexC = new Vector3(topLeftX + x, heightMap[x, y + lod] * vertexCMultiplier,
+                        topLeftY - y - lod);
+                    Vector3 vertexD = new Vector3(topLeftX + x + lod, heightMap[x + lod, y + lod] * vertexDMultiplier,
+                        topLeftY - y - lod);
+
+                    Vector2 uvA = new Vector2((float)x / (width - 1), (float)y / (height - 1));
+                    Vector2 uvB = new Vector2((float)(x + lod) / (width - 1), (float)y / (height - 1));
+                    Vector2 uvC = new Vector2((float)x / (width - 1), (float)(y + lod) / (height - 1));
+                    Vector2 uvD = new Vector2((float)(x + lod) / (width - 1), (float)(y + lod) / (height - 1));
+
+
+                    Color firstTriangleColor = EvaluateVertexColorGradient(vertexA, vertexB, vertexD, vertexAMultiplier,
+                        vertexBMultiplier, vertexDMultiplier, gradient);
+
+                    meshData.AddTriangle(vertexA, vertexB, vertexD, firstTriangleColor, uvA, uvB, uvD);
+
+
+                    Color secondTriangleColor = EvaluateVertexColorGradient(vertexC, vertexA, vertexD,
+                        vertexCMultiplier,
+                        vertexAMultiplier, vertexDMultiplier, gradient);
+
+                    meshData.AddTriangle(vertexC, vertexA, vertexD, secondTriangleColor, uvC, uvA, uvD);
+                }
+            }
+
+            return meshData;
+        }
+
+
+        
         private Color EvaluateVertexColorGradient(Vector3 vertexA, Vector3 vertexB, Vector3 vertexC,
             float vertexScaleA, float vertexScaleB, float vertexScaleC, Gradient gradient)
         {
@@ -142,6 +231,5 @@ namespace TerrainGenerator
 
             return color;
         }
-      
     }
 }

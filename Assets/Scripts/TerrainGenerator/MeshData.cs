@@ -5,16 +5,18 @@ namespace TerrainGenerator
 {
     public class MeshData
     {
-        public Vector3[] Vertices { get; private set; }
-        public int[] Triangles { get; private set; }
-        public Color[] Colors { get; private set; }
-        public Vector2[] Uvs { get; private set; }
-
+        public Vector3[] Vertices { get; set; }
+        public int[] Triangles { get; set; }
+        public Color[] Colors { get; set; }
+        public Vector2[] Uvs { get; set; }
+        public Vector3[] Normals { get; set; }
+        public int verticesPerLine;
         private int vertexCount;
 
 
         public MeshData(int verticesPerLine)
         {
+            this.verticesPerLine = verticesPerLine;
             Vertices = new Vector3[verticesPerLine * verticesPerLine * 6];
             Triangles = new int[verticesPerLine * verticesPerLine * 6];
             Colors = new Color[verticesPerLine * verticesPerLine * 6];
@@ -46,7 +48,7 @@ namespace TerrainGenerator
 
         private Vector3[] CalculateNormals()
         {
-            Vector3[] vertexNormals = new Vector3[Vertices.Length];
+            Normals = new Vector3[Vertices.Length];
             int triangleCount = Triangles.Length;
 
             for (int i = 0; i < triangleCount; i += 3)
@@ -57,17 +59,17 @@ namespace TerrainGenerator
 
                 Vector3 triangleNormal = SurfaceNormalFromIndices(vertexIndexA, vertexIndexB, vertexIndexC);
 
-                vertexNormals[vertexIndexA] += triangleNormal;
-                vertexNormals[vertexIndexB] += triangleNormal;
-                vertexNormals[vertexIndexC] += triangleNormal;
+                Normals[vertexIndexA] += triangleNormal;
+                Normals[vertexIndexB] += triangleNormal;
+                Normals[vertexIndexC] += triangleNormal;
             }
 
-            for (int i = 0; i < vertexNormals.Length; i++)
+            for (int i = 0; i < Normals.Length; i++)
             {
-                vertexNormals[i] = vertexNormals[i].normalized;
+                Normals[i] = Normals[i].normalized;
             }
 
-            return vertexNormals;
+            return Normals;
         }
 
 

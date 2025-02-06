@@ -34,6 +34,13 @@ namespace Infrastructure.Installers.Global
             BindCameraCreator();
             BindCoinFactory();
             BindStructureSpawner();
+            BindSpawnPointsValidator();
+        }
+
+
+        private void BindSpawnPointsValidator()
+        {
+            Container.Bind<SpawnPointsValidator>().AsSingle();
         }
 
 

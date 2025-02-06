@@ -18,16 +18,18 @@ namespace Infrastructure.GameStates
         private readonly PlayerFactory playerFactory;
         private readonly CameraCreator cameraCreator;
         private readonly StructureSpawner structureSpawner;
+        private readonly SpawnPointsValidator spawnPointsValidator;
 
 
         public LoadLevelState(SceneLoader sceneLoader, MapCreator mapCreator, PlayerFactory playerFactory,
-            CameraCreator cameraCreator, StructureSpawner structureSpawner)
+            CameraCreator cameraCreator, StructureSpawner structureSpawner, SpawnPointsValidator spawnPointsValidator)
         {
             this.sceneLoader = sceneLoader;
             this.mapCreator = mapCreator;
             this.playerFactory = playerFactory;
             this.cameraCreator = cameraCreator;
             this.structureSpawner = structureSpawner;
+            this.spawnPointsValidator = spawnPointsValidator;
         }
 
 
@@ -39,13 +41,17 @@ namespace Infrastructure.GameStates
 
         private void CreateLevel()
         {
+            spawnPointsValidator.Init(); //TODO: Move initializer to other place
+            
             mapCreator.CreateMap();
             GameObject player = playerFactory.CreatePlayer(new Vector3(50, 100, 50));
             Transform cameraPivot = GameObject.FindWithTag("CameraPivot").transform;
             
             SetCamera(cameraPivot);
             
-            structureSpawner.ActivateAllSpawners();
+            spawnPointsValidator.ComputeAllMeshesParallel();
+            
+            // structureSpawner.ActivateAllSpawners();
         }
 
 
