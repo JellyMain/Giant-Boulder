@@ -6,6 +6,7 @@ using Sirenix.OdinInspector;
 using StaticData.Data;
 using StaticData.Services;
 using StructuresSpawner;
+using TerrainGenerator.Data;
 using Unity.Collections;
 using Unity.VisualScripting;
 using UnityEditor;
@@ -56,25 +57,15 @@ namespace TerrainGenerator
                     allChunkPositions[y * mapGenerationConfig.mapSize + x] = chunkPosition;
                 }
             }
-
-
-            Stopwatch stopwatch = new Stopwatch();
-            stopwatch.Start();
             
             float[][] allTerrainHeightMaps = noiseGenerator.GenerateAllHeightMapsParallel(
                 mapGenerationConfig.mapSize,
                 mapGenerationConfig.chunkSize,
                 mapGenerationConfig.noiseScale, mapGenerationConfig.persistance, mapGenerationConfig.lacunarity,
                 mapGenerationConfig.octaves, mapGenerationConfig.seed, mapGenerationConfig.offset, allChunkPositions);
-
-            
-            stopwatch.Stop();
-            Debug.Log(stopwatch.ElapsedMilliseconds);
             
             chunkFactory.CreateAllChunks(allChunkPositions, allTerrainHeightMaps, mapGenerationConfig,
                 chunksParent.transform);
-
-            // CreateChunks(allChunkPositions, allTerrainHeightMaps, chunksParent);
         }
 
 

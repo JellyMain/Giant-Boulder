@@ -1,9 +1,11 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Diagnostics;
 using Unity.Collections;
 using Unity.Jobs;
 using Unity.Mathematics;
 using UnityEngine;
+using Debug = UnityEngine.Debug;
 using Random = System.Random;
 
 
@@ -180,91 +182,67 @@ namespace TerrainGenerator
             float globalMinNoiseHeight = float.MaxValue;
             float globalMaxNoiseHeight = float.MinValue;
 
+            int totalChunks = terrainMapSize * terrainMapSize;
+            int chunkResolution = chunkSize * chunkSize;
 
-            NativeArray<float>[] terrainHeightMapsNative = new NativeArray<float>[terrainMapSize * terrainMapSize];
-            NativeArray<JobHandle> jobHandles =
-                new NativeArray<JobHandle>(terrainHeightMapsNative.Length, Allocator.TempJob);
+            NativeArray<float> terrainHeightMapsNative =
+                new NativeArray<float>(totalChunks * chunkResolution, Allocator.TempJob);
 
-            for (int chunkY = 0; chunkY < terrainMapSize; chunkY++)
+            NativeArray<float3> chunkPositionsNative = new NativeArray<float3>(positions.Length, Allocator.TempJob);
+
+            for (int i = 0; i < chunkPositionsNative.Length; i++)
             {
-                for (int chunkX = 0; chunkX < terrainMapSize; chunkX++)
-                {
-                    int index = chunkY * terrainMapSize + chunkX;
-                    terrainHeightMapsNative[index] = new NativeArray<float>(chunkSize * chunkSize, Allocator.TempJob);
-
-                    Random rng = new Random(seed);
-                    NativeArray<float2> octaveOffsets = new NativeArray<float2>(octaves, Allocator.TempJob);
-                    Vector3 chunkPosition = positions[chunkY * terrainMapSize + chunkX];
-
-                    for (int i = 0; i < octaves; i++)
-                    {
-                        float xOffset = rng.Next(-10000, 10000) + offset.x + chunkPosition.x;
-                        float yOffset = rng.Next(-10000, 10000) - offset.y + chunkPosition.z;
-                        octaveOffsets[i] = new float2(xOffset, yOffset);
-                    }
-
-                    jobOctaveOffsetsList.Add(octaveOffsets);
-
-                    GenerateHeightMapJob heightMapJob = new GenerateHeightMapJob
-                    {
-                        chunkSize = chunkSize,
-                        heightMap = terrainHeightMapsNative[index],
-                        lacunarity = lacunarity,
-                        octaves = octaves,
-                        persistance = persistance,
-                        scale = scale,
-                        octaveOffsets = octaveOffsets,
-                    };
-
-                    jobHandles[index] = heightMapJob.Schedule();
-                }
+                chunkPositionsNative[i] = positions[i];
             }
 
-            JobHandle.CompleteAll(jobHandles);
-
-
-            float[][] terrainHeightMaps = new float[terrainMapSize * terrainMapSize][];
-
-            for (int i = 0; i < terrainHeightMapsNative.Length; i++)
+            GenerateHeightMapJob heightMapJob = new GenerateHeightMapJob
             {
-                NativeArray<float> heightMap = terrainHeightMapsNative[i];
+                offset = offset,
+                seed = (uint)seed,
+                chunkPositions = chunkPositionsNative,
+                chunkSize = chunkSize,
+                heightMapsRead = terrainHeightMapsNative,
+                lacunarity = lacunarity,
+                octaves = octaves,
+                persistance = persistance,
+                scale = scale,
+            };
 
-                for (int j = 0; j < heightMap.Length; j++)
-                {
-                    if (heightMap[j] > globalMaxNoiseHeight)
-                    {
-                        globalMaxNoiseHeight = heightMap[j];
-                    }
+            JobHandle jobHandle = heightMapJob.Schedule(totalChunks, 100);
+            jobHandle.Complete();
 
-                    if (heightMap[j] < globalMinNoiseHeight)
-                    {
-                        globalMinNoiseHeight = heightMap[j];
-                    }
-                }
-            }
+            float[][] terrainHeightMaps = new float[totalChunks][];
             
-
-            for (int i = 0; i < terrainHeightMapsNative.Length; i++)
+            for (int i = 0; i < totalChunks; i++)
             {
-                terrainHeightMaps[i] = new float[terrainHeightMapsNative[i].Length];
+                terrainHeightMaps[i] = new float[chunkResolution];
+                int startIndex = i * chunkResolution;
 
-                for (int j = 0; j < terrainHeightMaps[i].Length; j++)
+                for (int j = 0; j < chunkResolution; j++)
+                {
+                    float heightValue = terrainHeightMapsNative[startIndex + j];
+
+                    if (heightValue > globalMaxNoiseHeight)
+                        globalMaxNoiseHeight = heightValue;
+
+                    if (heightValue < globalMinNoiseHeight)
+                        globalMinNoiseHeight = heightValue;
+                }
+            }
+
+            for (int i = 0; i < totalChunks; i++)
+            {
+                int startIndex = i * chunkResolution;
+
+                for (int j = 0; j < chunkResolution; j++)
                 {
                     terrainHeightMaps[i][j] = Mathf.InverseLerp(globalMinNoiseHeight, globalMaxNoiseHeight,
-                        terrainHeightMapsNative[i][j]);
-
+                        terrainHeightMapsNative[startIndex + j]);
                 }
-
-                terrainHeightMapsNative[i].Dispose();
             }
 
-            foreach (var octaveOffsets in jobOctaveOffsetsList)
-            {
-                octaveOffsets.Dispose();
-            }
-
-            jobHandles.Dispose();
-            jobOctaveOffsetsList.Clear();
+            terrainHeightMapsNative.Dispose();
+            chunkPositionsNative.Dispose();
 
             return terrainHeightMaps;
         }

@@ -1,6 +1,7 @@
 using StaticData.Data;
 using StaticData.Services;
 using TerrainGenerator;
+using TerrainGenerator.Data;
 using Unity.Collections;
 using UnityEngine;
 using Zenject;

@@ -1,4 +1,6 @@
 using System.Diagnostics;
+using TerrainGenerator.Data;
+using TerrainGenerator.GradientBurst;
 using Unity.Collections;
 using Unity.Jobs;
 using Unity.Mathematics;
@@ -14,40 +16,34 @@ namespace TerrainGenerator
             AnimationCurve heightCurve,
             int lod, Gradient gradient)
         {
-            Stopwatch stopwatch = new Stopwatch();
-            stopwatch.Start();
-            
             NativeArray<JobHandle> jobHandles = new NativeArray<JobHandle>(heightMaps.GetLength(0), Allocator.Temp);
             NativeArray<NativeArray<float>> nativeHeightMaps =
                 new NativeArray<NativeArray<float>>(heightMaps.GetLength(0), Allocator.Temp);
             NativeArray<Keyframe> heightCurveKeys =
                 new NativeArray<Keyframe>(heightCurve.keys.Length, Allocator.TempJob);
-            NativeArray<MeshDataBurstCompatible> meshDataBurstCompatibles =
-                new NativeArray<MeshDataBurstCompatible>(heightMaps.GetLength(0), Allocator.Temp);
+            NativeArray<MeshDataNative> meshDataNatives =
+                new NativeArray<MeshDataNative>(heightMaps.GetLength(0), Allocator.Temp);
+
+            GradientStruct.ReadOnly gradientReadOnly = gradient.DirectAccessReadOnly();
 
 
-            for (int i = 0; i < heightCurveKeys.Length; i++)
-            {
-                heightCurveKeys[i] = heightCurve[i];
-            }
+            SetHeightCurveKeys(heightCurve, heightCurveKeys);
 
 
             for (int i = 0; i < nativeHeightMaps.Length; i++)
             {
-                nativeHeightMaps[i] = new NativeArray<float>(heightMaps[i].Length, Allocator.TempJob);
-                NativeArray<float> nativeHeightMap = nativeHeightMaps[i];
-
                 int verticesPerLine = (int)math.sqrt(heightMaps[i].Length) / lod;
 
-                MeshDataBurstCompatible meshDataBurstCompatible = new MeshDataBurstCompatible(verticesPerLine);
-
-                meshDataBurstCompatibles[i] = meshDataBurstCompatible;
+                nativeHeightMaps[i] = new NativeArray<float>(heightMaps[i].Length, Allocator.TempJob);
+                NativeArray<float> nativeHeightMap = nativeHeightMaps[i];
 
                 for (int j = 0; j < heightMaps[i].Length; j++)
                 {
                     nativeHeightMap[j] = heightMaps[i][j];
                 }
 
+                MeshDataNative meshDataNative = new MeshDataNative(verticesPerLine);
+                meshDataNatives[i] = meshDataNative;
 
                 CreateMeshDataJob createMeshDataJob = new CreateMeshDataJob()
                 {
@@ -55,7 +51,8 @@ namespace TerrainGenerator
                     heightMap = nativeHeightMap,
                     lod = lod,
                     noiseMultiplier = noiseMultiplier,
-                    meshDataBurstCompatible = meshDataBurstCompatibles[i]
+                    meshDataNative = meshDataNatives[i],
+                    gradientReadOnly = gradientReadOnly
                 };
 
                 jobHandles[i] = createMeshDataJob.Schedule();
@@ -63,40 +60,52 @@ namespace TerrainGenerator
 
             JobHandle.CompleteAll(jobHandles);
 
-            MeshData[] allMeshData = new MeshData[heightMaps.GetLength(0)];
-
-            for (int i = 0; i < allMeshData.Length; i++)
-            {
-                MeshDataBurstCompatible meshDataBurstCompatible = meshDataBurstCompatibles[i];
-                MeshData meshData = new MeshData(meshDataBurstCompatible.verticesPerLine);
-
-                for (int j = 0; j < meshDataBurstCompatible.vertices.Length; j++)
-                {
-                    meshData.Vertices[j] = meshDataBurstCompatible.vertices[j];
-                    meshData.Triangles[j] = meshDataBurstCompatible.triangles[j];
-                    meshData.Uvs[j] = meshDataBurstCompatible.uvs[j];
-                    meshData.Colors[j] = meshDataBurstCompatible.colors[j];
-                }
-
-                allMeshData[i] = meshData;
-                nativeHeightMaps[i].Dispose();
-                meshDataBurstCompatible.Dispose();
-            }
+            MeshData[] allMeshData = CopyToMeshData(heightMaps.GetLength(0), meshDataNatives, nativeHeightMaps);
 
             jobHandles.Dispose();
             heightCurveKeys.Dispose();
-            meshDataBurstCompatibles.Dispose();
+            meshDataNatives.Dispose();
             nativeHeightMaps.Dispose();
-
-            stopwatch.Stop();
-            
-            Debug.Log(stopwatch.ElapsedMilliseconds);
             
             return allMeshData;
         }
 
 
+        private static MeshData[] CopyToMeshData(int meshDataArraySize, NativeArray<MeshDataNative> meshDataNatives,
+            NativeArray<NativeArray<float>> nativeHeightMaps)
+        {
+            MeshData[] allMeshData = new MeshData[meshDataArraySize];
 
+            for (int i = 0; i < allMeshData.Length; i++)
+            {
+                MeshDataNative meshDataNative = meshDataNatives[i];
+                MeshData meshData = new MeshData(meshDataNative.verticesPerLine);
+
+                for (int j = 0; j < meshDataNative.vertices.Length; j++)
+                {
+                    meshData.Vertices[j] = meshDataNative.vertices[j];
+                    meshData.Triangles[j] = meshDataNative.triangles[j];
+                    meshData.Uvs[j] = meshDataNative.uvs[j];
+                    meshData.Colors[j] = meshDataNative.colors[j];
+                }
+
+                allMeshData[i] = meshData;
+                nativeHeightMaps[i].Dispose();
+                meshDataNative.Dispose();
+            }
+
+            return allMeshData;
+        }
+
+
+        private static void SetHeightCurveKeys(AnimationCurve heightCurve, NativeArray<Keyframe> heightCurveKeys)
+        {
+            for (int i = 0; i < heightCurveKeys.Length; i++)
+            {
+                heightCurveKeys[i] = heightCurve[i];
+            }
+        }
+        
 
         public MeshData CreateMeshData(float[] heightMap, float noiseMultiplier, AnimationCurve heightCurve,
             int lod, Gradient gradient)
@@ -217,7 +226,7 @@ namespace TerrainGenerator
         }
 
 
-        
+
         private Color EvaluateVertexColorGradient(Vector3 vertexA, Vector3 vertexB, Vector3 vertexC,
             float vertexScaleA, float vertexScaleB, float vertexScaleC, Gradient gradient)
         {

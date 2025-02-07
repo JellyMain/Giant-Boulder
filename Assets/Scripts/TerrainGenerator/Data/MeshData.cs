@@ -1,7 +1,7 @@
 using UnityEngine;
 
 
-namespace TerrainGenerator
+namespace TerrainGenerator.Data
 {
     public class MeshData
     {

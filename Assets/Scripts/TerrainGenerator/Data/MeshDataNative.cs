@@ -5,7 +5,7 @@ using UnityEngine;
 
 namespace TerrainGenerator
 {
-    public struct MeshDataBurstCompatible
+    public struct MeshDataNative
     {
         public NativeArray<float3> vertices;
         public NativeArray<int> triangles;
@@ -15,7 +15,7 @@ namespace TerrainGenerator
         private int vertexCount;
 
 
-        public MeshDataBurstCompatible(int verticesPerLine)
+        public MeshDataNative(int verticesPerLine)
         {
             this.verticesPerLine = verticesPerLine;
             vertexCount = 0;
