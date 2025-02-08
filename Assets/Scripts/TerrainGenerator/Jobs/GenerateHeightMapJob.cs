@@ -15,7 +15,7 @@ public struct GenerateHeightMapJob : IJobParallelFor
     public float lacunarity;
     public int octaves;
     [ReadOnly] public NativeArray<float3> chunkPositions;
-    [NativeDisableParallelForRestriction] public NativeArray<float> heightMapsRead;
+    [NativeDisableParallelForRestriction] public NativeArray<float> allHeightMaps;
 
 
     public void Execute(int index)
@@ -56,7 +56,7 @@ public struct GenerateHeightMapJob : IJobParallelFor
                 }
 
                 int ind = y * chunkSize + x;
-                heightMapsRead[startIndex + ind] = noiseHeight;
+                allHeightMaps[startIndex + ind] = noiseHeight;
             }
         }
 

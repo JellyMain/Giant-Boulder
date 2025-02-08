@@ -1,6 +1,7 @@
 using System.Diagnostics;
 using TerrainGenerator.Data;
 using TerrainGenerator.GradientBurst;
+using TerrainGenerator.Jobs;
 using Unity.Collections;
 using Unity.Jobs;
 using Unity.Mathematics;

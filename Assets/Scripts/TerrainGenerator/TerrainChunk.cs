@@ -13,11 +13,13 @@ namespace TerrainGenerator
         private readonly GameObject chunkGameObject;
         private readonly MeshCollider meshCollider;
         public MeshData meshData;
+        public Vector3 position;
         
 
         public TerrainChunk(Material material, Vector3 position, MeshData meshData, Transform parent)
         {
             this.meshData = meshData;
+            this.position = position;
             
             chunkGameObject = new GameObject("Terrain Chunk");
             chunkGameObject.layer = LayerMask.NameToLayer("Ground");

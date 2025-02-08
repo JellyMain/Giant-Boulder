@@ -201,7 +201,7 @@ namespace TerrainGenerator
                 seed = (uint)seed,
                 chunkPositions = chunkPositionsNative,
                 chunkSize = chunkSize,
-                heightMapsRead = terrainHeightMapsNative,
+                allHeightMaps = terrainHeightMapsNative,
                 lacunarity = lacunarity,
                 octaves = octaves,
                 persistance = persistance,

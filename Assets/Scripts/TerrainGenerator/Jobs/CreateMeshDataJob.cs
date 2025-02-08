@@ -6,7 +6,7 @@ using Unity.Mathematics;
 using UnityEngine;
 
 
-namespace TerrainGenerator
+namespace TerrainGenerator.Jobs
 {
     [BurstCompile]
     public struct CreateMeshDataJob : IJob

@@ -2,6 +2,7 @@ using StaticData.Data;
 using StaticData.Services;
 using TerrainGenerator;
 using TerrainGenerator.Data;
+using TerrainGenerator.Enums;
 using Unity.Collections;
 using UnityEngine;
 using Zenject;
@@ -55,6 +56,8 @@ namespace Factories
             MeshData[] chunksMeshData = meshGenerator.CreateAllMeshDataParallel(heightMaps,
                 mapGenerationConfig.noiseMultiplier, mapGenerationConfig.heightCurve, mapGenerationConfig.lod,
                 mapGenerationConfig.heightGradient);
+            
+            
 
             TerrainChunk[] terrainChunks = new TerrainChunk[chunksMeshData.Length];
 
@@ -67,5 +70,6 @@ namespace Factories
 
             return terrainChunks;
         }
+        
     }
 }

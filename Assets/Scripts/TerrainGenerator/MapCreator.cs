@@ -25,7 +25,7 @@ namespace TerrainGenerator
         private readonly ChunkFactory chunkFactory;
         private MapGenerationConfig mapGenerationConfig;
         private int chunkSize;
-        public List<MeshData> ChunksMeshData { get; private set; } = new List<MeshData>();
+        public TerrainChunk[] TerrainChunks { get; private set; }
 
 
         public MapCreator(NoiseGenerator noiseGenerator, StaticDataService staticDataService, ChunkFactory chunkFactory)
@@ -57,20 +57,25 @@ namespace TerrainGenerator
                     allChunkPositions[y * mapGenerationConfig.mapSize + x] = chunkPosition;
                 }
             }
-            
+
             float[][] allTerrainHeightMaps = noiseGenerator.GenerateAllHeightMapsParallel(
                 mapGenerationConfig.mapSize,
                 mapGenerationConfig.chunkSize,
                 mapGenerationConfig.noiseScale, mapGenerationConfig.persistance, mapGenerationConfig.lacunarity,
                 mapGenerationConfig.octaves, mapGenerationConfig.seed, mapGenerationConfig.offset, allChunkPositions);
-            
-            chunkFactory.CreateAllChunks(allChunkPositions, allTerrainHeightMaps, mapGenerationConfig,
+
+            TerrainChunk[] terrainChunks = chunkFactory.CreateAllChunks(allChunkPositions, allTerrainHeightMaps,
+                mapGenerationConfig,
                 chunksParent.transform);
+
+            TerrainChunks = terrainChunks;
         }
 
 
         private void CreateChunks(Vector3[] allChunkPositions, float[][] allTerrainHeightMaps, GameObject chunksParent)
         {
+            TerrainChunks = new TerrainChunk[mapGenerationConfig.mapSize * mapGenerationConfig.mapSize];
+
             for (int y = 0; y < mapGenerationConfig.mapSize; y++)
             {
                 for (int x = 0; x < mapGenerationConfig.mapSize; x++)
@@ -79,8 +84,8 @@ namespace TerrainGenerator
                     float[] heightMap = allTerrainHeightMaps[y * mapGenerationConfig.mapSize + x];
                     TerrainChunk terrainChunk = chunkFactory.CreateChunk(position, heightMap, mapGenerationConfig,
                         chunksParent.transform);
-                    
-                    ChunksMeshData.Add(terrainChunk.meshData);
+
+                    TerrainChunks[y * mapGenerationConfig.mapSize + x] = terrainChunk;
                 }
             }
         }

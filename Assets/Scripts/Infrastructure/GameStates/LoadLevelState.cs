@@ -3,6 +3,7 @@ using Const;
 using Factories;
 using Infrastructure.GameStates.Interfaces;
 using StructuresSpawner;
+using StructuresSpawner.SpawnPointsValidator;
 using TerrainGenerator;
 using UI;
 using UnityEngine;
@@ -40,14 +41,11 @@ namespace Infrastructure.GameStates
 
         private void CreateLevel()
         {
-            spawnPointsValidator.Init(); //TODO: Move initializer to other place
             mapCreator.CreateMap();
             
             GameObject player = playerFactory.CreatePlayer(new Vector3(50, 100, 50));
             Transform cameraPivot = GameObject.FindWithTag("CameraPivot").transform;
             SetCamera(cameraPivot);
-            
-            spawnPointsValidator.ComputeAllMeshesParallel();
             
             // structureSpawner.ActivateAllSpawners();
         }

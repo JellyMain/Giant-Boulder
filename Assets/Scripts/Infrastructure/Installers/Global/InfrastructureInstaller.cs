@@ -5,6 +5,7 @@ using PlayerInput.Interfaces;
 using PlayerInput.Services;
 using StaticData.Services;
 using StructuresSpawner;
+using StructuresSpawner.SpawnPointsValidator;
 using TerrainGenerator;
 using UI;
 using UnityEngine;

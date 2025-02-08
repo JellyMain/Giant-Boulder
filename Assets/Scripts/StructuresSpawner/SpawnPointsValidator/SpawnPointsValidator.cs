@@ -1,24 +1,23 @@
 using System.Collections.Generic;
-using System.Diagnostics;
 using StaticData.Data;
 using StaticData.Services;
+using StructuresSpawner.SpawnPointsValidator.Jobs;
 using TerrainGenerator;
 using TerrainGenerator.Data;
 using Unity.Collections;
 using Unity.Jobs;
 using Unity.Mathematics;
 using UnityEngine;
-using Debug = UnityEngine.Debug;
 
 
-namespace StructuresSpawner
+namespace StructuresSpawner.SpawnPointsValidator
 {
     public class SpawnPointsValidator
     {
         private readonly StaticDataService staticDataService;
         private readonly MapCreator mapCreator;
+        private readonly int vertexCheckStep = 2;
         private QuadTree spawnPointsQuadTree;
-        private int vertexCheckStep = 5;
         private MapGenerationConfig mapGenerationConfig;
 
 
@@ -33,99 +32,92 @@ namespace StructuresSpawner
         {
             mapGenerationConfig = staticDataService.MapConfigForSeason(TerrainSeason.Summer);
 
-            float width = mapGenerationConfig.chunkSize - 1;
-            float height = mapGenerationConfig.chunkSize - 1;
+            float mapWidth = (mapGenerationConfig.chunkSize - 1) * mapGenerationConfig.mapSize;
+            float mapHeight = (mapGenerationConfig.chunkSize - 1) * mapGenerationConfig.mapSize;
+            float chunkWidth = mapGenerationConfig.chunkSize - 1;
+            float chunkHeight = mapGenerationConfig.chunkSize - 1;
 
-            float startX = 0 - width / 2;
-            float startZ = 0 - height / 2;
+            float startX = 0 - chunkWidth / 2;
+            float startZ = 0 - chunkHeight / 2;
 
-            Rect bounds = new Rect(startX, startZ, width, height);
-            spawnPointsQuadTree = new QuadTree(bounds);
+            Rect bounds = new Rect(startX, startZ, mapWidth, mapHeight);
+            spawnPointsQuadTree = new QuadTree(bounds, mapGenerationConfig.mapSize);
         }
 
 
         public void ComputeAllMeshesParallel()
         {
-            NativeArray<NativeList<float2>> chunkValidSpawnPoints =
-                new NativeArray<NativeList<float2>>(mapCreator.ChunksMeshData.Count, Allocator.TempJob);
+            int totalChunks = mapGenerationConfig.mapSize * mapGenerationConfig.mapSize;
+            int chunkResolution = mapGenerationConfig.chunkSize * mapGenerationConfig.chunkSize;
+            int totalVertices = totalChunks * chunkResolution;
 
-            NativeArray<JobHandle> jobHandles =
-                new NativeArray<JobHandle>(mapCreator.ChunksMeshData.Count, Allocator.Temp);
+            NativeArray<float3> allVertices = new NativeArray<float3>(totalVertices, Allocator.TempJob);
+            NativeArray<float3> allNormals = new NativeArray<float3>(totalVertices, Allocator.TempJob);
+            NativeArray<int> validSpawnPointsFlags = new NativeArray<int>(totalVertices, Allocator.TempJob);
+            NativeList<float2> validSpawnPoints = new NativeList<float2>(Allocator.TempJob);
 
-            NativeArray<NativeArray<float3>> normalsArrays =
-                new NativeArray<NativeArray<float3>>(mapCreator.ChunksMeshData.Count, Allocator.Temp);
-            NativeArray<NativeArray<float3>> verticesArrays =
-                new NativeArray<NativeArray<float3>>(mapCreator.ChunksMeshData.Count, Allocator.Temp);
-
-            for (int i = 0; i < mapCreator.ChunksMeshData.Count; i++)
+            for (int i = 0; i < mapCreator.TerrainChunks.Length; i++)
             {
-                MeshData chunkMeshData = mapCreator.ChunksMeshData[i];
-                NativeArray<float3> normals = new NativeArray<float3>(chunkMeshData.Normals.Length, Allocator.TempJob);
-                NativeArray<float3> vertices =
-                    new NativeArray<float3>(chunkMeshData.Vertices.Length, Allocator.TempJob);
+                int startIndex = chunkResolution * i;
+                MeshData chunkMeshData = mapCreator.TerrainChunks[i].meshData;
 
                 for (int j = 0; j < chunkMeshData.Vertices.Length; j++)
                 {
-                    normals[j] = chunkMeshData.Normals[j];
-                    vertices[j] = chunkMeshData.Vertices[j];
+                    allVertices[startIndex + j] = chunkMeshData.Vertices[j];
+                    allNormals[startIndex + j] = chunkMeshData.Normals[j];
                 }
-
-                normalsArrays[i] = normals;
-                verticesArrays[i] = vertices;
-
-                chunkValidSpawnPoints[i] = new NativeList<float2>(Allocator.TempJob);
-
-                AddValidSpawnPointsJob addValidSpawnPointsJob = new AddValidSpawnPointsJob()
-                {
-                    vertices = vertices,
-                    normals = normals,
-                    validSpawnPoints = chunkValidSpawnPoints[i],
-                    vertexCheckStep = vertexCheckStep,
-                    verticesPerLine = chunkMeshData.verticesPerLine
-                };
-
-                jobHandles[i] = addValidSpawnPointsJob.Schedule();
             }
 
-            JobHandle.CompleteAll(jobHandles);
-
-            NativeList<float2> validSpawnPoints = new NativeList<float2>(Allocator.Temp);
-
-            for (int i = 0; i < chunkValidSpawnPoints.Length; i++)
+            AddValidSpawnPointsJob slopeJob = new AddValidSpawnPointsJob
             {
-                validSpawnPoints.AddRange(chunkValidSpawnPoints[i]);
-                chunkValidSpawnPoints[i].Dispose(); 
-            }
+                vertices = allVertices,
+                normals = allNormals,
+                validSpawnPointsFlags = validSpawnPointsFlags,
+                verticesPerLine = mapGenerationConfig.chunkSize,
+                vertexCheckStep = vertexCheckStep
+            };
+            JobHandle slopeJobHandle = slopeJob.Schedule(totalVertices, 64);
 
-            InsertPointsInQuadTree(validSpawnPoints);
-
-            DisposeNativeCollections(normalsArrays, verticesArrays, jobHandles, chunkValidSpawnPoints, validSpawnPoints);
-        }
-
-
-        private void InsertPointsInQuadTree(NativeList<float2> validSpawnPoints)
-        {
-            foreach (float2 spawnPoint in validSpawnPoints)
+            CollectValidSpawnPointsJob collectJob = new CollectValidSpawnPointsJob
             {
-                spawnPointsQuadTree.Insert(new Vector2(spawnPoint.x, spawnPoint.y));
-            }
-        }
+                validSpawnPointsFlags = validSpawnPointsFlags,
+                vertices = allVertices,
+                validSpawnPoints = validSpawnPoints
+            };
+            JobHandle collectJobHandle = collectJob.Schedule(slopeJobHandle);
 
+            collectJobHandle.Complete();
 
-        private static void DisposeNativeCollections(NativeArray<NativeArray<float3>> normalsArrays, NativeArray<NativeArray<float3>> verticesArrays,
-            NativeArray<JobHandle> jobHandles, NativeArray<NativeList<float2>> chunkValidSpawnPoints, NativeList<float2> validSpawnPoints)
-        {
-            for (int i = 0; i < normalsArrays.Length; i++)
-            {
-                normalsArrays[i].Dispose();
-                verticesArrays[i].Dispose();
-            }
+            InsertPointsInQuadTree(validSpawnPoints, mapCreator.TerrainChunks);
 
-            jobHandles.Dispose();
-            chunkValidSpawnPoints.Dispose();
-            normalsArrays.Dispose();
-            verticesArrays.Dispose();
+            allVertices.Dispose();
+            allNormals.Dispose();
+            validSpawnPointsFlags.Dispose();
             validSpawnPoints.Dispose();
+        }
+
+
+        private void InsertPointsInQuadTree(NativeList<float2> validSpawnPoints, TerrainChunk[] terrainChunks)
+        {
+            int validPointsPerChunk =
+                validSpawnPoints.Length / (mapGenerationConfig.mapSize * mapGenerationConfig.mapSize);
+
+            for (int i = 0; i < terrainChunks.Length; i++)
+            {
+                int pointsStartPosition = i * validPointsPerChunk;
+                Vector3 terrainChunkPosition = terrainChunks[i].position;
+
+                for (int j = 0; j < validPointsPerChunk; j++)
+                {
+                    float2 spawnPoint = validSpawnPoints[pointsStartPosition + j];
+                    Vector2 globalPosition = new Vector2(spawnPoint.x + terrainChunkPosition.x,
+                        spawnPoint.y + terrainChunkPosition.z);
+
+                    spawnPointsQuadTree.Insert(globalPosition);
+                }
+            }
+
+            QuadTreeDrawer.quadTree = spawnPointsQuadTree;
         }
     }
 }
