@@ -5,7 +5,6 @@ using PlayerInput.Interfaces;
 using PlayerInput.Services;
 using StaticData.Services;
 using StructuresSpawner;
-using StructuresSpawner.SpawnPointsValidator;
 using TerrainGenerator;
 using UI;
 using UnityEngine;
@@ -35,16 +34,9 @@ namespace Infrastructure.Installers.Global
             BindCameraCreator();
             BindCoinFactory();
             BindStructureSpawner();
-            BindSpawnPointsValidator();
         }
-
-
-        private void BindSpawnPointsValidator()
-        {
-            Container.Bind<SpawnPointsValidator>().AsSingle();
-        }
-
-
+        
+        
         private void BindStructureSpawner()
         {
             Container.Bind<StructureSpawner>().AsSingle();

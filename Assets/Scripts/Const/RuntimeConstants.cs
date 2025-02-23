@@ -36,6 +36,7 @@ namespace Const
         {
             public const string STRUCTURE_FRAGMENTED = "StructureFragmented";
             public const string STRUCTURE_OBJECT = "StructureObject";
+            public const string GROUND_LAYER = "Ground";
         }
     }
 }

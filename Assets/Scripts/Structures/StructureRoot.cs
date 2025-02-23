@@ -30,9 +30,10 @@ namespace Structures
 
 
 
-        private void OnDrawGizmosSelected()
+        private void OnDrawGizmos()
         {
             Gizmos.DrawWireSphere(transform.position, StructureRadius);
+            Gizmos.DrawWireCube(transform.position, new Vector3(100, 1, 100));
         }
     }
 }

@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Diagnostics;
+using TerrainGenerator.Jobs;
 using Unity.Collections;
 using Unity.Jobs;
 using Unity.Mathematics;
@@ -175,74 +176,77 @@ namespace TerrainGenerator
 
 
         public float[][] GenerateAllHeightMapsParallel(int terrainMapSize, int chunkSize, float scale,
-            float persistance,
-            float lacunarity, int octaves,
-            int seed, Vector2 offset, Vector3[] positions)
+            float persistance, float lacunarity, int octaves, int seed, Vector2 offset, Vector2[] chunksCoords)
         {
             float globalMinNoiseHeight = float.MaxValue;
             float globalMaxNoiseHeight = float.MinValue;
-
             int totalChunks = terrainMapSize * terrainMapSize;
             int chunkResolution = chunkSize * chunkSize;
 
-            NativeArray<float> terrainHeightMapsNative =
-                new NativeArray<float>(totalChunks * chunkResolution, Allocator.TempJob);
+            NativeArray<float>[] heightMapsNative = new NativeArray<float>[totalChunks];
+            NativeArray<float2> chunksCoordsNative = new NativeArray<float2>(chunksCoords.Length, Allocator.TempJob);
+            NativeArray<JobHandle> jobHandles = new NativeArray<JobHandle>(totalChunks, Allocator.Temp);
 
-            NativeArray<float3> chunkPositionsNative = new NativeArray<float3>(positions.Length, Allocator.TempJob);
 
-            for (int i = 0; i < chunkPositionsNative.Length; i++)
+            for (int i = 0; i < chunksCoordsNative.Length; i++)
             {
-                chunkPositionsNative[i] = positions[i];
+                chunksCoordsNative[i] = chunksCoords[i];
+                heightMapsNative[i] = new NativeArray<float>(chunkResolution, Allocator.TempJob);
             }
 
-            GenerateHeightMapJob heightMapJob = new GenerateHeightMapJob
+            for (int i = 0; i < totalChunks; i++)
             {
-                offset = offset,
-                seed = (uint)seed,
-                chunkPositions = chunkPositionsNative,
-                chunkSize = chunkSize,
-                allHeightMaps = terrainHeightMapsNative,
-                lacunarity = lacunarity,
-                octaves = octaves,
-                persistance = persistance,
-                scale = scale,
-            };
+                GenerateHeightMapJob heightMapJob = new GenerateHeightMapJob
+                {
+                    offset = offset,
+                    seed = (uint)seed,
+                    chunkSize = chunkSize,
+                    scale = scale,
+                    persistance = persistance,
+                    lacunarity = lacunarity,
+                    octaves = octaves,
+                    chunkPosition = chunksCoordsNative[i],
+                    heightMap = heightMapsNative[i]
+                };
 
-            JobHandle jobHandle = heightMapJob.Schedule(totalChunks, 100);
-            jobHandle.Complete();
+                jobHandles[i] = heightMapJob.Schedule();
+            }
+
+            JobHandle.CompleteAll(jobHandles);
 
             float[][] terrainHeightMaps = new float[totalChunks][];
-            
+
             for (int i = 0; i < totalChunks; i++)
             {
                 terrainHeightMaps[i] = new float[chunkResolution];
-                int startIndex = i * chunkResolution;
 
                 for (int j = 0; j < chunkResolution; j++)
                 {
-                    float heightValue = terrainHeightMapsNative[startIndex + j];
+                    float heightValue = heightMapsNative[i][j];
 
                     if (heightValue > globalMaxNoiseHeight)
+                    {
                         globalMaxNoiseHeight = heightValue;
-
+                    }
                     if (heightValue < globalMinNoiseHeight)
+                    {
                         globalMinNoiseHeight = heightValue;
+                    }
                 }
             }
 
             for (int i = 0; i < totalChunks; i++)
             {
-                int startIndex = i * chunkResolution;
-
                 for (int j = 0; j < chunkResolution; j++)
                 {
                     terrainHeightMaps[i][j] = Mathf.InverseLerp(globalMinNoiseHeight, globalMaxNoiseHeight,
-                        terrainHeightMapsNative[startIndex + j]);
+                        heightMapsNative[i][j]);
                 }
+
+                heightMapsNative[i].Dispose();
             }
 
-            terrainHeightMapsNative.Dispose();
-            chunkPositionsNative.Dispose();
+            chunksCoordsNative.Dispose();
 
             return terrainHeightMaps;
         }

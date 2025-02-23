@@ -1,19 +1,10 @@
-using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using Factories;
-using Sirenix.OdinInspector;
 using StaticData.Data;
 using StaticData.Services;
-using StructuresSpawner;
-using TerrainGenerator.Data;
-using Unity.Collections;
-using Unity.VisualScripting;
-using UnityEditor;
+using TerrainGenerator.Enums;
 using UnityEngine;
 using Utils;
-using Zenject;
-using Debug = UnityEngine.Debug;
 
 
 namespace TerrainGenerator
@@ -25,7 +16,11 @@ namespace TerrainGenerator
         private readonly ChunkFactory chunkFactory;
         private MapGenerationConfig mapGenerationConfig;
         private int chunkSize;
-        public TerrainChunk[] TerrainChunks { get; private set; }
+        public Dictionary<Vector2, TerrainChunk> TerrainChunks { get; private set; }
+
+        public Dictionary<ChunkLandscapeType, List<TerrainChunk>> SortedChunks { get; private set; } =
+            new Dictionary<ChunkLandscapeType, List<TerrainChunk>>();
+
 
 
         public MapCreator(NoiseGenerator noiseGenerator, StaticDataService staticDataService, ChunkFactory chunkFactory)
@@ -46,15 +41,15 @@ namespace TerrainGenerator
 
             chunkSize = mapGenerationConfig.chunkSize - 1;
 
-            Vector3[] allChunkPositions = new Vector3[mapGenerationConfig.mapSize * mapGenerationConfig.mapSize];
+            Vector2[] allChunksCoords = new Vector2[mapGenerationConfig.mapSize * mapGenerationConfig.mapSize];
 
             for (int y = 0; y < mapGenerationConfig.mapSize; y++)
             {
                 for (int x = 0; x < mapGenerationConfig.mapSize; x++)
                 {
-                    Vector3 chunkPosition = new Vector3(x * chunkSize, 0, y * chunkSize);
+                    Vector3 chunkCoord = new Vector2(x, y);
 
-                    allChunkPositions[y * mapGenerationConfig.mapSize + x] = chunkPosition;
+                    allChunksCoords[y * mapGenerationConfig.mapSize + x] = chunkCoord;
                 }
             }
 
@@ -62,32 +57,116 @@ namespace TerrainGenerator
                 mapGenerationConfig.mapSize,
                 mapGenerationConfig.chunkSize,
                 mapGenerationConfig.noiseScale, mapGenerationConfig.persistance, mapGenerationConfig.lacunarity,
-                mapGenerationConfig.octaves, mapGenerationConfig.seed, mapGenerationConfig.offset, allChunkPositions);
+                mapGenerationConfig.octaves, mapGenerationConfig.seed, mapGenerationConfig.offset, allChunksCoords);
 
-            TerrainChunk[] terrainChunks = chunkFactory.CreateAllChunks(allChunkPositions, allTerrainHeightMaps,
+            ChunkLandscapeType[] chunkLandscapeTypes = CalculateChunksLandscapeTypes(allTerrainHeightMaps);
+
+            TerrainChunks = chunkFactory.CreateAllChunks(allChunksCoords, allTerrainHeightMaps,
+                chunkLandscapeTypes,
                 mapGenerationConfig,
-                chunksParent.transform);
+                chunksParent.transform, chunkSize);
 
-            TerrainChunks = terrainChunks;
+            SortTerrainChunks(TerrainChunks);
         }
 
 
-        private void CreateChunks(Vector3[] allChunkPositions, float[][] allTerrainHeightMaps, GameObject chunksParent)
+        private void CreateChunks(Vector2[] allChunksCoords, float[][] allTerrainHeightMaps,
+            ChunkLandscapeType[] chunkLandscapeTypes, GameObject chunksParent)
         {
-            TerrainChunks = new TerrainChunk[mapGenerationConfig.mapSize * mapGenerationConfig.mapSize];
+            TerrainChunks = new Dictionary<Vector2, TerrainChunk>();
 
             for (int y = 0; y < mapGenerationConfig.mapSize; y++)
             {
                 for (int x = 0; x < mapGenerationConfig.mapSize; x++)
                 {
-                    Vector3 position = allChunkPositions[y * mapGenerationConfig.mapSize + x];
+                    Vector2 chunkCoord = allChunksCoords[y * mapGenerationConfig.mapSize + x];
                     float[] heightMap = allTerrainHeightMaps[y * mapGenerationConfig.mapSize + x];
-                    TerrainChunk terrainChunk = chunkFactory.CreateChunk(position, heightMap, mapGenerationConfig,
-                        chunksParent.transform);
+                    ChunkLandscapeType chunkLandscapeType = chunkLandscapeTypes[y * mapGenerationConfig.mapSize + x];
+                    TerrainChunk terrainChunk = chunkFactory.CreateChunk(chunkCoord, heightMap, chunkLandscapeType,
+                        mapGenerationConfig,
+                        chunksParent.transform, mapGenerationConfig.chunkSize - 1);
 
-                    TerrainChunks[y * mapGenerationConfig.mapSize + x] = terrainChunk;
+                    TerrainChunks.Add(chunkCoord, terrainChunk);
                 }
             }
+        }
+
+
+        private void SortTerrainChunks(Dictionary<Vector2, TerrainChunk> terrainChunks)
+        {
+            foreach (TerrainChunk chunk in terrainChunks.Values)
+            {
+                switch (chunk.ChunkLandscapeType)
+                {
+                    case ChunkLandscapeType.Plain:
+                        if (!SortedChunks.ContainsKey(ChunkLandscapeType.Plain))
+                        {
+                            SortedChunks[ChunkLandscapeType.Plain] = new List<TerrainChunk>();
+                        }
+
+                        SortedChunks[ChunkLandscapeType.Plain].Add(chunk);
+
+                        break;
+                    case ChunkLandscapeType.Hill:
+                        if (!SortedChunks.ContainsKey(ChunkLandscapeType.Hill))
+                        {
+                            SortedChunks[ChunkLandscapeType.Hill] = new List<TerrainChunk>();
+                        }
+
+                        SortedChunks[ChunkLandscapeType.Hill].Add(chunk);
+
+                        break;
+                    case ChunkLandscapeType.Mountain:
+                        if (!SortedChunks.ContainsKey(ChunkLandscapeType.Mountain))
+                        {
+                            SortedChunks[ChunkLandscapeType.Mountain] = new List<TerrainChunk>();
+                        }
+
+                        SortedChunks[ChunkLandscapeType.Mountain].Add(chunk);
+
+                        break;
+                }
+            }
+        }
+
+
+        private ChunkLandscapeType[] CalculateChunksLandscapeTypes(float[][] heightMaps)
+        {
+            ChunkLandscapeType[] chunkLandscapeTypes = new ChunkLandscapeType[heightMaps.Length];
+
+
+            for (int i = 0; i < heightMaps.Length; i++)
+            {
+                float[] heightMap = heightMaps[i];
+                ChunkLandscapeType chunkLandscapeType;
+
+                float averageHeight = 0;
+
+                for (int j = 0; j < heightMap.Length; j++)
+                {
+                    averageHeight += heightMap[j];
+                }
+
+                averageHeight /= heightMap.Length;
+
+                switch (averageHeight)
+                {
+                    case <= 0.45f:
+                        chunkLandscapeType = ChunkLandscapeType.Plain;
+                        chunkLandscapeTypes[i] = chunkLandscapeType;
+                        break;
+                    case <= 0.6f:
+                        chunkLandscapeType = ChunkLandscapeType.Hill;
+                        chunkLandscapeTypes[i] = chunkLandscapeType;
+                        break;
+                    default:
+                        chunkLandscapeType = ChunkLandscapeType.Mountain;
+                        chunkLandscapeTypes[i] = chunkLandscapeType;
+                        break;
+                }
+            }
+
+            return chunkLandscapeTypes;
         }
     }
 }

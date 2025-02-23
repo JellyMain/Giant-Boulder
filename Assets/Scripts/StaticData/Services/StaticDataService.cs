@@ -58,6 +58,7 @@ namespace StaticData.Services
         {
             SpawnerConfigs =
                 Resources.LoadAll<SpawnerConfig>(RuntimeConstants.StaticDataPaths.STRUCTURE_SPAWNER_CONFIGS)
+                    .Where(x => x.isEnabled)
                     .ToDictionary(x => x.spawnOrder, x => x);
         }
     }

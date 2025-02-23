@@ -12,7 +12,7 @@ using UnityEngine;
 
 namespace Utils
 {
-    public class DestructiblePrefabCreator : SerializedMonoBehaviour
+    public class PrefabPreparer : SerializedMonoBehaviour
     {
         [SerializeField] private Dictionary<GameObject, Material> uniqueObjects;
         private HashSet<GameObject> uniquePrefabs;

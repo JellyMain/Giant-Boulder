@@ -4,62 +4,59 @@ using Unity.Jobs;
 using Unity.Mathematics;
 
 
-[BurstCompile]
-public struct GenerateHeightMapJob : IJobParallelFor
+namespace TerrainGenerator.Jobs
 {
-    public uint seed;
-    public float2 offset;
-    public int chunkSize;
-    public float scale;
-    public float persistance;
-    public float lacunarity;
-    public int octaves;
-    [ReadOnly] public NativeArray<float3> chunkPositions;
-    [NativeDisableParallelForRestriction] public NativeArray<float> allHeightMaps;
-
-
-    public void Execute(int index)
+    [BurstCompile]
+    public struct GenerateHeightMapJob : IJob
     {
-        float3 chunkPosition = chunkPositions[index];
-        int chunkResolution = chunkSize * chunkSize;
-        int startIndex = index * chunkResolution;
+        public uint seed;
+        public float2 offset;
+        public int chunkSize;
+        public float scale;
+        public float persistance;
+        public float lacunarity;
+        public int octaves;
+        public float2 chunkPosition;
+        public NativeArray<float> heightMap;
 
-        NativeArray<float2> octaveOffsets = new NativeArray<float2>(octaves, Allocator.Temp);
-        Random rng = new Random(seed);
 
-        for (int i = 0; i < octaves; i++)
+        public void Execute()
         {
-            float xOffset = rng.NextInt(-10000, 10000) + offset.x + chunkPosition.x;
-            float yOffset = rng.NextInt(-10000, 10000) - offset.y + chunkPosition.z;
-            octaveOffsets[i] = new float2(xOffset, yOffset);
-        }
+            NativeArray<float2> octaveOffsets = new NativeArray<float2>(octaves, Allocator.Temp);
+            Random rng = new Random(seed);
 
-        for (int y = 0; y < chunkSize; y++)
-        {
-            for (int x = 0; x < chunkSize; x++)
+            for (int i = 0; i < octaves; i++)
             {
-                float noiseHeight = 0f;
-                float frequency = 1f;
-                float amplitude = 1f;
-
-                for (int i = 0; i < octaves; i++)
-                {
-                    float positionX = (x + octaveOffsets[i].x) / scale * frequency;
-                    float positionY = (y - octaveOffsets[i].y) / scale * frequency;
-                    float2 position = new float2(positionX, positionY);
-
-                    float perlinValue = noise.pnoise(position, new float2(1000, 1000)) * 2 - 1;
-                    noiseHeight += perlinValue * amplitude;
-
-                    frequency *= lacunarity;
-                    amplitude *= persistance;
-                }
-
-                int ind = y * chunkSize + x;
-                allHeightMaps[startIndex + ind] = noiseHeight;
+                float xOffset = rng.NextInt(-10000, 10000) + offset.x + chunkPosition.x * (chunkSize - 1);
+                float yOffset = rng.NextInt(-10000, 10000) - offset.y + chunkPosition.y * (chunkSize - 1);
+                octaveOffsets[i] = new float2(xOffset, yOffset);
             }
-        }
 
-        octaveOffsets.Dispose();
+            for (int y = 0; y < chunkSize; y++)
+            {
+                for (int x = 0; x < chunkSize; x++)
+                {
+                    float noiseHeight = 0f;
+                    float frequency = 1f;
+                    float amplitude = 1f;
+
+                    for (int i = 0; i < octaves; i++)
+                    {
+                        float positionX = (x + octaveOffsets[i].x) / scale * frequency;
+                        float positionY = (y - octaveOffsets[i].y) / scale * frequency;
+                        float2 position = new float2(positionX, positionY);
+                        float perlinValue = noise.pnoise(position, new float2(1000, 1000)) * 2 - 1;
+                        noiseHeight += perlinValue * amplitude;
+                        frequency *= lacunarity;
+                        amplitude *= persistance;
+                    }
+
+                    int ind = y * chunkSize + x;
+                    heightMap[ind] = noiseHeight;
+                }
+            }
+
+            octaveOffsets.Dispose();
+        }
     }
 }

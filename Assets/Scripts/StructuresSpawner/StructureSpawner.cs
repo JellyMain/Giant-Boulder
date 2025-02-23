@@ -4,6 +4,8 @@ using System.Collections.Generic;
 using StaticData.Data;
 using StaticData.Services;
 using Structures;
+using TerrainGenerator;
+using TerrainGenerator.Enums;
 using UnityEngine;
 using Zenject;
 using Object = UnityEngine.Object;
@@ -16,14 +18,16 @@ namespace StructuresSpawner
     {
         private readonly Collider[] collidersAllocation = new Collider[1];
         private readonly StaticDataService staticDataService;
-        private float maxXPosition;
-        private float maxYPosition;
+        private readonly MapCreator mapCreator;
         private int spawnerCounter;
+        private MapGenerationConfig mapGenerationConfig;
+        private Dictionary<ChunkLandscapeType, List<TerrainChunk>> availableChunks;
 
 
-        public StructureSpawner(StaticDataService staticDataService)
+        public StructureSpawner(StaticDataService staticDataService, MapCreator mapCreator)
         {
             this.staticDataService = staticDataService;
+            this.mapCreator = mapCreator;
         }
 
 
@@ -31,13 +35,8 @@ namespace StructuresSpawner
         {
             spawnerCounter = 0;
 
-            MapGenerationConfig mapGenerationConfig = staticDataService.MapConfigForSeason(TerrainSeason.Summer);
-
-            maxXPosition = mapGenerationConfig.mapSize * (mapGenerationConfig.chunkSize - 1) -
-                           (mapGenerationConfig.chunkSize - 1);
-
-            maxYPosition = mapGenerationConfig.mapSize * (mapGenerationConfig.chunkSize - 1) -
-                           (mapGenerationConfig.chunkSize - 1);
+            mapGenerationConfig = staticDataService.MapConfigForSeason(TerrainSeason.Summer);
+            availableChunks = mapCreator.SortedChunks;
         }
 
 
@@ -55,70 +54,46 @@ namespace StructuresSpawner
 
         private void ActivateSpawner(SpawnerConfig spawnerConfig)
         {
+            ChunkLandscapeType chunkLandscapeType = spawnerConfig.chunkLandscapeType;
+
+            List<TerrainChunk> chunks = availableChunks[chunkLandscapeType];
+
+
             foreach (StructureRoot structurePrefab in spawnerConfig.structurePrefabCountPair.Keys)
             {
                 for (int i = 0; i < spawnerConfig.structurePrefabCountPair[structurePrefab]; i++)
                 {
-                    SpawnStructure(structurePrefab, spawnerConfig);
+                    TerrainChunk randomChunk = chunks[Random.Range(0, chunks.Count)];
+
+                    Vector3 rayStart = randomChunk.position + Vector3.up * spawnerConfig.raycastHeight;
+
+                    if (Physics.Raycast(rayStart, Vector3.down, out RaycastHit hit, Mathf.Infinity,
+                            spawnerConfig.groundLayer))
+                    {
+                        randomChunk.structures.Add(hit, structurePrefab);
+                        randomChunk.spawnerConfig = spawnerConfig;
+                    }
+
+
+                    availableChunks[chunkLandscapeType].Remove(randomChunk);
+
+                    if (availableChunks[chunkLandscapeType].Count == 0)
+                    {
+                        Debug.LogError($"Doesn't have any available chunks of type {chunkLandscapeType}");
+                        break;
+                    }
+                }
+
+                if (availableChunks[chunkLandscapeType].Count == 0)
+                {
+                    break;
                 }
             }
 
             spawnerCounter++;
         }
+        
 
-
-
-        private void SpawnStructure(StructureRoot structurePrefab, SpawnerConfig spawnerConfig)
-        {
-            bool foundValidPosition = false;
-
-            for (int i = 0; i < spawnerConfig.spawnAttempts; i++)
-            {
-                if (foundValidPosition)
-                {
-                    break;
-                }
-
-                float positionX = Random.Range(0, maxXPosition);
-                float positionZ = Random.Range(0, maxYPosition);
-
-                Vector3 position = new Vector3(positionX, 0, positionZ);
-
-                Vector3 rayStart = position + Vector3.up * spawnerConfig.raycastHeight;
-
-                if (Physics.Raycast(rayStart, Vector3.down, out RaycastHit hit, Mathf.Infinity,
-                        spawnerConfig.groundLayer))
-                {
-                    if (!IsSlopeSteep(rayStart, structurePrefab.StructureRadius,
-                            spawnerConfig.slopeCheckRaysAmount, structurePrefab.MaxSlopeAngle, spawnerConfig))
-                    {
-                        if (!HasStructuresInRadius(hit.point, structurePrefab.StructureRadius, spawnerConfig))
-                        {
-                            StructureRoot spawnedObject = Object.Instantiate(structurePrefab);
-
-                            spawnedObject.transform.position = hit.point;
-
-                            spawnedObject.transform.rotation = Quaternion.FromToRotation(Vector3.up, hit.normal);
-
-                            ApplyStructureSettings(spawnedObject.structureChildSettings, spawnerConfig);
-
-                            foundValidPosition = true;
-
-                            Physics.SyncTransforms();
-                        }
-                    }
-                }
-                else
-                {
-                    Debug.LogWarning("No ground detected at the specified position.");
-                }
-            }
-
-            if (!foundValidPosition)
-            {
-                Debug.LogWarning($"Haven't found valid position in {spawnerConfig.spawnAttempts} attempts");
-            }
-        }
 
 
         private void ApplyStructureSettings(List<StructureSpawnSettings> structureSpawnSettings,
