@@ -15,12 +15,13 @@ GameObject:
   - component: {fileID: 6022417555141180477}
   - component: {fileID: 7585525064173233367}
   - component: {fileID: 8400091496734735690}
+  - component: {fileID: 6083411739695330428}
   m_Layer: 6
   m_Name: farm-house
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 2147483647
   m_IsActive: 1
 --- !u!4 &4979098901876776
 Transform:
@@ -219,6 +220,22 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!114 &6083411739695330428
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1169681003932024}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dfa6b2a319ca4a47ae18aca8298eb943, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  maxCoinsAmount: 5
+  minCoinsAmount: 10
+  spawnCircleDiameter: 5
+  explosionForce: 40
 --- !u!1 &764900951744555269
 GameObject:
   m_ObjectHideFlags: 0

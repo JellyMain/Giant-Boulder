@@ -15,12 +15,13 @@ GameObject:
   - component: {fileID: 6024680979831405689}
   - component: {fileID: 4408017604368711208}
   - component: {fileID: 4736778961289218263}
+  - component: {fileID: 965805048207956219}
   m_Layer: 10
   m_Name: hay-cube
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 2147483647
   m_IsActive: 1
 --- !u!4 &4009134127628568
 Transform:
@@ -218,6 +219,22 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!114 &965805048207956219
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1820147749981870}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dfa6b2a319ca4a47ae18aca8298eb943, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  maxCoinsAmount: 5
+  minCoinsAmount: 10
+  spawnCircleDiameter: 5
+  explosionForce: 40
 --- !u!1 &342370485054750224
 GameObject:
   m_ObjectHideFlags: 0

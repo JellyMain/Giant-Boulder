@@ -5,6 +5,7 @@ namespace StaticData.Data
         None = 0,
         Summer = 1,
         Winter = 2,
-        Spring = 3
+        Spring = 3,
+        Mountains = 4
     }
 }

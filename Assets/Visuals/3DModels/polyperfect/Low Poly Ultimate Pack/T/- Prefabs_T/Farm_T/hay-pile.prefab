@@ -15,12 +15,13 @@ GameObject:
   - component: {fileID: 7768304075593263299}
   - component: {fileID: 3891434939680594161}
   - component: {fileID: 3664855133254911952}
+  - component: {fileID: 6531946022440738024}
   m_Layer: 6
   m_Name: hay-pile
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 2147483647
   m_IsActive: 1
 --- !u!4 &4282703005897628
 Transform:
@@ -218,6 +219,22 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!114 &6531946022440738024
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1620601054122078}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dfa6b2a319ca4a47ae18aca8298eb943, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  maxCoinsAmount: 5
+  minCoinsAmount: 10
+  spawnCircleDiameter: 5
+  explosionForce: 40
 --- !u!1 &473330000864931354
 GameObject:
   m_ObjectHideFlags: 0

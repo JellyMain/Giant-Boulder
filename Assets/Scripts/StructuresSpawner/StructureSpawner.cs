@@ -19,15 +19,17 @@ namespace StructuresSpawner
         private readonly Collider[] collidersAllocation = new Collider[1];
         private readonly StaticDataService staticDataService;
         private readonly MapCreator mapCreator;
+        private readonly DiContainer diContainer;
         private int spawnerCounter;
         private MapGenerationConfig mapGenerationConfig;
         private Dictionary<ChunkLandscapeType, List<TerrainChunk>> availableChunks;
 
 
-        public StructureSpawner(StaticDataService staticDataService, MapCreator mapCreator)
+        public StructureSpawner(StaticDataService staticDataService, MapCreator mapCreator, DiContainer diContainer)
         {
             this.staticDataService = staticDataService;
             this.mapCreator = mapCreator;
+            this.diContainer = diContainer;
         }
 
 
@@ -92,7 +94,24 @@ namespace StructuresSpawner
 
             spawnerCounter++;
         }
-        
+
+
+        public void SpawnStructuresInChunk(TerrainChunk terrainChunk)
+        {
+            
+            foreach (KeyValuePair<RaycastHit, StructureRoot> keyValuePair in terrainChunk.structures)
+            {
+                Quaternion rotation = Quaternion.FromToRotation(Vector3.up, keyValuePair.Key.normal);
+                GameObject spawnedObject =  diContainer.InstantiatePrefab(keyValuePair.Value, keyValuePair.Key.point, rotation,
+                    terrainChunk.chunkGameObject.transform);
+                StructureRoot spawnedStructureRoot = spawnedObject.GetComponent<StructureRoot>();
+                
+                ApplyStructureSettings(spawnedStructureRoot.structureChildSettings, terrainChunk.spawnerConfig);
+                spawnedStructureRoot.BatchObjects();
+            }
+            
+            terrainChunk.structuresInstantiated = true;
+        }
 
 
 
@@ -176,6 +195,23 @@ namespace StructuresSpawner
                 spawnerConfig.structuresLayer);
 
             return collidersNumber > 0;
+        }
+
+
+        public void SpawnWalls()
+        {
+            GameObject wallPrefab = Resources.Load<GameObject>("RuntimePrefabs/BorderMountains/Mountains");
+
+            Vector3 leftWallPosition = new Vector3(-175, 0, 30);
+            Vector3 backWallPosition = new Vector3(0, 0, -175);
+            Vector3 frontWallPosition = new Vector3(30, 0, 3075);
+            Vector3 rightWallPosition = new Vector3(3075, 0, 30);
+
+
+            Object.Instantiate(wallPrefab, leftWallPosition, Quaternion.identity);
+            Object.Instantiate(wallPrefab, rightWallPosition, Quaternion.identity);
+            Object.Instantiate(wallPrefab, backWallPosition, Quaternion.Euler(0, 90, 0));
+            Object.Instantiate(wallPrefab, frontWallPosition, Quaternion.Euler(0, 90, 0));
         }
     }
 }

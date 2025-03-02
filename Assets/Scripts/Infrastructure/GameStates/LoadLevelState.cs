@@ -49,6 +49,7 @@ namespace Infrastructure.GameStates
             Transform cameraPivot = GameObject.FindWithTag("CameraPivot").transform;
             SetCamera(cameraPivot);
 
+            structureSpawner.SpawnWalls();
             structureSpawner.ActivateAllSpawners();
 
             ChunkUpdater chunkUpdater = CreateChunkUpdater();

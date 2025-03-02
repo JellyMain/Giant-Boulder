@@ -13,7 +13,7 @@ namespace Structures
         [SerializeField] private int maxCoinsAmount = 5;
         [SerializeField] private int minCoinsAmount = 10;
         [SerializeField] private float spawnCircleDiameter = 5;
-        [SerializeField] private float explosionForce = 10;
+        [SerializeField] private float explosionForce = 40;
         private CoinsFactory coinsFactory;
         private DestructibleObjectBase destructibleObjectBase;
         private Vector3 objectCenter;
@@ -53,9 +53,9 @@ namespace Structures
 
         private Vector3 GetMeshCenter()
         {
-            MeshFilter meshFilter = GetComponent<MeshFilter>();
+            MeshCollider meshCollider = GetComponent<MeshCollider>();
 
-            Vector3 localCenter = meshFilter.sharedMesh.bounds.center;
+            Vector3 localCenter = meshCollider.sharedMesh.bounds.center;
 
             return transform.TransformPoint(localCenter);
         }
@@ -69,12 +69,12 @@ namespace Structures
             {
                 Vector2 randomPositionInUnitCircle = Random.insideUnitCircle * spawnCircleDiameter;
                 Vector3 randomPosition = new Vector3(randomPositionInUnitCircle.x, 0, randomPositionInUnitCircle.y) +
-                                         objectCenter;
+                                         GetMeshCenter();
 
                 Coin coin = coinsFactory.CreateCoin(randomPosition);
 
                 coin.Rb.AddExplosionForce(explosionForce,
-                    new Vector3(objectCenter.x, objectCenter.y - 3, objectCenter.z), spawnCircleDiameter * 2);
+                    new Vector3(objectCenter.x, objectCenter.y - 3, objectCenter.z), explosionForce);
             }
         }
     }

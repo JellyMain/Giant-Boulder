@@ -10,6 +10,7 @@ namespace PlayerCamera
         [SerializeField] private float rotationSpeed = 5;
         [SerializeField] private float maxXRotation;
         [SerializeField] private Transform cameraPivot;
+        [SerializeField] private RectTransform cameraRotationArea;
         private Vector3 lastCameraRotation = Vector3.zero;
         private IInput inputService;
         private bool canRotate;
@@ -42,20 +43,30 @@ namespace PlayerCamera
         }
 
 
+        private bool IsInRotationArea()
+        {
+            Vector2 touchPosition = inputService.GetTouchPosition();
+            return RectTransformUtility.RectangleContainsScreenPoint(cameraRotationArea, touchPosition);
+        }
+
+
         private void Update()
         {
             if (canRotate)
             {
-                lastCameraRotation.z = 0;
-
-                Vector2 mouseDelta = inputService.GetMouseDelta();
-
-                lastCameraRotation.x -= mouseDelta.y;
-                lastCameraRotation.y += mouseDelta.x;
-
-                if (lastCameraRotation.x > maxXRotation)
+                if (IsInRotationArea())
                 {
-                    lastCameraRotation.x = maxXRotation;
+                    lastCameraRotation.z = 0;
+
+                    Vector2 mouseDelta = inputService.GetMouseDelta();
+
+                    lastCameraRotation.x -= mouseDelta.y;
+                    lastCameraRotation.y += mouseDelta.x;
+
+                    if (lastCameraRotation.x > maxXRotation)
+                    {
+                        lastCameraRotation.x = maxXRotation;
+                    }
                 }
             }
 

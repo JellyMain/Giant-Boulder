@@ -1,8 +1,6 @@
+using DG.Tweening;
 using Factories;
-using Infrastructure.GameStates;
-using Infrastructure.Services;
 using PlayerInput.Interfaces;
-using PlayerInput.Services;
 using StaticData.Services;
 using StructuresSpawner;
 using TerrainGenerator;
@@ -20,6 +18,7 @@ namespace Infrastructure.Installers.Global
 
         public override void InstallBindings()
         {
+            DOTween.Init();
             BindStaticDataService();
             BindPlayerFactory();
             CreateAndBindLoadingScreen();
@@ -35,8 +34,8 @@ namespace Infrastructure.Installers.Global
             BindCoinFactory();
             BindStructureSpawner();
         }
-        
-        
+
+
         private void BindStructureSpawner()
         {
             Container.Bind<StructureSpawner>().AsSingle();
@@ -71,7 +70,7 @@ namespace Infrastructure.Installers.Global
         {
             Container.Bind<MeshGenerator>().AsSingle();
         }
-        
+
 
         private void BindTextureGenerator()
         {
@@ -81,17 +80,10 @@ namespace Infrastructure.Installers.Global
 
         private void BindInputService()
         {
-            if (Application.isEditor)
-            {
-                Container.Bind<IInput>().FromInstance(new PcInput());
-            }
-            else if (Application.isMobilePlatform)
-            {
-                Container.Bind<IInput>().FromInstance(new MobileInput());
-            }
+            Container.Bind<IInput>().FromInstance(new PlayerInput.Services.PlayerInput());
         }
 
-        
+
         private void BindUIFactory()
         {
             Container.Bind<UIFactory>().AsSingle();

@@ -1,14 +1,37 @@
 using System;
+using Cysharp.Threading.Tasks;
 using UnityEngine;
+using Utils;
 
 
 namespace Coins
 {
     public class Coin : MonoBehaviour
     {
-         
         [SerializeField] private Rigidbody rb;
+        [SerializeField] private float disappearStartTime = 2;
         public Rigidbody Rb => rb;
+        public event Action OnDisappearStarted;
+
+
+        private void Start()
+        {
+            StartTimer().Forget();
+        }
+
+
+        private async UniTaskVoid StartTimer()
+        {
+            float elapsedTime = 0;
+
+            while (elapsedTime <= disappearStartTime)
+            {
+                elapsedTime += Time.deltaTime;
+                await UniTask.Yield(this.GetCancellationTokenOnDestroy());
+            }
+
+            OnDisappearStarted?.Invoke();
+        }
 
 
         private void OnCollisionEnter(Collision other)

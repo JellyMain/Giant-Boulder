@@ -124,6 +124,8 @@ namespace Utils
                     {
                         child.AddComponent<BoxCollider>();
                     }
+
+                    child.AddComponent<CoinSpawner>();
                 }
             }
         }

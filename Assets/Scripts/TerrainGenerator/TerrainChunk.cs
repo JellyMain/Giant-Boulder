@@ -50,91 +50,9 @@ namespace TerrainGenerator
             meshCollider.sharedMesh = meshFilter.mesh;
             meshRenderer.material = material;
         }
+        
 
 
-        public void SpawnStructures()
-        {
-            foreach (KeyValuePair<RaycastHit, StructureRoot> keyValuePair in structures)
-            {
-                Quaternion rotation = Quaternion.FromToRotation(Vector3.up, keyValuePair.Key.normal);
-                StructureRoot spawnedObject = Object.Instantiate(keyValuePair.Value, keyValuePair.Key.point, rotation,
-                    chunkGameObject.transform);
-                ApplyStructureSettings(spawnedObject.structureChildSettings);
-            }
-
-            structuresInstantiated = true;
-        }
-
-
-        private void ApplyStructureSettings(List<StructureSpawnSettings> structureSpawnSettings)
-        {
-            foreach (StructureSpawnSettings childObject in structureSpawnSettings)
-            {
-                if (childObject.snapToGround)
-                {
-                    SnapToGround(childObject.transform);
-                }
-
-                int randomNumber = Random.Range(0, 100);
-
-                if (randomNumber > childObject.SpawnChance)
-                {
-                    Object.Destroy(childObject.gameObject);
-                    continue;
-                }
-
-                if (childObject.RotationModifier != Vector2.zero)
-                {
-                    float objectYRotation =
-                        Random.Range(childObject.RotationModifier.x, childObject.RotationModifier.y);
-
-                    childObject.transform.localRotation = Quaternion.Euler(childObject.transform.rotation.x,
-                        objectYRotation,
-                        childObject.transform.rotation.z);
-                }
-            }
-        }
-
-
-        private void SnapToGround(Transform objectToSnap)
-        {
-            Vector3 rayStart = objectToSnap.position + Vector3.up * spawnerConfig.raycastHeight;
-
-            if (Physics.Raycast(rayStart, Vector3.down, out RaycastHit hit, Mathf.Infinity, spawnerConfig.groundLayer))
-            {
-                float currentYRotation = objectToSnap.eulerAngles.y;
-
-                Quaternion groundAlignment = Quaternion.FromToRotation(Vector3.up, hit.normal);
-
-                objectToSnap.rotation = groundAlignment * Quaternion.Euler(0, currentYRotation, 0);
-
-                objectToSnap.position = hit.point;
-            }
-        }
-
-
-        public void UpdateChunk(Transform player, float viewDistance)
-        {
-            float distanceToPlayer = Mathf.Sqrt(bounds.SqrDistance(new Vector2(player.position.x, player.position.z)));
-            bool isVisible = distanceToPlayer <= viewDistance;
-            SetVisible(isVisible);
-
-            if (!structuresInstantiated)
-            {
-                SpawnStructures();
-            }
-        }
-
-
-        public bool IsVisible()
-        {
-            return chunkGameObject.activeSelf;
-        }
-
-
-        public void SetVisible(bool isVisible)
-        {
-            chunkGameObject.SetActive(isVisible);
-        }
+        
     }
 }

@@ -10,6 +10,7 @@ namespace PlayerInput.Interfaces
         public event Action OnClickCanceled;
         public Vector2 GetNormalizedMoveInput();
         public Vector2 GetMouseDelta();
+        public Vector2 GetTouchPosition();
 
     }
 }

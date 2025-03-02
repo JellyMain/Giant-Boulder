@@ -4,6 +4,7 @@ using Const;
 using Cysharp.Threading.Tasks;
 using StaticData.Data;
 using StaticData.Services;
+using StructuresSpawner;
 using UnityEngine;
 using Zenject;
 
@@ -19,12 +20,13 @@ namespace TerrainGenerator
         private StaticDataService staticDataService;
         private MapCreator mapCreator;
         private MapGenerationConfig mapGenerationConfig;
-        private List<TerrainChunk> lastUpdatedChunks = new List<TerrainChunk>();
-
+        private StructureSpawner structureSpawner;
+        
 
         [Inject]
-        private void Init(StaticDataService staticDataService, MapCreator mapCreator)
+        private void Init(StaticDataService staticDataService, MapCreator mapCreator, StructureSpawner structureSpawner)
         {
+            this.structureSpawner = structureSpawner;
             this.mapCreator = mapCreator;
             this.staticDataService = staticDataService;
         }
@@ -46,13 +48,6 @@ namespace TerrainGenerator
 
         private void UpdateChunks()
         {
-            for (int i = 0; i < lastUpdatedChunks.Count; i++)
-            {
-                lastUpdatedChunks[i].SetVisible(false);
-            }
-
-            lastUpdatedChunks.Clear();
-
             int currentChunkCoordX = Mathf.RoundToInt(player.position.x / (mapGenerationConfig.chunkSize - 1));
             int currentChunkCoordY = Mathf.RoundToInt(player.position.z / (mapGenerationConfig.chunkSize - 1));
 
@@ -67,7 +62,7 @@ namespace TerrainGenerator
                     {
                         if (!terrainChunks[chunkCoord].structuresInstantiated)
                         {
-                            terrainChunks[chunkCoord].SpawnStructures();
+                            structureSpawner.SpawnStructuresInChunk(terrainChunks[chunkCoord]);
                         }
                     }
                 }

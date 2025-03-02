@@ -20,6 +20,7 @@ namespace Infrastructure
 
         private void Start()
         {
+            Application.targetFrameRate = 120;
             gameStateMachine.Enter<BootstrapState>();
         }
     }
