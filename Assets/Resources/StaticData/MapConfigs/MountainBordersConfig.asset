@@ -96,7 +96,7 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
-  chunkMaterial: {fileID: 2100000, guid: a7fb4acd26546ab4fb987852bd9199e4, type: 2}
+  chunkMaterial: {fileID: 2100000, guid: c73cb6408ff3fd546a6e3298073756f0, type: 2}
   chunkSize: 101
   lod: 5
   noiseScale: 70

@@ -1,8 +1,10 @@
 using System.Collections.Generic;
+using Const;
 using Factories;
 using StaticData.Data;
 using StaticData.Services;
 using TerrainGenerator.Enums;
+using Unity.AI.Navigation;
 using UnityEngine;
 using Utils;
 
@@ -67,6 +69,14 @@ namespace TerrainGenerator
                 chunksParent.transform, chunkSize);
 
             SortTerrainChunks(TerrainChunks);
+
+
+            int groundLayer = LayerMask.NameToLayer(RuntimeConstants.Layers.GROUND_LAYER);
+            NavMeshSurface navMeshSurface = chunksParent.AddComponent<NavMeshSurface>();
+            navMeshSurface.collectObjects = CollectObjects.Children;
+            navMeshSurface.layerMask = 1 << groundLayer;
+            
+            navMeshSurface.BuildNavMesh();
         }
 
 

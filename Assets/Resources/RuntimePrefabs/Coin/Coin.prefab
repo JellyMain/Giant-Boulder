@@ -74,7 +74,7 @@ TrailRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Time: 1
+  m_Time: 0.4
   m_PreviewTimeScale: 1
   m_Parameters:
     serializedVersion: 3
@@ -176,7 +176,7 @@ Transform:
   m_GameObject: {fileID: 7882485188686661248}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 56.272, y: 40.54, z: 333.071}
+  m_LocalPosition: {x: 0, y: 0.621, z: -0.468}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -267,7 +267,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   rb: {fileID: 4537249055175888964}
-  disappearStartTime: 5
+  destroyParticlesPrefab: {fileID: 8876955120442586744, guid: 0112a6f6a0a441445917863fa4ccd76a, type: 3}
+  disappearStartTime: 10
 --- !u!114 &3748148872009070398
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -284,7 +285,7 @@ MonoBehaviour:
   meshRenderer: {fileID: 6863986005791443305}
   rotationSpeed: 100
   disappearTime: 3
-  blinkTime: 0.5
+  initialBlinkInterval: 0.2
 --- !u!54 &4537249055175888964
 Rigidbody:
   m_ObjectHideFlags: 0

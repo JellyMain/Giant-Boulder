@@ -5,6 +5,7 @@ using Cysharp.Threading.Tasks;
 using StaticData.Data;
 using StaticData.Services;
 using StructuresSpawner;
+using Unity.AI.Navigation;
 using UnityEngine;
 using Zenject;
 
@@ -63,6 +64,7 @@ namespace TerrainGenerator
                         if (!terrainChunks[chunkCoord].structuresInstantiated)
                         {
                             structureSpawner.SpawnStructuresInChunk(terrainChunks[chunkCoord]);
+                            // terrainChunks[chunkCoord].navMeshSurface.BuildNavMesh();
                         }
                     }
                 }

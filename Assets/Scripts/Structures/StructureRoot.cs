@@ -21,6 +21,9 @@ namespace Structures
         public float StructureRadius => structureRadius;
 
 
+#if UNITY_EDITOR
+
+
         [Button]
         public void FindStructureChildObjects()
         {
@@ -30,6 +33,9 @@ namespace Structures
 
             structureChildSettings = structureChildren.ToList();
         }
+
+
+
 
 
         [Button]
@@ -70,6 +76,9 @@ namespace Structures
                 GroupIdenticalPrefabsRecursive(child);
             }
         }
+
+
+#endif
 
 
         public void BatchObjects()

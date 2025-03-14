@@ -65,6 +65,14 @@ namespace StructuresSpawner
             {
                 for (int i = 0; i < spawnerConfig.structurePrefabCountPair[structurePrefab]; i++)
                 {
+                    if (availableChunks[chunkLandscapeType].Count == 0)
+                    {
+                        Debug.LogError($"Doesn't have any available chunks of type {chunkLandscapeType}");
+                        break;
+                    }
+                    
+                    Debug.Log(chunks.Count);
+                    
                     TerrainChunk randomChunk = chunks[Random.Range(0, chunks.Count)];
 
                     Vector3 rayStart = randomChunk.position + Vector3.up * spawnerConfig.raycastHeight;
@@ -75,15 +83,8 @@ namespace StructuresSpawner
                         randomChunk.structures.Add(hit, structurePrefab);
                         randomChunk.spawnerConfig = spawnerConfig;
                     }
-
-
+                    
                     availableChunks[chunkLandscapeType].Remove(randomChunk);
-
-                    if (availableChunks[chunkLandscapeType].Count == 0)
-                    {
-                        Debug.LogError($"Doesn't have any available chunks of type {chunkLandscapeType}");
-                        break;
-                    }
                 }
 
                 if (availableChunks[chunkLandscapeType].Count == 0)

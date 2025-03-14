@@ -63,7 +63,7 @@ namespace Factories
                 mapGenerationConfig.heightGradient);
 
             Dictionary<Vector2, TerrainChunk> terrainChunks = new Dictionary<Vector2, TerrainChunk>();
-            
+
             for (int i = 0; i < chunksCoords.Length; i++)
             {
                 TerrainChunk terrainChunk = new TerrainChunk(mapGenerationConfig.chunkMaterial, chunksCoords[i],

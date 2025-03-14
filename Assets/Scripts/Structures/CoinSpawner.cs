@@ -2,6 +2,7 @@ using System;
 using Coins;
 using Factories;
 using UnityEngine;
+using Utils;
 using Zenject;
 using Random = UnityEngine.Random;
 
@@ -14,6 +15,7 @@ namespace Structures
         [SerializeField] private int minCoinsAmount = 10;
         [SerializeField] private float spawnCircleDiameter = 5;
         [SerializeField] private float explosionForce = 40;
+        private Collider col;
         private CoinsFactory coinsFactory;
         private DestructibleObjectBase destructibleObjectBase;
         private Vector3 objectCenter;
@@ -40,25 +42,16 @@ namespace Structures
 
         private void Awake()
         {
+            col = GetComponent<Collider>();
             destructibleObjectBase = GetComponent<DestructibleObjectBase>();
         }
 
 
         private void Start()
         {
-            objectCenter = GetMeshCenter();
+            objectCenter = RuntimeMeshUtility.GetMeshCenter(transform, col);
         }
 
-
-
-        private Vector3 GetMeshCenter()
-        {
-            MeshCollider meshCollider = GetComponent<MeshCollider>();
-
-            Vector3 localCenter = meshCollider.sharedMesh.bounds.center;
-
-            return transform.TransformPoint(localCenter);
-        }
 
 
         private void SpawnCoins()
@@ -69,7 +62,7 @@ namespace Structures
             {
                 Vector2 randomPositionInUnitCircle = Random.insideUnitCircle * spawnCircleDiameter;
                 Vector3 randomPosition = new Vector3(randomPositionInUnitCircle.x, 0, randomPositionInUnitCircle.y) +
-                                         GetMeshCenter();
+                                         objectCenter;
 
                 Coin coin = coinsFactory.CreateCoin(randomPosition);
 

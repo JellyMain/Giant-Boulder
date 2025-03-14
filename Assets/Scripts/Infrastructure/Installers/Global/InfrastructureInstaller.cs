@@ -1,6 +1,8 @@
+using DataTrackers;
 using DG.Tweening;
 using Factories;
 using PlayerInput.Interfaces;
+using Progress;
 using StaticData.Services;
 using StructuresSpawner;
 using TerrainGenerator;
@@ -33,6 +35,34 @@ namespace Infrastructure.Installers.Global
             BindCameraCreator();
             BindCoinFactory();
             BindStructureSpawner();
+            BindCurrencyTracker();
+            BindScoreTracker();
+            BindSaveLoadService();
+            BindPersistentPlayerProgress();
+        }
+
+
+        private void BindPersistentPlayerProgress()
+        {
+            Container.Bind<PersistentPlayerProgress>().AsSingle();
+        }
+
+
+        private void BindSaveLoadService()
+        {
+            Container.BindInterfacesAndSelfTo<SaveLoadService>().AsSingle();
+        }
+
+
+        private void BindScoreTracker()
+        {
+            Container.Bind<ScoreTracker>().AsSingle();
+        }
+
+
+        private void BindCurrencyTracker()
+        {
+            Container.Bind<CurrencyTracker>().AsSingle();
         }
 
 

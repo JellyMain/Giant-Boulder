@@ -5,6 +5,7 @@ using StaticData.Data;
 using Structures;
 using TerrainGenerator.Data;
 using TerrainGenerator.Enums;
+using Unity.AI.Navigation;
 using UnityEditor;
 using UnityEngine;
 
@@ -34,8 +35,10 @@ namespace TerrainGenerator
             bounds = new Bounds(position, new Vector3(1 * chunkSize, 0, 1 * chunkSize));
             ChunkLandscapeType = chunkLandscapeType;
 
+            int groundLayer = LayerMask.NameToLayer("Ground");
+
             chunkGameObject = new GameObject($"Terrain Chunk {ChunkLandscapeType.ToString()}");
-            chunkGameObject.layer = LayerMask.NameToLayer("Ground");
+            chunkGameObject.layer = groundLayer;
 
             chunkGameObject.transform.SetParent(parent);
 
@@ -44,15 +47,12 @@ namespace TerrainGenerator
             meshRenderer = chunkGameObject.AddComponent<MeshRenderer>();
             meshFilter = chunkGameObject.AddComponent<MeshFilter>();
 
-            meshFilter.mesh = meshData.CreateMesh();
+            meshRenderer.renderingLayerMask = 1 << 1;
 
+            meshFilter.mesh = meshData.CreateMesh();
             meshCollider = chunkGameObject.AddComponent<MeshCollider>();
             meshCollider.sharedMesh = meshFilter.mesh;
             meshRenderer.material = material;
         }
-        
-
-
-        
     }
 }

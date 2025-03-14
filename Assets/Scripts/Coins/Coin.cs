@@ -1,7 +1,6 @@
 using System;
 using Cysharp.Threading.Tasks;
 using UnityEngine;
-using Utils;
 
 
 namespace Coins
@@ -9,6 +8,7 @@ namespace Coins
     public class Coin : MonoBehaviour
     {
         [SerializeField] private Rigidbody rb;
+        [SerializeField] private ParticleSystem destroyParticlesPrefab;
         [SerializeField] private float disappearStartTime = 2;
         public Rigidbody Rb => rb;
         public event Action OnDisappearStarted;
@@ -41,5 +41,14 @@ namespace Coins
                 rb.isKinematic = true;
             }
         }
+
+
+        public void Destroy()
+        {
+            Instantiate(destroyParticlesPrefab, transform.position, Quaternion.identity);
+            Destroy(gameObject);
+        }
+
+        
     }
 }

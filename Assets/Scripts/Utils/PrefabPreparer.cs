@@ -1,13 +1,15 @@
 using System.Collections.Generic;
-using System.Linq;
 using Const;
 using RayFire;
-using RayFireEditor;
 using Sirenix.OdinInspector;
 using Structures;
 using Unity.VisualScripting;
 using UnityEditor;
 using UnityEngine;
+
+#if UNITY_EDITOR
+using RayFireEditor;
+#endif
 
 
 namespace Utils
@@ -16,6 +18,8 @@ namespace Utils
     {
         [SerializeField] private Dictionary<GameObject, Material> uniqueObjects;
         private HashSet<GameObject> uniquePrefabs;
+
+#if UNITY_EDITOR
 
 
 
@@ -213,5 +217,8 @@ namespace Utils
             return child.GetComponent<DestructibleObject>() &&
                    child.GetComponent<StructureSpawnSettings>();
         }
+
+
+#endif
     }
 }

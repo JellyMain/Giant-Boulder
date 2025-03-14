@@ -11,6 +11,8 @@ namespace Utils
         [SerializeField] private List<MeshFilter> meshFilters;
         private int counter;
 
+#if UNITY_EDITOR
+
 
         [Button]
         private void SaveMeshes()
@@ -22,5 +24,8 @@ namespace Utils
                 counter++;
             }
         }
+
+
+#endif
     }
 }

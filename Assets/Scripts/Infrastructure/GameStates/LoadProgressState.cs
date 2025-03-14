@@ -1,5 +1,6 @@
 using Infrastructure.GameStates.Interfaces;
 using Infrastructure.Services;
+using Progress;
 using StaticData.Services;
 using UnityEngine;
 
@@ -10,12 +11,17 @@ namespace Infrastructure.GameStates
     {
         private readonly GameStateMachine gameStateMachine;
         private readonly StaticDataService staticDataService;
+        private readonly SaveLoadService saveLoadService;
+        private readonly PersistentPlayerProgress persistentPlayerProgress;
 
 
-        public LoadProgressState(GameStateMachine gameStateMachine, StaticDataService staticDataService)
+        public LoadProgressState(GameStateMachine gameStateMachine, StaticDataService staticDataService,
+            SaveLoadService saveLoadService, PersistentPlayerProgress persistentPlayerProgress)
         {
             this.gameStateMachine = gameStateMachine;
             this.staticDataService = staticDataService;
+            this.saveLoadService = saveLoadService;
+            this.persistentPlayerProgress = persistentPlayerProgress;
         }
 
 
@@ -35,7 +41,14 @@ namespace Infrastructure.GameStates
 
         private void LoadSavesOrCreateNew()
         {
-            
+            persistentPlayerProgress.PlayerProgress = saveLoadService.LoadProgress() ?? CreateNewProgress();
+        }
+
+
+        private PlayerProgress CreateNewProgress()
+        {
+            PlayerProgress playerProgress = new PlayerProgress();
+            return playerProgress;
         }
     }
 }

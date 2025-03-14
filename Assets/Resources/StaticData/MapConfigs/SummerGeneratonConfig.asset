@@ -69,8 +69,8 @@ MonoBehaviour:
   - name: Mountain Top
     regionColor: {r: 1, g: 1, b: 1, a: 1}
     regionHeight: 1
-  mapSize: 30
-  seed: 11446
+  mapSize: 10
+  seed: 12156
   offset: {x: -15.1, y: 8.15}
   heightCurve:
     serializedVersion: 2
@@ -105,7 +105,7 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
-  chunkMaterial: {fileID: 2100000, guid: a7fb4acd26546ab4fb987852bd9199e4, type: 2}
+  chunkMaterial: {fileID: 2100000, guid: c73cb6408ff3fd546a6e3298073756f0, type: 2}
   chunkSize: 101
   lod: 5
   noiseScale: 430

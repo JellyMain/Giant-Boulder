@@ -2389,6 +2389,7 @@ MonoBehaviour:
   rotationSpeed: 5
   maxXRotation: 40
   cameraPivot: {fileID: 5363990655357231832}
+  lookArea: {fileID: 0}
 --- !u!114 &8935035591722415233
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2401,6 +2402,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 819c50a050e945d2a37e21a48a988152, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  magnetRadius: 15
+  maxMagnetPower: 5
 --- !u!1 &5864629814826455883
 GameObject:
   m_ObjectHideFlags: 0

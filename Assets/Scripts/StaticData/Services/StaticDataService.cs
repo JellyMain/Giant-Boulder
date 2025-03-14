@@ -3,7 +3,6 @@ using System.Linq;
 using Const;
 using StaticData.Data;
 using UnityEngine;
-using Zenject;
 
 
 namespace StaticData.Services
@@ -43,16 +42,15 @@ namespace StaticData.Services
             Debug.LogError($"Couldn't find map generation config with key {terrainSeason}");
             return null;
         }
-
-
+        
+        
         private void LoadMapChunkConfig()
         {
             MapGenerationConfigs =
                 Resources.LoadAll<MapGenerationConfig>(RuntimeConstants.StaticDataPaths.MAP_GENERATION_CONFIGS)
                     .ToDictionary(x => x.terrainSeason, x => x);
         }
-
-
+        
 
         private void LoadSpawnerConfigs()
         {

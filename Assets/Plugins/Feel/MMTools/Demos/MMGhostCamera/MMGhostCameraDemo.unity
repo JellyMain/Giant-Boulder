@@ -314,14 +314,39 @@ MonoBehaviour:
   Acceleration: 5
   Deceleration: 5
   RotationSpeed: 40
-  ActivateButton: 304
-  HorizontalAxisName: Horizontal
-  VerticalAxisName: Vertical
-  UpButton: 32
-  DownButton: 99
-  ControlsModeSwitch: 109
-  TimescaleModificationButton: 102
-  RunButton: 303
+  HorizontalAction:
+    m_Name: 
+    m_Type: 0
+    m_ExpectedControlType: 
+    m_Id: 03a188b3-42d6-4ea6-8aae-7d86deeb687d
+    m_Processors: 
+    m_Interactions: 
+    m_SingletonActionBindings: []
+    m_Flags: 0
+  VerticalAction:
+    m_Name: 
+    m_Type: 0
+    m_ExpectedControlType: 
+    m_Id: a09486af-8de0-4fb0-8cb4-4d0dd8e3c554
+    m_Processors: 
+    m_Interactions: 
+    m_SingletonActionBindings: []
+    m_Flags: 0
+  MousePositionAction:
+    m_Name: 
+    m_Type: 0
+    m_ExpectedControlType: 
+    m_Id: eb06cd1b-94d9-458d-a672-fecc58b04630
+    m_Processors: 
+    m_Interactions: 
+    m_SingletonActionBindings: []
+    m_Flags: 0
+  ActivateKey: 51
+  UpKey: 1
+  DownKey: 17
+  ControlsModeSwitchKey: 27
+  TimescaleModificationKey: 20
+  RunKey: 52
   MouseSensitivity: 0.02
   MobileStickSensitivity: 2
   TimescaleModifier: 0.2

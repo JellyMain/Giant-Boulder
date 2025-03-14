@@ -1,4 +1,5 @@
 using Const;
+using PlayerCamera;
 using StaticData.Services;
 using UnityEngine;
 using Zenject;
@@ -17,12 +18,18 @@ namespace Factories
         }
 
 
-        public GameObject CreatePlayer(Vector3 position)
+        public GameObject CreatePlayer(Vector3 position, RectTransform cameraLookArea)
         {
             GameObject player = Resources.Load<GameObject>(RuntimeConstants.PrefabPaths.PLAYER);
 
-            return diContainer.InstantiatePrefab(player, position, Quaternion.identity,
+            GameObject spawnedPlayer = diContainer.InstantiatePrefab(player, position, Quaternion.identity,
                 new GameObject("Player").transform);
+
+            ThirdPersonCameraController cameraController = spawnedPlayer.GetComponent<ThirdPersonCameraController>();
+
+            cameraController.lookArea = cameraLookArea;
+
+            return spawnedPlayer;
         }
     }
 }

@@ -104,11 +104,11 @@ MeshCollider:
     serializedVersion: 2
     m_Bits: 0
   m_LayerOverridePriority: 0
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 5
-  m_Convex: 0
+  m_Convex: 1
   m_CookingOptions: 30
   m_Mesh: {fileID: 4300000, guid: 2265084a308c24bdb8431970f4252f22, type: 3}
 --- !u!114 &1367758209517168569
@@ -123,7 +123,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0a1561298703474a838758266d49e45f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  destroyParticlesPrefab: {fileID: 198633821086180066, guid: 101d62f0a3e4fef4eab61adb79c845df, type: 3}
   fragmentsRoot: {fileID: 5361207364350872516}
+  scoreValue: 100
 --- !u!114 &8359982342340856802
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -233,7 +235,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   maxCoinsAmount: 1
-  minCoinsAmount: 2
+  minCoinsAmount: 1
   spawnCircleDiameter: 1
   explosionForce: 50
 --- !u!1 &305552170636099959

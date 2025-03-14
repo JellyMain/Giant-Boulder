@@ -5,6 +5,8 @@ using UnityEngine;
 
 public unsafe struct CurveData
 {
+#if UNITY_EDITOR
+    
     public CurveData(Curve curve, Allocator alloc)
     {
         array = curve.Keys.GetUnsafePtr();
@@ -41,4 +43,6 @@ public unsafe struct CurveData
     public void* array;
     public int size;
     public Allocator allocatorLabel;
+    
+    #endif
 }
