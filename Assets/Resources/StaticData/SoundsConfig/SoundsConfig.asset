@@ -1,0 +1,31 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0ab06a2a78dd42b2bd4924e82a829665, type: 3}
+  m_Name: SoundsConfig
+  m_EditorClassIdentifier: 
+  missileExplosionSound:
+    sounds:
+    - {fileID: 8300000, guid: a7326fe4698f67c46b484591ee56fbef, type: 3}
+    minSoundPitch: 0.5
+    maxSoundPitch: 1.5
+  coinCollectedSound:
+    sounds:
+    - {fileID: 8300000, guid: 82a6c7b8a07a71d4d9532404f7b8a3f7, type: 3}
+    minSoundPitch: 0.8
+    maxSoundPitch: 1.1
+  destroyTreeSound:
+    sounds:
+    - {fileID: 8300000, guid: adee104c845a4da4a946d400ecf2dcb6, type: 3}
+    - {fileID: 8300000, guid: 4e70f95ff772ce04c9c6d3a81d5a9f0b, type: 3}
+    - {fileID: 8300000, guid: 94fd54629c2016641ae2a2b5b666d23f, type: 3}
+    minSoundPitch: 0.8
+    maxSoundPitch: 1.1

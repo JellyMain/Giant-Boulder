@@ -1,10 +1,12 @@
+using Factories;
+using GameLoop;
 using Infrastructure.GameStates.Interfaces;
 using Infrastructure.Services;
 
 
 namespace Infrastructure.GameStates
 {
-    public class GameLoopState: IGameState
+    public class GameLoopState : IGameState
     {
         private readonly GameStateMachine gameStateMachine;
 
@@ -15,9 +17,6 @@ namespace Infrastructure.GameStates
         }
 
 
-        public void Enter()
-        {
-        
-        }
+        public void Enter() { }
     }
 }

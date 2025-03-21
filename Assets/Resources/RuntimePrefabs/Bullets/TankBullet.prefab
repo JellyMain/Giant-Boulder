@@ -26,7 +26,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 3, y: 3, z: 3}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 1
   m_Children:
   - {fileID: 3329622206686426115}
@@ -42,6 +42,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4349246318476415765}
   - component: {fileID: 1080621961765965442}
+  - component: {fileID: 7462836672840909224}
   m_Layer: 0
   m_Name: TankBullet
   m_TagString: Untagged
@@ -59,8 +60,8 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
+  m_LocalScale: {x: 3, y: 3, z: 3}
+  m_ConstrainProportionsScale: 1
   m_Children:
   - {fileID: 9134625107342429095}
   m_Father: {fileID: 0}
@@ -101,7 +102,34 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
-  heightMultiplier: 15
+  destroyParticlesPrefab: {fileID: 198258662121256016, guid: 75085e3afaae12440841f1c575728053, type: 3}
+  explosionRadius: 5
+  playerLayer:
+    serializedVersion: 2
+    m_Bits: 128
+  damage: 50
+--- !u!64 &7462836672840909224
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2653461394788418014}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 5
+  m_Convex: 1
+  m_CookingOptions: 30
+  m_Mesh: {fileID: 8668171859219085931, guid: 1d3dd4e868d68fa46a8f37417ba389f7, type: 3}
 --- !u!1001 &218383923756160747
 PrefabInstance:
   m_ObjectHideFlags: 0

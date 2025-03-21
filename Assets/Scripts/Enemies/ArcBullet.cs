@@ -1,4 +1,6 @@
 using System;
+using Player;
+using Sounds;
 using UnityEngine;
 
 
@@ -7,6 +9,12 @@ namespace Enemies
     public class ArcBullet : MonoBehaviour
     {
         [SerializeField] private AnimationCurve animationCurve;
+        [SerializeField] private ParticleSystem destroyParticlesPrefab;
+        [SerializeField] private float explosionRadius = 5;
+        [SerializeField] private LayerMask playerLayer;
+        [SerializeField] private int damage = 50;
+        private readonly Collider[] playerColliderBuffer = new Collider[1];
+        private SoundPlayer soundPlayer;
         private Vector3 target;
         private float moveSpeed;
         private float arcHeightMultiplier;
@@ -15,11 +23,12 @@ namespace Enemies
         private float t;
 
 
-        public void Construct(Vector3 target, float moveSpeed, float arcHeightMultiplier)
+        public void Construct(Vector3 target, float moveSpeed, float arcHeightMultiplier, SoundPlayer soundPlayer)
         {
             this.target = target;
             this.moveSpeed = moveSpeed;
             this.arcHeightMultiplier = arcHeightMultiplier;
+            this.soundPlayer = soundPlayer;
         }
 
 
@@ -50,6 +59,10 @@ namespace Enemies
 
                 t += Time.deltaTime * moveSpeed;
             }
+            else
+            {
+                Explode();
+            }
         }
 
 
@@ -63,6 +76,29 @@ namespace Enemies
             }
 
             previousPosition = transform.position;
+        }
+
+
+        private void Explode()
+        {
+            Instantiate(destroyParticlesPrefab, transform.position, Quaternion.identity);
+            soundPlayer.PlayMissileExplosionSound(transform.position);
+
+            if (Physics.OverlapSphereNonAlloc(transform.position, explosionRadius, playerColliderBuffer, playerLayer) !=
+                0)
+            {
+                PlayerHealth playerHealth = playerColliderBuffer[0].GetComponent<PlayerHealth>();
+                playerHealth.TakeDamage(damage);
+            }
+
+            Destroy(gameObject);
+        }
+
+
+        private void OnDrawGizmos()
+        {
+            Gizmos.color = Color.yellow;
+            Gizmos.DrawWireSphere(transform.position, explosionRadius);
         }
     }
 }

@@ -2,7 +2,9 @@ using Cinemachine;
 using Const;
 using DataTrackers;
 using Factories;
+using GameLoop;
 using Infrastructure.GameStates.Interfaces;
+using Infrastructure.Services;
 using Player;
 using Progress;
 using StructuresSpawner;
@@ -21,26 +23,27 @@ namespace Infrastructure.GameStates
         private readonly PlayerFactory playerFactory;
         private readonly CameraCreator cameraCreator;
         private readonly StructureSpawner structureSpawner;
-        private readonly DiContainer diContainer;
         private readonly UIFactory uiFactory;
         private readonly SaveLoadService saveLoadService;
+        private readonly GameStateMachine gameStateMachine;
+        private readonly LevelCreationWatcher levelCreationWatcher;
+        private readonly ChunkUpdater chunkUpdater;
         private readonly ScoreTracker scoreTracker;
 
 
         public LoadLevelState(SceneLoader sceneLoader, MapCreator mapCreator, PlayerFactory playerFactory,
-            CameraCreator cameraCreator, StructureSpawner structureSpawner, DiContainer diContainer,
-            UIFactory uiFactory, SaveLoadService saveLoadService)
+            CameraCreator cameraCreator, StructureSpawner structureSpawner, UIFactory uiFactory,
+            SaveLoadService saveLoadService, GameStateMachine gameStateMachine, LevelCreationWatcher levelCreationWatcher)
         {
             this.sceneLoader = sceneLoader;
             this.mapCreator = mapCreator;
             this.playerFactory = playerFactory;
             this.cameraCreator = cameraCreator;
             this.structureSpawner = structureSpawner;
-            this.diContainer = diContainer;
             this.uiFactory = uiFactory;
             this.saveLoadService = saveLoadService;
-
-            //TODO: Remove di container and move Chunk Updater to another place; 
+            this.gameStateMachine = gameStateMachine;
+            this.levelCreationWatcher = levelCreationWatcher;
         }
 
 
@@ -49,26 +52,52 @@ namespace Infrastructure.GameStates
             saveLoadService.Cleanup();
             sceneLoader.Load(RuntimeConstants.Scenes.GAME_SCENE, CreateLevel);
             saveLoadService.UpdateProgress();
+
+            gameStateMachine.Enter<GameLoopState>();
         }
 
 
         private void CreateLevel()
         {
-            mapCreator.CreateMap();
-            
-            PlayerControlsUI playerControlsUI = uiFactory.CreatePlayerControlsUI();
+            CreateMap();
 
-            GameObject player = playerFactory.CreatePlayer(new Vector3(50, 100, 50), playerControlsUI.lookArea);
-            Transform cameraPivot = GameObject.FindWithTag("CameraPivot").transform;
-            SetVirtualCamera(cameraPivot);
+            GameObject player = CreatePlayerWithControls();
 
+            CreateCameras();
             SetScoreAndCurrencyUI(player);
 
+            CreateStructures();
+
+            levelCreationWatcher.LevelCreated();
+        }
+
+
+        private void CreateStructures()
+        {
             structureSpawner.SpawnWalls();
             structureSpawner.ActivateAllSpawners();
+        }
 
-            ChunkUpdater chunkUpdater = CreateChunkUpdater();
-            chunkUpdater.player = player.transform;
+
+        private void CreateCameras()
+        {
+            Transform cameraPivot = GameObject.FindWithTag("CameraPivot").transform;
+            SetVirtualCamera(cameraPivot);
+        }
+
+
+        private GameObject CreatePlayerWithControls()
+        {
+            PlayerControlsUI playerControlsUI = uiFactory.CreatePlayerControlsUI();
+            GameObject player = playerFactory.CreatePlayer(new Vector3(50, 100, 50), playerControlsUI);
+            return player;
+        }
+
+
+        private void CreateMap()
+        {
+            levelCreationWatcher.MapGenerationStarted();
+            mapCreator.CreateMap();
         }
 
 
@@ -81,10 +110,10 @@ namespace Infrastructure.GameStates
 
             CoinsUI coinsUI = scoreAndCurrencyUI.GetComponent<CoinsUI>();
             ScoreUI scoreUI = scoreAndCurrencyUI.GetComponent<ScoreUI>();
-            
+
             coinsUI.Construct(coinCollector, uiCamera);
             scoreUI.Construct(objectsDestroyer, uiCamera);
-            
+
             cameraCreator.StackCamera(uiCamera);
         }
 
@@ -93,15 +122,6 @@ namespace Infrastructure.GameStates
         {
             CinemachineVirtualCamera virtualCamera = cameraCreator.CreateVirtualCamera();
             cameraCreator.SetUpVirtualCamera(virtualCamera, cameraPivot);
-        }
-
-
-        private ChunkUpdater CreateChunkUpdater()
-        {
-            ChunkUpdater chunkUpdaterPrefab = Resources.Load<ChunkUpdater>("RuntimePrefabs/ChunkUpdater");
-            GameObject parentObject = new GameObject("ChunkUpdater");
-            return diContainer.InstantiatePrefab(chunkUpdaterPrefab, parentObject.transform)
-                .GetComponent<ChunkUpdater>();
         }
     }
 }

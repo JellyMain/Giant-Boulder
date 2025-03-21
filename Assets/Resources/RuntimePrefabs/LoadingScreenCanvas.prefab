@@ -272,7 +272,7 @@ Canvas:
   m_AdditionalShaderChannelsFlag: 25
   m_UpdateRectTransformForStandalone: 0
   m_SortingLayerID: 0
-  m_SortingOrder: 0
+  m_SortingOrder: 1
   m_TargetDisplay: 0
 --- !u!114 &7839753401215453721
 MonoBehaviour:
@@ -326,8 +326,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7ead84b48be713b4b9bb1e7403b4eddb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  fadeDuration: 0
+  fadeDuration: 0.5
   canvasGroup: {fileID: 5589325765228130217}
+  canvas: {fileID: 5079223318927781605}
+  loadingStageText: {fileID: 4030762859100346481}
 --- !u!225 &5589325765228130217
 CanvasGroup:
   m_ObjectHideFlags: 0
@@ -338,5 +340,5 @@ CanvasGroup:
   m_Enabled: 1
   m_Alpha: 1
   m_Interactable: 1
-  m_BlocksRaycasts: 1
+  m_BlocksRaycasts: 0
   m_IgnoreParentGroups: 0

@@ -1,4 +1,5 @@
 using PlayerInput.Interfaces;
+using UI;
 using UnityEngine;
 using Zenject;
 
@@ -7,11 +8,13 @@ namespace PlayerCamera
 {
     public class ThirdPersonCameraController : MonoBehaviour
     {
+        [SerializeField, Range(0, 1)] private float sensitivity = 0.4f;
         [SerializeField] private float rotationSpeed = 5;
         [SerializeField] private float maxXRotation;
         [SerializeField] private Transform cameraPivot;
-        public RectTransform lookArea;
-        private Vector3 lastCameraRotation = Vector3.zero;
+        public PlayerControlsUI PlayerControlsUI { get; set; }
+        private Vector3 targetCameraRotation = Vector3.zero;
+        private Quaternion lastRotation = Quaternion.identity;
         private IInput inputService;
         private bool canRotate;
 
@@ -23,54 +26,32 @@ namespace PlayerCamera
         }
 
 
-        private void OnEnable()
-        {
-            inputService.OnClickPerformed += ToggleCanRotate;
-            inputService.OnClickCanceled += ToggleCanRotate;
-        }
-
-
-        private void OnDisable()
-        {
-            inputService.OnClickPerformed -= ToggleCanRotate;
-            inputService.OnClickCanceled -= ToggleCanRotate;
-        }
-
-
-        private void ToggleCanRotate()
-        {
-            canRotate = !canRotate;
-        }
-
-
-        private bool IsInRotationArea()
-        {
-            Vector2 touchPosition = inputService.GetTouchPosition();
-            return RectTransformUtility.RectangleContainsScreenPoint(lookArea, touchPosition);
-        }
-
-
         private void Update()
         {
-            if (canRotate)
+            if (PlayerControlsUI.IsAreaAndClicked)
             {
-                if (IsInRotationArea())
+                targetCameraRotation.z = 0;
+
+                Vector2 mouseDelta = inputService.GetMouseDelta() * sensitivity;
+
+                targetCameraRotation.x -= mouseDelta.y;
+                targetCameraRotation.y += mouseDelta.x;
+
+                if (Mathf.Abs(targetCameraRotation.x) > maxXRotation)
                 {
-                    lastCameraRotation.z = 0;
-
-                    Vector2 mouseDelta = inputService.GetMouseDelta();
-
-                    lastCameraRotation.x -= mouseDelta.y;
-                    lastCameraRotation.y += mouseDelta.x;
-
-                    if (lastCameraRotation.x > maxXRotation)
-                    {
-                        lastCameraRotation.x = maxXRotation;
-                    }
+                    targetCameraRotation.x = Mathf.Sign(targetCameraRotation.x) * maxXRotation;
                 }
-            }
 
-            cameraPivot.transform.rotation = Quaternion.Euler(lastCameraRotation);
+                cameraPivot.transform.rotation = Quaternion.Lerp(lastRotation,
+                    Quaternion.Euler(targetCameraRotation), Time.deltaTime * rotationSpeed);
+
+                lastRotation = cameraPivot.transform.rotation;
+            }
+            else
+            {
+                cameraPivot.transform.rotation = lastRotation;
+                targetCameraRotation = lastRotation.eulerAngles;
+            }
         }
     }
 }

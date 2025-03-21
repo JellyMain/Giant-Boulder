@@ -13,7 +13,7 @@ namespace Enemies
         [SerializeField] private float bodyRotationSpeed = 0.2f;
         [SerializeField] private float maxTurretRotation = 35f;
         [SerializeField] private float minTurretRotation = -35f;
-        
+
 
 
         private void Update()
@@ -28,37 +28,21 @@ namespace Enemies
 
         private void Rotate(Transform player)
         {
-            Vector3 direction = player.transform.position - transform.position;
-
-            Quaternion lookDirection = Quaternion.LookRotation(new Vector3(direction.x, 0, direction.z));
-
-            Quaternion nextFrameTurretRotation = Quaternion.Slerp(turret.transform.rotation, lookDirection,
-                Time.deltaTime * turretRotationSpeed);
+            Quaternion nextFrameTurretRotation = Quaternion.Slerp(turret.transform.rotation,
+                playerDetector.LookRotation, Time.deltaTime * turretRotationSpeed);
 
 
-            Quaternion nextFrameBodyRotation = Quaternion.Slerp(transform.rotation, lookDirection,
+            Quaternion nextFrameBodyRotation = Quaternion.Slerp(transform.rotation, playerDetector.LookRotation,
                 Time.deltaTime * bodyRotationSpeed);
 
 
-            float nextFrameYNormalized =
-                Mathf.DeltaAngle(transform.eulerAngles.y, lookDirection.eulerAngles.y);
-
-
-            if (nextFrameYNormalized <= maxTurretRotation && nextFrameYNormalized >= minTurretRotation)
+            if (playerDetector.ShortestAngleToTargetY <= maxTurretRotation &&
+                playerDetector.ShortestAngleToTargetY >= minTurretRotation)
             {
                 turret.transform.rotation = nextFrameTurretRotation;
-                transform.rotation = nextFrameBodyRotation;
             }
-            else
-            {
-                transform.rotation = nextFrameBodyRotation;
-            }
+
+            transform.rotation = nextFrameBodyRotation;
         }
-
-
-
-
-
-        
     }
 }

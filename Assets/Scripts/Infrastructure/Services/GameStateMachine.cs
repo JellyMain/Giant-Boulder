@@ -8,12 +8,12 @@ using Zenject;
 
 namespace Infrastructure.Services
 {
-    public class GameStateMachine: IInitializable
+    public class GameStateMachine : IInitializable
     {
         private readonly GameStatesFactory gameStatesFactory;
         private Dictionary<Type, IGameState> states;
 
-        
+
         public GameStateMachine(GameStatesFactory gameStatesFactory)
         {
             this.gameStatesFactory = gameStatesFactory;
@@ -24,28 +24,25 @@ namespace Infrastructure.Services
         {
             states = new Dictionary<Type, IGameState>()
             {
-                [typeof(BootstrapState)] = gameStatesFactory.CreateState<BootstrapState>() ,
+                [typeof(BootstrapState)] = gameStatesFactory.CreateState<BootstrapState>(),
                 [typeof(LoadProgressState)] = gameStatesFactory.CreateState<LoadProgressState>(),
                 [typeof(LoadMetaState)] = gameStatesFactory.CreateState<LoadMetaState>(),
                 [typeof(LoadLevelState)] = gameStatesFactory.CreateState<LoadLevelState>(),
                 [typeof(GameLoopState)] = gameStatesFactory.CreateState<GameLoopState>()
             };
         }
-        
-        
+
+
         public void Enter<TState>() where TState : class, IGameState
         {
             TState newState = GetState<TState>();
             newState.Enter();
         }
-        
-        
+
+
         private TState GetState<TState>() where TState : class, IGameState
         {
             return states[typeof(TState)] as TState;
         }
-
-
-       
     }
 }

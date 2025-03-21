@@ -2143,6 +2143,7 @@ GameObject:
   - component: {fileID: 7882456063441241295}
   - component: {fileID: 5529853091249922795}
   - component: {fileID: 8935035591722415233}
+  - component: {fileID: 2277866503182418168}
   m_Layer: 7
   m_Name: PlayerBoulder
   m_TagString: Player
@@ -2373,7 +2374,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5327a0e9945b4418abe2fa2b0893399c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  fragmentsRoot: {fileID: 2220747991912272333}
 --- !u!114 &5529853091249922795
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2386,6 +2386,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 905a50c27c969614b8ef96ed501b545d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  sensitivity: 0.4
   rotationSpeed: 5
   maxXRotation: 40
   cameraPivot: {fileID: 5363990655357231832}
@@ -2404,6 +2405,20 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   magnetRadius: 15
   maxMagnetPower: 5
+--- !u!114 &2277866503182418168
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4146865952014049784}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b721660d25a44c97b50d0d4135ba878c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  fragmentsRoot: {fileID: 2220747991912272333}
+  playerHealth: 100
 --- !u!1 &5864629814826455883
 GameObject:
   m_ObjectHideFlags: 0

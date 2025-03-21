@@ -13,8 +13,8 @@ GameObject:
   - component: {fileID: 9037255340070071132}
   - component: {fileID: 1024772805387297275}
   - component: {fileID: 6947051151011199680}
-  - component: {fileID: 5788355516600099800}
   - component: {fileID: -4750454942369319438}
+  - component: {fileID: 5788355516600099800}
   m_Layer: 0
   m_Name: EnemyTank
   m_TagString: Untagged
@@ -73,7 +73,6 @@ MonoBehaviour:
   moveSpeed: 4
   minRotationToMove: -35
   maxRotationToMove: 35
-  minDistanceToPlayer: 60
 --- !u!114 &1024772805387297275
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -86,6 +85,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 32565405d4e94551bd9d864b63a48862, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  moveMinDistance: 50
+  aimMinDistance: 70
   playerDetectionRadius: 80
   playerLayer:
     serializedVersion: 2
@@ -103,8 +104,32 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   rotationModifier: {x: 0, y: 0}
-  spawnChance: 40
+  spawnChance: 20
   snapToGround: 1
+--- !u!114 &-4750454942369319438
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2536966133065387415}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c95a552dd5da4855af3f0aff844ba39c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  bulletPrefab: {fileID: 1080621961765965442, guid: 1c9cba9d4adc278409d2e180497687e6, type: 3}
+  tankBarrel: {fileID: 6536554569427030858}
+  shotParticlesPrefab: {fileID: 198195352207415246, guid: 3dafea4085fbd4947b2fc6fcb50472bf, type: 3}
+  targetPointPrefab: {fileID: 6313299929476234951, guid: b206be2f482fb9c4d83e87f942a5e745, type: 3}
+  playerDetector: {fileID: 1024772805387297275}
+  aimTime: 2
+  reloadTime: 2
+  minRotationToAim: -35
+  maxRotationToAim: 35
+  arcHeightMultiplier: 15
+  bulletSpeed: 1
+  targetPointOffset: 1
 --- !u!195 &5788355516600099800
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -127,25 +152,6 @@ NavMeshAgent:
   m_BaseOffset: 0
   m_WalkableMask: 4294967295
   m_ObstacleAvoidanceType: 4
---- !u!114 &-4750454942369319438
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2536966133065387415}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c95a552dd5da4855af3f0aff844ba39c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  bulletPrefab: {fileID: 1080621961765965442, guid: 1c9cba9d4adc278409d2e180497687e6, type: 3}
-  bulletSpeed: 1
-  arcHeightMultiplier: 15
-  playerDetector: {fileID: 1024772805387297275}
-  groundLayer:
-    serializedVersion: 2
-    m_Bits: 8
 --- !u!1 &7786205432517560776
 GameObject:
   m_ObjectHideFlags: 0
@@ -243,5 +249,10 @@ Transform:
 --- !u!1 &733446322521895964 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 4007504783935428492, guid: 5f87f3ffe43340e44a95c2b35416ce74, type: 3}
+  m_PrefabInstance: {fileID: 4445120817547551632}
+  m_PrefabAsset: {fileID: 0}
+--- !u!4 &6536554569427030858 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 7423828202377326810, guid: 5f87f3ffe43340e44a95c2b35416ce74, type: 3}
   m_PrefabInstance: {fileID: 4445120817547551632}
   m_PrefabAsset: {fileID: 0}

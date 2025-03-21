@@ -70,7 +70,7 @@ MonoBehaviour:
     regionColor: {r: 1, g: 1, b: 1, a: 1}
     regionHeight: 1
   mapSize: 10
-  seed: 12156
+  seed: 12528
   offset: {x: -15.1, y: 8.15}
   heightCurve:
     serializedVersion: 2
@@ -84,15 +84,6 @@ MonoBehaviour:
       weightedMode: 0
       inWeight: 0
       outWeight: 0
-    - serializedVersion: 3
-      time: 0.106946826
-      value: 0.03361417
-      inSlope: 0.27820724
-      outSlope: 0.27820724
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0.06576162
     - serializedVersion: 3
       time: 1
       value: 1

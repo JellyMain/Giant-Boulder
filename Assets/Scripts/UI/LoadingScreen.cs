@@ -1,4 +1,5 @@
 using System.Collections;
+using TMPro;
 using UnityEngine;
 
 
@@ -8,6 +9,8 @@ namespace UI
     {
         [SerializeField] private float fadeDuration;
         [SerializeField] private CanvasGroup canvasGroup;
+        [SerializeField] private Canvas canvas;
+        [SerializeField] private TMP_Text loadingStageText;
 
 
         private void Awake()
@@ -18,6 +21,7 @@ namespace UI
 
         public void Show()
         {
+            canvasGroup.blocksRaycasts = true;
             canvasGroup.alpha = 1;
         }
 
@@ -25,6 +29,13 @@ namespace UI
         public void Hide()
         {
             StartCoroutine(FadeOut());
+        }
+
+
+
+        public void SetLoadingStageText(string text)
+        {
+            loadingStageText.text = text;
         }
     
     
@@ -42,6 +53,7 @@ namespace UI
                 yield return null;
             }
             canvasGroup.alpha = 0;
+            canvasGroup.blocksRaycasts = false;
         }
     }
 }

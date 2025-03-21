@@ -124,6 +124,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   destroyParticlesPrefab: {fileID: 198633821086180066, guid: 101d62f0a3e4fef4eab61adb79c845df, type: 3}
+  destroySoundSettings:
+    sounds:
+    - {fileID: 8300000, guid: adee104c845a4da4a946d400ecf2dcb6, type: 3}
+    - {fileID: 8300000, guid: 4e70f95ff772ce04c9c6d3a81d5a9f0b, type: 3}
+    - {fileID: 8300000, guid: 94fd54629c2016641ae2a2b5b666d23f, type: 3}
+    minSoundPitch: 0.8
+    maxSoundPitch: 1.1
   fragmentsRoot: {fileID: 5361207364350872516}
   scoreValue: 100
 --- !u!114 &8359982342340856802

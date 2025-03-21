@@ -1,5 +1,6 @@
 using Coins;
 using Const;
+using Sounds;
 using UnityEngine;
 
 
@@ -7,11 +8,13 @@ namespace Factories
 {
     public class CoinsFactory
     {
+        private readonly SoundPlayer soundPlayer;
         private Coin coinPrefab;
 
 
-        public CoinsFactory()
+        public CoinsFactory(SoundPlayer soundPlayer)
         {
+            this.soundPlayer = soundPlayer;
             LoadPrefab();
         }
 
@@ -24,7 +27,9 @@ namespace Factories
 
         public Coin CreateCoin(Vector3 position)
         {
-            return Object.Instantiate(coinPrefab, position, Quaternion.identity);
+            Coin spawnedCoin = Object.Instantiate(coinPrefab, position, Quaternion.identity);
+            spawnedCoin.Construct(soundPlayer);
+            return spawnedCoin;
         }
     }
 }

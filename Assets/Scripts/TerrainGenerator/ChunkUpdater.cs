@@ -1,11 +1,12 @@
 using System;
 using System.Collections.Generic;
 using Const;
-using Cysharp.Threading.Tasks;
+using Factories;
+using GameLoop;
 using StaticData.Data;
 using StaticData.Services;
 using StructuresSpawner;
-using Unity.AI.Navigation;
+using TerrainGenerator.Enums;
 using UnityEngine;
 using Zenject;
 
@@ -22,22 +23,47 @@ namespace TerrainGenerator
         private MapCreator mapCreator;
         private MapGenerationConfig mapGenerationConfig;
         private StructureSpawner structureSpawner;
-        
+        private LevelCreationWatcher levelCreationWatcher;
+        private PlayerFactory playerFactory;
+
 
         [Inject]
-        private void Init(StaticDataService staticDataService, MapCreator mapCreator, StructureSpawner structureSpawner)
+        private void Construct(StaticDataService staticDataService, MapCreator mapCreator, StructureSpawner structureSpawner,
+            LevelCreationWatcher levelCreationWatcher, PlayerFactory playerFactory)
         {
             this.structureSpawner = structureSpawner;
             this.mapCreator = mapCreator;
             this.staticDataService = staticDataService;
+            this.levelCreationWatcher = levelCreationWatcher;
+            this.playerFactory = playerFactory;
         }
 
 
-        private void Start()
+        private void OnEnable()
+        {
+            levelCreationWatcher.OnLevelCreated += Init;
+            playerFactory.OnPlayerCreated += SetPlayer;
+        }
+
+
+        private void OnDisable()
+        {
+            levelCreationWatcher.OnLevelCreated -= Init;
+            playerFactory.OnPlayerCreated -= SetPlayer;
+        }
+
+
+        private void Init()
         {
             mapGenerationConfig = staticDataService.MapConfigForSeason(TerrainSeason.Summer);
             chunksInViewDistance = viewDistance / (mapGenerationConfig.chunkSize - 1);
             terrainChunks = mapCreator.TerrainChunks;
+        }
+
+
+        private void SetPlayer(GameObject player)
+        {
+            this.player = player.transform;
         }
 
 
@@ -49,22 +75,24 @@ namespace TerrainGenerator
 
         private void UpdateChunks()
         {
-            int currentChunkCoordX = Mathf.RoundToInt(player.position.x / (mapGenerationConfig.chunkSize - 1));
-            int currentChunkCoordY = Mathf.RoundToInt(player.position.z / (mapGenerationConfig.chunkSize - 1));
-
-            for (int xOffset = -chunksInViewDistance; xOffset < chunksInViewDistance; xOffset++)
+            if (player != null)
             {
-                for (int yOffset = -chunksInViewDistance; yOffset < chunksInViewDistance; yOffset++)
-                {
-                    Vector2 chunkCoord = new Vector2(Mathf.Max(0, currentChunkCoordX + xOffset),
-                        Mathf.Max(0, currentChunkCoordY + yOffset));
+                int currentChunkCoordX = Mathf.RoundToInt(player.position.x / (mapGenerationConfig.chunkSize - 1));
+                int currentChunkCoordY = Mathf.RoundToInt(player.position.z / (mapGenerationConfig.chunkSize - 1));
 
-                    if (terrainChunks.ContainsKey(chunkCoord))
+                for (int xOffset = -chunksInViewDistance; xOffset < chunksInViewDistance; xOffset++)
+                {
+                    for (int yOffset = -chunksInViewDistance; yOffset < chunksInViewDistance; yOffset++)
                     {
-                        if (!terrainChunks[chunkCoord].structuresInstantiated)
+                        Vector2 chunkCoord = new Vector2(Mathf.Max(0, currentChunkCoordX + xOffset),
+                            Mathf.Max(0, currentChunkCoordY + yOffset));
+
+                        if (terrainChunks.ContainsKey(chunkCoord))
                         {
-                            structureSpawner.SpawnStructuresInChunk(terrainChunks[chunkCoord]);
-                            // terrainChunks[chunkCoord].navMeshSurface.BuildNavMesh();
+                            if (!terrainChunks[chunkCoord].structuresInstantiated)
+                            {
+                                structureSpawner.SpawnStructuresInChunk(terrainChunks[chunkCoord]);
+                            }
                         }
                     }
                 }

@@ -1,5 +1,3 @@
-using System;
-using System.Collections;
 using System.Collections.Generic;
 using StaticData.Data;
 using StaticData.Services;
@@ -99,7 +97,6 @@ namespace StructuresSpawner
 
         public void SpawnStructuresInChunk(TerrainChunk terrainChunk)
         {
-            
             foreach (KeyValuePair<RaycastHit, StructureRoot> keyValuePair in terrainChunk.structures)
             {
                 Quaternion rotation = Quaternion.FromToRotation(Vector3.up, keyValuePair.Key.normal);
@@ -114,8 +111,7 @@ namespace StructuresSpawner
             terrainChunk.structuresInstantiated = true;
         }
 
-
-
+        
         private void ApplyStructureSettings(List<StructureSpawnSettings> structureSpawnSettings,
             SpawnerConfig spawnerConfig)
         {
@@ -145,9 +141,8 @@ namespace StructuresSpawner
                 }
             }
         }
-
-
-
+        
+        
         private void SnapToGround(Transform objectToSnap, SpawnerConfig spawnerConfig)
         {
             Vector3 rayStart = objectToSnap.position + Vector3.up * spawnerConfig.raycastHeight;

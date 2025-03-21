@@ -2,6 +2,8 @@ using System.Collections.Generic;
 using System.Linq;
 using Const;
 using StaticData.Data;
+using TerrainGenerator;
+using TerrainGenerator.Enums;
 using UnityEngine;
 
 
@@ -11,12 +13,15 @@ namespace StaticData.Services
     {
         public Dictionary<TerrainSeason, MapGenerationConfig> MapGenerationConfigs { get; private set; }
         public Dictionary<int, SpawnerConfig> SpawnerConfigs { get; private set; }
+        public SoundConfigs SoundConfigs { get; private set; }
+        public GameConfig GameConfig { get; private set; }
 
 
         public void LoadStaticData()
         {
             LoadMapChunkConfig();
             LoadSpawnerConfigs();
+            LoadSoundsConfig();
         }
 
 
@@ -42,15 +47,21 @@ namespace StaticData.Services
             Debug.LogError($"Couldn't find map generation config with key {terrainSeason}");
             return null;
         }
-        
-        
+
+
+        private void LoadSoundsConfig()
+        {
+            SoundConfigs = Resources.Load<SoundConfigs>(RuntimeConstants.StaticDataPaths.SOUNDS_CONFIG);
+        }
+
+
         private void LoadMapChunkConfig()
         {
             MapGenerationConfigs =
                 Resources.LoadAll<MapGenerationConfig>(RuntimeConstants.StaticDataPaths.MAP_GENERATION_CONFIGS)
                     .ToDictionary(x => x.terrainSeason, x => x);
         }
-        
+
 
         private void LoadSpawnerConfigs()
         {

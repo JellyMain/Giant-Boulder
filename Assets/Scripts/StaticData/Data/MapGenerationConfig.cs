@@ -1,5 +1,6 @@
 using Sirenix.OdinInspector;
 using TerrainGenerator;
+using TerrainGenerator.Enums;
 using UnityEngine;
 
 

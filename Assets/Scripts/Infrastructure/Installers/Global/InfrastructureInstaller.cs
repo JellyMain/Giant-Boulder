@@ -1,8 +1,10 @@
 using DataTrackers;
 using DG.Tweening;
 using Factories;
+using GameLoop;
 using PlayerInput.Interfaces;
 using Progress;
+using Sounds;
 using StaticData.Services;
 using StructuresSpawner;
 using TerrainGenerator;
@@ -39,6 +41,20 @@ namespace Infrastructure.Installers.Global
             BindScoreTracker();
             BindSaveLoadService();
             BindPersistentPlayerProgress();
+            BindSoundPlayer();
+            BindLevelCreationWatcher();
+        }
+
+
+        private void BindLevelCreationWatcher()
+        {
+            Container.Bind<LevelCreationWatcher>().AsSingle();
+        }
+
+        
+        private void BindSoundPlayer()
+        {
+            Container.Bind<SoundPlayer>().AsSingle();
         }
 
 

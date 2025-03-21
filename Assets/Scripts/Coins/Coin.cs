@@ -1,5 +1,6 @@
 using System;
 using Cysharp.Threading.Tasks;
+using Sounds;
 using UnityEngine;
 
 
@@ -10,9 +11,16 @@ namespace Coins
         [SerializeField] private Rigidbody rb;
         [SerializeField] private ParticleSystem destroyParticlesPrefab;
         [SerializeField] private float disappearStartTime = 2;
+        private SoundPlayer soundPlayer;
         public Rigidbody Rb => rb;
         public event Action OnDisappearStarted;
 
+        
+        public void Construct(SoundPlayer soundPlayer)
+        {
+            this.soundPlayer = soundPlayer;
+        }
+        
 
         private void Start()
         {
@@ -45,6 +53,7 @@ namespace Coins
 
         public void Destroy()
         {
+            soundPlayer.PlayCoinCollectedSound(transform.position);
             Instantiate(destroyParticlesPrefab, transform.position, Quaternion.identity);
             Destroy(gameObject);
         }

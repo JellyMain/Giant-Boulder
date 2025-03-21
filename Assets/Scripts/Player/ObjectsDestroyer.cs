@@ -10,12 +10,6 @@ namespace Player
 {
     public class ObjectsDestroyer : MonoBehaviour
     {
-        [SerializeField] private GameObject fragmentsRoot;
-        private RayfireBomb rayfireBomb;
-        private Rigidbody rb;
-        private MeshRenderer meshRenderer;
-        private Collider col;
-        private bool isDestroyed;
         private ScoreTracker scoreTracker;
         public event Action<int, Vector3> OnScoreCollected;
 
@@ -26,25 +20,7 @@ namespace Player
         {
             this.scoreTracker = scoreTracker;
         }
-
-
-        private void Awake()
-        {
-            rayfireBomb = GetComponent<RayfireBomb>();
-            rb = GetComponent<Rigidbody>();
-            meshRenderer = GetComponent<MeshRenderer>();
-            col = GetComponent<Collider>();
-        }
-
-
-        private void Update()
-        {
-            // if (Input.GetKeyDown(KeyCode.Space))
-            // {
-            //     Destroy();
-            // }
-        }
-
+        
 
         private void OnCollisionEnter(Collision other)
         {
@@ -69,17 +45,7 @@ namespace Player
 
         private void Destroy()
         {
-            if (!isDestroyed)
-            {
-                isDestroyed = true;
-
-                rb.isKinematic = true;
-                meshRenderer.enabled = false;
-                col.enabled = false;
-
-                fragmentsRoot.SetActive(true);
-                rayfireBomb.Explode(0);
-            }
+            
         }
     }
 }

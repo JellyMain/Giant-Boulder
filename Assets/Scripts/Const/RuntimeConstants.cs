@@ -16,6 +16,8 @@ namespace Const
             public const string PLAYER_CONTROLS_UI = "RuntimePrefabs/UI/PlayerControlsCanvas";
             public const string UI_CAMERA = "RuntimePrefabs/Camera/UICamera";
             public const string SCORE_AND_CURRENCY_UI = "RuntimePrefabs/UI/ScoreAndCurrencyCanvas";
+            public const string CHUNK_UPDATER = "RuntimePrefabs/MonoServices/ChunkUpdater";
+            public const string GAME_TIMER = "RuntimePrefabs/MonoServices/GameTimer";
         }
 
 
@@ -30,11 +32,13 @@ namespace Const
         {
             public const string MAP_GENERATION_CONFIGS = "StaticData/MapConfigs";
             public const string STRUCTURE_SPAWNER_CONFIGS = "StaticData/SpawnerConfigs";
+            public const string SOUNDS_CONFIG = "StaticData/SoundsConfig/SoundsConfig";
         }
 
 
         public static class Tags
         {
+            public const string PLAYER = "Player";
             public const string FRAGMENTS_ROOT = "FragmentsRoot";
             public const string CONTAINER = "Container";
             public const string INDESTRUCTIBLE = "Indestructible";
