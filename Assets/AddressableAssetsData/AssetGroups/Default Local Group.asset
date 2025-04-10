@@ -1,0 +1,121 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bbb281ee3bf0b054c82ac2347e9e782c, type: 3}
+  m_Name: Default Local Group
+  m_EditorClassIdentifier: 
+  m_GroupName: Default Local Group
+  m_Data:
+    m_SerializedData: []
+  m_GUID: 8163807347b181543a9719bb3a08b6fb
+  m_SerializeEntries:
+  - m_GUID: 1a83250ba8c9f1a4fad6d344b28fb95b
+    m_Address: QuestsWindowUI
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 238a687d39c43c545ab419daaa7cab10
+    m_Address: Coin
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 253111e0267a97440939453be3b936a2
+    m_Address: ScoreAndCurrencyUI
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 258faefa4b30554479cbc8469bd25997
+    m_Address: RageScaleUI
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 29e4fe14b688c104db79d80462dbafbe
+    m_Address: SpawnerConfig
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 2e455ec04d577644cb70ed25031d1bd2
+    m_Address: QuestUI
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 4010994ab9935e2448692a07a85129af
+    m_Address: VirtualCamera
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 4f5efe3651d3bd94db7e6c63b8c60542
+    m_Address: Player
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 5d26add0455d6f54d93c2f735c7f8f1b
+    m_Address: GameTimerUI
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 7cc80ec92946ba546ada686c2df5946d
+    m_Address: MapConfigs
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - MapConfigs
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 9bfb870e780e01940b624ab882f41c4f
+    m_Address: QuestsConfig
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: c3a6690cdc5fc5a49805147739dc1ff2
+    m_Address: UICamera
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: c54f459d9e6a3e04eb69a4bf0de4559b
+    m_Address: MainMenuUI
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: d86de01c0437523418fce206f2ff2815
+    m_Address: AlmanacWindowUI
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: e0b5642aa8a07f944b9dcf55c0218138
+    m_Address: GameOverWindowUI
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: e120b03bf76edd64091231f4ad13b744
+    m_Address: PlayerControlsUI
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: eab149ae77938264eb16195096fb5b93
+    m_Address: SoundsConfig
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: fe32fcefe9584114783f3aeaa68331f5
+    m_Address: GameConfig
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: ff5ebafcec47b90419a9cb0cd7985d4f
+    m_Address: Mountains
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  m_ReadOnly: 0
+  m_Settings: {fileID: 11400000, guid: 37278ba9b4b248a4bbfd2a2601f5bdab, type: 2}
+  m_SchemaSet:
+    m_Schemas:
+    - {fileID: 11400000, guid: ebfebaee5f09d5d40bb1a94ee7956ad2, type: 2}
+    - {fileID: 11400000, guid: 96d39c04660d5f043819941f91bf8d8a, type: 2}

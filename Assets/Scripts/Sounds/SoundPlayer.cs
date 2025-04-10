@@ -18,13 +18,13 @@ namespace Sounds
         
         public void PlayMissileExplosionSound(Vector3 position)
         {
-            PlaySound(staticDataService.SoundConfigs.missileExplosionSound, position);
+            PlaySound(staticDataService.SoundConfig.missileExplosionSound, position);
         }
 
 
         public void PlayCoinCollectedSound(Vector3 position)
         {
-            PlaySound(staticDataService.SoundConfigs.coinCollectedSound, position);
+            PlaySound(staticDataService.SoundConfig.coinCollectedSound, position);
         }
 
 

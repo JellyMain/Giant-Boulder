@@ -1,17 +1,16 @@
 using Cinemachine;
-using Const;
+using Cysharp.Threading.Tasks;
 using DataTrackers;
 using Factories;
 using GameLoop;
 using Infrastructure.GameStates.Interfaces;
 using Infrastructure.Services;
-using Player;
 using Progress;
+using Scenes;
 using StructuresSpawner;
 using TerrainGenerator;
 using UI;
 using UnityEngine;
-using Zenject;
 
 
 namespace Infrastructure.GameStates
@@ -23,59 +22,73 @@ namespace Infrastructure.GameStates
         private readonly PlayerFactory playerFactory;
         private readonly CameraCreator cameraCreator;
         private readonly StructureSpawner structureSpawner;
-        private readonly UIFactory uiFactory;
+        private readonly GameplayUIFactory gameplayUIFactory;
         private readonly SaveLoadService saveLoadService;
         private readonly GameStateMachine gameStateMachine;
         private readonly LevelCreationWatcher levelCreationWatcher;
+        private readonly GameplayQuestTracker gameplayQuestTracker;
         private readonly ChunkUpdater chunkUpdater;
         private readonly ScoreTracker scoreTracker;
 
 
         public LoadLevelState(SceneLoader sceneLoader, MapCreator mapCreator, PlayerFactory playerFactory,
-            CameraCreator cameraCreator, StructureSpawner structureSpawner, UIFactory uiFactory,
-            SaveLoadService saveLoadService, GameStateMachine gameStateMachine, LevelCreationWatcher levelCreationWatcher)
+            CameraCreator cameraCreator, StructureSpawner structureSpawner, GameplayUIFactory gameplayUIFactory,
+            SaveLoadService saveLoadService, GameStateMachine gameStateMachine,
+            LevelCreationWatcher levelCreationWatcher, GameTimer gameTimer, GameplayQuestTracker gameplayQuestTracker)
         {
             this.sceneLoader = sceneLoader;
             this.mapCreator = mapCreator;
             this.playerFactory = playerFactory;
             this.cameraCreator = cameraCreator;
             this.structureSpawner = structureSpawner;
-            this.uiFactory = uiFactory;
+            this.gameplayUIFactory = gameplayUIFactory;
             this.saveLoadService = saveLoadService;
             this.gameStateMachine = gameStateMachine;
             this.levelCreationWatcher = levelCreationWatcher;
+            this.gameplayQuestTracker = gameplayQuestTracker;
         }
 
 
-        public void Enter()
+        public async void Enter()
         {
-            saveLoadService.Cleanup();
-            sceneLoader.Load(RuntimeConstants.Scenes.GAME_SCENE, CreateLevel);
+            await CreateLevel();
             saveLoadService.UpdateProgress();
 
             gameStateMachine.Enter<GameLoopState>();
         }
 
 
-        private void CreateLevel()
+        private async UniTask CreateLevel()
         {
             CreateMap();
 
-            GameObject player = CreatePlayerWithControls();
+            GameObject player = await CreatePlayerWithControls();
 
             CreateCameras();
-            SetScoreAndCurrencyUI(player);
+
+            CreateScoreAndCurrencyUI().Forget();
+            CreateRageScaleUI();
+
+            gameplayUIFactory.CreateGameTimerUI().Forget();
 
             CreateStructures();
 
             levelCreationWatcher.LevelCreated();
+            
+            gameplayQuestTracker.TrackCurrentQuest();
+        }
+
+
+        private void CreateRageScaleUI()
+        {
+            gameplayUIFactory.CreateRageScaleUI().Forget();
         }
 
 
         private void CreateStructures()
         {
-            structureSpawner.SpawnWalls();
-            structureSpawner.ActivateAllSpawners();
+            structureSpawner.SpawnWalls().Forget();
+            structureSpawner.ActivateSpawner();
         }
 
 
@@ -86,10 +99,10 @@ namespace Infrastructure.GameStates
         }
 
 
-        private GameObject CreatePlayerWithControls()
+        private async UniTask<GameObject> CreatePlayerWithControls()
         {
-            PlayerControlsUI playerControlsUI = uiFactory.CreatePlayerControlsUI();
-            GameObject player = playerFactory.CreatePlayer(new Vector3(50, 100, 50), playerControlsUI);
+            PlayerControlsUI playerControlsUI = await gameplayUIFactory.CreatePlayerControlsUI();
+            GameObject player = await playerFactory.CreatePlayer(new Vector3(50, 100, 50), playerControlsUI);
             return player;
         }
 
@@ -101,26 +114,24 @@ namespace Infrastructure.GameStates
         }
 
 
-        private void SetScoreAndCurrencyUI(GameObject player)
+        private async UniTaskVoid CreateScoreAndCurrencyUI()
         {
-            CoinCollector coinCollector = player.GetComponent<CoinCollector>();
-            ObjectsDestroyer objectsDestroyer = player.GetComponent<ObjectsDestroyer>();
-            Camera uiCamera = cameraCreator.CreateUICamera();
-            GameObject scoreAndCurrencyUI = uiFactory.CreateScoreAndCurrencyUI(uiCamera);
+            Camera uiCamera = await cameraCreator.CreateUICamera();
+            GameObject scoreAndCurrencyUI = await gameplayUIFactory.CreateScoreAndCurrencyUI(uiCamera);
 
             CoinsUI coinsUI = scoreAndCurrencyUI.GetComponent<CoinsUI>();
             ScoreUI scoreUI = scoreAndCurrencyUI.GetComponent<ScoreUI>();
 
-            coinsUI.Construct(coinCollector, uiCamera);
-            scoreUI.Construct(objectsDestroyer, uiCamera);
+            coinsUI.Construct(uiCamera);
+            scoreUI.Construct(uiCamera);
 
             cameraCreator.StackCamera(uiCamera);
         }
 
 
-        private void SetVirtualCamera(Transform cameraPivot)
+        private async void SetVirtualCamera(Transform cameraPivot)
         {
-            CinemachineVirtualCamera virtualCamera = cameraCreator.CreateVirtualCamera();
+            CinemachineVirtualCamera virtualCamera = await cameraCreator.CreateVirtualCamera();
             cameraCreator.SetUpVirtualCamera(virtualCamera, cameraPivot);
         }
     }

@@ -1,38 +1,41 @@
 using Const;
+using Cysharp.Threading.Tasks;
+using Factories;
 using Infrastructure.GameStates.Interfaces;
 using Infrastructure.Services;
 using Progress;
 using UI;
+using UI.Meta;
+using UnityEngine;
 
 
 namespace Infrastructure.GameStates
 {
     public class LoadMetaState : IGameState
     {
-        private readonly GameStateMachine gameStateMachine;
-        private readonly SceneLoader sceneLoader;
         private readonly SaveLoadService saveLoadService;
+        private readonly MetaUIFactory metaUIFactory;
 
 
-        public LoadMetaState(GameStateMachine gameStateMachine, SceneLoader sceneLoader, SaveLoadService saveLoadService)
+        public LoadMetaState(SaveLoadService saveLoadService, MetaUIFactory metaUIFactory)
         {
-            this.gameStateMachine = gameStateMachine;
-            this.sceneLoader = sceneLoader;
             this.saveLoadService = saveLoadService;
+            this.metaUIFactory = metaUIFactory;
         }
 
 
-        public void Enter()
+        public async void Enter()
         {
-            saveLoadService.Cleanup();
-            sceneLoader.Load(RuntimeConstants.Scenes.MAIN_MENU_SCENE, CreateMenu);
+            await CreateMeta();
             saveLoadService.UpdateProgress();
         }
 
 
-        private void CreateMenu()
+        private async UniTask CreateMeta()
         {
-        
+            metaUIFactory.CreateUIRoot();
+            QuestsWindow questsWindow = await metaUIFactory.CreateQuestsWindow();
+            await metaUIFactory.CreateMainMenuUI(questsWindow);
         }
     }
 }

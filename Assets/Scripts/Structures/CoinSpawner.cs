@@ -1,5 +1,6 @@
 using System;
 using Coins;
+using Cysharp.Threading.Tasks;
 using Factories;
 using UnityEngine;
 using Utils;
@@ -30,13 +31,13 @@ namespace Structures
 
         private void OnEnable()
         {
-            destructibleObjectBase.OnBuildingDestroyed += SpawnCoins;
+            destructibleObjectBase.OnDestroyed += SpawnCoins;
         }
 
 
         private void OnDisable()
         {
-            destructibleObjectBase.OnBuildingDestroyed -= SpawnCoins;
+            destructibleObjectBase.OnDestroyed -= SpawnCoins;
         }
 
 
@@ -54,7 +55,7 @@ namespace Structures
 
 
 
-        private void SpawnCoins()
+        private async void SpawnCoins(DestructibleObjectBase _)
         {
             int coinsAmount = Random.Range(minCoinsAmount, maxCoinsAmount);
 
@@ -64,7 +65,7 @@ namespace Structures
                 Vector3 randomPosition = new Vector3(randomPositionInUnitCircle.x, 0, randomPositionInUnitCircle.y) +
                                          objectCenter;
 
-                Coin coin = coinsFactory.CreateCoin(randomPosition);
+                Coin coin = await coinsFactory.CreateCoin(randomPosition);
 
                 coin.Rb.AddExplosionForce(explosionForce,
                     new Vector3(objectCenter.x, objectCenter.y - 3, objectCenter.z), explosionForce);

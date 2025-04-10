@@ -20,8 +20,8 @@ namespace TerrainGenerator
         private int chunkSize;
         public Dictionary<Vector2, TerrainChunk> TerrainChunks { get; private set; }
 
-        public Dictionary<ChunkLandscapeType, List<TerrainChunk>> SortedChunks { get; private set; } =
-            new Dictionary<ChunkLandscapeType, List<TerrainChunk>>();
+        public Dictionary<ChunkBiome, List<TerrainChunk>> SortedChunks { get; private set; } =
+            new Dictionary<ChunkBiome, List<TerrainChunk>>();
 
 
 
@@ -61,7 +61,7 @@ namespace TerrainGenerator
                 mapGenerationConfig.noiseScale, mapGenerationConfig.persistance, mapGenerationConfig.lacunarity,
                 mapGenerationConfig.octaves, mapGenerationConfig.seed, mapGenerationConfig.offset, allChunksCoords);
 
-            ChunkLandscapeType[] chunkLandscapeTypes = CalculateChunksLandscapeTypes(allTerrainHeightMaps);
+            ChunkBiome[] chunkLandscapeTypes = CalculateChunksLandscapeTypes(allTerrainHeightMaps);
 
             TerrainChunks = chunkFactory.CreateAllChunks(allChunksCoords, allTerrainHeightMaps,
                 chunkLandscapeTypes,
@@ -81,7 +81,7 @@ namespace TerrainGenerator
 
 
         private void CreateChunks(Vector2[] allChunksCoords, float[][] allTerrainHeightMaps,
-            ChunkLandscapeType[] chunkLandscapeTypes, GameObject chunksParent)
+            ChunkBiome[] chunkLandscapeTypes, GameObject chunksParent)
         {
             TerrainChunks = new Dictionary<Vector2, TerrainChunk>();
 
@@ -91,8 +91,8 @@ namespace TerrainGenerator
                 {
                     Vector2 chunkCoord = allChunksCoords[y * mapGenerationConfig.mapSize + x];
                     float[] heightMap = allTerrainHeightMaps[y * mapGenerationConfig.mapSize + x];
-                    ChunkLandscapeType chunkLandscapeType = chunkLandscapeTypes[y * mapGenerationConfig.mapSize + x];
-                    TerrainChunk terrainChunk = chunkFactory.CreateChunk(chunkCoord, heightMap, chunkLandscapeType,
+                    ChunkBiome chunkBiome = chunkLandscapeTypes[y * mapGenerationConfig.mapSize + x];
+                    TerrainChunk terrainChunk = chunkFactory.CreateChunk(chunkCoord, heightMap, chunkBiome,
                         mapGenerationConfig,
                         chunksParent.transform, mapGenerationConfig.chunkSize - 1);
 
@@ -106,33 +106,33 @@ namespace TerrainGenerator
         {
             foreach (TerrainChunk chunk in terrainChunks.Values)
             {
-                switch (chunk.ChunkLandscapeType)
+                switch (chunk.ChunkBiome)
                 {
-                    case ChunkLandscapeType.Plain:
-                        if (!SortedChunks.ContainsKey(ChunkLandscapeType.Plain))
+                    case ChunkBiome.Plain:
+                        if (!SortedChunks.ContainsKey(ChunkBiome.Plain))
                         {
-                            SortedChunks[ChunkLandscapeType.Plain] = new List<TerrainChunk>();
+                            SortedChunks[ChunkBiome.Plain] = new List<TerrainChunk>();
                         }
 
-                        SortedChunks[ChunkLandscapeType.Plain].Add(chunk);
+                        SortedChunks[ChunkBiome.Plain].Add(chunk);
 
                         break;
-                    case ChunkLandscapeType.Hill:
-                        if (!SortedChunks.ContainsKey(ChunkLandscapeType.Hill))
+                    case ChunkBiome.Hill:
+                        if (!SortedChunks.ContainsKey(ChunkBiome.Hill))
                         {
-                            SortedChunks[ChunkLandscapeType.Hill] = new List<TerrainChunk>();
+                            SortedChunks[ChunkBiome.Hill] = new List<TerrainChunk>();
                         }
 
-                        SortedChunks[ChunkLandscapeType.Hill].Add(chunk);
+                        SortedChunks[ChunkBiome.Hill].Add(chunk);
 
                         break;
-                    case ChunkLandscapeType.Mountain:
-                        if (!SortedChunks.ContainsKey(ChunkLandscapeType.Mountain))
+                    case ChunkBiome.Mountain:
+                        if (!SortedChunks.ContainsKey(ChunkBiome.Mountain))
                         {
-                            SortedChunks[ChunkLandscapeType.Mountain] = new List<TerrainChunk>();
+                            SortedChunks[ChunkBiome.Mountain] = new List<TerrainChunk>();
                         }
 
-                        SortedChunks[ChunkLandscapeType.Mountain].Add(chunk);
+                        SortedChunks[ChunkBiome.Mountain].Add(chunk);
 
                         break;
                 }
@@ -140,15 +140,15 @@ namespace TerrainGenerator
         }
 
 
-        private ChunkLandscapeType[] CalculateChunksLandscapeTypes(float[][] heightMaps)
+        private ChunkBiome[] CalculateChunksLandscapeTypes(float[][] heightMaps)
         {
-            ChunkLandscapeType[] chunkLandscapeTypes = new ChunkLandscapeType[heightMaps.Length];
+            ChunkBiome[] chunkLandscapeTypes = new ChunkBiome[heightMaps.Length];
 
 
             for (int i = 0; i < heightMaps.Length; i++)
             {
                 float[] heightMap = heightMaps[i];
-                ChunkLandscapeType chunkLandscapeType;
+                ChunkBiome chunkBiome;
 
                 float averageHeight = 0;
 
@@ -162,16 +162,16 @@ namespace TerrainGenerator
                 switch (averageHeight)
                 {
                     case <= 0.45f:
-                        chunkLandscapeType = ChunkLandscapeType.Plain;
-                        chunkLandscapeTypes[i] = chunkLandscapeType;
+                        chunkBiome = ChunkBiome.Plain;
+                        chunkLandscapeTypes[i] = chunkBiome;
                         break;
                     case <= 0.6f:
-                        chunkLandscapeType = ChunkLandscapeType.Hill;
-                        chunkLandscapeTypes[i] = chunkLandscapeType;
+                        chunkBiome = ChunkBiome.Hill;
+                        chunkLandscapeTypes[i] = chunkBiome;
                         break;
                     default:
-                        chunkLandscapeType = ChunkLandscapeType.Mountain;
-                        chunkLandscapeTypes[i] = chunkLandscapeType;
+                        chunkBiome = ChunkBiome.Mountain;
+                        chunkLandscapeTypes[i] = chunkBiome;
                         break;
                 }
             }

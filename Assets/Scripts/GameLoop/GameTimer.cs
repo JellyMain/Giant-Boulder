@@ -10,34 +10,38 @@ namespace GameLoop
     public class GameTimer : MonoBehaviour
     {
         private float maxTime;
-        private float currentTime;
         private GameConfig gameConfig;
-        private bool isStarted;
+        private StaticDataService staticDataService;
+        public float CurrentTime { get; private set; }
+        public bool IsStarted { get; private set; }
+        public event Action OnTimerEnded;
 
 
         [Inject]
         private void Construct(StaticDataService staticDataService)
         {
-            gameConfig = staticDataService.GameConfig;
+            this.staticDataService = staticDataService;
         }
 
-
+        
         private void Start()
         {
+            gameConfig = staticDataService.GameConfig;
             maxTime = gameConfig.maxTime;
         }
 
 
         private void Update()
         {
-            if (isStarted)
+            if (IsStarted)
             {
-                currentTime -= Time.deltaTime;
+                CurrentTime -= Time.deltaTime;
 
-                if (currentTime <= 0)
+                if (CurrentTime <= 0)
                 {
-                    currentTime = 0;
-                    isStarted = false;
+                    CurrentTime = 0;
+                    IsStarted = false;
+                    OnTimerEnded?.Invoke();
                 }
             }
         }
@@ -45,8 +49,8 @@ namespace GameLoop
 
         public void StartTimer()
         {
-            isStarted = true;
-            currentTime = maxTime;
+            IsStarted = true;
+            CurrentTime = maxTime;
         }
     }
 }

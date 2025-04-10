@@ -18,26 +18,25 @@ namespace TerrainGenerator
         private readonly MeshFilter meshFilter;
         private readonly MeshCollider meshCollider;
         public GameObject chunkGameObject;
-        public ChunkLandscapeType ChunkLandscapeType { get; private set; }
+        public ChunkBiome ChunkBiome { get; private set; }
         private Bounds bounds;
         public MeshData meshData;
         public Vector3 position;
         public bool structuresInstantiated;
-        public SpawnerConfig spawnerConfig;
         public readonly Dictionary<RaycastHit, StructureRoot> structures = new Dictionary<RaycastHit, StructureRoot>();
 
 
         public TerrainChunk(Material material, Vector2 chunkCoord, MeshData meshData,
-            ChunkLandscapeType chunkLandscapeType, Transform parent, int chunkSize)
+            ChunkBiome chunkBiome, Transform parent, int chunkSize)
         {
             this.meshData = meshData;
             position = new Vector3(chunkCoord.x * chunkSize, 0, chunkCoord.y * chunkSize);
             bounds = new Bounds(position, new Vector3(1 * chunkSize, 0, 1 * chunkSize));
-            ChunkLandscapeType = chunkLandscapeType;
+            ChunkBiome = chunkBiome;
 
             int groundLayer = LayerMask.NameToLayer("Ground");
 
-            chunkGameObject = new GameObject($"Terrain Chunk {ChunkLandscapeType.ToString()}");
+            chunkGameObject = new GameObject($"Terrain Chunk {ChunkBiome.ToString()}");
             chunkGameObject.layer = groundLayer;
 
             chunkGameObject.transform.SetParent(parent);

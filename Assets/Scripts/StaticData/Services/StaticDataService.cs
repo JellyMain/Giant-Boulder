@@ -1,6 +1,9 @@
 using System.Collections.Generic;
 using System.Linq;
+using Assets;
 using Const;
+using Cysharp.Threading.Tasks;
+using Quests;
 using StaticData.Data;
 using TerrainGenerator;
 using TerrainGenerator.Enums;
@@ -11,29 +14,38 @@ namespace StaticData.Services
 {
     public class StaticDataService
     {
+        private readonly AssetProvider assetProvider;
         public Dictionary<TerrainSeason, MapGenerationConfig> MapGenerationConfigs { get; private set; }
-        public Dictionary<int, SpawnerConfig> SpawnerConfigs { get; private set; }
-        public SoundConfigs SoundConfigs { get; private set; }
+        public SpawnerConfig SpawnerConfig { get; private set; }
+        public SoundConfig SoundConfig { get; private set; }
         public GameConfig GameConfig { get; private set; }
+        public QuestsConfig QuestsConfig { get; private set; }
 
 
-        public void LoadStaticData()
+        public StaticDataService(AssetProvider assetProvider)
         {
-            LoadMapChunkConfig();
-            LoadSpawnerConfigs();
-            LoadSoundsConfig();
+            this.assetProvider = assetProvider;
         }
 
 
-        public SpawnerConfig SpawnerConfigForSpawnOrder(int spawnOrder)
+        public async UniTask LoadStaticData()
         {
-            if (SpawnerConfigs.TryGetValue(spawnOrder, out SpawnerConfig spawnerConfig))
-            {
-                return spawnerConfig;
-            }
+            UniTask loadMapChunkConfigUniTask = LoadMapChunkConfig(); 
+            UniTask loadGlobalSpawnerConfigUniTask = LoadGlobalSpawnerConfig();
+            UniTask loadSoundsConfigUniTask = LoadSoundsConfig();
+            UniTask loadGameConfigUniTask= LoadGameConfig();
+            UniTask loadQuestsConfigUniTask = LoadQuestsConfig();
 
-            Debug.LogError($"Couldn't find spawner config with order key {spawnOrder}");
-            return null;
+            UniTask[] loadTasks = new[]
+            {
+                loadMapChunkConfigUniTask,
+                loadGlobalSpawnerConfigUniTask,
+                loadSoundsConfigUniTask,
+                loadGameConfigUniTask,
+                loadQuestsConfigUniTask
+            };
+
+            await UniTask.WhenAll(loadTasks);
         }
 
 
@@ -49,26 +61,41 @@ namespace StaticData.Services
         }
 
 
-        private void LoadSoundsConfig()
+        private async UniTask LoadQuestsConfig()
         {
-            SoundConfigs = Resources.Load<SoundConfigs>(RuntimeConstants.StaticDataPaths.SOUNDS_CONFIG);
+            QuestsConfig =
+                await assetProvider.LoadAsset<QuestsConfig>(RuntimeConstants.StaticDataAddresses.QUESTS_CONFIG);
         }
 
 
-        private void LoadMapChunkConfig()
+        private async UniTask LoadGameConfig()
         {
-            MapGenerationConfigs =
-                Resources.LoadAll<MapGenerationConfig>(RuntimeConstants.StaticDataPaths.MAP_GENERATION_CONFIGS)
-                    .ToDictionary(x => x.terrainSeason, x => x);
+            GameConfig = await assetProvider.LoadAsset<GameConfig>(RuntimeConstants.StaticDataAddresses.GAME_CONFIG);
         }
 
 
-        private void LoadSpawnerConfigs()
+        private async UniTask LoadSoundsConfig()
         {
-            SpawnerConfigs =
-                Resources.LoadAll<SpawnerConfig>(RuntimeConstants.StaticDataPaths.STRUCTURE_SPAWNER_CONFIGS)
-                    .Where(x => x.isEnabled)
-                    .ToDictionary(x => x.spawnOrder, x => x);
+            SoundConfig =
+                await assetProvider.LoadAsset<SoundConfig>(RuntimeConstants.StaticDataAddresses.SOUNDS_CONFIG);
+        }
+
+
+        private async UniTask LoadMapChunkConfig()
+        {
+            IList<MapGenerationConfig> mapGenerationConfigsList =
+                await assetProvider.LoadAssets<MapGenerationConfig>(
+                    RuntimeConstants.StaticDataAddresses.MAP_GENERATION_CONFIGS, null);
+
+            MapGenerationConfigs = mapGenerationConfigsList.ToDictionary(x => x.terrainSeason, x => x);
+            
+        }
+
+
+        private async UniTask LoadGlobalSpawnerConfig()
+        {
+            SpawnerConfig =
+                await assetProvider.LoadAsset<SpawnerConfig>(RuntimeConstants.StaticDataAddresses.SPAWNER_CONFIG);
         }
     }
 }

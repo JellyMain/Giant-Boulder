@@ -16,6 +16,13 @@ namespace Utils
 {
     public class PrefabPreparer : SerializedMonoBehaviour
     {
+        [SerializeField] private float maxBombPower = 20;
+        [SerializeField] private float minBombPower = 0.5f;
+        [SerializeField] private float maxObjectVolume = 900;
+        [SerializeField] private float minObjectVolume = 5;
+        [SerializeField] private int maxObjectFragments = 20;
+        [SerializeField] private int minObjectFragments = 3;
+        [SerializeField] private Material defaultInsideMaterial;
         [SerializeField] private Dictionary<GameObject, Material> uniqueObjects;
         private HashSet<GameObject> uniquePrefabs;
 
@@ -59,9 +66,9 @@ namespace Utils
                         string prefabPath = PrefabUtility.GetPrefabAssetPathOfNearestInstanceRoot(child.gameObject);
                         GameObject prefab = AssetDatabase.LoadAssetAtPath<GameObject>(prefabPath);
 
-                        if (!uniquePrefabs.Contains(prefab) && !child.GetComponent<StructureSpawnSettings>())
+                        if (!uniquePrefabs.Contains(prefab) && !child.GetComponent<StructureObject>())
                         {
-                            uniqueObjects.Add(child.gameObject, null);
+                            uniqueObjects.Add(child.gameObject, defaultInsideMaterial);
                         }
 
                         uniquePrefabs.Add(prefab);
@@ -90,12 +97,12 @@ namespace Utils
             foreach (Transform child in transform)
             {
                 if (child.CompareTag(RuntimeConstants.Tags.CONTAINER) &&
-                    !child.GetComponent<StructureSpawnSettings>() ||
+                    !child.GetComponent<StructureObject>() ||
                     child.CompareTag(RuntimeConstants.Tags.INDESTRUCTIBLE) &&
-                    !child.GetComponent<StructureSpawnSettings>())
+                    !child.GetComponent<StructureObject>())
                 {
-                    StructureSpawnSettings structureSpawnSettings = child.AddComponent<StructureSpawnSettings>();
-                    structureSpawnSettings.snapToGround = true;
+                    StructureObject structureObject = child.AddComponent<StructureObject>();
+                    structureObject.snapToGround = true;
                 }
             }
         }
@@ -107,22 +114,29 @@ namespace Utils
             {
                 if (!HasStructureComponents(child))
                 {
-                    LayerMask structureObjectLayer = LayerMask.NameToLayer(RuntimeConstants.Layers.STRUCTURE_OBJECT);
+                    LayerMask structureObjectLayer = LayerMask.NameToLayer(RuntimeConstants.Layers.STRUCTURE_OBJECT_LAYER);
                     LayerMask structureFragmentedLayer =
-                        LayerMask.NameToLayer(RuntimeConstants.Layers.STRUCTURE_FRAGMENTED);
+                        LayerMask.NameToLayer(RuntimeConstants.Layers.STRUCTURE_FRAGMENTED_LAYER);
+
+                    int structureFragmentedLayerMask = 1 << structureFragmentedLayer;
+
                     child.layer = structureObjectLayer;
 
                     DestructibleObject destructibleObject = child.AddComponent<DestructibleObject>();
                     destructibleObject.FindFragmentsRoot();
 
-                    StructureSpawnSettings structureSpawnSettings = child.AddComponent<StructureSpawnSettings>();
-                    structureSpawnSettings.snapToGround = true;
+                    StructureObject structureObject = child.AddComponent<StructureObject>();
+                    structureObject.snapToGround = true;
 
                     RayfireBomb rayfireBomb = child.AddComponent<RayfireBomb>();
                     rayfireBomb.range = 30;
                     rayfireBomb.affectInactive = true;
-                    rayfireBomb.strength = 10;
-                    rayfireBomb.mask = structureFragmentedLayer;
+
+                    float objectVolume = CalculateObjectVolume(child);
+                    float bombPower = CalculateBombPower(objectVolume);
+
+                    rayfireBomb.strength = bombPower;
+                    rayfireBomb.mask = structureFragmentedLayerMask;
 
                     if (!child.GetComponent<Collider>())
                     {
@@ -139,7 +153,10 @@ namespace Utils
         {
             RayfireShatter rayfireShatter = obj.AddComponent<RayfireShatter>();
 
-            rayfireShatter.voronoi.amount = 20;
+            float objectVolume = CalculateObjectVolume(obj);
+            int fragmentsAmount = CalculateFragmentsAmount(objectVolume);
+
+            rayfireShatter.voronoi.amount = fragmentsAmount;
 
             rayfireShatter.material.iMat = uniqueObjects[obj];
             rayfireShatter.advanced.decompose = false;
@@ -148,7 +165,7 @@ namespace Utils
             GameObject fragmentsParent = new GameObject($"{obj.name}_Fragmented");
             fragmentsParent.tag = RuntimeConstants.Tags.FRAGMENTS_ROOT;
 
-            LayerMask fragmentsLayer = LayerMask.NameToLayer(RuntimeConstants.Layers.STRUCTURE_FRAGMENTED);
+            LayerMask fragmentsLayer = LayerMask.NameToLayer(RuntimeConstants.Layers.STRUCTURE_FRAGMENTED_LAYER);
 
             rayfireShatter.Fragment(fragmentsParent.transform, fragmentsLayer);
 
@@ -215,7 +232,64 @@ namespace Utils
         private static bool HasStructureComponents(GameObject child)
         {
             return child.GetComponent<DestructibleObject>() &&
-                   child.GetComponent<StructureSpawnSettings>();
+                   child.GetComponent<StructureObject>();
+        }
+
+
+        private float CalculateObjectVolume(GameObject obj)
+        {
+            Renderer[] objectRenderers = obj.GetComponentsInChildren<Renderer>();
+            float objectVolume = 0;
+
+            foreach (Renderer objectRenderer in objectRenderers)
+            {
+                Bounds bounds = objectRenderer.bounds;
+                Vector3 size = bounds.size;
+
+                objectVolume += size.x * size.y * size.z;
+            }
+
+            return objectVolume;
+        }
+
+
+        private int CalculateFragmentsAmount(float objectVolume)
+        {
+            if (objectVolume > maxObjectVolume)
+            {
+                return maxObjectFragments;
+            }
+
+            if (objectVolume < minObjectVolume)
+            {
+                return minObjectFragments;
+            }
+
+            float t = Mathf.InverseLerp(minObjectVolume, maxObjectVolume, objectVolume);
+
+            int fragmentsAmount = (int)Mathf.Lerp(minObjectFragments, maxObjectFragments, t);
+
+            return fragmentsAmount;
+        }
+
+
+        private float CalculateBombPower(float objectVolume)
+        {
+            if (objectVolume > maxObjectVolume)
+            {
+                return maxBombPower;
+            }
+
+            if (objectVolume < minObjectVolume)
+            {
+                return minBombPower;
+            }
+
+            float t = Mathf.InverseLerp(minObjectVolume, maxObjectVolume, objectVolume);
+
+            float bombPower = Mathf.Lerp(minObjectFragments, maxObjectFragments, t);
+
+            return bombPower;
         }
 
 

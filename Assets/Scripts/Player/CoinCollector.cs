@@ -10,20 +10,23 @@ namespace Player
 {
     public class CoinCollector : MonoBehaviour
     {
+        [SerializeField] private float coinCollectionRadius = 1;
         [SerializeField] private float magnetRadius = 10;
         [SerializeField] private float maxMagnetPower = 5;
-        private readonly Collider[] coinCollidersBuffer =  new Collider[50];
+        private readonly Collider[] magnetCoinsBuffer = new Collider[50];
+        private readonly Collider[] collectedCoinsBuffer = new Collider[50];
         private int coinLayerMask;
-        private CurrencyTracker currencyTracker;
         public event Action<Vector3> OnCoinCollected;
+        private GameCurrencyTracker gameCurrencyTracker;
 
 
         [Inject]
-        private void Construct(CurrencyTracker currencyTracker)
+        private void Construct(GameCurrencyTracker gameCurrencyTracker)
         {
-            this.currencyTracker = currencyTracker;
+            this.gameCurrencyTracker = gameCurrencyTracker;
         }
-
+        
+        
 
         private void Start()
         {
@@ -38,11 +41,34 @@ namespace Player
         }
 
 
+        private void FixedUpdate()
+        {
+            CollectCoins();
+        }
+
+
+        private void CollectCoins()
+        {
+            Physics.OverlapSphereNonAlloc(transform.position, coinCollectionRadius, collectedCoinsBuffer,
+                coinLayerMask);
+
+            foreach (Collider coinCollider in collectedCoinsBuffer)
+            {
+                if (coinCollider != null)
+                {
+                    Coin coin = coinCollider.GetComponent<Coin>();
+                    coin.Destroy();
+                    OnCoinCollected?.Invoke(coin.transform.position);
+                }
+            }
+        }
+
+
         private void MagnetCoins()
         {
-            Physics.OverlapSphereNonAlloc(transform.position, magnetRadius, coinCollidersBuffer, coinLayerMask);
+            Physics.OverlapSphereNonAlloc(transform.position, magnetRadius, magnetCoinsBuffer, coinLayerMask);
 
-            foreach (Collider coinCollider in coinCollidersBuffer)
+            foreach (Collider coinCollider in magnetCoinsBuffer)
             {
                 if (coinCollider != null)
                 {
@@ -56,20 +82,15 @@ namespace Player
         }
 
 
-        private void OnCollisionEnter(Collision other)
-        {
-            if (other.gameObject.TryGetComponent(out Coin coin))
-            {
-                coin.Destroy();
-                OnCoinCollected?.Invoke(coin.transform.position);
-            }
-        }
+        private void OnTriggerEnter(Collider other) { }
 
 
         private void OnDrawGizmos()
         {
             Gizmos.color = Color.red;
             Gizmos.DrawWireSphere(transform.position, magnetRadius);
+            Gizmos.color = Color.green;
+            Gizmos.DrawWireSphere(transform.position, coinCollectionRadius);
         }
     }
 }

@@ -123,7 +123,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0a1561298703474a838758266d49e45f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  destroyParticlesPrefab: {fileID: 0}
+  destroySoundSettings:
+    sounds: []
+    minSoundPitch: 0.8
+    maxSoundPitch: 1.1
   fragmentsRoot: {fileID: 1922503987922006341}
+  scoreValue: 100
+  objectType: 6
 --- !u!114 &5521397547783736531
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -139,6 +146,7 @@ MonoBehaviour:
   rotationModifier: {x: 0, y: 0}
   spawnChance: 100
   snapToGround: 1
+  isKeyObject: 0
 --- !u!114 &8243904768811074499
 MonoBehaviour:
   m_ObjectHideFlags: 0

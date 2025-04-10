@@ -27,20 +27,20 @@ namespace Factories
         }
 
 
-        public TerrainChunk CreateChunk(Vector3 position, float[,] heightMap, ChunkLandscapeType chunkLandscapeType,
+        public TerrainChunk CreateChunk(Vector3 position, float[,] heightMap, ChunkBiome chunkBiome,
             MapGenerationConfig mapGenerationConfig, Transform parent, int chunkSize)
         {
             MeshData meshData = meshGenerator.CreateMeshData(heightMap, mapGenerationConfig.noiseMultiplier,
                 mapGenerationConfig.heightCurve, mapGenerationConfig.lod, mapGenerationConfig.heightGradient);
 
             TerrainChunk terrainChunk = new TerrainChunk(mapGenerationConfig.chunkMaterial, position, meshData,
-                chunkLandscapeType, parent, chunkSize);
+                chunkBiome, parent, chunkSize);
 
             return terrainChunk;
         }
 
 
-        public TerrainChunk CreateChunk(Vector3 position, float[] heightMap, ChunkLandscapeType chunkLandscapeType,
+        public TerrainChunk CreateChunk(Vector3 position, float[] heightMap, ChunkBiome chunkBiome,
             MapGenerationConfig mapGenerationConfig,
             Transform parent, int chunkSize)
         {
@@ -48,14 +48,14 @@ namespace Factories
                 mapGenerationConfig.heightCurve, mapGenerationConfig.lod, mapGenerationConfig.heightGradient);
 
             TerrainChunk terrainChunk = new TerrainChunk(mapGenerationConfig.chunkMaterial, position, meshData,
-                chunkLandscapeType, parent, chunkSize);
+                chunkBiome, parent, chunkSize);
 
             return terrainChunk;
         }
 
 
         public Dictionary<Vector2, TerrainChunk> CreateAllChunks(Vector2[] chunksCoords, float[][] heightMaps,
-            ChunkLandscapeType[] chunkLandscapeTypes,
+            ChunkBiome[] chunkLandscapeTypes,
             MapGenerationConfig mapGenerationConfig, Transform parent, int chunkSize)
         {
             MeshData[] chunksMeshData = meshGenerator.CreateAllMeshDataParallel(heightMaps,

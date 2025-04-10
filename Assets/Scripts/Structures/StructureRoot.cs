@@ -14,7 +14,9 @@ namespace Structures
         [SerializeField] private float structureRadius = 10;
         [SerializeField] private float maxSlopeAngle = 30;
         [SerializeField] private List<GameObject[]> objectsBatches;
-        public List<StructureSpawnSettings> structureChildSettings;
+        [SerializeField] private List<DestructibleObjectBase> structureKeyObjects;
+        [SerializeField] private List<DestructibleObjectBase> structureDestructibleObjects;
+        public List<StructureObject> structureChildSettings;
         private Dictionary<string, List<GameObject>> identicalObjectsGroupPairs;
 
         public float MaxSlopeAngle => maxSlopeAngle;
@@ -27,14 +29,26 @@ namespace Structures
         [Button]
         public void FindStructureChildObjects()
         {
-            structureChildSettings = new List<StructureSpawnSettings>();
+            structureChildSettings = new List<StructureObject>();
 
-            StructureSpawnSettings[] structureChildren = GetComponentsInChildren<StructureSpawnSettings>();
+            StructureObject[] structureChildren = GetComponentsInChildren<StructureObject>();
+
+            DestructibleObjectBase[] destructibleObjects = GetComponentsInChildren<DestructibleObjectBase>();
 
             structureChildSettings = structureChildren.ToList();
+            structureDestructibleObjects = destructibleObjects.ToList();
+
+            structureKeyObjects = new List<DestructibleObjectBase>();
+
+            foreach (StructureObject structureObject in structureChildSettings)
+            {
+                if (structureObject.IsKeyObject)
+                {
+                    DestructibleObjectBase destructibleObject = structureObject.GetComponent<DestructibleObjectBase>();
+                    structureKeyObjects.Add(destructibleObject);
+                }
+            }
         }
-
-
 
 
 
@@ -79,6 +93,72 @@ namespace Structures
 
 
 #endif
+
+
+        private void Start()
+        {
+            ObserveKeyObjectsDestruction();
+            ObserveAllObjectsDestruction();
+        }
+
+
+
+        private void ObserveKeyObjectsDestruction()
+        {
+            foreach (DestructibleObjectBase keyObject in structureKeyObjects)
+            {
+                keyObject.OnDestroyed += OnKeyObjectDestroyed;
+            }
+        }
+
+
+        private void ObserveAllObjectsDestruction()
+        {
+            foreach (DestructibleObjectBase destructibleObject in structureDestructibleObjects)
+            {
+                destructibleObject.OnDestroyed += OnObjectDestroyed;
+            }
+        }
+
+
+        private void OnObjectDestroyed(DestructibleObjectBase destructibleObject)
+        {
+            destructibleObject.OnDestroyed -= OnObjectDestroyed;
+            structureDestructibleObjects.Remove(destructibleObject);
+        }
+
+
+        private void OnKeyObjectDestroyed(DestructibleObjectBase keyObject)
+        {
+            keyObject.OnDestroyed -= OnKeyObjectDestroyed;
+            structureKeyObjects.Remove(keyObject);
+
+            if (structureKeyObjects.Count == 0)
+            {
+                DestroyStructure();
+            }
+        }
+
+
+        private void DestroyStructure()
+        {
+            foreach (StructureObject structureObject in structureChildSettings)
+            {
+                if (structureObject != null)
+                {
+                    Destroy(structureObject.gameObject);
+                }
+            }
+            
+            structureChildSettings.Clear();
+
+            // foreach (DestructibleObjectBase destructibleObject in structureDestructibleObjects)
+            // {
+            //     destructibleObject.OnDestroyed -= OnObjectDestroyed;
+            //     destructibleObject.DestroyLight();
+            // }
+        }
+
 
 
         public void BatchObjects()

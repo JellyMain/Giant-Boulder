@@ -6,14 +6,19 @@ namespace Progress
     [Serializable]
     public class PlayerProgress
     {
-        public ScoreData scoreData;
         public CurrencyData currencyData;
-        
+        public ScoreData scoreData;
+        public QuestsData questsData;
+        public StatsData statsData;
+
 
         public PlayerProgress()
         {
-            scoreData = new ScoreData();
             currencyData = new CurrencyData();
+            scoreData = new ScoreData();
+            questsData = new QuestsData();
+            statsData = new StatsData();
         }
+        
     }
 }

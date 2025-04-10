@@ -1,20 +1,33 @@
+using Assets;
 using Cinemachine;
 using Const;
+using Cysharp.Threading.Tasks;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.AddressableAssets;
 using UnityEngine.Rendering.Universal;
+using UnityEngine.ResourceManagement.AsyncOperations;
 
 
 namespace Factories
 {
     public class CameraCreator
     {
-        public CinemachineVirtualCamera CreateVirtualCamera()
+        private readonly AssetProvider assetProvider;
+
+
+        public CameraCreator(AssetProvider assetProvider)
         {
-            CinemachineVirtualCamera virtualCameraPrefab =
-                Resources.Load<CinemachineVirtualCamera>(RuntimeConstants.PrefabPaths.VIRTUAL_CAMERA);
-            
-            return Object.Instantiate(virtualCameraPrefab);
+            this.assetProvider = assetProvider;
+        }
+
+
+        public async UniTask<CinemachineVirtualCamera> CreateVirtualCamera()
+        {
+            GameObject virtualCameraPrefab =
+                await assetProvider.LoadAsset<GameObject>(RuntimeConstants.PrefabAddresses.VIRTUAL_CAMERA);
+
+            return Object.Instantiate(virtualCameraPrefab).GetComponent<CinemachineVirtualCamera>();
         }
 
 
@@ -33,10 +46,12 @@ namespace Factories
         }
 
 
-        public Camera CreateUICamera()
+        public async UniTask<Camera> CreateUICamera()
         {
-            Camera uiCameraPrefab = Resources.Load<Camera>(RuntimeConstants.PrefabPaths.UI_CAMERA);
-            return Object.Instantiate(uiCameraPrefab);
+            GameObject uiCameraPrefab =
+                await assetProvider.LoadAsset<GameObject>(RuntimeConstants.PrefabAddresses.UI_CAMERA);
+            
+            return Object.Instantiate(uiCameraPrefab).GetComponent<Camera>();
         }
 
 

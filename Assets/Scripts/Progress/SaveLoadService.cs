@@ -1,38 +1,29 @@
 using System.Collections.Generic;
 using Const;
-using DataTrackers;
 using UnityEngine;
 using Utils;
-using Zenject;
 
 
 namespace Progress
 {
-    public class SaveLoadService: IInitializable
+    public class SaveLoadService
     {
-        public List<IProgressUpdater> globalProgressUpdaters = new List<IProgressUpdater>();
-        public List<IProgressSaver> globalProgressSavers = new List<IProgressSaver>();
-        public List<IProgressUpdater> sceneProgressUpdaters = new List<IProgressUpdater>();
-        public List<IProgressSaver> sceneProgressSavers = new List<IProgressSaver>();
+        private readonly List<IProgressUpdater> globalProgressUpdaters = new List<IProgressUpdater>();
+        private readonly List<IProgressSaver> globalProgressSavers = new List<IProgressSaver>();
+        private readonly List<IProgressUpdater> sceneProgressUpdaters = new List<IProgressUpdater>();
+        private readonly List<IProgressSaver> sceneProgressSavers = new List<IProgressSaver>();
         private readonly PersistentPlayerProgress persistentPlayerProgress;
-        private readonly CurrencyTracker currencyTracker;
 
 
 
-        public SaveLoadService(PersistentPlayerProgress persistentPlayerProgress, CurrencyTracker currencyTracker)
+        public SaveLoadService(PersistentPlayerProgress persistentPlayerProgress)
         {
             this.persistentPlayerProgress = persistentPlayerProgress;
-            this.currencyTracker = currencyTracker;
         }
         
         
-        public void Initialize()
-        {
-            RegisterGlobalService(currencyTracker);
-        }
 
-
-        private void RegisterGlobalService<T>(T service)
+        public void RegisterGlobalObject<T>(T service)
         {
             if (service is IProgressSaver progressSaver)
             {
@@ -42,6 +33,20 @@ namespace Progress
             if (service is IProgressUpdater progressUpdater)
             {
                 globalProgressUpdaters.Add(progressUpdater);
+            }
+        }
+
+
+        public void RegisterSceneObject<T>(T service)
+        {
+            if (service is IProgressSaver progressSaver)
+            {
+                sceneProgressSavers.Add(progressSaver);
+            }
+
+            if (service is IProgressUpdater progressUpdater)
+            {
+                sceneProgressUpdaters.Add(progressUpdater);
             }
         }
 

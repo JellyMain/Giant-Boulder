@@ -1,33 +1,46 @@
+using Assets;
 using Coins;
 using Const;
+using Cysharp.Threading.Tasks;
 using Sounds;
 using UnityEngine;
+using UnityEngine.AddressableAssets;
+using UnityEngine.ResourceManagement.AsyncOperations;
+using Zenject;
 
 
 namespace Factories
 {
-    public class CoinsFactory
+    public class CoinsFactory : IInitializable
     {
         private readonly SoundPlayer soundPlayer;
-        private Coin coinPrefab;
+        private readonly AssetProvider assetProvider;
 
 
-        public CoinsFactory(SoundPlayer soundPlayer)
+        public CoinsFactory(SoundPlayer soundPlayer, AssetProvider assetProvider)
         {
             this.soundPlayer = soundPlayer;
-            LoadPrefab();
+            this.assetProvider = assetProvider;
         }
 
 
-        private void LoadPrefab()
+        public void Initialize()
         {
-            coinPrefab = Resources.Load<Coin>(RuntimeConstants.PrefabPaths.COIN);
+            WarmUpPrefab().Forget();
         }
 
 
-        public Coin CreateCoin(Vector3 position)
+        private async UniTaskVoid WarmUpPrefab()
         {
-            Coin spawnedCoin = Object.Instantiate(coinPrefab, position, Quaternion.identity);
+            await assetProvider.LoadAsset<GameObject>(RuntimeConstants.PrefabAddresses.COIN);
+        }
+
+
+        public async UniTask<Coin> CreateCoin(Vector3 position)
+        {
+            GameObject coinPrefab = await assetProvider.LoadAsset<GameObject>(RuntimeConstants.PrefabAddresses.COIN);
+
+            Coin spawnedCoin = Object.Instantiate(coinPrefab, position, Quaternion.identity).GetComponent<Coin>();
             spawnedCoin.Construct(soundPlayer);
             return spawnedCoin;
         }

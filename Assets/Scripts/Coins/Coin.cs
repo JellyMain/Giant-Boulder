@@ -49,8 +49,8 @@ namespace Coins
                 rb.isKinematic = true;
             }
         }
-
-
+        
+        
         public void Destroy()
         {
             soundPlayer.PlayCoinCollectedSound(transform.position);

@@ -3734,7 +3734,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0a1561298703474a838758266d49e45f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  destroyParticlesPrefab: {fileID: 0}
+  destroySoundSettings:
+    sounds: []
+    minSoundPitch: 0.8
+    maxSoundPitch: 1.1
   fragmentsRoot: {fileID: 9001211542579091920}
+  scoreValue: 100
 --- !u!114 &5429481933813472538
 MonoBehaviour:
   m_ObjectHideFlags: 0

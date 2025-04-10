@@ -1,5 +1,6 @@
 using System;
 using Const;
+using DataTrackers;
 using RayFire;
 using Sirenix.OdinInspector;
 using Sounds;
@@ -17,13 +18,16 @@ namespace Structures
         [SerializeField] private SoundSettings destroySoundSettings;
         [SerializeField] private GameObject fragmentsRoot;
         [SerializeField] private int scoreValue = 100;
+        [SerializeField] private ObjectType objectType;
         private MeshRenderer meshRenderer;
         private RayfireBomb rayfireBomb;
         private Collider col;
         private Vector3 objectCenter;
         private SoundPlayer soundPlayer;
         public int ScoreValue => scoreValue;
-        public event Action OnBuildingDestroyed;
+        public ObjectType ObjectType => objectType;
+        public event Action<DestructibleObjectBase> OnDestroyed;
+        public event Action<DestructibleObjectBase> OnLightDestroyed;
 
 
         [Inject]
@@ -31,8 +35,8 @@ namespace Structures
         {
             this.soundPlayer = soundPlayer;
         }
-        
-        
+
+
         private void Awake()
         {
             rayfireBomb = GetComponent<RayfireBomb>();
@@ -59,6 +63,14 @@ namespace Structures
         }
 
 
+        public void DestroyLight()
+        {
+            Destroy(gameObject);
+
+            OnLightDestroyed?.Invoke(this);
+        }
+
+
         public void Destroy()
         {
             meshRenderer.enabled = false;
@@ -68,9 +80,13 @@ namespace Structures
             rayfireBomb.Explode(0);
 
             soundPlayer.PlaySound(destroySoundSettings, transform.position);
-            Instantiate(destroyParticlesPrefab, objectCenter, Quaternion.identity);
 
-            OnBuildingDestroyed?.Invoke();
+            if (destroyParticlesPrefab != null)
+            {
+                Instantiate(destroyParticlesPrefab, objectCenter, Quaternion.identity);
+            }
+            
+            OnDestroyed?.Invoke(this);
         }
     }
 }

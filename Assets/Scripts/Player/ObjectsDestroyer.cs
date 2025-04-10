@@ -1,51 +1,37 @@
 using System;
-using DataTrackers;
-using RayFire;
 using Structures;
 using UnityEngine;
-using Zenject;
 
 
 namespace Player
 {
     public class ObjectsDestroyer : MonoBehaviour
     {
-        private ScoreTracker scoreTracker;
-        public event Action<int, Vector3> OnScoreCollected;
+        public delegate void ObjectScoreCollectedHandler(int scoreValue, Vector3 objectPosition);
 
+        public event ObjectScoreCollectedHandler OnObjectScoreCollected;
+        public event Action<ObjectType> OnObjectDestroyed;
 
-
-        [Inject]
-        private void Construct(ScoreTracker scoreTracker)
-        {
-            this.scoreTracker = scoreTracker;
-        }
-        
 
         private void OnCollisionEnter(Collision other)
         {
-            if (other.gameObject.TryGetComponent(out DestructibleObjectBase structure))
+            if (other.gameObject.TryGetComponent(out DestructibleObjectBase destructibleObject))
             {
-                OnScoreCollected?.Invoke(structure.ScoreValue, structure.transform.position);
-                structure.Destroy();
+                OnObjectScoreCollected?.Invoke(destructibleObject.ScoreValue, destructibleObject.transform.position);
+                OnObjectDestroyed?.Invoke(destructibleObject.ObjectType);
+                destructibleObject.Destroy();
             }
         }
 
 
         private void OnTriggerEnter(Collider other)
         {
-            if (other.gameObject.TryGetComponent(out DestructibleObjectBase structure))
+            if (other.gameObject.TryGetComponent(out DestructibleObjectBase destructibleObject))
             {
-                scoreTracker.AddScore(structure.ScoreValue);
-                OnScoreCollected?.Invoke(structure.ScoreValue, structure.transform.position);
-                structure.Destroy();
+                OnObjectScoreCollected?.Invoke(destructibleObject.ScoreValue, destructibleObject.transform.position);
+                OnObjectDestroyed?.Invoke(destructibleObject.ObjectType);
+                destructibleObject.Destroy();
             }
-        }
-
-
-        private void Destroy()
-        {
-            
         }
     }
 }

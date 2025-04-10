@@ -1,4 +1,7 @@
 using System.Collections.Generic;
+using Assets;
+using Const;
+using Cysharp.Threading.Tasks;
 using StaticData.Data;
 using StaticData.Services;
 using Structures;
@@ -18,80 +21,73 @@ namespace StructuresSpawner
         private readonly StaticDataService staticDataService;
         private readonly MapCreator mapCreator;
         private readonly DiContainer diContainer;
-        private int spawnerCounter;
+        private readonly AssetProvider assetProvider;
         private MapGenerationConfig mapGenerationConfig;
-        private Dictionary<ChunkLandscapeType, List<TerrainChunk>> availableChunks;
+        private Dictionary<ChunkBiome, List<TerrainChunk>> availableChunks;
 
 
-        public StructureSpawner(StaticDataService staticDataService, MapCreator mapCreator, DiContainer diContainer)
+        public StructureSpawner(StaticDataService staticDataService, MapCreator mapCreator, DiContainer diContainer,
+            AssetProvider assetProvider)
         {
             this.staticDataService = staticDataService;
             this.mapCreator = mapCreator;
             this.diContainer = diContainer;
+            this.assetProvider = assetProvider;
         }
 
 
         private void Init()
         {
-            spawnerCounter = 0;
-
             mapGenerationConfig = staticDataService.MapConfigForSeason(TerrainSeason.Summer);
             availableChunks = mapCreator.SortedChunks;
         }
 
 
-        public void ActivateAllSpawners()
+        public void ActivateSpawner()
         {
             Init();
 
-            for (int i = 0; i < staticDataService.SpawnerConfigs.Count; i++)
+
+            foreach (KeyValuePair<ChunkBiome, List<StructuresPercentagePair>> biomeStructuresPair in staticDataService
+                         .SpawnerConfig.allSpawners)
             {
-                SpawnerConfig spawnerConfig = staticDataService.SpawnerConfigForSpawnOrder(spawnerCounter);
-                ActivateSpawner(spawnerConfig);
+                SpawnStructures(biomeStructuresPair);
             }
         }
 
 
-        private void ActivateSpawner(SpawnerConfig spawnerConfig)
+        private void SpawnStructures(KeyValuePair<ChunkBiome, List<StructuresPercentagePair>> biomeStructuresPair)
         {
-            ChunkLandscapeType chunkLandscapeType = spawnerConfig.chunkLandscapeType;
+            ChunkBiome chunkBiome = biomeStructuresPair.Key;
+            List<StructuresPercentagePair> structuresPercentagePairs = biomeStructuresPair.Value;
+            List<TerrainChunk> chunks = availableChunks[chunkBiome];
 
-            List<TerrainChunk> chunks = availableChunks[chunkLandscapeType];
-
-
-            foreach (StructureRoot structurePrefab in spawnerConfig.structurePrefabCountPair.Keys)
+            foreach (StructuresPercentagePair structurePercentagePair in structuresPercentagePairs)
             {
-                for (int i = 0; i < spawnerConfig.structurePrefabCountPair[structurePrefab]; i++)
+                if (availableChunks[chunkBiome].Count == 0)
                 {
-                    if (availableChunks[chunkLandscapeType].Count == 0)
-                    {
-                        Debug.LogError($"Doesn't have any available chunks of type {chunkLandscapeType}");
-                        break;
-                    }
-                    
-                    Debug.Log(chunks.Count);
-                    
-                    TerrainChunk randomChunk = chunks[Random.Range(0, chunks.Count)];
-
-                    Vector3 rayStart = randomChunk.position + Vector3.up * spawnerConfig.raycastHeight;
-
-                    if (Physics.Raycast(rayStart, Vector3.down, out RaycastHit hit, Mathf.Infinity,
-                            spawnerConfig.groundLayer))
-                    {
-                        randomChunk.structures.Add(hit, structurePrefab);
-                        randomChunk.spawnerConfig = spawnerConfig;
-                    }
-                    
-                    availableChunks[chunkLandscapeType].Remove(randomChunk);
-                }
-
-                if (availableChunks[chunkLandscapeType].Count == 0)
-                {
+                    Debug.LogError($"Doesn't have any available chunks of type {chunkBiome}");
                     break;
                 }
-            }
 
-            spawnerCounter++;
+                int structuresCount = chunks.Count * structurePercentagePair.spawnRate / 100;
+
+                for (int i = 0; i < structuresCount; i++)
+                {
+                    TerrainChunk randomChunk = chunks[Random.Range(0, chunks.Count)];
+
+                    Vector3 rayStart = randomChunk.position +
+                                       Vector3.up * staticDataService.SpawnerConfig.raycastHeight;
+
+                    if (Physics.Raycast(rayStart, Vector3.down, out RaycastHit hit, Mathf.Infinity,
+                            staticDataService.SpawnerConfig.groundLayer))
+                    {
+                        randomChunk.structures.Add(hit, structurePercentagePair.structurePrefab);
+                    }
+
+                    availableChunks[chunkBiome].Remove(randomChunk);
+                }
+            }
         }
 
 
@@ -100,26 +96,26 @@ namespace StructuresSpawner
             foreach (KeyValuePair<RaycastHit, StructureRoot> keyValuePair in terrainChunk.structures)
             {
                 Quaternion rotation = Quaternion.FromToRotation(Vector3.up, keyValuePair.Key.normal);
-                GameObject spawnedObject =  diContainer.InstantiatePrefab(keyValuePair.Value, keyValuePair.Key.point, rotation,
+                GameObject spawnedObject = diContainer.InstantiatePrefab(keyValuePair.Value, keyValuePair.Key.point,
+                    rotation,
                     terrainChunk.chunkGameObject.transform);
                 StructureRoot spawnedStructureRoot = spawnedObject.GetComponent<StructureRoot>();
-                
-                ApplyStructureSettings(spawnedStructureRoot.structureChildSettings, terrainChunk.spawnerConfig);
+
+                ApplyStructureSettings(spawnedStructureRoot.structureChildSettings);
                 spawnedStructureRoot.BatchObjects();
             }
-            
+
             terrainChunk.structuresInstantiated = true;
         }
 
-        
-        private void ApplyStructureSettings(List<StructureSpawnSettings> structureSpawnSettings,
-            SpawnerConfig spawnerConfig)
+
+        private void ApplyStructureSettings(List<StructureObject> structureSpawnSettings)
         {
-            foreach (StructureSpawnSettings childObject in structureSpawnSettings)
+            foreach (StructureObject childObject in structureSpawnSettings)
             {
                 if (childObject.snapToGround)
                 {
-                    SnapToGround(childObject.transform, spawnerConfig);
+                    SnapToGround(childObject.transform);
                 }
 
                 int randomNumber = Random.Range(0, 100);
@@ -141,13 +137,14 @@ namespace StructuresSpawner
                 }
             }
         }
-        
-        
-        private void SnapToGround(Transform objectToSnap, SpawnerConfig spawnerConfig)
-        {
-            Vector3 rayStart = objectToSnap.position + Vector3.up * spawnerConfig.raycastHeight;
 
-            if (Physics.Raycast(rayStart, Vector3.down, out RaycastHit hit, Mathf.Infinity, spawnerConfig.groundLayer))
+
+        private void SnapToGround(Transform objectToSnap)
+        {
+            Vector3 rayStart = objectToSnap.position + Vector3.up * staticDataService.SpawnerConfig.raycastHeight;
+
+            if (Physics.Raycast(rayStart, Vector3.down, out RaycastHit hit, Mathf.Infinity,
+                    staticDataService.SpawnerConfig.groundLayer))
             {
                 float currentYRotation = objectToSnap.eulerAngles.y;
 
@@ -160,8 +157,7 @@ namespace StructuresSpawner
         }
 
 
-        private bool IsSlopeSteep(Vector3 position, float radius, int raysCount, float maxSlopeAngle,
-            SpawnerConfig spawnerConfig)
+        private bool IsSlopeSteep(Vector3 position, float radius, int raysCount, float maxSlopeAngle)
         {
             float totalAngle = 0;
 
@@ -172,7 +168,7 @@ namespace StructuresSpawner
                     new Vector3(randomOffset.x + position.x, position.y, randomOffset.y + position.z);
 
                 if (Physics.Raycast(randomPositionInRadius, Vector3.down, out RaycastHit hit, Mathf.Infinity,
-                        spawnerConfig.groundLayer))
+                        staticDataService.SpawnerConfig.groundLayer))
                 {
                     float angle = Vector3.Angle(hit.normal, Vector3.up);
                     totalAngle += angle;
@@ -185,18 +181,18 @@ namespace StructuresSpawner
         }
 
 
-        private bool HasStructuresInRadius(Vector3 position, float radius, SpawnerConfig spawnerConfig)
+        private bool HasStructuresInRadius(Vector3 position, float radius)
         {
             int collidersNumber = Physics.OverlapSphereNonAlloc(position, radius, collidersAllocation,
-                spawnerConfig.structuresLayer);
+                staticDataService.SpawnerConfig.structuresLayer);
 
             return collidersNumber > 0;
         }
 
 
-        public void SpawnWalls()
+        public async UniTaskVoid SpawnWalls()
         {
-            GameObject wallPrefab = Resources.Load<GameObject>("RuntimePrefabs/BorderMountains/Mountains");
+            GameObject wallPrefab = await assetProvider.LoadAsset<GameObject>(RuntimeConstants.PrefabAddresses.MOUNTAINS);
 
             Vector3 leftWallPosition = new Vector3(-175, 0, 30);
             Vector3 backWallPosition = new Vector3(0, 0, -175);

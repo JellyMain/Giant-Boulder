@@ -1,0 +1,140 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1db4a0930fbef9a4da9ed367df142412, type: 3}
+  m_Name: SpawnerConfig
+  m_EditorClassIdentifier: 
+  serializationData:
+    SerializedFormat: 2
+    SerializedBytes: 
+    ReferencedUnityObjects:
+    - {fileID: 7250096664496216, guid: 43eda3ade8cf22b4da1d9cd6d8d6ea72, type: 3}
+    - {fileID: 8471221206144756128, guid: 1f07e9fcef75b1846baad55d8664313d, type: 3}
+    - {fileID: 6384345283535233235, guid: 392cda1fa10406f4ba5d3ae2f1bc2c28, type: 3}
+    SerializedBytesString: 
+    Prefab: {fileID: 0}
+    PrefabModificationsReferencedUnityObjects: []
+    PrefabModifications: []
+    SerializationNodes:
+    - Name: allSpawners
+      Entry: 7
+      Data: 0|System.Collections.Generic.Dictionary`2[[TerrainGenerator.Enums.ChunkBiome,
+        Assembly-CSharp],[System.Collections.Generic.List`1[[StaticData.Data.StructuresPercentagePair,
+        Assembly-CSharp]], mscorlib]], mscorlib
+    - Name: comparer
+      Entry: 7
+      Data: 1|System.Collections.Generic.EnumEqualityComparer`1[[TerrainGenerator.Enums.ChunkBiome,
+        Assembly-CSharp]], mscorlib
+    - Name: 
+      Entry: 12
+      Data: 0
+    - Name: 
+      Entry: 13
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 12
+      Data: 2
+    - Name: 
+      Entry: 7
+      Data: 
+    - Name: $k
+      Entry: 3
+      Data: 1
+    - Name: $v
+      Entry: 7
+      Data: 2|System.Collections.Generic.List`1[[StaticData.Data.StructuresPercentagePair,
+        Assembly-CSharp]], mscorlib
+    - Name: 
+      Entry: 12
+      Data: 2
+    - Name: 
+      Entry: 7
+      Data: 3|StaticData.Data.StructuresPercentagePair, Assembly-CSharp
+    - Name: structurePrefab
+      Entry: 10
+      Data: 0
+    - Name: spawnRate
+      Entry: 3
+      Data: 50
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 4|StaticData.Data.StructuresPercentagePair, Assembly-CSharp
+    - Name: structurePrefab
+      Entry: 10
+      Data: 1
+    - Name: spawnRate
+      Entry: 3
+      Data: 50
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 13
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 
+    - Name: $k
+      Entry: 3
+      Data: 2
+    - Name: $v
+      Entry: 7
+      Data: 5|System.Collections.Generic.List`1[[StaticData.Data.StructuresPercentagePair,
+        Assembly-CSharp]], mscorlib
+    - Name: 
+      Entry: 12
+      Data: 1
+    - Name: 
+      Entry: 7
+      Data: 6|StaticData.Data.StructuresPercentagePair, Assembly-CSharp
+    - Name: structurePrefab
+      Entry: 10
+      Data: 2
+    - Name: spawnRate
+      Entry: 3
+      Data: 100
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 13
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 13
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+  raycastHeight: 1000
+  groundLayer:
+    serializedVersion: 2
+    m_Bits: 8
+  structuresLayer:
+    serializedVersion: 2
+    m_Bits: 1088

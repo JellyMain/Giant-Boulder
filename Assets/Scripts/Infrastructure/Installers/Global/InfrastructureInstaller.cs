@@ -1,13 +1,14 @@
+using Assets;
 using DataTrackers;
 using DG.Tweening;
 using Factories;
-using GameLoop;
+using Infrastructure.Services;
 using PlayerInput.Interfaces;
 using Progress;
+using Quests;
+using Scenes;
 using Sounds;
 using StaticData.Services;
-using StructuresSpawner;
-using TerrainGenerator;
 using UI;
 using UnityEngine;
 using Zenject;
@@ -24,34 +25,50 @@ namespace Infrastructure.Installers.Global
         {
             DOTween.Init();
             BindStaticDataService();
-            BindPlayerFactory();
             CreateAndBindLoadingScreen();
             BindSceneLoader();
-            BindUIFactory();
             BindInputService();
-            BindNoiseGenerator();
-            BindTextureGenerator();
-            BindMeshGenerator();
-            BindChunkFactory();
-            BindMapCreator();
-            BindCameraCreator();
-            BindCoinFactory();
-            BindStructureSpawner();
-            BindCurrencyTracker();
-            BindScoreTracker();
             BindSaveLoadService();
             BindPersistentPlayerProgress();
             BindSoundPlayer();
-            BindLevelCreationWatcher();
+            BindContainerManager();
+            BindLocalContainerPasser();
+            BindQuestService();
+            BindAssetProvider();
+            BindStatsTracker();
         }
 
 
-        private void BindLevelCreationWatcher()
+        private void BindStatsTracker()
         {
-            Container.Bind<LevelCreationWatcher>().AsSingle();
+            Container.BindInterfacesAndSelfTo<StatsTracker>().AsSingle().NonLazy();
         }
 
-        
+
+        private void BindAssetProvider()
+        {
+            Container.BindInterfacesAndSelfTo<AssetProvider>().AsSingle().NonLazy();
+        }
+
+
+        private void BindQuestService()
+        {
+            Container.BindInterfacesAndSelfTo<QuestService>().AsSingle().NonLazy();
+        }
+
+
+        private void BindLocalContainerPasser()
+        {
+            Container.Bind<LocalContainerPasser>().AsSingle().CopyIntoDirectSubContainers().NonLazy();
+        }
+
+
+        private void BindContainerManager()
+        {
+            Container.Bind<ContainerService>().AsSingle().NonLazy();
+        }
+
+
         private void BindSoundPlayer()
         {
             Container.Bind<SoundPlayer>().AsSingle();
@@ -66,73 +83,13 @@ namespace Infrastructure.Installers.Global
 
         private void BindSaveLoadService()
         {
-            Container.BindInterfacesAndSelfTo<SaveLoadService>().AsSingle();
+            Container.Bind<SaveLoadService>().AsSingle();
         }
-
-
-        private void BindScoreTracker()
-        {
-            Container.Bind<ScoreTracker>().AsSingle();
-        }
-
-
-        private void BindCurrencyTracker()
-        {
-            Container.Bind<CurrencyTracker>().AsSingle();
-        }
-
-
-        private void BindStructureSpawner()
-        {
-            Container.Bind<StructureSpawner>().AsSingle();
-        }
-
-
-        private void BindCoinFactory()
-        {
-            Container.Bind<CoinsFactory>().AsSingle().NonLazy();
-        }
-
-
-        private void BindCameraCreator()
-        {
-            Container.Bind<CameraCreator>().AsSingle();
-        }
-
-
-        private void BindMapCreator()
-        {
-            Container.Bind<MapCreator>().AsSingle();
-        }
-
-
-        private void BindChunkFactory()
-        {
-            Container.Bind<ChunkFactory>().AsSingle();
-        }
-
-
-        private void BindMeshGenerator()
-        {
-            Container.Bind<MeshGenerator>().AsSingle();
-        }
-
-
-        private void BindTextureGenerator()
-        {
-            Container.Bind<TextureGenerator>().AsSingle();
-        }
-
-
+        
+        
         private void BindInputService()
         {
             Container.Bind<IInput>().FromInstance(new PlayerInput.Services.PlayerInput());
-        }
-
-
-        private void BindUIFactory()
-        {
-            Container.Bind<UIFactory>().AsSingle();
         }
 
 
@@ -148,21 +105,9 @@ namespace Infrastructure.Installers.Global
         }
 
 
-        private void BindPlayerFactory()
-        {
-            Container.Bind<PlayerFactory>().AsSingle();
-        }
-
-
         private void BindStaticDataService()
         {
             Container.Bind<StaticDataService>().AsSingle();
-        }
-
-
-        private void BindNoiseGenerator()
-        {
-            Container.Bind<NoiseGenerator>().AsSingle();
         }
     }
 }
