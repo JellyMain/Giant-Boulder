@@ -47,7 +47,6 @@ namespace StructuresSpawner
         {
             Init();
 
-
             foreach (KeyValuePair<ChunkBiome, List<StructuresPercentagePair>> biomeStructuresPair in staticDataService
                          .SpawnerConfig.allSpawners)
             {
@@ -61,6 +60,8 @@ namespace StructuresSpawner
             ChunkBiome chunkBiome = biomeStructuresPair.Key;
             List<StructuresPercentagePair> structuresPercentagePairs = biomeStructuresPair.Value;
             List<TerrainChunk> chunks = availableChunks[chunkBiome];
+            int initialChunksCount = chunks.Count;
+
 
             foreach (StructuresPercentagePair structurePercentagePair in structuresPercentagePairs)
             {
@@ -70,20 +71,15 @@ namespace StructuresSpawner
                     break;
                 }
 
-                int structuresCount = chunks.Count * structurePercentagePair.spawnRate / 100;
+                int structuresCount = initialChunksCount * structurePercentagePair.spawnRate / 100;
 
                 for (int i = 0; i < structuresCount; i++)
                 {
                     TerrainChunk randomChunk = chunks[Random.Range(0, chunks.Count)];
 
-                    Vector3 rayStart = randomChunk.position +
-                                       Vector3.up * staticDataService.SpawnerConfig.raycastHeight;
 
-                    if (Physics.Raycast(rayStart, Vector3.down, out RaycastHit hit, Mathf.Infinity,
-                            staticDataService.SpawnerConfig.groundLayer))
-                    {
-                        randomChunk.structures.Add(hit, structurePercentagePair.structurePrefab);
-                    }
+                    randomChunk.structurePrefab = structurePercentagePair.structurePrefab;
+
 
                     availableChunks[chunkBiome].Remove(randomChunk);
                 }
@@ -93,18 +89,17 @@ namespace StructuresSpawner
 
         public void SpawnStructuresInChunk(TerrainChunk terrainChunk)
         {
-            foreach (KeyValuePair<RaycastHit, StructureRoot> keyValuePair in terrainChunk.structures)
+            if (terrainChunk.structurePrefab != null)
             {
-                Quaternion rotation = Quaternion.FromToRotation(Vector3.up, keyValuePair.Key.normal);
-                GameObject spawnedObject = diContainer.InstantiatePrefab(keyValuePair.Value, keyValuePair.Key.point,
-                    rotation,
-                    terrainChunk.chunkGameObject.transform);
+                GameObject spawnedObject = diContainer.InstantiatePrefab(terrainChunk.structurePrefab,
+                    terrainChunk.position, Quaternion.identity, terrainChunk.chunkGameObject.transform);
                 StructureRoot spawnedStructureRoot = spawnedObject.GetComponent<StructureRoot>();
+                terrainChunk.currentStructure = spawnedStructureRoot;
 
                 ApplyStructureSettings(spawnedStructureRoot.structureChildSettings);
                 spawnedStructureRoot.BatchObjects();
             }
-
+            
             terrainChunk.structuresInstantiated = true;
         }
 
@@ -192,7 +187,8 @@ namespace StructuresSpawner
 
         public async UniTaskVoid SpawnWalls()
         {
-            GameObject wallPrefab = await assetProvider.LoadAsset<GameObject>(RuntimeConstants.PrefabAddresses.MOUNTAINS);
+            GameObject wallPrefab =
+                await assetProvider.LoadAsset<GameObject>(RuntimeConstants.PrefabAddresses.MOUNTAINS);
 
             Vector3 leftWallPosition = new Vector3(-175, 0, 30);
             Vector3 backWallPosition = new Vector3(0, 0, -175);

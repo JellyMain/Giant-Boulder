@@ -15,7 +15,7 @@ namespace TerrainGenerator
 {
     public class ChunkUpdater : MonoBehaviour
     {
-        [SerializeField] private int viewDistance = 200;
+        [SerializeField] private int chunkUpdateDistance = 200;
         public Transform player;
         private int chunksInViewDistance;
         private Dictionary<Vector2, TerrainChunk> terrainChunks;
@@ -25,19 +25,25 @@ namespace TerrainGenerator
         private StructureSpawner structureSpawner;
         private LevelCreationWatcher levelCreationWatcher;
         private PlayerFactory playerFactory;
+        private GrassSpawner grassSpawner;
+        private Camera mainCamera;
+        private readonly List<TerrainChunk> visibleChunks = new List<TerrainChunk>();
+        private readonly List<TerrainChunk> lastFrameVisibleChunks = new List<TerrainChunk>();
 
 
         [Inject]
-        private void Construct(StaticDataService staticDataService, MapCreator mapCreator, StructureSpawner structureSpawner,
-            LevelCreationWatcher levelCreationWatcher, PlayerFactory playerFactory)
+        private void Construct(StaticDataService staticDataService, MapCreator mapCreator,
+            StructureSpawner structureSpawner,
+            LevelCreationWatcher levelCreationWatcher, PlayerFactory playerFactory, GrassSpawner grassSpawner)
         {
             this.structureSpawner = structureSpawner;
             this.mapCreator = mapCreator;
             this.staticDataService = staticDataService;
             this.levelCreationWatcher = levelCreationWatcher;
             this.playerFactory = playerFactory;
+            this.grassSpawner = grassSpawner;
         }
-
+        
 
         private void OnEnable()
         {
@@ -56,8 +62,9 @@ namespace TerrainGenerator
         private void Init()
         {
             mapGenerationConfig = staticDataService.MapConfigForSeason(TerrainSeason.Summer);
-            chunksInViewDistance = viewDistance / (mapGenerationConfig.chunkSize - 1);
+            chunksInViewDistance = chunkUpdateDistance / (mapGenerationConfig.chunkSize - 1);
             terrainChunks = mapCreator.TerrainChunks;
+            mainCamera = Camera.main;
         }
 
 
@@ -69,16 +76,37 @@ namespace TerrainGenerator
 
         private void Update()
         {
-            UpdateChunks();
+            GetVisibleChunks();
+            UpdateVisibleChunks();
         }
 
 
-        private void UpdateChunks()
+        private void UpdateVisibleChunks()
+        {
+            foreach (TerrainChunk chunk in lastFrameVisibleChunks)
+            {
+                chunk.DisableRender();
+            }
+            
+            lastFrameVisibleChunks.Clear();
+            
+            foreach (TerrainChunk chunk in visibleChunks)
+            {
+                chunk.Render();
+                // grassSpawner.RenderGrassChunk(chunk);
+                lastFrameVisibleChunks.Add(chunk);
+            }
+        }
+
+
+        private void GetVisibleChunks()
         {
             if (player != null)
             {
                 int currentChunkCoordX = Mathf.RoundToInt(player.position.x / (mapGenerationConfig.chunkSize - 1));
                 int currentChunkCoordY = Mathf.RoundToInt(player.position.z / (mapGenerationConfig.chunkSize - 1));
+                
+                visibleChunks.Clear();
 
                 for (int xOffset = -chunksInViewDistance; xOffset < chunksInViewDistance; xOffset++)
                 {
@@ -89,7 +117,15 @@ namespace TerrainGenerator
 
                         if (terrainChunks.ContainsKey(chunkCoord))
                         {
-                            if (!terrainChunks[chunkCoord].structuresInstantiated)
+                            TerrainChunk chunk = terrainChunks[chunkCoord];
+                            Bounds chunkBounds = chunk.bounds;
+                            
+                            if (IsInCameraView(mainCamera, chunkBounds))
+                            {
+                                visibleChunks.Add(chunk);
+                            }
+                            
+                            if (!chunk.structuresInstantiated)
                             {
                                 structureSpawner.SpawnStructuresInChunk(terrainChunks[chunkCoord]);
                             }
@@ -97,6 +133,19 @@ namespace TerrainGenerator
                     }
                 }
             }
+        }
+
+
+        public bool IsInCameraView(Camera currentCamera , Bounds objectBounds)
+        {
+            Plane[] frustumPlanes = GeometryUtility.CalculateFrustumPlanes(currentCamera);
+
+            if (GeometryUtility.TestPlanesAABB(frustumPlanes, objectBounds))
+            {
+                return true;
+            }
+
+            return false;
         }
     }
 }

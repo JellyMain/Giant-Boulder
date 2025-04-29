@@ -20,6 +20,7 @@ namespace StaticData.Services
         public SoundConfig SoundConfig { get; private set; }
         public GameConfig GameConfig { get; private set; }
         public QuestsConfig QuestsConfig { get; private set; }
+        public AnimationsConfig AnimationsConfig { get; private set; }
 
 
         public StaticDataService(AssetProvider assetProvider)
@@ -30,11 +31,12 @@ namespace StaticData.Services
 
         public async UniTask LoadStaticData()
         {
-            UniTask loadMapChunkConfigUniTask = LoadMapChunkConfig(); 
+            UniTask loadMapChunkConfigUniTask = LoadMapChunkConfig();
             UniTask loadGlobalSpawnerConfigUniTask = LoadGlobalSpawnerConfig();
             UniTask loadSoundsConfigUniTask = LoadSoundsConfig();
-            UniTask loadGameConfigUniTask= LoadGameConfig();
+            UniTask loadGameConfigUniTask = LoadGameConfig();
             UniTask loadQuestsConfigUniTask = LoadQuestsConfig();
+            UniTask loadAnimationsConfigUniTask = LoadAnimationsConfig();
 
             UniTask[] loadTasks = new[]
             {
@@ -42,7 +44,8 @@ namespace StaticData.Services
                 loadGlobalSpawnerConfigUniTask,
                 loadSoundsConfigUniTask,
                 loadGameConfigUniTask,
-                loadQuestsConfigUniTask
+                loadQuestsConfigUniTask,
+                loadAnimationsConfigUniTask
             };
 
             await UniTask.WhenAll(loadTasks);
@@ -58,6 +61,13 @@ namespace StaticData.Services
 
             Debug.LogError($"Couldn't find map generation config with key {terrainSeason}");
             return null;
+        }
+
+
+        private async UniTask LoadAnimationsConfig()
+        {
+            AnimationsConfig =
+                await assetProvider.LoadAsset<AnimationsConfig>(RuntimeConstants.StaticDataAddresses.ANIMATIONS_CONFIG);
         }
 
 
@@ -88,7 +98,6 @@ namespace StaticData.Services
                     RuntimeConstants.StaticDataAddresses.MAP_GENERATION_CONFIGS, null);
 
             MapGenerationConfigs = mapGenerationConfigsList.ToDictionary(x => x.terrainSeason, x => x);
-            
         }
 
 

@@ -82,7 +82,7 @@ namespace Enemies
         private void Explode()
         {
             Instantiate(destroyParticlesPrefab, transform.position, Quaternion.identity);
-            soundPlayer.PlayMissileExplosionSound(transform.position);
+            soundPlayer.PlayMissileExplosionSound();
 
             if (Physics.OverlapSphereNonAlloc(transform.position, explosionRadius, playerColliderBuffer, playerLayer) !=
                 0)

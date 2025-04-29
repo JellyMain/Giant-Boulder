@@ -53,7 +53,7 @@ namespace Coins
         
         public void Destroy()
         {
-            soundPlayer.PlayCoinCollectedSound(transform.position);
+            soundPlayer.PlayCoinCollectedSound();
             Instantiate(destroyParticlesPrefab, transform.position, Quaternion.identity);
             Destroy(gameObject);
         }

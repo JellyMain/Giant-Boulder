@@ -27,7 +27,7 @@ namespace GameLoop
         private void Start()
         {
             gameConfig = staticDataService.GameConfig;
-            maxTime = gameConfig.maxTime;
+            maxTime = gameConfig.maxTimerTime;
         }
 
 

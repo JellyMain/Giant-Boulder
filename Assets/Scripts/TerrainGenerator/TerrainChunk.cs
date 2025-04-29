@@ -17,13 +17,14 @@ namespace TerrainGenerator
         private readonly MeshRenderer meshRenderer;
         private readonly MeshFilter meshFilter;
         private readonly MeshCollider meshCollider;
-        public GameObject chunkGameObject;
+        public readonly GameObject chunkGameObject;
         public ChunkBiome ChunkBiome { get; private set; }
-        private Bounds bounds;
+        public Bounds bounds;
         public MeshData meshData;
         public Vector3 position;
         public bool structuresInstantiated;
-        public readonly Dictionary<RaycastHit, StructureRoot> structures = new Dictionary<RaycastHit, StructureRoot>();
+        public StructureRoot currentStructure;
+        public StructureRoot structurePrefab;
 
 
         public TerrainChunk(Material material, Vector2 chunkCoord, MeshData meshData,
@@ -31,7 +32,7 @@ namespace TerrainGenerator
         {
             this.meshData = meshData;
             position = new Vector3(chunkCoord.x * chunkSize, 0, chunkCoord.y * chunkSize);
-            bounds = new Bounds(position, new Vector3(1 * chunkSize, 0, 1 * chunkSize));
+            bounds = new Bounds(position, new Vector3(1 * chunkSize, 100, 1 * chunkSize));
             ChunkBiome = chunkBiome;
 
             int groundLayer = LayerMask.NameToLayer("Ground");
@@ -52,6 +53,30 @@ namespace TerrainGenerator
             meshCollider = chunkGameObject.AddComponent<MeshCollider>();
             meshCollider.sharedMesh = meshFilter.mesh;
             meshRenderer.material = material;
+
+            DisableRender();
+        }
+
+
+        public void Render()
+        {
+            if (currentStructure != null)
+            {
+                currentStructure.EnableAllMeshRenderers();
+            }
+
+            meshRenderer.enabled = true;
+        }
+
+
+        public void DisableRender()
+        {
+            if (currentStructure != null)
+            {
+                currentStructure.DisableAllMeshRenderers();
+            }
+
+            meshRenderer.enabled = false;
         }
     }
 }

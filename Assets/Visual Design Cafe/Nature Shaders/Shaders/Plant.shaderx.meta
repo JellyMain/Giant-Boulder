@@ -1,0 +1,35 @@
+fileFormatVersion: 2
+guid: 3d8b1c086d50b3e4fa52193c2e38eab0
+ScriptedImporter:
+  internalIDToNameTable:
+  - first:
+      48: 4800000
+    second: MainAsset
+  externalObjects: {}
+  serializedVersion: 2
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+  script: {fileID: 11500000, guid: 68c7d7bfc0362c5429557c42cee14f13, type: 3}
+  _importSettings:
+    _editors:
+    - VisualDesignCafe.Nature.Editor.ShaderRenderingSection
+    - VisualDesignCafe.Nature.Editor.ShaderIntegrationsSection
+    - VisualDesignCafe.ShaderX.Editor.StrippingSection
+    _properties:
+    - Key: __strip__lod_crossfade
+      Value: strip
+    - Key: __strip__decals
+      Value: strip
+    - Key: __strip__reflection_probe_blending
+      Value: strip
+    - Key: __strip__reflection_probe_box_projection
+      Value: strip
+    - Key: __strip__light_cookies
+      Value: strip
+    - Key: __strip__additional_light_shadows
+      Value: strip
+    - Key: __strip__lightmap
+      Value: strip
+    - Key: __strip__shadow_mask
+      Value: strip

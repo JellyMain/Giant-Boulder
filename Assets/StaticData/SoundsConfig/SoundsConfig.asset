@@ -20,8 +20,8 @@ MonoBehaviour:
   coinCollectedSound:
     sounds:
     - {fileID: 8300000, guid: 82a6c7b8a07a71d4d9532404f7b8a3f7, type: 3}
-    minSoundPitch: 0.8
-    maxSoundPitch: 1.1
+    minSoundPitch: 1
+    maxSoundPitch: 1.5
   destroyTreeSound:
     sounds:
     - {fileID: 8300000, guid: adee104c845a4da4a946d400ecf2dcb6, type: 3}

@@ -1,0 +1,230 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!21 &2100000
+Material:
+  serializedVersion: 8
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: 46 BLUE-LIGHEST-LPUP_MOVING
+  m_Shader: {fileID: 4800000, guid: 5354841ef6d24a94ab5a4d1b80a940fb, type: 3}
+  m_Parent: {fileID: 0}
+  m_ModifiedSerializedProperties: 0
+  m_ValidKeywords:
+  - _COLOR_TINT
+  - _LIGHTING_QUALITY_HIGH
+  - _WIND
+  m_InvalidKeywords:
+  - _BAKEDMESHDATA_OFF
+  - _INTERACTION_OFF
+  - _LINKMAPTILINGOFFSET_ON
+  - _OVERLAY_OFF
+  m_LightmapFlags: 4
+  m_EnableInstancingVariants: 0
+  m_DoubleSidedGI: 0
+  m_CustomRenderQueue: 2225
+  stringTagMap: {}
+  disabledShaderPasses:
+  - DistortionVectors
+  - TransparentDepthPrepass
+  - TransparentDepthPostpass
+  - TransparentBackface
+  m_LockedProperties: 
+  m_SavedProperties:
+    serializedVersion: 3
+    m_TexEnvs:
+    - _Albedo:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _BaseMap:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _BumpMap:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _DetailAlbedoMap:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _DetailMask:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _DetailNormalMap:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _EmissionMap:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _MainTex:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _MetallicGlossMap:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _NormalMap:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _OcclusionMap:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _PackedMap:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _ParallaxMap:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _SecondaryAlbedo:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _SecondaryMetallicGlossMap:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _SecondaryNormalMap:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _SecondaryOcclusionMap:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _SecondaryPackedMap:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _SpecGlossMap:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - unity_Lightmaps:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - unity_LightmapsInd:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - unity_ShadowMasks:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    m_Ints: []
+    m_Floats:
+    - _AlphaClip: 0
+    - _AlphaTest: 0
+    - _AlphaTestThreshold: 0.5
+    - _AlphaToMask: 0
+    - _BakedMeshData: 0
+    - _Blend: 0
+    - _BlendModePreserveSpecular: 1
+    - _BumpScale: 1
+    - _ClearCoatMask: 0
+    - _ClearCoatSmoothness: 0
+    - _ColorCorrection: 0
+    - _ColorVariationSpread: 0.2
+    - _Cull: 2
+    - _Cutoff: 0.5
+    - _Decals: 1
+    - _DetailAlbedoMapScale: 1
+    - _DetailNormalMapScale: 1
+    - _DoubleSidedMode: 2
+    - _DoubleSidedNormalMode: 1
+    - _DstBlend: 0
+    - _DstBlendAlpha: 0
+    - _EmissionIntensity: 0
+    - _EnvironmentReflections: 1
+    - _GlossMapScale: 1
+    - _Glossiness: 0
+    - _GlossyReflections: 1
+    - _LightingQuality: 0
+    - _LinkMapTilingOffset: 1
+    - _Metallic: 0
+    - _Mode: 0
+    - _MotionVectors: 1
+    - _NormalMapScale: 1
+    - _ObjectHeight: 0.5
+    - _ObjectRadius: 0.5
+    - _OcclusionStrength: 1
+    - _Overlay: 0
+    - _Parallax: 0.02
+    - _QueueOffset: 0
+    - _RecalculateWindNormals: 0.5
+    - _ReceiveShadows: 1
+    - _SampleAlphaOverlay: 1
+    - _SampleColorOverlay: 1
+    - _SecondaryGlossiness: 0.2
+    - _SecondaryMaps: 0
+    - _SecondaryMetallic: 0
+    - _SecondaryNormalMapScale: 1
+    - _Smoothness: 0
+    - _SmoothnessTextureChannel: 0
+    - _SpecularHighlights: 1
+    - _SrcBlend: 1
+    - _SrcBlendAlpha: 1
+    - _Surface: 0
+    - _SurfaceMapMethod: 0
+    - _TemporalAntiAliasing: 0
+    - _TurbulenceStrength: 1
+    - _UVSec: 0
+    - _VertexNormalStrength: 1
+    - _Wind: 1
+    - _WindStrength: 0.15
+    - _WindVariation: 0
+    - _WorkflowMode: 0
+    - _ZWrite: 1
+    - __strip__additional_light_shadows: 1
+    - __strip__additional_lights: 0
+    - __strip__debug: 0
+    - __strip__decals: 1
+    - __strip__fog: 0
+    - __strip__light_cookies: 1
+    - __strip__light_layers: 0
+    - __strip__lightmap: 1
+    - __strip__lod_crossfade: 1
+    - __strip__reflection_probe_blending: 1
+    - __strip__reflection_probe_box_projection: 1
+    - __strip__shadow_mask: 1
+    m_Colors:
+    - _BaseColor: {r: 0.7176471, g: 0.9411765, b: 0.9490196, a: 1}
+    - _Color: {r: 0.7176471, g: 0.9411765, b: 0.9490196, a: 1}
+    - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
+    - _FloatingOriginOffset_Color: {r: 0, g: 0, b: 0, a: 0}
+    - _GlossRemap: {r: 0, g: 0, b: 0, a: 0}
+    - _HSL: {r: 0.02, g: 0.05, b: 0.1, a: 0}
+    - _HSLVariation: {r: -0.02, g: -0.05, b: -0.1, a: 0}
+    - _OcclusionRemap: {r: 0, g: 1, b: 0, a: 0}
+    - _SecondaryGlossRemap: {r: 0, g: 1, b: 0, a: 0}
+    - _SecondaryOcclusionRemap: {r: 0, g: 1, b: 0, a: 0}
+    - _SpecColor: {r: 0.07352942, g: 0.07352942, b: 0.07352942, a: 1}
+    - _Tint: {r: 0.7176471, g: 0.9411765, b: 0.9490196, a: 1}
+    - _TintVariation: {r: 0.7176471, g: 0.9411765, b: 0.9490196, a: 1}
+    - _TrunkBendFactor: {r: 1, g: 0, b: 0, a: 0}
+    - _WindFade: {r: 50, g: 20, b: 0, a: 0}
+  m_BuildTextureStacks: []
+--- !u!114 &2362723307301450726
+MonoBehaviour:
+  m_ObjectHideFlags: 11
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d0353a89b1f911e48b9e16bdc9f2e058, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  version: 7

@@ -1,0 +1,38 @@
+{% comment %}
+// Copyright 2022 Visual Design Cafe. All rights reserved.
+// This shader was created using ShaderX, a shader framework by Visual Design Cafe.
+// https://www.visualdesigncafe.com/shaderx
+
+// Package: Nature Shaders
+// Website: https://www.visualdesigncafe.com/nature-shaders
+// Documentation: https://support.visualdesigncafe.com/hc/categories/900000043503
+{% endcomment %}
+
+Properties
+{
+    {% universal %}
+        [ToggleUI] _AlphaToMask("Alpha to Mask", Float) = 0.0
+    {% enduniversal %}
+    {% standard %}
+        [ToggleUI] _AlphaToMask("Alpha to Mask", Float) = 0.0
+    {% endstandard %}
+}
+
+{% standard %}
+    {% if pass.name == "FORWARD" or pass.name == "FORWARD_DELTA" or pass.name == "MotionVectors" %}
+        AlphaToMask [_AlphaToMask]
+    {% endif %}
+{% endstandard %}
+
+{% universal %}
+    {% if pass.name == "Universal Forward" %}
+        AlphaToMask [_AlphaToMask]
+    {% endif %}
+{% enduniversal %}
+
+{% hd %}
+    {% if pass.name == "DepthOnly" or pass.name == "MotionVectors" %}
+        // TODO: Fix Alpha to Mask for HDRP. It seems to be broken in Unity's Lit shaders as well. Maybe a Unity bug?
+        // AlphaToMask [_AlphaToMask]
+    {% endif %}
+{% endhd %}

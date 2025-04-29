@@ -10,8 +10,6 @@ namespace Quests
     public class QuestService 
     {
         public Quest CurrentQuest { get; private set; }
-        public event Action<ObjectType> OnObjectDestroyed;
-        public event Action OnCoinCollected;
         
         
         public void SetCurrentQuest(Quest quest)

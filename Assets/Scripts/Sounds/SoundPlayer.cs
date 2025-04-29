@@ -16,31 +16,29 @@ namespace Sounds
         }
 
         
-        public void PlayMissileExplosionSound(Vector3 position)
+        public void PlayMissileExplosionSound()
         {
-            PlaySound(staticDataService.SoundConfig.missileExplosionSound, position);
+            PlaySound(staticDataService.SoundConfig.missileExplosionSound);
         }
 
 
-        public void PlayCoinCollectedSound(Vector3 position)
+        public void PlayCoinCollectedSound()
         {
-            PlaySound(staticDataService.SoundConfig.coinCollectedSound, position);
+            PlaySound(staticDataService.SoundConfig.coinCollectedSound);
         }
 
 
-        public void PlaySound(SoundSettings soundSettings, Vector3 position)
+        public void PlaySound(SoundSettings soundSettings)
         {
             if (soundSettings.sounds.Length != 0)
             {
                 AudioClip randomSound = soundSettings.sounds[Random.Range(0, soundSettings.sounds.Length)];
             
                 GameObject spawnedSound = new GameObject($"{randomSound.name}_Sound");
-                spawnedSound.transform.position = position;
 
                 AudioSource audioSource = spawnedSound.AddComponent<AudioSource>();
             
                 audioSource.clip = randomSound;
-                audioSource.spatialBlend = 1;
                 audioSource.pitch = Random.Range(soundSettings.minSoundPitch, soundSettings.maxSoundPitch);
                 audioSource.Play();
 

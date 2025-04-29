@@ -22,6 +22,7 @@ namespace Const
             public const string QUEST_UI = "QuestUI";
             public const string PLAYER = "Player";
             public const string MOUNTAINS = "Mountains";
+            public const string GRASS_MESH = "";
         }
 
 
@@ -32,6 +33,7 @@ namespace Const
             public const string SOUNDS_CONFIG = "SoundsConfig";
             public const string MAP_GENERATION_CONFIGS = "MapConfigs";
             public const string SPAWNER_CONFIG = "SpawnerConfig";
+            public const string ANIMATIONS_CONFIG = "AnimationsConfig";
         }
 
 

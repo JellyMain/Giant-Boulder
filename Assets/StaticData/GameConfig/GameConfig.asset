@@ -12,4 +12,192 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5702ab5ef174422c9d9da4cce13b3a0b, type: 3}
   m_Name: GameConfig
   m_EditorClassIdentifier: 
-  maxTime: 30
+  serializationData:
+    SerializedFormat: 2
+    SerializedBytes: 
+    ReferencedUnityObjects: []
+    SerializedBytesString: 
+    Prefab: {fileID: 0}
+    PrefabModificationsReferencedUnityObjects: []
+    PrefabModifications: []
+    SerializationNodes:
+    - Name: rageScaleStageMultiplierPointsMap
+      Entry: 7
+      Data: 0|System.Collections.Generic.Dictionary`2[[System.Int32, mscorlib],[StaticData.Data.RageScaleStageMultipliersPair,
+        Assembly-CSharp]], mscorlib
+    - Name: comparer
+      Entry: 7
+      Data: 1|System.Collections.Generic.GenericEqualityComparer`1[[System.Int32,
+        mscorlib]], mscorlib
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 12
+      Data: 4
+    - Name: 
+      Entry: 7
+      Data: 
+    - Name: $k
+      Entry: 3
+      Data: 1
+    - Name: $v
+      Entry: 7
+      Data: 2|StaticData.Data.RageScaleStageMultipliersPair, Assembly-CSharp
+    - Name: lowerMultiplier
+      Entry: 7
+      Data: 3|StaticData.Data.RageScaleMultiplier, Assembly-CSharp
+    - Name: multiplier
+      Entry: 3
+      Data: 2
+    - Name: normalizedPointOnScale
+      Entry: 4
+      Data: 0.43
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: higherMultiplier
+      Entry: 7
+      Data: 4|StaticData.Data.RageScaleMultiplier, Assembly-CSharp
+    - Name: multiplier
+      Entry: 3
+      Data: 3
+    - Name: normalizedPointOnScale
+      Entry: 4
+      Data: 0.73
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 
+    - Name: $k
+      Entry: 3
+      Data: 2
+    - Name: $v
+      Entry: 7
+      Data: 5|StaticData.Data.RageScaleStageMultipliersPair, Assembly-CSharp
+    - Name: lowerMultiplier
+      Entry: 7
+      Data: 6|StaticData.Data.RageScaleMultiplier, Assembly-CSharp
+    - Name: multiplier
+      Entry: 3
+      Data: 4
+    - Name: normalizedPointOnScale
+      Entry: 4
+      Data: 0.5
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: higherMultiplier
+      Entry: 7
+      Data: 7|StaticData.Data.RageScaleMultiplier, Assembly-CSharp
+    - Name: multiplier
+      Entry: 3
+      Data: 5
+    - Name: normalizedPointOnScale
+      Entry: 4
+      Data: 0.82
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 
+    - Name: $k
+      Entry: 3
+      Data: 3
+    - Name: $v
+      Entry: 7
+      Data: 8|StaticData.Data.RageScaleStageMultipliersPair, Assembly-CSharp
+    - Name: lowerMultiplier
+      Entry: 7
+      Data: 9|StaticData.Data.RageScaleMultiplier, Assembly-CSharp
+    - Name: multiplier
+      Entry: 3
+      Data: 6
+    - Name: normalizedPointOnScale
+      Entry: 4
+      Data: 0.35
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: higherMultiplier
+      Entry: 7
+      Data: 10|StaticData.Data.RageScaleMultiplier, Assembly-CSharp
+    - Name: multiplier
+      Entry: 3
+      Data: 7
+    - Name: normalizedPointOnScale
+      Entry: 4
+      Data: 0.7
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 
+    - Name: $k
+      Entry: 3
+      Data: 4
+    - Name: $v
+      Entry: 7
+      Data: 11|StaticData.Data.RageScaleStageMultipliersPair, Assembly-CSharp
+    - Name: lowerMultiplier
+      Entry: 7
+      Data: 12|StaticData.Data.RageScaleMultiplier, Assembly-CSharp
+    - Name: multiplier
+      Entry: 3
+      Data: 8
+    - Name: normalizedPointOnScale
+      Entry: 4
+      Data: 0.23
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: higherMultiplier
+      Entry: 7
+      Data: 13|StaticData.Data.RageScaleMultiplier, Assembly-CSharp
+    - Name: multiplier
+      Entry: 3
+      Data: 9
+    - Name: normalizedPointOnScale
+      Entry: 4
+      Data: 0.77
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 13
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+  maxTimerTime: 300
+  maxScaleScore: 2000
+  superBoulderTime: 5
+  maxScoreForObject: 2000

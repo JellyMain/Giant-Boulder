@@ -1,0 +1,67 @@
+{% comment %}
+// Copyright 2022 Visual Design Cafe. All rights reserved.
+// This shader was created using ShaderX, a shader framework by Visual Design Cafe.
+// https://www.visualdesigncafe.com/shaderx
+
+// Package: Nature Shaders
+// Website: https://www.visualdesigncafe.com/nature-shaders
+// Documentation: https://support.visualdesigncafe.com/hc/categories/900000043503
+{% endcomment %}
+
+// TODO: Alpha to Mask seems to be broken in HDRP (both in ShaderX and Unity's Lit shaders)
+{% standard or universal %}
+    #pragma {{shader_feature_local}} _ALPHATOMASK_ON
+{% endstandard %}
+
+{% standard %}
+    // Sharpens the alpha of a texture to the width of a single pixel
+    // Used for alpha to coverage
+    // source: https://medium.com/@bgolus/anti-aliased-alpha-test-the-esoteric-alpha-to-coverage-8b177335ae4f
+    float SharpenAlpha(float alpha, float alphaClipTreshold)
+    {
+        return saturate((alpha - alphaClipTreshold) / max(fwidth(alpha), 0.0001) + 0.5);
+    }
+{% endstandard %}
+
+float AlphaTest( float alpha, float threshold )
+{
+    {% hd %}
+        // TODO: Fix Alpha to Mask for HDRP. It seems to be broken in Unity's Lit shaders as well. Maybe a Unity bug?
+        {% if pass.name == "Forward" or pass.name == "GBuffer" %}
+            #if defined(SHADERPASS_FORWARD_BYPASS_ALPHA_TEST) \
+                || defined(SHADERPASS_GBUFFER_BYPASS_ALPHA_TEST)
+                // Ignore clip in forward and gbuffer passes. We already did the clip in the Depth Prepass, and we use ZTest Equal for this pass to discard the transparent pixels.
+            #else
+                clip( alpha - threshold );
+            #endif
+        {% else %}
+            clip( alpha - threshold );
+        {% endif %}
+    {% endhd %}
+
+    {% universal %}
+        {% if pass.name == "Universal Forward" %}
+            #ifdef _ALPHATOMASK_ON
+                alpha = SharpenAlpha(alpha, threshold);
+            #else
+                clip( alpha - threshold );
+            #endif
+        {% else %}
+            clip( alpha - threshold );
+        {% endif %}
+    {% enduniversal %}
+
+    {% standard %}
+        {% if pass.name == "FORWARD" or pass.name == "FORWARD_DELTA" or pass.name == "MotionVectors" %}
+            #ifdef _ALPHATOMASK_ON
+                alpha = SharpenAlpha(alpha, threshold);
+            #else
+                clip( alpha - threshold );
+            #endif
+        {% else %}
+            clip( alpha - threshold );
+        {% endif %}
+    {% endstandard %}
+
+    return alpha;
+}

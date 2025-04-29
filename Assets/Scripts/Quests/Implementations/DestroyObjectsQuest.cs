@@ -9,7 +9,6 @@ namespace Quests.Implementations
 {
     public class DestroyObjectsQuest : QuestProgressUpdater, IProgressSaver, IProgressUpdater
     {
-        private readonly Quest quest;
         private readonly DestroyedObjectsTracker destroyedObjectsTracker;
         private int objectsCount;
 
@@ -17,7 +16,6 @@ namespace Quests.Implementations
         public DestroyObjectsQuest(Quest quest, SaveLoadService saveLoadService,
             DestroyedObjectsTracker destroyedObjectsTracker) : base(quest, saveLoadService)
         {
-            this.quest = quest;
             this.destroyedObjectsTracker = destroyedObjectsTracker;
         }
 

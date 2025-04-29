@@ -1,0 +1,108 @@
+{% if unity.version.major >= 2021 %}
+    #ifdef DEBUG_DISPLAY
+
+        {% if pass.name == "FullScreenDebug" %}
+            void DebugQuadOverdraw ( float2 screenPosition, SurfaceInput input )
+            {
+                #if defined(PLATFORM_SUPPORTS_PRIMITIVE_ID_IN_PIXEL_SHADER) && SHADER_STAGE_FRAGMENT
+                    if (_DebugFullScreenMode == FULLSCREENDEBUGMODE_QUAD_OVERDRAW)
+                        IncrementQuadOverdrawCounter(screenPosition, input.primitiveID);
+                #endif
+            }
+
+            void DebugVertexDensity ( float4 positionCS )
+            {
+                #if !defined(SHADER_API_METAL) && defined(SHADERPASS) && (SHADERPASS == SHADERPASS_FULL_SCREEN_DEBUG)
+                    if (_DebugFullScreenMode == FULLSCREENDEBUGMODE_VERTEX_DENSITY)
+                        IncrementVertexDensityCounter( positionCS );
+                #endif
+            }
+        {% else %}
+            #define DebugQuadOverdraw DebugQuadOverdraw_can_only_be_used_in_pass_FullScreenDebug
+            #define DebugVertexDensity DebugVertexDensity_can_only_be_used_in_pass_FullScreenDebug
+        {% endif %}
+
+        {% if pass.name == "Forward" %}
+            float4 ForwardDebug( 
+                FragInputs input, 
+                SurfaceData surfaceData,
+                BuiltinData builtinData,
+                BSDFData bsdfData,
+                PositionInputs posInput )
+            {
+                float4 outColor = (float4)0;
+
+                // Same code in ShaderPassForwardUnlit.shader
+                // Reminder: _DebugViewMaterialArray[i]
+                //   i==0 -> the size used in the buffer
+                //   i>0  -> the index used (0 value means nothing)
+                // The index stored in this buffer could either be
+                //   - a gBufferIndex (always stored in _DebugViewMaterialArray[1] as only one supported)
+                //   - a property index which is different for each kind of material even if reflecting the same thing (see MaterialSharedProperty)
+                bool viewMaterial = false;
+                int bufferSize = (int)_DebugViewMaterialArray[0];
+                if (bufferSize != 0)
+                {
+                    bool needLinearToSRGB = false;
+                    float3 result = float3(1.0, 0.0, 1.0);
+
+                    // Loop through the whole buffer
+                    // Works because GetSurfaceDataDebug will do nothing if the index is not a known one
+                    for (int index = 1; index <= bufferSize; index++)
+                    {
+                        int indexMaterialProperty = (int)_DebugViewMaterialArray[index];
+
+                        // skip if not really in use
+                        if (indexMaterialProperty != 0)
+                        {
+                            viewMaterial = true;
+
+                            GetPropertiesDataDebug(indexMaterialProperty, result, needLinearToSRGB);
+                            GetVaryingsDataDebug(indexMaterialProperty, input, result, needLinearToSRGB);
+                            {% if unity.version.major >= 2020 %}
+                                GetBuiltinDataDebug(indexMaterialProperty, builtinData, posInput, result, needLinearToSRGB);
+                            {% else %}
+                                GetBuiltinDataDebug(indexMaterialProperty, builtinData, result, needLinearToSRGB);
+                            {% endif %}
+                            GetSurfaceDataDebug(indexMaterialProperty, surfaceData, result, needLinearToSRGB);
+                            GetBSDFDataDebug(indexMaterialProperty, bsdfData, result, needLinearToSRGB);
+                        }
+                    }
+
+                    // TEMP!
+                    // For now, the final blit in the backbuffer performs an sRGB write
+                    // So in the meantime we apply the inverse transform to linear data to compensate.
+                    if (!needLinearToSRGB)
+                        result = SRGBToLinear(max(0, result));
+
+                    outColor = float4(result, 1.0);
+                }
+
+                if( !viewMaterial )
+                {
+                    if (_DebugFullScreenMode == FULLSCREENDEBUGMODE_VALIDATE_DIFFUSE_COLOR || _DebugFullScreenMode == FULLSCREENDEBUGMODE_VALIDATE_SPECULAR_COLOR)
+                    {
+                        float3 result = float3(0.0, 0.0, 0.0);
+
+                        GetPBRValidatorDebug(surfaceData, result);
+
+                        outColor = float4(result, 1.0f);
+                    }
+                    else if (_DebugFullScreenMode == FULLSCREENDEBUGMODE_TRANSPARENCY_OVERDRAW)
+                    {
+                        float4 result = _DebugTransparencyOverdrawWeight * float4(TRANSPARENCY_OVERDRAW_COST, TRANSPARENCY_OVERDRAW_COST, TRANSPARENCY_OVERDRAW_COST, TRANSPARENCY_OVERDRAW_A);
+                        outColor = result;
+                    }
+                }
+
+                return outColor;
+            }
+        {% else %}
+            #define ForwardDebug ForwardDebug_can_only_be_used_in_pass_Forward
+        {% endif %}
+    #else
+        #define DebugQuadOverdraw DebugQuadOverdraw_can_only_be_used_with_define_DEBUG_DISPLAY
+        #define DebugVertexDensity DebugVertexDensity_can_only_be_used_with_define_DEBUG_DISPLAY
+        #define ForwardDebug ForwardDebug_can_only_be_used_with_define_DEBUG_DISPLAY
+    #endif
+{% endif %}

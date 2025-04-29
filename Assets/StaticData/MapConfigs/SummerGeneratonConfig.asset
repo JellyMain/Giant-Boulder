@@ -70,7 +70,7 @@ MonoBehaviour:
     regionColor: {r: 1, g: 1, b: 1, a: 1}
     regionHeight: 1
   mapSize: 10
-  seed: 12528
+  seed: 14587
   offset: {x: -15.1, y: 8.15}
   heightCurve:
     serializedVersion: 2

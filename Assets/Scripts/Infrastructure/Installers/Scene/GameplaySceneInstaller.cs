@@ -17,6 +17,7 @@ namespace Infrastructure.Installers.Scene
         [SerializeField] private ChunkUpdater chunkUpdater;
         [SerializeField] private GameTimer gameTimer;
         [SerializeField] private RageScale rageScale;
+        [SerializeField] private GrassSpawner grassSpawner;
 
 
         public override void InstallBindings()
@@ -41,6 +42,13 @@ namespace Infrastructure.Installers.Scene
             BindGameplayQuestTracker();
             BindQuestFactory();
             BindDestroyedObjectsTracker();
+            BindGrassSpawner();
+        }
+
+
+        private void BindGrassSpawner()
+        {
+            Container.Bind<GrassSpawner>().FromComponentInNewPrefab(grassSpawner).AsSingle().NonLazy();
         }
 
 

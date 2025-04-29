@@ -21,14 +21,14 @@ namespace Player
         private void OnEnable()
         {
             rageScale.OnSuperBoulderActivated += ChangeToSuperBoulder;
-            rageScale.OnSuperBoulderDiactivated += ChangeToStandardBoulder;
+            rageScale.OnSuperBoulderDeactivated += ChangeToStandardBoulder;
         }
 
 
         private void OnDisable()
         {
             rageScale.OnSuperBoulderActivated -= ChangeToSuperBoulder;
-            rageScale.OnSuperBoulderDiactivated -= ChangeToStandardBoulder;
+            rageScale.OnSuperBoulderDeactivated -= ChangeToStandardBoulder;
         }
 
 

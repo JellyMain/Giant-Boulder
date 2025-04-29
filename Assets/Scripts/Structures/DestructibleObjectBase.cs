@@ -1,6 +1,7 @@
 using System;
 using Const;
 using DataTrackers;
+using DG.Tweening;
 using RayFire;
 using Sirenix.OdinInspector;
 using Sounds;
@@ -28,6 +29,8 @@ namespace Structures
         public ObjectType ObjectType => objectType;
         public event Action<DestructibleObjectBase> OnDestroyed;
         public event Action<DestructibleObjectBase> OnLightDestroyed;
+        public bool IsDestroyed { get; private set; }
+
 
 
         [Inject]
@@ -49,6 +52,7 @@ namespace Structures
         {
             objectCenter = RuntimeMeshUtility.GetMeshCenter(transform, col);
         }
+
 
 
         public void FindFragmentsRoot()
@@ -79,13 +83,15 @@ namespace Structures
             fragmentsRoot.SetActive(true);
             rayfireBomb.Explode(0);
 
-            soundPlayer.PlaySound(destroySoundSettings, transform.position);
+            soundPlayer.PlaySound(destroySoundSettings);
 
             if (destroyParticlesPrefab != null)
             {
                 Instantiate(destroyParticlesPrefab, objectCenter, Quaternion.identity);
             }
-            
+
+            IsDestroyed = true;
+
             OnDestroyed?.Invoke(this);
         }
     }
