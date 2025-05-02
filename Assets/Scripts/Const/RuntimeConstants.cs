@@ -23,6 +23,7 @@ namespace Const
             public const string PLAYER = "Player";
             public const string MOUNTAINS = "Mountains";
             public const string GRASS_MESH = "";
+            public const string STATISTICS_WINDOW = "StatisticsWindow";
         }
 
 
@@ -42,6 +43,7 @@ namespace Const
             public const string FRAGMENTS_ROOT = "FragmentsRoot";
             public const string CONTAINER = "Container";
             public const string INDESTRUCTIBLE = "Indestructible";
+            public const string UI_CAMERA = "UICamera";
         }
 
         public static class Layers

@@ -5,14 +5,14 @@ namespace Quests
 {
     public abstract class QuestProgressUpdater
     {
-        protected readonly Quest quest;
+        protected readonly QuestData questData;
         private readonly SaveLoadService saveLoadService;
         protected bool isCompleted;
         
 
-        protected QuestProgressUpdater(Quest quest, SaveLoadService saveLoadService)
+        protected QuestProgressUpdater(QuestData questData, SaveLoadService saveLoadService)
         {
-            this.quest = quest;
+            this.questData = questData;
             this.saveLoadService = saveLoadService;
         }
 

@@ -1,0 +1,24 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 12edf075ebbf47afab60e2d67f681239, type: 3}
+  m_Name: DestroyMedievalHouses
+  m_EditorClassIdentifier: 
+  uniqueId: 1370616870
+  questTitle: Farm houses
+  questDescription: Destroy 10 farm houses
+  reward: {fileID: 0}
+  rewardUIObject: {fileID: 1503668613526817451, guid: 968673413a9dc324085deb698b6ebc3d, type: 3}
+  questType: 2
+  questPersistenceProgressType: 2
+  targetCoinsAmount: 0
+  targetObjectType: 2
+  targetObjectAmount: 0

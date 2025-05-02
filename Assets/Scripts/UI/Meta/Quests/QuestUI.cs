@@ -1,53 +1,98 @@
 using System;
 using Progress;
 using Quests;
+using Quests.Enums;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
+using Zenject;
 
 
 namespace UI.Meta.Quests
 {
-    public class QuestUI : MonoBehaviour, IProgressUpdater
+    public class QuestUI : MonoBehaviour
     {
-        private Quest quest;
         [SerializeField] private TMP_Text titleText;
+        [SerializeField] private TMP_Text descriptionText;
+        [SerializeField] private TMP_Text targetAmount;
+        [SerializeField] private TMP_Text currentAmount;
+        [SerializeField] private Transform rewardObjectParent;
         [SerializeField] private Image progressFill;
-        private int collectedAmount;
+        private PersistentPlayerProgress persistentPlayerProgress;
 
 
-        public void SetQuest(Quest quest)
+
+        [Inject]
+        private void Construct(PersistentPlayerProgress persistentPlayerProgress)
         {
-            this.quest = quest;
+            this.persistentPlayerProgress = persistentPlayerProgress;
         }
         
 
-        private void Start()
+        public void SetQuestData(QuestData questData)
         {
-            titleText.text = quest.questTitle;
+            titleText.text = questData.questTitle;
+            descriptionText.text = questData.questDescription;
+            Instantiate(questData.rewardUIObject, rewardObjectParent);
+
+            UpdateQuestProgress(questData);
         }
 
 
-        private void OnEnable()
+        private void UpdateQuestProgress(QuestData questData)
         {
-            UpdateFill();
+            switch (questData.questType)
+            {
+                case QuestType.CollectCoins:
+                {
+                    UpdateCoinsQuest(questData);
+                    break;
+                }
+                case QuestType.DestroyObjects:
+                {
+                    UpdateObjectsQuest(questData);
+                    break;
+                }
+                case QuestType.None:
+                    Debug.LogError("Quest has type None");
+                    break;
+            }
         }
 
 
-        private void UpdateFill()
+        private void UpdateObjectsQuest(QuestData questData)
         {
-            float normalizedProgress = (float)collectedAmount / quest.targetCoinsAmount;
+            int destroyedAmount = 0;
+
+            if (persistentPlayerProgress.PlayerProgress.questsData.questsIdProgressDictionary.TryGetValue(
+                    questData.uniqueId, out QuestProgress questProgress))
+            {
+                destroyedAmount = questProgress.destroyedAmount;
+            }
+
+            currentAmount.text = destroyedAmount.ToString();
+            targetAmount.text = questData.targetObjectAmount.ToString();
+
+            float normalizedProgress = (float)destroyedAmount / questData.targetObjectAmount;
             progressFill.fillAmount = normalizedProgress;
         }
 
 
-        public void UpdateProgress(PlayerProgress playerProgress)
+        private void UpdateCoinsQuest(QuestData questData)
         {
-            if (playerProgress.questsData.questsIdProgressDictionary.TryGetValue(quest.uniqueId, out QuestProgress questProgress))
+            int collectedAmount = 0;
+
+            if (persistentPlayerProgress.PlayerProgress.questsData.questsIdProgressDictionary.TryGetValue(
+                    questData.uniqueId, out QuestProgress questProgress))
             {
                 collectedAmount = questProgress.collectedCoins;
-            } 
+            }
+
+            currentAmount.text = collectedAmount.ToString();
+            targetAmount.text = questData.targetCoinsAmount.ToString();
             
+            float normalizedProgress = (float)collectedAmount / questData.targetCoinsAmount;
+            progressFill.fillAmount = normalizedProgress;
         }
     }
 }

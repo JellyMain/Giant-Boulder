@@ -39,10 +39,10 @@ namespace Infrastructure.GameStates
         {
             await staticDataService.LoadStaticData();
             LoadSavesOrCreateNew();
-            questService.SetCurrentQuest(staticDataService.QuestsConfig.quests[0]);
-           sceneLoader.Load(RuntimeConstants.Scenes.MAIN_MENU_SCENE, () => gameStateMachine.Enter<LoadMetaState>());  
+            questService.SetRandomQuests();
+            sceneLoader.Load(RuntimeConstants.Scenes.MAIN_MENU_SCENE, () => gameStateMachine.Enter<LoadMetaState>());
         }
-        
+
 
         private void LoadSavesOrCreateNew()
         {

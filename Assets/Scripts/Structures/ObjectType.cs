@@ -8,6 +8,10 @@ namespace Structures
         HayPile = 3,
         Tractor = 4,
         TractorCarriage = 5,
-        Scarecrow = 6
+        Scarecrow = 6,
+        Stump = 7,
+        Log = 8,
+        BirchTree = 9,
+        SpruceTree = 10
     }
 }

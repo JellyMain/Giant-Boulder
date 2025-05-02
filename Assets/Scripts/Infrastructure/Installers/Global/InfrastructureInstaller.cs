@@ -36,8 +36,15 @@ namespace Infrastructure.Installers.Global
             BindQuestService();
             BindAssetProvider();
             BindStatsTracker();
+            BindCameraCreator();
         }
 
+        
+        private void BindCameraCreator()
+        {
+            Container.Bind<CameraCreator>().AsSingle();
+        }
+        
 
         private void BindStatsTracker()
         {

@@ -8,7 +8,7 @@ namespace UI
 {
     public class StructureSlotUI : MonoBehaviour
     {
-        [SerializeField] private Quest questToUnlock;
+        [SerializeField] private QuestData questDataToUnlock;
         [SerializeField] private Image lockedQuestImage;
         [SerializeField] private Image unlockedQuestImage;
         

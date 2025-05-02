@@ -1,61 +1,146 @@
 fileFormatVersion: 2
 guid: dbfa1c49faba249f69077202e6019e38
-timeCreated: 1570025508
-licenseType: Store
 ModelImporter:
-  serializedVersion: 21
-  fileIDToRecycleName:
-    100000: //RootNode
-    100002: spitfire-base
-    100004: spitfire-cockpit
-    100006: spitfire-door
-    100008: spitfire-propeller
-    100010: spitfire-wheel_B
-    100012: spitfire-wheel_FL
-    100014: spitfire-wheel_FR
-    400000: //RootNode
-    400002: spitfire-base
-    400004: spitfire-cockpit
-    400006: spitfire-door
-    400008: spitfire-propeller
-    400010: spitfire-wheel_B
-    400012: spitfire-wheel_FL
-    400014: spitfire-wheel_FR
-    2300000: spitfire-base
-    2300002: spitfire-cockpit
-    2300004: spitfire-door
-    2300006: spitfire-propeller
-    2300008: spitfire-wheel_B
-    2300010: spitfire-wheel_FL
-    2300012: spitfire-wheel_FR
-    3300000: spitfire-base
-    3300002: spitfire-cockpit
-    3300004: spitfire-door
-    3300006: spitfire-propeller
-    3300008: spitfire-wheel_B
-    3300010: spitfire-wheel_FL
-    3300012: spitfire-wheel_FR
-    4300000: spitfire-base
-    4300002: spitfire-wheel_FR
-    4300004: spitfire-wheel_FL
-    4300006: spitfire-propeller
-    4300008: spitfire-cockpit
-    4300010: spitfire-door
-    4300012: spitfire-wheel_B
-    7400000: spitfire-cockpit|spitfire-cockpit|Take 001|BaseLayer
-    7400002: spitfire-cockpit|spitfire-door|Take 001|BaseLayer
-    7400004: spitfire-door|spitfire-cockpit|Take 001|BaseLayer
-    7400006: spitfire-door|spitfire-door|Take 001|BaseLayer
-    9500000: //RootNode
+  serializedVersion: 22200
+  internalIDToNameTable:
+  - first:
+      1: 100000
+    second: //RootNode
+  - first:
+      1: 100002
+    second: spitfire-base
+  - first:
+      1: 100004
+    second: spitfire-cockpit
+  - first:
+      1: 100006
+    second: spitfire-door
+  - first:
+      1: 100008
+    second: spitfire-propeller
+  - first:
+      1: 100010
+    second: spitfire-wheel_B
+  - first:
+      1: 100012
+    second: spitfire-wheel_FL
+  - first:
+      1: 100014
+    second: spitfire-wheel_FR
+  - first:
+      4: 400000
+    second: //RootNode
+  - first:
+      4: 400002
+    second: spitfire-base
+  - first:
+      4: 400004
+    second: spitfire-cockpit
+  - first:
+      4: 400006
+    second: spitfire-door
+  - first:
+      4: 400008
+    second: spitfire-propeller
+  - first:
+      4: 400010
+    second: spitfire-wheel_B
+  - first:
+      4: 400012
+    second: spitfire-wheel_FL
+  - first:
+      4: 400014
+    second: spitfire-wheel_FR
+  - first:
+      23: 2300000
+    second: spitfire-base
+  - first:
+      23: 2300002
+    second: spitfire-cockpit
+  - first:
+      23: 2300004
+    second: spitfire-door
+  - first:
+      23: 2300006
+    second: spitfire-propeller
+  - first:
+      23: 2300008
+    second: spitfire-wheel_B
+  - first:
+      23: 2300010
+    second: spitfire-wheel_FL
+  - first:
+      23: 2300012
+    second: spitfire-wheel_FR
+  - first:
+      33: 3300000
+    second: spitfire-base
+  - first:
+      33: 3300002
+    second: spitfire-cockpit
+  - first:
+      33: 3300004
+    second: spitfire-door
+  - first:
+      33: 3300006
+    second: spitfire-propeller
+  - first:
+      33: 3300008
+    second: spitfire-wheel_B
+  - first:
+      33: 3300010
+    second: spitfire-wheel_FL
+  - first:
+      33: 3300012
+    second: spitfire-wheel_FR
+  - first:
+      43: 4300000
+    second: spitfire-base
+  - first:
+      43: 4300002
+    second: spitfire-wheel_FR
+  - first:
+      43: 4300004
+    second: spitfire-wheel_FL
+  - first:
+      43: 4300006
+    second: spitfire-propeller
+  - first:
+      43: 4300008
+    second: spitfire-cockpit
+  - first:
+      43: 4300010
+    second: spitfire-door
+  - first:
+      43: 4300012
+    second: spitfire-wheel_B
+  - first:
+      74: 7400000
+    second: spitfire-cockpit|spitfire-cockpit|Take 001|BaseLayer
+  - first:
+      74: 7400002
+    second: spitfire-cockpit|spitfire-door|Take 001|BaseLayer
+  - first:
+      74: 7400004
+    second: spitfire-door|spitfire-cockpit|Take 001|BaseLayer
+  - first:
+      74: 7400006
+    second: spitfire-door|spitfire-door|Take 001|BaseLayer
+  - first:
+      95: 9500000
+    second: //RootNode
+  externalObjects: {}
   materials:
-    importMaterials: 0
+    materialImportMode: 0
     materialName: 0
     materialSearch: 1
+    materialLocation: 0
   animations:
     legacyGenerateAnimations: 4
     bakeSimulation: 0
     resampleCurves: 1
     optimizeGameObjects: 0
+    removeConstantScaleCurves: 0
     motionNodeName: 
     rigImportErrors: 
     rigImportWarnings: 
@@ -63,6 +148,8 @@ ModelImporter:
     animationImportWarnings: 
     animationRetargetingWarnings: 
     animationDoRetargetingWarnings: 0
+    importAnimatedCustomProperties: 0
+    importConstraints: 0
     animationCompression: 1
     animationRotationError: 0.5
     animationPositionError: 0.5
@@ -77,30 +164,49 @@ ModelImporter:
     globalScale: 1
     meshCompression: 0
     addColliders: 0
+    useSRGBMaterialColor: 1
+    sortHierarchyByName: 1
+    importPhysicalCameras: 0
     importVisibility: 0
     importBlendShapes: 0
     importCameras: 0
     importLights: 0
+    nodeNameCollisionStrategy: 0
+    fileIdsGeneration: 1
     swapUVChannels: 0
     generateSecondaryUV: 0
     useFileUnits: 1
-    optimizeMeshForGPU: 1
     keepQuads: 0
     weldVertices: 1
+    bakeAxisConversion: 0
+    preserveHierarchy: 0
+    skinWeightsMode: 0
+    maxBonesPerVertex: 4
+    minBoneWeight: 0.001
+    optimizeBones: 1
+    meshOptimizationFlags: -1
+    indexFormat: 1
     secondaryUVAngleDistortion: 8
     secondaryUVAreaDistortion: 15.000001
     secondaryUVHardAngle: 88
+    secondaryUVMarginMethod: 0
+    secondaryUVMinLightmapResolution: 40
+    secondaryUVMinObjectScale: 1
     secondaryUVPackMargin: 4
     useFileScale: 1
+    strictVertexDataChecks: 0
   tangentSpace:
     normalSmoothAngle: 60
     normalImportMode: 0
     tangentImportMode: 3
     normalCalculationMode: 0
+    legacyComputeAllNormalsFromSmoothingGroupsWhenMeshHasBlendShapes: 1
+    blendShapeNormalImportMode: 1
+    normalSmoothingSource: 0
+  referencedClips: []
   importAnimation: 0
-  copyAvatar: 0
   humanDescription:
-    serializedVersion: 2
+    serializedVersion: 3
     human: []
     skeleton: []
     armTwist: 0.5
@@ -110,14 +216,19 @@ ModelImporter:
     armStretch: 0.05
     legStretch: 0.05
     feetSpacing: 0
+    globalScale: 1
     rootMotionBoneName: 
-    rootMotionBoneRotation: {x: 0, y: 0, z: 0, w: 1}
     hasTranslationDoF: 0
     hasExtraRoot: 0
     skeletonHasParents: 1
   lastHumanDescriptionAvatarSource: {instanceID: 0}
+  autoGenerateAvatarMappingIfUnspecified: 1
   animationType: 0
   humanoidOversampling: 1
+  avatarSetup: 0
+  addHumanoidExtraRootOnlyWhenUsingAvatar: 0
+  importBlendShapeDeformPercent: 0
+  remapMaterialsIfMaterialImportModeIsNone: 1
   additionalBone: 0
   userData: 
   assetBundleName: 

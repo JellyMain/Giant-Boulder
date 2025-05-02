@@ -16,6 +16,7 @@ MonoBehaviour:
     SerializedFormat: 2
     SerializedBytes: 
     ReferencedUnityObjects:
+    - {fileID: 4531357475045743729, guid: 2fdad544f57883d40a484dfc27322011, type: 3}
     - {fileID: 7250096664496216, guid: 43eda3ade8cf22b4da1d9cd6d8d6ea72, type: 3}
     - {fileID: 8471221206144756128, guid: 1f07e9fcef75b1846baad55d8664313d, type: 3}
     - {fileID: 6384345283535233235, guid: 392cda1fa10406f4ba5d3ae2f1bc2c28, type: 3}
@@ -57,7 +58,7 @@ MonoBehaviour:
         Assembly-CSharp]], mscorlib
     - Name: 
       Entry: 12
-      Data: 2
+      Data: 3
     - Name: 
       Entry: 7
       Data: 3|StaticData.Data.StructuresPercentagePair, Assembly-CSharp
@@ -66,7 +67,7 @@ MonoBehaviour:
       Data: 0
     - Name: spawnRate
       Entry: 3
-      Data: 50
+      Data: 65
     - Name: 
       Entry: 8
       Data: 
@@ -78,7 +79,19 @@ MonoBehaviour:
       Data: 1
     - Name: spawnRate
       Entry: 3
-      Data: 50
+      Data: 30
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 5|StaticData.Data.StructuresPercentagePair, Assembly-CSharp
+    - Name: structurePrefab
+      Entry: 10
+      Data: 2
+    - Name: spawnRate
+      Entry: 3
+      Data: 5
     - Name: 
       Entry: 8
       Data: 
@@ -99,17 +112,17 @@ MonoBehaviour:
       Data: 2
     - Name: $v
       Entry: 7
-      Data: 5|System.Collections.Generic.List`1[[StaticData.Data.StructuresPercentagePair,
+      Data: 6|System.Collections.Generic.List`1[[StaticData.Data.StructuresPercentagePair,
         Assembly-CSharp]], mscorlib
     - Name: 
       Entry: 12
       Data: 1
     - Name: 
       Entry: 7
-      Data: 6|StaticData.Data.StructuresPercentagePair, Assembly-CSharp
+      Data: 7|StaticData.Data.StructuresPercentagePair, Assembly-CSharp
     - Name: structurePrefab
       Entry: 10
-      Data: 2
+      Data: 3
     - Name: spawnRate
       Entry: 3
       Data: 100

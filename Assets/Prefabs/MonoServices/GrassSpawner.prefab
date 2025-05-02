@@ -45,8 +45,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   grassMesh: {fileID: 4300002, guid: cab25cf65c668284fae0a240eda5d0e5, type: 3}
-  grassMaterial: {fileID: 2100000, guid: d41a8bca790345f49b3ae205465ff2f8, type: 2}
-  grassAmountPerChunk: 10000
+  grassMaterial: {fileID: 2100000, guid: 5d73b506f3a9a994aafc352107e4e332, type: 2}
+  grassAmountPerChunk: 2000
   groundLayer:
     serializedVersion: 2
     m_Bits: 8

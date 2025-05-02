@@ -75,7 +75,7 @@ namespace TerrainGenerator
             NavMeshSurface navMeshSurface = chunksParent.AddComponent<NavMeshSurface>();
             navMeshSurface.collectObjects = CollectObjects.Children;
             navMeshSurface.layerMask = 1 << groundLayer;
-            
+
             navMeshSurface.BuildNavMesh();
         }
 

@@ -22,7 +22,7 @@ namespace DataTrackers
 
         public void TrackCurrentQuest()
         {
-            currentQuestProgressUpdater = questProgressUpdaterFactory.CreateQuestProgressUpdaterByQuest(questService.CurrentQuest);
+            currentQuestProgressUpdater = questProgressUpdaterFactory.CreateQuestProgressUpdaterByQuest(questService.CurrentQuestData);
             currentQuestProgressUpdater.Init();
         }
     }

@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using GameLoop;
 using TerrainGenerator;
+using TerrainGenerator.Enums;
 using UnityEngine;
 using Zenject;
 using Random = UnityEngine.Random;
@@ -16,7 +17,7 @@ namespace StructuresSpawner
         [SerializeField] private LayerMask groundLayer;
         private MapCreator mapCreator;
         private LevelCreationWatcher levelCreationWatcher;
-        private Dictionary<Vector2, TerrainChunk> allChunks;
+        private List<TerrainChunk> grassChunks;
         public Dictionary<TerrainChunk, List<Matrix4x4>> ChunkGrassMatrices { get; private set; }
         private readonly List<Matrix4x4> visibleChunksGrassMatrices = new List<Matrix4x4>();
 
@@ -44,10 +45,17 @@ namespace StructuresSpawner
 
         private void Init()
         {
-            allChunks = mapCreator.TerrainChunks;
+            GetGrassChunks();
             Dictionary<TerrainChunk, List<(Vector3 Position, Quaternion rotation)>> chunkGrassPositionsAndRotations =
                 GetGrassPositions();
             CreateMatrices(chunkGrassPositionsAndRotations);
+        }
+
+
+        private void GetGrassChunks()
+        {
+            grassChunks = mapCreator.SortedChunks[ChunkBiome.Plain];
+            grassChunks.AddRange(mapCreator.SortedChunks[ChunkBiome.Hill]);
         }
 
 
@@ -56,7 +64,7 @@ namespace StructuresSpawner
         {
             ChunkGrassMatrices = new Dictionary<TerrainChunk, List<Matrix4x4>>();
 
-            foreach (TerrainChunk chunk in allChunks.Values)
+            foreach (TerrainChunk chunk in grassChunks)
             {
                 ChunkGrassMatrices[chunk] = new List<Matrix4x4>(grassAmountPerChunk);
 
@@ -100,7 +108,7 @@ namespace StructuresSpawner
             Dictionary<TerrainChunk, List<(Vector3 position, Quaternion rotation)>> chunkGrassPositions =
                 new Dictionary<TerrainChunk, List<(Vector3 position, Quaternion rotation)>>();
 
-            foreach (TerrainChunk chunk in allChunks.Values)
+            foreach (TerrainChunk chunk in grassChunks)
             {
                 chunkGrassPositions[chunk] = new List<(Vector3 position, Quaternion rotation)>(grassAmountPerChunk);
 
@@ -130,20 +138,22 @@ namespace StructuresSpawner
 
         public void RenderGrassChunk(TerrainChunk terrainChunk)
         {
-            List<Matrix4x4> chunkGrassMatrices = ChunkGrassMatrices[terrainChunk];
-            Graphics.DrawMeshInstanced(grassMesh, 0, grassMaterial, chunkGrassMatrices);
+            if (ChunkGrassMatrices.TryGetValue(terrainChunk, out List<Matrix4x4> chunkGrassMatrices))
+            {
+                Graphics.DrawMeshInstanced(grassMesh, 0, grassMaterial, chunkGrassMatrices);
+            }
         }
 
 
         public void RenderAllVisibleGrassChunks(List<TerrainChunk> visibleChunks)
         {
             visibleChunksGrassMatrices.Clear();
-            
+
             foreach (var chunk in visibleChunks)
             {
-                visibleChunksGrassMatrices.AddRange(ChunkGrassMatrices[chunk]); 
+                visibleChunksGrassMatrices.AddRange(ChunkGrassMatrices[chunk]);
             }
-            
+
             Graphics.DrawMeshInstanced(grassMesh, 0, grassMaterial, visibleChunksGrassMatrices);
         }
     }

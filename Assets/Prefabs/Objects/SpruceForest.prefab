@@ -2075,8 +2075,6 @@ MonoBehaviour:
     - Name: 
       Entry: 8
       Data: 
-  structureRadius: 10
-  maxSlopeAngle: 30
   structureKeyObjects: []
   structureDestructibleObjects:
   - {fileID: 5881527469993731602}

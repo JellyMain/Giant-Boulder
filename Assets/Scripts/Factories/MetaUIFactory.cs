@@ -36,40 +36,39 @@ namespace Factories
         }
 
 
-        public async UniTask CreateMainMenuUI(QuestsWindow questsWindow)
+        public async UniTask CreateMainMenuUI()
         {
             GameObject mainMenuPrefab =
                 await assetProvider.LoadAsset<GameObject>(RuntimeConstants.PrefabAddresses.MAIN_MENU_UI);
 
-            MainMenuUI createdMainMenu =
-                diContainer.InstantiatePrefab(mainMenuPrefab, uiRoot).GetComponent<MainMenuUI>();
-            createdMainMenu.Construct(questsWindow);
+            diContainer.InstantiatePrefab(mainMenuPrefab, uiRoot).GetComponent<MainMenuUI>();
         }
 
 
-        public async UniTask<QuestsWindow> CreateQuestsWindow()
+        public async UniTaskVoid CreateQuestsWindow()
         {
             GameObject questsWindowPrefab =
                 await assetProvider.LoadAsset<GameObject>(RuntimeConstants.PrefabAddresses.QUESTS_WINDOW_UI);
 
-            QuestsWindow createdQuestsWindow =
-                diContainer.InstantiatePrefab(questsWindowPrefab, uiRoot).GetComponent<QuestsWindow>();
-            Transform questsParent = createdQuestsWindow.QuestsContainer;
-
-            await CreateQuestsUI(questsParent);
-
-            return createdQuestsWindow;
+            diContainer.InstantiatePrefab(questsWindowPrefab, uiRoot).GetComponent<QuestsWindow>();
         }
 
 
-        private async UniTask CreateQuestsUI(Transform parent)
+        public async UniTask<QuestUI> CreateQuestUI(Transform parent)
         {
             GameObject questUIPrefab =
                 await assetProvider.LoadAsset<GameObject>(RuntimeConstants.PrefabAddresses.QUEST_UI);
 
-            QuestUI createdQuest = diContainer.InstantiatePrefab(questUIPrefab, parent).GetComponent<QuestUI>();
-            createdQuest.SetQuest(questService.CurrentQuest);
-            saveLoadService.RegisterSceneObject(createdQuest);
+            return diContainer.InstantiatePrefab(questUIPrefab, parent).GetComponent<QuestUI>();
+        }
+
+
+        public async UniTaskVoid CreateStatisticsWindow()
+        {
+            GameObject statisticsWindowPrefab =
+                await assetProvider.LoadAsset<GameObject>(RuntimeConstants.PrefabAddresses.STATISTICS_WINDOW);
+
+            diContainer.InstantiatePrefab(statisticsWindowPrefab, uiRoot);
         }
     }
 }

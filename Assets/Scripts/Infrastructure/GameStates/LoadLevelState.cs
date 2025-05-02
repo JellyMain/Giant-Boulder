@@ -28,6 +28,7 @@ namespace Infrastructure.GameStates
         private readonly GameStateMachine gameStateMachine;
         private readonly LevelCreationWatcher levelCreationWatcher;
         private readonly GameplayQuestTracker gameplayQuestTracker;
+        private readonly GrassSpawner grassSpawner;
         private readonly ChunkUpdater chunkUpdater;
         private readonly ScoreTracker scoreTracker;
 
@@ -35,7 +36,7 @@ namespace Infrastructure.GameStates
         public LoadLevelState(SceneLoader sceneLoader, MapCreator mapCreator, PlayerFactory playerFactory,
             CameraCreator cameraCreator, StructureSpawner structureSpawner, GameplayUIFactory gameplayUIFactory,
             SaveLoadService saveLoadService, GameStateMachine gameStateMachine,
-            LevelCreationWatcher levelCreationWatcher, GameTimer gameTimer, GameplayQuestTracker gameplayQuestTracker)
+            LevelCreationWatcher levelCreationWatcher, GameplayQuestTracker gameplayQuestTracker, GrassSpawner grassSpawner)
         {
             this.sceneLoader = sceneLoader;
             this.mapCreator = mapCreator;
@@ -47,6 +48,7 @@ namespace Infrastructure.GameStates
             this.gameStateMachine = gameStateMachine;
             this.levelCreationWatcher = levelCreationWatcher;
             this.gameplayQuestTracker = gameplayQuestTracker;
+            this.grassSpawner = grassSpawner;
         }
 
 
@@ -92,6 +94,8 @@ namespace Infrastructure.GameStates
             structureSpawner.ActivateSpawner();
         }
 
+
+       
 
         private void CreateCameras()
         {

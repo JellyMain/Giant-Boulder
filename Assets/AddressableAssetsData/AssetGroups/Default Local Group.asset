@@ -78,6 +78,11 @@ MonoBehaviour:
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: b6b30ec62dce83b408ad081d1cb3e1c6
+    m_Address: StatisticsWindow
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: c3a6690cdc5fc5a49805147739dc1ff2
     m_Address: UICamera
     m_ReadOnly: 0

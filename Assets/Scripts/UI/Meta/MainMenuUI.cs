@@ -1,5 +1,6 @@
 using System;
 using Const;
+using Cysharp.Threading.Tasks;
 using Factories;
 using Infrastructure.GameStates;
 using Infrastructure.Services;
@@ -16,8 +17,11 @@ namespace UI.Meta
         [SerializeField] private Button playButton;
         [SerializeField] private Button questsButton;
         [SerializeField] private Button almanacButton;
+        [SerializeField] private Button statisticsWindow;
+        [SerializeField] Canvas canvas;
         private GameStateMachine gameStateMachine;
         private SceneLoader sceneLoader;
+        private MetaUIFactory metaUIFactory;
         public QuestsWindow QuestsWindow { get; set; }
 
 
@@ -26,36 +30,45 @@ namespace UI.Meta
         {
             this.sceneLoader = sceneLoader;
             this.gameStateMachine = gameStateMachine;
+            this.metaUIFactory = metaUIFactory;
         }
-
-
-        public void Construct(QuestsWindow questsWindow)
-        {
-            QuestsWindow = questsWindow;
-        }
-
+        
         
         private void Start()
         {
+            SetCamera();
             playButton.onClick.AddListener(StartGame);
             questsButton.onClick.AddListener(OpenQuestsWindow);
             almanacButton.onClick.AddListener(OpenAlmanac);
+            statisticsWindow.onClick.AddListener(OpenStatisticsWindow);
+        }
+        
+        private void SetCamera()
+        {
+            Camera uiCamera = GameObject.FindGameObjectWithTag(RuntimeConstants.Tags.UI_CAMERA).GetComponent<Camera>();
+            canvas.worldCamera = uiCamera;
         }
 
 
-        public void StartGame()
+        private void StartGame()
         {
             sceneLoader.Load(RuntimeConstants.Scenes.GAME_SCENE, () => gameStateMachine.Enter<LoadLevelState>());
         }
 
 
-        public void OpenAlmanac() { }
+        private void OpenAlmanac() { }
 
 
-        
-        public void OpenQuestsWindow()
+
+        private void OpenQuestsWindow()
         {
-           QuestsWindow.WindowOverlay.SetActive(true);
+          metaUIFactory.CreateQuestsWindow().Forget();
+        }
+
+
+        private void OpenStatisticsWindow()
+        {
+            metaUIFactory.CreateStatisticsWindow().Forget();
         }
     }
 }

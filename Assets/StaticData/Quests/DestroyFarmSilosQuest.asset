@@ -13,11 +13,12 @@ MonoBehaviour:
   m_Name: DestroyFarmSilosQuest
   m_EditorClassIdentifier: 
   uniqueId: 794891660
-  questTitle: 
-  questDescription: 
+  questTitle: Farm Silos
+  questDescription: Destroy 15 farm silos
   reward: {fileID: 0}
+  rewardUIObject: {fileID: 2533900169703172442, guid: 737a7a2c7a21bf34fb6a63da937c397f, type: 3}
   questType: 2
   questPersistenceProgressType: 2
   targetCoinsAmount: 0
-  targetObjectType: 0
-  targetObjectAmount: 0
+  targetObjectType: 1
+  targetObjectAmount: 15

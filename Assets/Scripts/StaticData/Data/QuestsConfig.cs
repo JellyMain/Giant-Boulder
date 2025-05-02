@@ -8,6 +8,6 @@ namespace StaticData.Data
     [CreateAssetMenu(menuName = "StaticData/QuestsConfig", fileName = "QuestsConfig")]
     public class QuestsConfig: ScriptableObject
     {
-        public List<Quest> quests;
+        public List<QuestData> quests;
     }
 }

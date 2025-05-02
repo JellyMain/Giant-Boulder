@@ -114,7 +114,8 @@ namespace Utils
             {
                 if (!HasStructureComponents(child))
                 {
-                    LayerMask structureObjectLayer = LayerMask.NameToLayer(RuntimeConstants.Layers.STRUCTURE_OBJECT_LAYER);
+                    LayerMask structureObjectLayer =
+                        LayerMask.NameToLayer(RuntimeConstants.Layers.STRUCTURE_OBJECT_LAYER);
                     LayerMask structureFragmentedLayer =
                         LayerMask.NameToLayer(RuntimeConstants.Layers.STRUCTURE_FRAGMENTED_LAYER);
 
@@ -158,7 +159,8 @@ namespace Utils
 
             rayfireShatter.voronoi.amount = fragmentsAmount;
 
-            rayfireShatter.material.iMat = uniqueObjects[obj];
+            rayfireShatter.material.iMat = uniqueObjects[obj] != null ? uniqueObjects[obj] : defaultInsideMaterial;
+
             rayfireShatter.advanced.decompose = false;
             rayfireShatter.advanced.combineChildren = true;
 

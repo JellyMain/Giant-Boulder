@@ -12,8 +12,6 @@ namespace Structures
 {
     public class StructureRoot : SerializedMonoBehaviour
     {
-        [SerializeField] private float structureRadius = 10;
-        [SerializeField] private float maxSlopeAngle = 30;
         [SerializeField] private List<GameObject[]> objectsBatches;
         [SerializeField] private List<DestructibleObjectBase> structureKeyObjects;
         [SerializeField] private List<DestructibleObjectBase> structureDestructibleObjects;
@@ -21,8 +19,6 @@ namespace Structures
         public Dictionary<MeshRenderer, DestructibleObjectBase> structureMeshRendererObjectMap;
         private Dictionary<string, List<GameObject>> identicalObjectsGroupPairs;
 
-        public float MaxSlopeAngle => maxSlopeAngle;
-        public float StructureRadius => structureRadius;
 
 
         private void Start()
@@ -129,7 +125,6 @@ namespace Structures
 
         private void OnDrawGizmos()
         {
-            Gizmos.DrawWireSphere(transform.position, StructureRadius);
             Gizmos.DrawWireCube(transform.position, new Vector3(100, 1, 100));
         }
 

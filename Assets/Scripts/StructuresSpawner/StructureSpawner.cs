@@ -59,13 +59,13 @@ namespace StructuresSpawner
         {
             ChunkBiome chunkBiome = biomeStructuresPair.Key;
             List<StructuresPercentagePair> structuresPercentagePairs = biomeStructuresPair.Value;
-            List<TerrainChunk> chunks = availableChunks[chunkBiome];
+            List<TerrainChunk> chunks = new List<TerrainChunk>(availableChunks[chunkBiome]);
             int initialChunksCount = chunks.Count;
 
 
             foreach (StructuresPercentagePair structurePercentagePair in structuresPercentagePairs)
             {
-                if (availableChunks[chunkBiome].Count == 0)
+                if (chunks.Count == 0)
                 {
                     Debug.LogError($"Doesn't have any available chunks of type {chunkBiome}");
                     break;
@@ -81,7 +81,7 @@ namespace StructuresSpawner
                     randomChunk.structurePrefab = structurePercentagePair.structurePrefab;
 
 
-                    availableChunks[chunkBiome].Remove(randomChunk);
+                    chunks.Remove(randomChunk);
                 }
             }
         }
@@ -99,7 +99,7 @@ namespace StructuresSpawner
                 ApplyStructureSettings(spawnedStructureRoot.structureChildSettings);
                 spawnedStructureRoot.BatchObjects();
             }
-            
+
             terrainChunk.structuresInstantiated = true;
         }
 

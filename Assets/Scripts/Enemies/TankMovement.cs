@@ -19,12 +19,12 @@ namespace Enemies
         {
             if (playerDetector.Player != null)
             {
-                FollowPlayer(playerDetector.Player);
+                FollowPlayer();
             }
         }
 
 
-        private void FollowPlayer(Transform player)
+        private void FollowPlayer()
         {
             if (playerDetector.ShortestAngleToTargetY <= maxRotationToMove &&
                 playerDetector.ShortestAngleToTargetY >= minRotationToMove &&

@@ -44,5 +44,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0c6692cb822141e5baf55d4dcfaacad2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  chunkUpdateDistance: 1000
+  chunkUpdateDistance: 400
+  grassRenderDistance: 200
   player: {fileID: 0}

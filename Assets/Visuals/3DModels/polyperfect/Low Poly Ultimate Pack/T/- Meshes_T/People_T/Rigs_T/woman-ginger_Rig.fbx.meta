@@ -1,75 +1,203 @@
 fileFormatVersion: 2
 guid: 5ce3fcc456849b547b053216c219b0b3
 ModelImporter:
-  serializedVersion: 23
-  fileIDToRecycleName:
-    100000: Armature
-    100002: Head
-    100004: Head_end
-    100006: Hips
-    100008: LeftArm
-    100010: LeftFoot
-    100012: LeftForeArm
-    100014: LeftHand
-    100016: LeftHand_end
-    100018: LeftLeg
-    100020: LeftShoulder
-    100022: LeftToeBase
-    100024: LeftToeBase_end
-    100026: LeftUpLeg
-    100028: Neck
-    100030: RightArm
-    100032: RightFoot
-    100034: RightForeArm
-    100036: RightHand
-    100038: RightHand_end
-    100040: RightLeg
-    100042: RightShoulder
-    100044: RightToeBase
-    100046: RightToeBase_end
-    100048: RightUpLeg
-    100050: Spine
-    100052: Spine1
-    100054: Spine2
-    100056: //RootNode
-    100058: woman-ginger_Rig
-    400000: Armature
-    400002: Head
-    400004: Head_end
-    400006: Hips
-    400008: LeftArm
-    400010: LeftFoot
-    400012: LeftForeArm
-    400014: LeftHand
-    400016: LeftHand_end
-    400018: LeftLeg
-    400020: LeftShoulder
-    400022: LeftToeBase
-    400024: LeftToeBase_end
-    400026: LeftUpLeg
-    400028: Neck
-    400030: RightArm
-    400032: RightFoot
-    400034: RightForeArm
-    400036: RightHand
-    400038: RightHand_end
-    400040: RightLeg
-    400042: RightShoulder
-    400044: RightToeBase
-    400046: RightToeBase_end
-    400048: RightUpLeg
-    400050: Spine
-    400052: Spine1
-    400054: Spine2
-    400056: woman-ginger_Rig
-    400058: //RootNode
-    2100000: LOWPOLY-COLORS
-    4300000: woman-ginger_Rig
-    9500000: //RootNode
-    13700000: woman-ginger_Rig
+  serializedVersion: 22200
+  internalIDToNameTable:
+  - first:
+      1: 100000
+    second: Armature
+  - first:
+      1: 100002
+    second: Head
+  - first:
+      1: 100004
+    second: Head_end
+  - first:
+      1: 100006
+    second: Hips
+  - first:
+      1: 100008
+    second: LeftArm
+  - first:
+      1: 100010
+    second: LeftFoot
+  - first:
+      1: 100012
+    second: LeftForeArm
+  - first:
+      1: 100014
+    second: LeftHand
+  - first:
+      1: 100016
+    second: LeftHand_end
+  - first:
+      1: 100018
+    second: LeftLeg
+  - first:
+      1: 100020
+    second: LeftShoulder
+  - first:
+      1: 100022
+    second: LeftToeBase
+  - first:
+      1: 100024
+    second: LeftToeBase_end
+  - first:
+      1: 100026
+    second: LeftUpLeg
+  - first:
+      1: 100028
+    second: Neck
+  - first:
+      1: 100030
+    second: RightArm
+  - first:
+      1: 100032
+    second: RightFoot
+  - first:
+      1: 100034
+    second: RightForeArm
+  - first:
+      1: 100036
+    second: RightHand
+  - first:
+      1: 100038
+    second: RightHand_end
+  - first:
+      1: 100040
+    second: RightLeg
+  - first:
+      1: 100042
+    second: RightShoulder
+  - first:
+      1: 100044
+    second: RightToeBase
+  - first:
+      1: 100046
+    second: RightToeBase_end
+  - first:
+      1: 100048
+    second: RightUpLeg
+  - first:
+      1: 100050
+    second: Spine
+  - first:
+      1: 100052
+    second: Spine1
+  - first:
+      1: 100054
+    second: Spine2
+  - first:
+      1: 100056
+    second: //RootNode
+  - first:
+      1: 100058
+    second: woman-ginger_Rig
+  - first:
+      4: 400000
+    second: Armature
+  - first:
+      4: 400002
+    second: Head
+  - first:
+      4: 400004
+    second: Head_end
+  - first:
+      4: 400006
+    second: Hips
+  - first:
+      4: 400008
+    second: LeftArm
+  - first:
+      4: 400010
+    second: LeftFoot
+  - first:
+      4: 400012
+    second: LeftForeArm
+  - first:
+      4: 400014
+    second: LeftHand
+  - first:
+      4: 400016
+    second: LeftHand_end
+  - first:
+      4: 400018
+    second: LeftLeg
+  - first:
+      4: 400020
+    second: LeftShoulder
+  - first:
+      4: 400022
+    second: LeftToeBase
+  - first:
+      4: 400024
+    second: LeftToeBase_end
+  - first:
+      4: 400026
+    second: LeftUpLeg
+  - first:
+      4: 400028
+    second: Neck
+  - first:
+      4: 400030
+    second: RightArm
+  - first:
+      4: 400032
+    second: RightFoot
+  - first:
+      4: 400034
+    second: RightForeArm
+  - first:
+      4: 400036
+    second: RightHand
+  - first:
+      4: 400038
+    second: RightHand_end
+  - first:
+      4: 400040
+    second: RightLeg
+  - first:
+      4: 400042
+    second: RightShoulder
+  - first:
+      4: 400044
+    second: RightToeBase
+  - first:
+      4: 400046
+    second: RightToeBase_end
+  - first:
+      4: 400048
+    second: RightUpLeg
+  - first:
+      4: 400050
+    second: Spine
+  - first:
+      4: 400052
+    second: Spine1
+  - first:
+      4: 400054
+    second: Spine2
+  - first:
+      4: 400056
+    second: woman-ginger_Rig
+  - first:
+      4: 400058
+    second: //RootNode
+  - first:
+      21: 2100000
+    second: LOWPOLY-COLORS
+  - first:
+      43: 4300000
+    second: woman-ginger_Rig
+  - first:
+      95: 9500000
+    second: //RootNode
+  - first:
+      137: 13700000
+    second: woman-ginger_Rig
   externalObjects: {}
   materials:
-    importMaterials: 0
+    materialImportMode: 0
     materialName: 0
     materialSearch: 1
     materialLocation: 1
@@ -78,6 +206,7 @@ ModelImporter:
     bakeSimulation: 0
     resampleCurves: 1
     optimizeGameObjects: 0
+    removeConstantScaleCurves: 0
     motionNodeName: 
     rigImportErrors: 
     rigImportWarnings: 
@@ -102,25 +231,36 @@ ModelImporter:
     meshCompression: 0
     addColliders: 0
     useSRGBMaterialColor: 1
+    sortHierarchyByName: 1
+    importPhysicalCameras: 1
     importVisibility: 1
     importBlendShapes: 1
     importCameras: 1
     importLights: 1
+    nodeNameCollisionStrategy: 0
+    fileIdsGeneration: 1
     swapUVChannels: 0
     generateSecondaryUV: 0
     useFileUnits: 1
-    optimizeMeshForGPU: 1
     keepQuads: 0
     weldVertices: 1
+    bakeAxisConversion: 0
     preserveHierarchy: 0
+    skinWeightsMode: 0
+    maxBonesPerVertex: 4
+    minBoneWeight: 0.001
+    optimizeBones: 1
+    meshOptimizationFlags: -1
     indexFormat: 0
     secondaryUVAngleDistortion: 8
     secondaryUVAreaDistortion: 15.000001
     secondaryUVHardAngle: 88
+    secondaryUVMarginMethod: 0
+    secondaryUVMinLightmapResolution: 40
+    secondaryUVMinObjectScale: 1
     secondaryUVPackMargin: 4
     useFileScale: 1
-    previousCalculatedGlobalScale: 1
-    hasPreviousCalculatedGlobalScale: 1
+    strictVertexDataChecks: 0
   tangentSpace:
     normalSmoothAngle: 60
     normalImportMode: 0
@@ -129,10 +269,10 @@ ModelImporter:
     legacyComputeAllNormalsFromSmoothingGroupsWhenMeshHasBlendShapes: 0
     blendShapeNormalImportMode: 1
     normalSmoothingSource: 0
+  referencedClips: []
   importAnimation: 0
-  copyAvatar: 0
   humanDescription:
-    serializedVersion: 2
+    serializedVersion: 3
     human:
     - boneName: Hips
       humanName: Hips
@@ -468,13 +608,19 @@ ModelImporter:
     armStretch: 0.05
     legStretch: 0.05
     feetSpacing: 0
+    globalScale: 1
     rootMotionBoneName: 
     hasTranslationDoF: 0
     hasExtraRoot: 1
     skeletonHasParents: 1
   lastHumanDescriptionAvatarSource: {instanceID: 0}
+  autoGenerateAvatarMappingIfUnspecified: 1
   animationType: 3
   humanoidOversampling: 1
+  avatarSetup: 1
+  addHumanoidExtraRootOnlyWhenUsingAvatar: 0
+  importBlendShapeDeformPercent: 0
+  remapMaterialsIfMaterialImportModeIsNone: 1
   additionalBone: 0
   userData: 
   assetBundleName: 

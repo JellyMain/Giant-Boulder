@@ -28,7 +28,6 @@ namespace Infrastructure.Installers.Scene
             BindGameTimer();
             BindMapCreator();
             BindPlayerFactory();
-            BindCameraCreator();
             BindStructureSpawner();
             BindLevelCreationWatcher();
             BindNoiseGenerator();
@@ -130,10 +129,7 @@ namespace Infrastructure.Installers.Scene
         }
         
         
-        private void BindCameraCreator()
-        {
-            Container.Bind<CameraCreator>().AsSingle();
-        }
+       
 
         
         private void BindPlayerFactory()

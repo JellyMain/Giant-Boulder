@@ -15,27 +15,36 @@ namespace Infrastructure.GameStates
     {
         private readonly SaveLoadService saveLoadService;
         private readonly MetaUIFactory metaUIFactory;
+        private readonly CameraCreator cameraCreator;
 
 
-        public LoadMetaState(SaveLoadService saveLoadService, MetaUIFactory metaUIFactory)
+        public LoadMetaState(SaveLoadService saveLoadService, MetaUIFactory metaUIFactory, CameraCreator cameraCreator)
         {
             this.saveLoadService = saveLoadService;
             this.metaUIFactory = metaUIFactory;
+            this.cameraCreator = cameraCreator;
         }
 
 
         public async void Enter()
         {
+            CreateCameras().Forget();
             await CreateMeta();
             saveLoadService.UpdateProgress();
+        }
+
+
+        private async UniTaskVoid CreateCameras()
+        {
+            Camera uiCamera = await cameraCreator.CreateUICamera();
+            cameraCreator.StackCamera(uiCamera);
         }
 
 
         private async UniTask CreateMeta()
         {
             metaUIFactory.CreateUIRoot();
-            QuestsWindow questsWindow = await metaUIFactory.CreateQuestsWindow();
-            await metaUIFactory.CreateMainMenuUI(questsWindow);
+            await metaUIFactory.CreateMainMenuUI();
         }
     }
 }

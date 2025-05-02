@@ -12,8 +12,8 @@ namespace Structures
 {
     public class CoinSpawner : MonoBehaviour
     {
-        [SerializeField] private int maxCoinsAmount = 5;
-        [SerializeField] private int minCoinsAmount = 10;
+        [SerializeField] private int maxCoinsAmount = 10;
+        [SerializeField] private int minCoinsAmount = 5;
         [SerializeField] private float spawnCircleDiameter = 5;
         [SerializeField] private float explosionForce = 40;
         private Collider col;
