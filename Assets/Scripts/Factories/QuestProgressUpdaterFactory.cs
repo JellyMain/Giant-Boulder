@@ -23,16 +23,22 @@ namespace Factories
         }
 
 
-        public QuestProgressUpdater CreateQuestProgressUpdaterByQuest(QuestData questData)
+        public QuestProgressUpdater CreateQuestProgressUpdaterByQuest(QuestDataBase questDataBase)
         {
-            switch (questData.questType)
+            switch (questDataBase)
             {
-                case QuestType.CollectCoins:
-                    return new CollectCoinsQuestUpdater(questData, saveLoadService, gameCurrencyTracker);
-                case QuestType.DestroyObjects:
-                    return new DestroyObjectsQuest(questData, saveLoadService, destroyedObjectsTracker);
+                case CollectCoinsQuestData collectCoinsQuestData:
+                {
+                    return new CollectCoinsQuestUpdater(collectCoinsQuestData, saveLoadService, gameCurrencyTracker);
+                }
+                case DestroyObjectsQuestData destroyObjectsQuestData:
+                {
+                    return new DestroyObjectsQuest(destroyObjectsQuestData, saveLoadService, destroyedObjectsTracker);
+                }
                 default:
+                {
                     return null;
+                }
             }
         }
     }

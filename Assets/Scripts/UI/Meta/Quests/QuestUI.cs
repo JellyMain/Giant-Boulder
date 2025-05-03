@@ -27,71 +27,75 @@ namespace UI.Meta.Quests
         {
             this.persistentPlayerProgress = persistentPlayerProgress;
         }
-        
 
-        public void SetQuestData(QuestData questData)
+
+        public void SetQuestData(QuestDataBase questDataBase)
         {
-            titleText.text = questData.questTitle;
-            descriptionText.text = questData.questDescription;
-            Instantiate(questData.rewardUIObject, rewardObjectParent);
+            titleText.text = questDataBase.questTitle;
+            descriptionText.text = questDataBase.questDescription;
+            Instantiate(questDataBase.rewardUIObject, rewardObjectParent);
 
-            UpdateQuestProgress(questData);
+            UpdateQuestProgress(questDataBase);
         }
 
 
-        private void UpdateQuestProgress(QuestData questData)
+        private void UpdateQuestProgress(QuestDataBase questDataBase)
         {
-            switch (questData.questType)
+            switch (questDataBase)
             {
-                case QuestType.CollectCoins:
+                case CollectCoinsQuestData collectCoinsQuestData:
                 {
-                    UpdateCoinsQuest(questData);
+                    UpdateCoinsQuest(collectCoinsQuestData);
                     break;
                 }
-                case QuestType.DestroyObjects:
+                case DestroyObjectsQuestData destroyObjectsQuestData:
                 {
-                    UpdateObjectsQuest(questData);
+                    UpdateObjectsQuest(destroyObjectsQuestData);
                     break;
                 }
-                case QuestType.None:
-                    Debug.LogError("Quest has type None");
+
+                default:
+                {
+                    Debug.LogWarning($"Unhandled quest type: {questDataBase.GetType()}");
                     break;
+                }
+                    
             }
         }
 
 
-        private void UpdateObjectsQuest(QuestData questData)
+        private void UpdateObjectsQuest(DestroyObjectsQuestData destroyObjectsQuest)
         {
             int destroyedAmount = 0;
 
             if (persistentPlayerProgress.PlayerProgress.questsData.questsIdProgressDictionary.TryGetValue(
-                    questData.uniqueId, out QuestProgress questProgress))
+                    destroyObjectsQuest.uniqueId, out QuestProgress questProgress))
             {
                 destroyedAmount = questProgress.destroyedAmount;
             }
 
             currentAmount.text = destroyedAmount.ToString();
-            targetAmount.text = questData.targetObjectAmount.ToString();
+            targetAmount.text = destroyObjectsQuest.targetObjectAmount.ToString();
 
-            float normalizedProgress = (float)destroyedAmount / questData.targetObjectAmount;
+            float normalizedProgress = (float)destroyedAmount / destroyObjectsQuest.targetObjectAmount;
             progressFill.fillAmount = normalizedProgress;
         }
 
 
-        private void UpdateCoinsQuest(QuestData questData)
+        private void UpdateCoinsQuest(CollectCoinsQuestData collectCoinsQuest)
         {
             int collectedAmount = 0;
 
             if (persistentPlayerProgress.PlayerProgress.questsData.questsIdProgressDictionary.TryGetValue(
-                    questData.uniqueId, out QuestProgress questProgress))
+                    collectCoinsQuest.uniqueId, out QuestProgress questProgress))
             {
                 collectedAmount = questProgress.collectedCoins;
             }
 
             currentAmount.text = collectedAmount.ToString();
-            targetAmount.text = questData.targetCoinsAmount.ToString();
-            
-            float normalizedProgress = (float)collectedAmount / questData.targetCoinsAmount;
+            targetAmount.text = collectCoinsQuest.targetCoinsAmount.ToString();
+
+            float normalizedProgress = (float)collectedAmount / collectCoinsQuest.targetCoinsAmount;
             progressFill.fillAmount = normalizedProgress;
         }
     }

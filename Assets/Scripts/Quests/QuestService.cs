@@ -12,8 +12,7 @@ namespace Quests
     public class QuestService
     {
         private readonly StaticDataService staticDataService;
-        public List<QuestData> CurrentQuests { get; private set; } = new List<QuestData>();
-        public QuestData CurrentQuestData { get; private set; }
+        public List<QuestDataBase> SelectedQuests { get; private set; } = new List<QuestDataBase>();
 
 
         public QuestService(StaticDataService staticDataService)
@@ -24,20 +23,15 @@ namespace Quests
 
         public void SetRandomQuests()
         {
-            List<QuestData> allQuests = staticDataService.QuestsConfig.quests;
+            List<QuestDataBase> allQuests = staticDataService.QuestsConfig.quests;
 
             for (int i = 0; i < 3; i++)
             {
                 int randomIndex = Random.Range(0, allQuests.Count);
-                QuestData randomQuestData = allQuests[randomIndex];
-                CurrentQuests.Add(randomQuestData);
+                QuestDataBase randomQuestDataBase = allQuests[randomIndex];
+                SelectedQuests.Add(randomQuestDataBase);
             }
         }
-
-
-        public void SetCurrentQuest(QuestData questData)
-        {
-            CurrentQuestData = questData;
-        }
+        
     }
 }

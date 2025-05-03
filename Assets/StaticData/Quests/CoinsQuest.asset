@@ -9,16 +9,13 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 12edf075ebbf47afab60e2d67f681239, type: 3}
+  m_Script: {fileID: 11500000, guid: ac72eb750975491a905cdbbfefc634d1, type: 3}
   m_Name: CoinsQuest
   m_EditorClassIdentifier: 
-  uniqueId: 1222251506
+  uniqueId: 2011714212
   questTitle: Collect Coins
   questDescription: Collect 30 coins in one run
   reward: {fileID: 0}
   rewardUIObject: {fileID: 6938895415985954369, guid: 90f600ce8e5db324dab48c96d7806976, type: 3}
-  questType: 1
   questPersistenceProgressType: 1
-  targetCoinsAmount: 30
-  targetObjectType: 0
-  targetObjectAmount: 0
+  targetCoinsAmount: 15

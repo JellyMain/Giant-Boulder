@@ -13,6 +13,6 @@ MonoBehaviour:
   m_Name: QuestsConfig
   m_EditorClassIdentifier: 
   quests:
-  - {fileID: 11400000, guid: 240f9b7f2c8b3a84ab9b7a6661cb57be, type: 2}
-  - {fileID: 11400000, guid: 5a8af355782f53e49959a279320ca8ad, type: 2}
-  - {fileID: 11400000, guid: 5b7edf62fb13b0a469bd93e6b564dbc3, type: 2}
+  - {fileID: 11400000, guid: 49ab244f19f61af4f9b90247e2ba1c07, type: 2}
+  - {fileID: 11400000, guid: 16177509583efb342963ff7bb88ae880, type: 2}
+  - {fileID: 11400000, guid: 0955f8fb1bb3b0d43bb0789f6bf0a8e1, type: 2}

@@ -1,13 +1,15 @@
 using System.Collections.Generic;
 using Quests;
+using Sirenix.OdinInspector;
 using UnityEngine;
 
 
 namespace StaticData.Data
 {
     [CreateAssetMenu(menuName = "StaticData/QuestsConfig", fileName = "QuestsConfig")]
-    public class QuestsConfig: ScriptableObject
+    public class QuestsConfig : ScriptableObject
     {
-        public List<QuestData> quests;
+        [AssetList(Path = "StaticData/Quests", AutoPopulate = true)]
+        public List<QuestDataBase> quests;
     }
 }

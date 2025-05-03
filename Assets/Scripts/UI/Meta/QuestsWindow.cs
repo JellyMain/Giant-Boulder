@@ -38,7 +38,7 @@ namespace UI.Meta
 
         private async UniTaskVoid InitQuests()
         {
-            foreach (QuestData quest in questService.CurrentQuests)
+            foreach (QuestDataBase quest in questService.SelectedQuests)
             {
                 QuestUI spawnedQuestUI = await metaUIFactory.CreateQuestUI(questsContainer);
                 spawnedQuestUI.SetQuestData(quest);

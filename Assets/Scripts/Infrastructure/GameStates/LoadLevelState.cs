@@ -78,7 +78,7 @@ namespace Infrastructure.GameStates
 
             levelCreationWatcher.LevelCreated();
             
-            gameplayQuestTracker.TrackCurrentQuest();
+            gameplayQuestTracker.TrackQuests();
         }
 
 

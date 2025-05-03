@@ -1,5 +1,6 @@
 using Factories;
 using Quests;
+using UnityEngine;
 using Zenject;
 
 
@@ -9,21 +10,25 @@ namespace DataTrackers
     {
         private readonly QuestService questService;
         private readonly QuestProgressUpdaterFactory questProgressUpdaterFactory;
-        private QuestProgressUpdater currentQuestProgressUpdater;
-        
-        
+
+
         public GameplayQuestTracker(QuestService questService, QuestProgressUpdaterFactory questProgressUpdaterFactory)
         {
             this.questService = questService;
             this.questProgressUpdaterFactory = questProgressUpdaterFactory;
         }
-        
 
 
-        public void TrackCurrentQuest()
+
+        public void TrackQuests()
         {
-            currentQuestProgressUpdater = questProgressUpdaterFactory.CreateQuestProgressUpdaterByQuest(questService.CurrentQuestData);
-            currentQuestProgressUpdater.Init();
+            foreach (QuestDataBase quest in questService.SelectedQuests)
+            {
+                QuestProgressUpdater currentQuestProgressUpdater =
+                    questProgressUpdaterFactory.CreateQuestProgressUpdaterByQuest(quest);
+                currentQuestProgressUpdater.Init();
+                Debug.Log("Inited");
+            }
         }
     }
 }

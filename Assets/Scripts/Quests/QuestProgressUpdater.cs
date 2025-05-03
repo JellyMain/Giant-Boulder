@@ -1,18 +1,17 @@
 using Progress;
+using UnityEngine;
 
 
 namespace Quests
 {
     public abstract class QuestProgressUpdater
     {
-        protected readonly QuestData questData;
         private readonly SaveLoadService saveLoadService;
         protected bool isCompleted;
-        
 
-        protected QuestProgressUpdater(QuestData questData, SaveLoadService saveLoadService)
+
+        protected QuestProgressUpdater(SaveLoadService saveLoadService)
         {
-            this.questData = questData;
             this.saveLoadService = saveLoadService;
         }
 
@@ -22,7 +21,7 @@ namespace Quests
             saveLoadService.RegisterSceneObject(this);
         }
 
+
         public abstract void UpdateProgress();
-        
     }
 }
