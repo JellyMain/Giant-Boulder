@@ -66,7 +66,7 @@ namespace Factories
         public async UniTaskVoid CreateStatisticsWindow()
         {
             GameObject statisticsWindowPrefab =
-                await assetProvider.LoadAsset<GameObject>(RuntimeConstants.PrefabAddresses.STATISTICS_WINDOW);
+                await assetProvider.LoadAsset<GameObject>(RuntimeConstants.PrefabAddresses.STATISTICS_WINDOW_UI);
 
             diContainer.InstantiatePrefab(statisticsWindowPrefab, uiRoot);
         }

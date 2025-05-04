@@ -65,7 +65,7 @@ namespace Infrastructure.Installers.Scene
 
         private void BindGameplayQuestTracker()
         {
-            Container.Bind<GameplayQuestTracker>().AsSingle().NonLazy();
+            Container.BindInterfacesAndSelfTo<GameplayQuestTracker>().AsSingle().NonLazy();
         }
 
 

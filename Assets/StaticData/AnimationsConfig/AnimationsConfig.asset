@@ -13,6 +13,8 @@ MonoBehaviour:
   m_Name: AnimationsConfig
   m_EditorClassIdentifier: 
   rageScaleAnimations:
+    scaleAppearDelay: 1.5
+    scaleAppearTime: 1.5
     scaleAnimationTime: 1
     mlTextFadeTime: 1
     mlObjectDisappearTime: 0.5
@@ -58,3 +60,8 @@ MonoBehaviour:
       m_ColorSpace: 0
       m_NumColorKeys: 4
       m_NumAlphaKeys: 2
+  questsPopupAnimations:
+    appearTime: 2
+    disappearTime: 2
+    pauseTime: 2
+    delay: 2

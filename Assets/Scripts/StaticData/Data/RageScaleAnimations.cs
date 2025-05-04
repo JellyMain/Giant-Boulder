@@ -6,6 +6,8 @@ namespace StaticData.Data
     [Serializable]
     public class RageScaleAnimations
     {
+        public float scaleAppearDelay = 1;
+        public float scaleAppearTime = 1.5f;
         public float scaleAnimationTime = 1;
         public float mlTextFadeTime = 1f;
         public float mlObjectDisappearTime = 1f;

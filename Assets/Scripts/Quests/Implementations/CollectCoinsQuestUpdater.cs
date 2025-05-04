@@ -11,8 +11,8 @@ namespace Quests.Implementations
     public class CollectCoinsQuestUpdater : QuestProgressUpdater, IDisposable, IProgressSaver, IProgressUpdater
     {
         private readonly GameCurrencyTracker gameCurrencyTracker;
-        private int collectedCoins;
         private readonly CollectCoinsQuestData collectCoinsQuestData;
+        private int collectedCoins;
 
 
         public CollectCoinsQuestUpdater(CollectCoinsQuestData collectCoinsQuestData, SaveLoadService saveLoadService,
@@ -39,15 +39,16 @@ namespace Quests.Implementations
         private void OnCoinAdded(int _, Vector3 __)
         {
             collectedCoins++;
-            UpdateProgress();
+            UpdateQuest();
         }
 
 
-        public override void UpdateProgress()
+        public override void UpdateQuest()
         {
             if (collectedCoins == collectCoinsQuestData.targetCoinsAmount)
             {
                 isCompleted = true;
+                QuestCompleted();
             }
         }
 
@@ -56,13 +57,18 @@ namespace Quests.Implementations
         {
             QuestsIdProgressDictionary progressDictionary = playerProgress.questsData.questsIdProgressDictionary;
 
-            if (collectCoinsQuestData.questPersistenceProgressType == QuestPersistenceProgressType.MultipleSessions)
+            switch (collectCoinsQuestData.questPersistenceProgressType)
             {
-                SaveMultipleSessionProgress(progressDictionary);
-            }
-            else
-            {
-                SaveSingleSessionProgress(progressDictionary);
+                case QuestPersistenceProgressType.MultipleSessions:
+                {
+                    SaveMultipleSessionProgress(progressDictionary);
+                    break;
+                }
+                case QuestPersistenceProgressType.OneSession:
+                {
+                    SaveSingleSessionProgress(progressDictionary);
+                    break;
+                }
             }
         }
 
@@ -71,13 +77,18 @@ namespace Quests.Implementations
         {
             QuestsIdProgressDictionary progressDictionary = playerProgress.questsData.questsIdProgressDictionary;
 
-            if (collectCoinsQuestData.questPersistenceProgressType == QuestPersistenceProgressType.MultipleSessions)
+            switch (collectCoinsQuestData.questPersistenceProgressType)
             {
-                UpdateMultipleSessionProgress(progressDictionary);
-            }
-            else
-            {
-                UpdateSingleSessionProgress();
+                case QuestPersistenceProgressType.MultipleSessions:
+                {
+                    UpdateMultipleSessionProgress(progressDictionary);
+                    break;
+                }
+                case QuestPersistenceProgressType.OneSession:
+                {
+                    UpdateSingleSessionProgress();
+                    break;
+                }
             }
         }
 
@@ -132,14 +143,7 @@ namespace Quests.Implementations
 
         private void UpdateMultipleSessionProgress(Dictionary<int, QuestProgress> progressDictionary)
         {
-            if (progressDictionary.TryGetValue(collectCoinsQuestData.uniqueId, out QuestProgress questProgress))
-            {
-                collectedCoins = questProgress.collectedCoins;
-            }
-            else
-            {
-                collectedCoins = 0;
-            }
+            collectedCoins = 0;
         }
 
 

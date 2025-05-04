@@ -8,14 +8,14 @@ using UnityEngine;
 
 namespace Quests.Implementations
 {
-    public class DestroyObjectsQuest : QuestProgressUpdater, IProgressSaver, IProgressUpdater
+    public class DestroyObjectsQuestUpdater : QuestProgressUpdater, IProgressSaver, IProgressUpdater
     {
-        private readonly DestroyObjectsQuestData destroyObjectsQuestData;
         private readonly DestroyedObjectsTracker destroyedObjectsTracker;
+        private readonly DestroyObjectsQuestData destroyObjectsQuestData;
         private int objectsCount;
 
 
-        public DestroyObjectsQuest(DestroyObjectsQuestData destroyObjectsQuestData, SaveLoadService saveLoadService,
+        public DestroyObjectsQuestUpdater(DestroyObjectsQuestData destroyObjectsQuestData, SaveLoadService saveLoadService,
             DestroyedObjectsTracker destroyedObjectsTracker) : base(saveLoadService)
         {
             this.destroyObjectsQuestData = destroyObjectsQuestData;
@@ -25,6 +25,7 @@ namespace Quests.Implementations
 
         public override void Init()
         {
+            base.Init();
             destroyedObjectsTracker.OnDestroyedObjectAdded += OnDestroyedObjectsAdded;
         }
 
@@ -34,16 +35,17 @@ namespace Quests.Implementations
             if (objectType == destroyObjectsQuestData.targetObjectType)
             {
                 objectsCount++;
-                UpdateProgress();
+                UpdateQuest();
             }
         }
 
 
-        public override void UpdateProgress()
+        public override void UpdateQuest()
         {
             if (objectsCount == destroyObjectsQuestData.targetObjectAmount)
             {
                 isCompleted = true;
+                QuestCompleted();
             }
         }
 
@@ -52,13 +54,18 @@ namespace Quests.Implementations
         {
             QuestsIdProgressDictionary progressDictionary = playerProgress.questsData.questsIdProgressDictionary;
 
-            if (destroyObjectsQuestData.questPersistenceProgressType == QuestPersistenceProgressType.MultipleSessions)
+            switch (destroyObjectsQuestData.questPersistenceProgressType)
             {
-                SaveMultipleSessionProgress(progressDictionary);
-            }
-            else
-            {
-                SaveSingleSessionProgress(progressDictionary);
+                case QuestPersistenceProgressType.MultipleSessions:
+                {
+                    SaveMultipleSessionProgress(progressDictionary);
+                    break;
+                }
+                case QuestPersistenceProgressType.OneSession:
+                {
+                    SaveSingleSessionProgress(progressDictionary);
+                    break;
+                }
             }
         }
 
@@ -67,13 +74,18 @@ namespace Quests.Implementations
         {
             QuestsIdProgressDictionary progressDictionary = playerProgress.questsData.questsIdProgressDictionary;
 
-            if (destroyObjectsQuestData.questPersistenceProgressType == QuestPersistenceProgressType.MultipleSessions)
+            switch (destroyObjectsQuestData.questPersistenceProgressType)
             {
-                UpdateMultipleSessionProgress(progressDictionary);
-            }
-            else
-            {
-                UpdateSingleSessionProgress();
+                case QuestPersistenceProgressType.MultipleSessions:
+                {
+                    UpdateMultipleSessionProgress(progressDictionary);
+                    break;
+                }
+                case QuestPersistenceProgressType.OneSession:
+                {
+                    UpdateSingleSessionProgress();
+                    break;
+                }
             }
         }
 
@@ -84,7 +96,6 @@ namespace Quests.Implementations
             if (progressDictionary.TryGetValue(destroyObjectsQuestData.uniqueId, out QuestProgress questProgress))
             {
                 questProgress.destroyedAmount += objectsCount;
-                Debug.Log($"Saved {questProgress.destroyedAmount} of {destroyObjectsQuestData.targetObjectType}");
             }
             else
             {
@@ -94,9 +105,6 @@ namespace Quests.Implementations
                         questState = QuestState.InProgress,
                         destroyedAmount = objectsCount
                     };
-
-                Debug.Log(
-                    $"Saved {progressDictionary[destroyObjectsQuestData.uniqueId].destroyedAmount} of {destroyObjectsQuestData.targetObjectType}");
             }
         }
 
@@ -132,14 +140,7 @@ namespace Quests.Implementations
 
         private void UpdateMultipleSessionProgress(Dictionary<int, QuestProgress> progressDictionary)
         {
-            if (progressDictionary.TryGetValue(destroyObjectsQuestData.uniqueId, out QuestProgress questProgress))
-            {
-                objectsCount = questProgress.destroyedAmount;
-            }
-            else
-            {
-                objectsCount = 0;
-            }
+            objectsCount = 0;
         }
 
 

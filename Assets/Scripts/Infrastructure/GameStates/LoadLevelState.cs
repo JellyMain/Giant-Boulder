@@ -27,7 +27,6 @@ namespace Infrastructure.GameStates
         private readonly SaveLoadService saveLoadService;
         private readonly GameStateMachine gameStateMachine;
         private readonly LevelCreationWatcher levelCreationWatcher;
-        private readonly GameplayQuestTracker gameplayQuestTracker;
         private readonly GrassSpawner grassSpawner;
         private readonly ChunkUpdater chunkUpdater;
         private readonly ScoreTracker scoreTracker;
@@ -36,7 +35,7 @@ namespace Infrastructure.GameStates
         public LoadLevelState(SceneLoader sceneLoader, MapCreator mapCreator, PlayerFactory playerFactory,
             CameraCreator cameraCreator, StructureSpawner structureSpawner, GameplayUIFactory gameplayUIFactory,
             SaveLoadService saveLoadService, GameStateMachine gameStateMachine,
-            LevelCreationWatcher levelCreationWatcher, GameplayQuestTracker gameplayQuestTracker, GrassSpawner grassSpawner)
+            LevelCreationWatcher levelCreationWatcher, GrassSpawner grassSpawner)
         {
             this.sceneLoader = sceneLoader;
             this.mapCreator = mapCreator;
@@ -47,7 +46,6 @@ namespace Infrastructure.GameStates
             this.saveLoadService = saveLoadService;
             this.gameStateMachine = gameStateMachine;
             this.levelCreationWatcher = levelCreationWatcher;
-            this.gameplayQuestTracker = gameplayQuestTracker;
             this.grassSpawner = grassSpawner;
         }
 
@@ -63,6 +61,8 @@ namespace Infrastructure.GameStates
 
         private async UniTask CreateLevel()
         {
+            CreateUIParent();
+
             CreateMap();
 
             GameObject player = await CreatePlayerWithControls();
@@ -71,14 +71,25 @@ namespace Infrastructure.GameStates
 
             CreateScoreAndCurrencyUI().Forget();
             CreateRageScaleUI();
+            CreateQuestsPopupUI();
 
             gameplayUIFactory.CreateGameTimerUI().Forget();
 
             CreateStructures();
 
             levelCreationWatcher.LevelCreated();
-            
-            gameplayQuestTracker.TrackQuests();
+        }
+
+
+        private void CreateQuestsPopupUI()
+        {
+            gameplayUIFactory.CreateQuestsPopupWindowUI().Forget();
+        }
+
+
+        private void CreateUIParent()
+        {
+            gameplayUIFactory.CreateUIParent();
         }
 
 
@@ -95,7 +106,7 @@ namespace Infrastructure.GameStates
         }
 
 
-       
+
 
         private void CreateCameras()
         {

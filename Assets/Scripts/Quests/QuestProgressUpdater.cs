@@ -1,3 +1,4 @@
+using System;
 using Progress;
 using UnityEngine;
 
@@ -8,6 +9,7 @@ namespace Quests
     {
         private readonly SaveLoadService saveLoadService;
         protected bool isCompleted;
+        public event Action<QuestProgressUpdater> OnQuestCompleted;
 
 
         protected QuestProgressUpdater(SaveLoadService saveLoadService)
@@ -22,6 +24,12 @@ namespace Quests
         }
 
 
-        public abstract void UpdateProgress();
+        protected void QuestCompleted()
+        {
+            OnQuestCompleted?.Invoke(this);
+        }
+
+
+        public abstract void UpdateQuest();
     }
 }

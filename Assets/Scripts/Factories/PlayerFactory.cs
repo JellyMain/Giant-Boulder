@@ -30,7 +30,24 @@ namespace Factories
             GameObject playerPrefab =
                 await assetProvider.LoadAsset<GameObject>(RuntimeConstants.PrefabAddresses.PLAYER);
 
-            GameObject spawnedPlayer = diContainer.InstantiatePrefab(playerPrefab, position, Quaternion.identity,
+
+            Vector3 rayStart = position + Vector3.up * 1000;
+
+            int groundLayerMask = 1 << LayerMask.NameToLayer(RuntimeConstants.Layers.GROUND_LAYER);
+            ;
+
+            Vector3 spawnPosition = position;
+
+            if (Physics.Raycast(rayStart, Vector3.down, out RaycastHit hit, Mathf.Infinity, groundLayerMask))
+            {
+                spawnPosition = hit.point + Vector3.up;
+            }
+            else
+            {
+                Debug.LogError("Didn't found ground under player");
+            }
+
+            GameObject spawnedPlayer = diContainer.InstantiatePrefab(playerPrefab, spawnPosition, Quaternion.identity,
                 new GameObject("Player").transform);
 
             ThirdPersonCameraController cameraController = spawnedPlayer.GetComponent<ThirdPersonCameraController>();

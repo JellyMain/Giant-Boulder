@@ -42,13 +42,11 @@ namespace Progress
             if (service is IProgressSaver progressSaver)
             {
                 sceneProgressSavers.Add(progressSaver);
-                Debug.Log($"Savers: {sceneProgressSavers.Count}" );
             }
 
             if (service is IProgressUpdater progressUpdater)
             {
                 sceneProgressUpdaters.Add(progressUpdater);
-                Debug.Log($"Updaters: {sceneProgressUpdaters.Count}" );
             }
         }
 

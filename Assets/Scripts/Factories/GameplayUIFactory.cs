@@ -5,6 +5,7 @@ using Const;
 using Cysharp.Threading.Tasks;
 using Infrastructure.Services;
 using UI;
+using UI.Gameplay;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
 using Zenject;
@@ -26,7 +27,7 @@ namespace Factories
         }
 
 
-        private void CreateUIParent()
+        public void CreateUIParent()
         {
             if (uiParent == null)
             {
@@ -35,9 +36,28 @@ namespace Factories
         }
 
 
+        public async UniTaskVoid CreateQuestsPopupWindowUI()
+        {
+            GameObject questsPopupWindowUIPrefab =
+                await assetProvider.LoadAsset<GameObject>(RuntimeConstants.PrefabAddresses.QUESTS_POPUP_WINDOW_UI);
+
+            diContainer.InstantiatePrefab(questsPopupWindowUIPrefab, uiParent);
+        }
+
+
+        public async UniTask<QuestPopupUI> CreateQuestPopupUI(Transform parent, Vector3 position)
+        {
+            GameObject questPopupUIPrefab =
+                await assetProvider.LoadAsset<GameObject>(RuntimeConstants.PrefabAddresses.QUEST_POPUP_UI);
+
+            return diContainer.InstantiatePrefab(questPopupUIPrefab, position, Quaternion.identity, parent)
+                .GetComponent<QuestPopupUI>();
+        }
+
+
+
         public async UniTask<PlayerControlsUI> CreatePlayerControlsUI()
         {
-            CreateUIParent();
             GameObject playerControlsUIPrefab =
                 await assetProvider.LoadAsset<GameObject>(RuntimeConstants.PrefabAddresses.PLAYER_CONTROLS_UI);
 
@@ -45,11 +65,8 @@ namespace Factories
         }
 
 
-
         public async UniTask<GameObject> CreateScoreAndCurrencyUI(Camera uiCamera)
         {
-            CreateUIParent();
-
             GameObject scoreAndCurrencyUIPrefab =
                 await assetProvider.LoadAsset<GameObject>(RuntimeConstants.PrefabAddresses.SCORE_AND_CURRENCY_UI);
 
@@ -64,8 +81,6 @@ namespace Factories
 
         public async UniTaskVoid CreateGameTimerUI()
         {
-            CreateUIParent();
-
             GameObject gameTimerUIPrefab =
                 await assetProvider.LoadAsset<GameObject>(RuntimeConstants.PrefabAddresses.GAME_TIMER_UI);
 
@@ -75,8 +90,6 @@ namespace Factories
 
         public async UniTaskVoid CreateGameOverWindow()
         {
-            CreateUIParent();
-
             GameObject gameOverWindowUIPrefab =
                 await assetProvider.LoadAsset<GameObject>(RuntimeConstants.PrefabAddresses.GAME_OVER_WINDOW_UI);
 
@@ -86,8 +99,6 @@ namespace Factories
 
         public async UniTaskVoid CreateRageScaleUI()
         {
-            CreateUIParent();
-
             GameObject rageScaleUIPrefab =
                 await assetProvider.LoadAsset<GameObject>(RuntimeConstants.PrefabAddresses.RAGE_SCALE_UI);
 

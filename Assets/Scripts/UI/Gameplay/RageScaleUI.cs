@@ -15,16 +15,18 @@ namespace UI.Gameplay
     {
         [SerializeField] private Image scaleFiller;
         [SerializeField] private Dictionary<int, StageMultipliersUI> stageMultipliersMap;
+        [SerializeField] private RectTransform rageScaleEndPosition;
+        [SerializeField] private RectTransform rageScaleUI;
         private StageMultipliersUI currentStageMultipliersUI;
         private RageScale rageScale;
-        private AnimationsConfig animationsConfig;
+        private RageScaleAnimations rageScaleAnimations;
 
 
         [Inject]
         private void Construct(RageScale rageScale, StaticDataService staticDataService)
         {
             this.rageScale = rageScale;
-            animationsConfig = staticDataService.AnimationsConfig;
+            rageScaleAnimations = staticDataService.AnimationsConfig.rageScaleAnimations;
         }
 
 
@@ -50,6 +52,14 @@ namespace UI.Gameplay
         {
             SetStageMultipliers();
             scaleFiller.fillAmount = 0;
+            AnimateAppear();
+        }
+
+
+        private void AnimateAppear()
+        {
+            rageScaleUI.DOMove(rageScaleEndPosition.position, rageScaleAnimations.scaleAppearTime)
+                .SetDelay(rageScaleAnimations.scaleAppearDelay).SetEase(Ease.OutQuart);
         }
 
 
@@ -89,7 +99,7 @@ namespace UI.Gameplay
         {
             float normalizedScaleScore = rageScale.GetNormalizedScaleScore();
             DOTween.To(() => scaleFiller.fillAmount, x => scaleFiller.fillAmount = x, normalizedScaleScore,
-                animationsConfig.rageScaleAnimations.scaleAnimationTime).SetEase(Ease.OutElastic);
+                rageScaleAnimations.scaleAnimationTime).SetEase(Ease.OutElastic);
         }
     }
 }

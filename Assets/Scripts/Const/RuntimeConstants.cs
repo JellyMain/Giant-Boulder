@@ -7,6 +7,7 @@ namespace Const
             public const string PLAYER_PROGRESS_KEY = "PlayerProgressKey";
         }
 
+        
         public static class PrefabAddresses
         {
             public const string VIRTUAL_CAMERA = "VirtualCamera";
@@ -23,7 +24,9 @@ namespace Const
             public const string PLAYER = "Player";
             public const string MOUNTAINS = "Mountains";
             public const string GRASS_MESH = "";
-            public const string STATISTICS_WINDOW = "StatisticsWindow";
+            public const string STATISTICS_WINDOW_UI = "StatisticsWindowUI";
+            public const string QUESTS_POPUP_WINDOW_UI = "QuestsPopupWindowUI";
+            public const string QUEST_POPUP_UI = "QuestPopupUI";
         }
 
 
@@ -46,6 +49,7 @@ namespace Const
             public const string UI_CAMERA = "UICamera";
         }
 
+        
         public static class Layers
         {
             public const string COIN_LAYER = "Coin";

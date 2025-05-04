@@ -19,7 +19,7 @@ namespace UI.Gameplay
         [SerializeField] private TMP_Text animatedScoreTextPrefab;
         private ScoreTracker scoreTracker;
         private GameConfig gameConfig;
-        private AnimationsConfig animationsConfig;
+        private ScoreAnimations scoreAnimations;
         private Camera uiCamera;
         private RageScale rageScale;
         private DOTweenTMPAnimator scoreTextAnimator;
@@ -30,7 +30,7 @@ namespace UI.Gameplay
         {
             this.scoreTracker = scoreTracker;
             gameConfig = staticDataService.GameConfig;
-            animationsConfig = staticDataService.AnimationsConfig;
+            scoreAnimations = staticDataService.AnimationsConfig.scoreAnimations;
         }
 
 
@@ -64,26 +64,26 @@ namespace UI.Gameplay
                 new Vector3(mainCameraScreenPos.x, mainCameraScreenPos.y, canvasPlaneDistance)
             );
 
-            float randomRotation = Random.Range(animationsConfig.scoreAnimations.minScoreTextRotation,
-                animationsConfig.scoreAnimations.maxScoreTextRotation);
+            float randomRotation = Random.Range(scoreAnimations.minScoreTextRotation,
+                scoreAnimations.maxScoreTextRotation);
 
             TMP_Text spawnedScoreText = Instantiate(animatedScoreTextPrefab, uiCameraWorldPos,
                 Quaternion.Euler(0, 0, randomRotation), animatedScoreTextParent);
 
             spawnedScoreText.text = scoreValue.ToString();
             float normalizedScoreValue = (float)scoreValue / gameConfig.maxScoreForObject;
-            spawnedScoreText.color = animationsConfig.scoreAnimations.scoreGradient.Evaluate(normalizedScoreValue);
+            spawnedScoreText.color = scoreAnimations.scoreGradient.Evaluate(normalizedScoreValue);
 
             Sequence sequence = DOTween.Sequence();
 
-            float scaleValue = Mathf.Lerp(animationsConfig.scoreAnimations.scoreMinScale,
-                animationsConfig.scoreAnimations.scoreMaxScale, normalizedScoreValue);
-            float disappearTime = Mathf.Lerp(animationsConfig.scoreAnimations.scoreMinDisappearTime,
-                animationsConfig.scoreAnimations.scoreMaxDisappearTime,
+            float scaleValue = Mathf.Lerp(scoreAnimations.scoreMinScale,
+                scoreAnimations.scoreMaxScale, normalizedScoreValue);
+            float disappearTime = Mathf.Lerp(scoreAnimations.scoreMinDisappearTime,
+                scoreAnimations.scoreMaxDisappearTime,
                 normalizedScoreValue);
 
             sequence.Insert(0,
-                spawnedScoreText.DOScale(scaleValue, animationsConfig.scoreAnimations.spawnedTextAppearTime).From(0));
+                spawnedScoreText.DOScale(scaleValue, scoreAnimations.spawnedTextAppearTime).From(0));
             sequence.Append(spawnedScoreText.DOScale(0, disappearTime));
             sequence.OnComplete(() => { Destroy(spawnedScoreText.gameObject); });
 
@@ -110,8 +110,7 @@ namespace UI.Gameplay
                         continue;
                     }
 
-                    scoreTextAnimator.DOPunchCharScale(i, 0.3f,
-                        animationsConfig.scoreAnimations.scoreTextScalePunchScaleTime);
+                    scoreTextAnimator.DOPunchCharScale(i, 0.3f, scoreAnimations.scoreTextScalePunchScaleTime);
                 }
             }
         }

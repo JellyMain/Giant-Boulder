@@ -1,4 +1,4 @@
-namespace Quests
+namespace Quests.Enums
 {
     public enum QuestPersistenceProgressType
     {

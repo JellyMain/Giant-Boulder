@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using Factories;
 using StaticData.Services;
 using Structures;
@@ -25,13 +26,15 @@ namespace Quests
         {
             List<QuestDataBase> allQuests = staticDataService.QuestsConfig.quests;
 
-            for (int i = 0; i < 3; i++)
+            List<QuestDataBase> allQuestsCopy = new List<QuestDataBase>(allQuests);
+
+            for (int i = allQuestsCopy.Count - 1; i > 0; i--)
             {
-                int randomIndex = Random.Range(0, allQuests.Count);
-                QuestDataBase randomQuestDataBase = allQuests[randomIndex];
-                SelectedQuests.Add(randomQuestDataBase);
+                int j = Random.Range(0, i + 1);
+                (allQuestsCopy[i], allQuestsCopy[j]) = (allQuestsCopy[j], allQuestsCopy[i]);
             }
+            
+            SelectedQuests = allQuestsCopy.Take(3).ToList();
         }
-        
     }
 }

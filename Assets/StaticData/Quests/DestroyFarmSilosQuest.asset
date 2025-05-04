@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 712d753118764ac2b00bccc7c234b73e, type: 3}
   m_Name: DestroyFarmSilosQuest
   m_EditorClassIdentifier: 
-  uniqueId: 463798860
+  uniqueId: 794891660
   questTitle: Farm Silos
   questDescription: Destroy 5 farm silos
   reward: {fileID: 0}

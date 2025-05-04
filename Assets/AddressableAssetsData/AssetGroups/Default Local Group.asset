@@ -67,6 +67,11 @@ MonoBehaviour:
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 627c1b67a45a4c941b1e8b30dbe5c279
+    m_Address: QuestPopupUI
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 7cc80ec92946ba546ada686c2df5946d
     m_Address: MapConfigs
     m_ReadOnly: 0
@@ -79,7 +84,7 @@ MonoBehaviour:
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: b6b30ec62dce83b408ad081d1cb3e1c6
-    m_Address: StatisticsWindow
+    m_Address: StatisticsWindowUI
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
@@ -105,6 +110,11 @@ MonoBehaviour:
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: e120b03bf76edd64091231f4ad13b744
     m_Address: PlayerControlsUI
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: e87deb6b1449131438114dd60eedd4b8
+    m_Address: QuestsPopupWindowUI
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0

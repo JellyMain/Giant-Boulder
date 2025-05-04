@@ -33,7 +33,7 @@ namespace Factories
                 }
                 case DestroyObjectsQuestData destroyObjectsQuestData:
                 {
-                    return new DestroyObjectsQuest(destroyObjectsQuestData, saveLoadService, destroyedObjectsTracker);
+                    return new DestroyObjectsQuestUpdater(destroyObjectsQuestData, saveLoadService, destroyedObjectsTracker);
                 }
                 default:
                 {
