@@ -10,29 +10,29 @@ namespace Quests.Implementations
 {
     public class CollectCoinsQuestUpdater : QuestProgressUpdater, IDisposable, IProgressSaver, IProgressUpdater
     {
-        private readonly GameCurrencyTracker gameCurrencyTracker;
         private readonly CollectCoinsQuestData collectCoinsQuestData;
+        private GameCurrencyTracker gameCurrencyTracker;
         private int collectedCoins;
 
 
-        public CollectCoinsQuestUpdater(CollectCoinsQuestData collectCoinsQuestData, SaveLoadService saveLoadService,
-            GameCurrencyTracker gameCurrencyTracker) : base(saveLoadService)
+        public CollectCoinsQuestUpdater(CollectCoinsQuestData collectCoinsQuestData, SaveLoadService saveLoadService) :
+            base(saveLoadService)
         {
-            this.gameCurrencyTracker = gameCurrencyTracker;
             this.collectCoinsQuestData = collectCoinsQuestData;
-        }
-
-
-        public override void Init()
-        {
-            base.Init();
-            gameCurrencyTracker.OnCoinAdded += OnCoinAdded;
         }
 
 
         public void Dispose()
         {
             gameCurrencyTracker.OnCoinAdded -= OnCoinAdded;
+        }
+
+
+        public override void StartTracking(QuestDependencies questDependencies)
+        {
+            base.StartTracking(questDependencies);
+            gameCurrencyTracker = questDependencies.gameCurrencyTracker;
+            gameCurrencyTracker.OnCoinAdded += OnCoinAdded;
         }
 
 
@@ -43,12 +43,13 @@ namespace Quests.Implementations
         }
 
 
+
         public override void UpdateQuest()
         {
             if (collectedCoins == collectCoinsQuestData.targetCoinsAmount)
             {
                 isCompleted = true;
-                QuestCompleted();
+                QuestCompleted(collectCoinsQuestData);
             }
         }
 
@@ -98,7 +99,7 @@ namespace Quests.Implementations
         {
             if (progressDictionary.TryGetValue(collectCoinsQuestData.uniqueId, out QuestProgress questProgress))
             {
-                questProgress.collectedCoins += collectedCoins;
+                questProgress.collectedCoins = collectedCoins;
             }
             else
             {
@@ -143,7 +144,14 @@ namespace Quests.Implementations
 
         private void UpdateMultipleSessionProgress(Dictionary<int, QuestProgress> progressDictionary)
         {
-            collectedCoins = 0;
+            if (progressDictionary.TryGetValue(collectCoinsQuestData.uniqueId, out QuestProgress questProgress))
+            {
+                collectedCoins = questProgress.collectedCoins;
+            }
+            else
+            {
+                collectedCoins = 0;
+            }
         }
 
 

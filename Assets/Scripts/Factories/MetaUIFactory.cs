@@ -14,17 +14,17 @@ namespace Factories
     public class MetaUIFactory
     {
         private readonly AssetProvider assetProvider;
-        private readonly QuestService questService;
+        private readonly QuestsService questsService;
         private readonly SaveLoadService saveLoadService;
         private readonly DiContainer diContainer;
         private Transform uiRoot;
 
 
-        public MetaUIFactory(AssetProvider assetProvider, QuestService questService, SaveLoadService saveLoadService,
+        public MetaUIFactory(AssetProvider assetProvider, QuestsService questsService, SaveLoadService saveLoadService,
             DiContainer diContainer)
         {
             this.assetProvider = assetProvider;
-            this.questService = questService;
+            this.questsService = questsService;
             this.saveLoadService = saveLoadService;
             this.diContainer = diContainer;
         }

@@ -20,13 +20,14 @@ namespace UI.Gameplay
         private GameplayUIFactory gameplayUIFactory;
         private QuestsPopupAnimations questsPopupAnimations;
         private GameplayQuestTracker gameplayQuestTracker;
+        private QuestsService questsService;
 
 
         [Inject]
         private void Construct(GameplayUIFactory gameplayUIFactory, StaticDataService staticDataService,
-            GameplayQuestTracker gameplayQuestTracker)
+            QuestsService questsService)
         {
-            this.gameplayQuestTracker = gameplayQuestTracker;
+            this.questsService = questsService;
             this.gameplayUIFactory = gameplayUIFactory;
             questsPopupAnimations = staticDataService.AnimationsConfig.questsPopupAnimations;
         }
@@ -49,7 +50,7 @@ namespace UI.Gameplay
 
         private void SubscribeOnTrackedQuests()
         {
-            foreach (QuestProgressUpdater questProgressUpdater in gameplayQuestTracker.TrackedQuests.Keys)
+            foreach (QuestProgressUpdater questProgressUpdater in questsService.SelectedQuests.Values)
             {
                 questProgressUpdater.OnQuestCompleted += OnQuestCompleted;
             }
@@ -58,16 +59,15 @@ namespace UI.Gameplay
 
         private void UnsubscribeFromTrackedQuests()
         {
-            foreach (QuestProgressUpdater questProgressUpdater in gameplayQuestTracker.TrackedQuests.Keys)
+            foreach (QuestProgressUpdater questProgressUpdater in questsService.SelectedQuests.Values)
             {
                 questProgressUpdater.OnQuestCompleted -= OnQuestCompleted;
             }
         }
 
 
-        private void OnQuestCompleted(QuestProgressUpdater questProgressUpdater)
+        private void OnQuestCompleted(QuestData questData)
         {
-            QuestDataBase questData = gameplayQuestTracker.TrackedQuests[questProgressUpdater];
             ShowCompletedQuest(questData);
         }
 
@@ -81,7 +81,7 @@ namespace UI.Gameplay
         }
 
 
-        private async void ShowCompletedQuest(QuestDataBase completedQuest)
+        private async void ShowCompletedQuest(QuestData completedQuest)
         {
             QuestPopupUI questPopupUI = await gameplayUIFactory.CreateQuestPopupUI(transform, popupSpawnPoint.position);
             questPopupUI.InitWithCompletedQuest(completedQuest);
@@ -92,7 +92,7 @@ namespace UI.Gameplay
         private void AnimatePopup(QuestPopupUI questPopupUI)
         {
             Sequence sequence = DOTween.Sequence();
-            
+
             sequence.Append(questPopupUI.transform.DOMove(popupEndPoint.position, questsPopupAnimations.appearTime)
                 .SetEase(Ease.InOutElastic));
             sequence.AppendInterval(questsPopupAnimations.pauseTime);

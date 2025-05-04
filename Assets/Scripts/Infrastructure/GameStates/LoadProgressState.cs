@@ -18,19 +18,19 @@ namespace Infrastructure.GameStates
         private readonly StaticDataService staticDataService;
         private readonly SaveLoadService saveLoadService;
         private readonly PersistentPlayerProgress persistentPlayerProgress;
-        private readonly QuestService questService;
+        private readonly QuestsService questsService;
         private readonly SceneLoader sceneLoader;
 
 
         public LoadProgressState(GameStateMachine gameStateMachine, StaticDataService staticDataService,
             SaveLoadService saveLoadService, PersistentPlayerProgress persistentPlayerProgress,
-            QuestService questService, SceneLoader sceneLoader)
+            QuestsService questsService, SceneLoader sceneLoader)
         {
             this.gameStateMachine = gameStateMachine;
             this.staticDataService = staticDataService;
             this.saveLoadService = saveLoadService;
             this.persistentPlayerProgress = persistentPlayerProgress;
-            this.questService = questService;
+            this.questsService = questsService;
             this.sceneLoader = sceneLoader;
         }
 
@@ -39,7 +39,7 @@ namespace Infrastructure.GameStates
         {
             await staticDataService.LoadStaticData();
             LoadSavesOrCreateNew();
-            questService.SetRandomQuests();
+            questsService.SetRandomQuests();
             sceneLoader.Load(RuntimeConstants.Scenes.MAIN_MENU_SCENE, () => gameStateMachine.Enter<LoadMetaState>());
         }
 

@@ -1,4 +1,5 @@
 using System;
+using System.Linq;
 using Quests;
 using TMPro;
 using UnityEngine;
@@ -13,24 +14,24 @@ namespace UI.Gameplay
         [SerializeField] private Image icon;
         [SerializeField] private Image completedIcon;
         [SerializeField] private TMP_Text questDescriptionText;
-        private QuestService questService;
+        private QuestsService questsService;
         
 
         [Inject]
-        private void Construct(QuestService questService)
+        private void Construct(QuestsService questsService)
         {
-            this.questService = questService;
+            this.questsService = questsService;
         }
 
         
         public void InitMainQuest()
         {
-            QuestDataBase questData = questService.SelectedQuests[0];
+            QuestData questData = questsService.SelectedQuests.Keys.First();
             questDescriptionText.text = questData.questDescription;
         }
 
 
-        public void InitWithCompletedQuest(QuestDataBase completedQuest)
+        public void InitWithCompletedQuest(QuestData completedQuest)
         {
             icon.gameObject.SetActive(false);
             completedIcon.gameObject.SetActive(true);

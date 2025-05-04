@@ -29,19 +29,19 @@ namespace UI.Meta.Quests
         }
 
 
-        public void SetQuestData(QuestDataBase questDataBase)
+        public void SetQuestData(QuestData questData)
         {
-            titleText.text = questDataBase.questTitle;
-            descriptionText.text = questDataBase.questDescription;
-            Instantiate(questDataBase.rewardUIObject, rewardObjectParent);
+            titleText.text = questData.questTitle;
+            descriptionText.text = questData.questDescription;
+            Instantiate(questData.rewardUIObject, rewardObjectParent);
 
-            UpdateQuestProgress(questDataBase);
+            UpdateQuestProgress(questData);
         }
 
 
-        private void UpdateQuestProgress(QuestDataBase questDataBase)
+        private void UpdateQuestProgress(QuestData questData)
         {
-            switch (questDataBase)
+            switch (questData)
             {
                 case CollectCoinsQuestData collectCoinsQuestData:
                 {
@@ -56,7 +56,7 @@ namespace UI.Meta.Quests
 
                 default:
                 {
-                    Debug.LogWarning($"Unhandled quest type: {questDataBase.GetType()}");
+                    Debug.LogWarning($"Unhandled quest type: {questData.GetType()}");
                     break;
                 }
                     

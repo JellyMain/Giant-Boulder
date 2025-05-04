@@ -39,7 +39,6 @@ namespace Infrastructure.Installers.Scene
             BindScoreTracker();
             BindGameCurrencyTracker();
             BindGameplayQuestTracker();
-            BindQuestFactory();
             BindDestroyedObjectsTracker();
             BindGrassSpawner();
         }
@@ -55,13 +54,7 @@ namespace Infrastructure.Installers.Scene
         {
             Container.BindInterfacesAndSelfTo<DestroyedObjectsTracker>().AsSingle();
         }
-
-
-        private void BindQuestFactory()
-        {
-            Container.Bind<QuestProgressUpdaterFactory>().AsSingle();
-        }
-
+        
 
         private void BindGameplayQuestTracker()
         {

@@ -11,18 +11,20 @@ namespace DataTrackers
 {
     public class GameplayQuestTracker : IDisposable
     {
-        private readonly QuestService questService;
-        private readonly QuestProgressUpdaterFactory questProgressUpdaterFactory;
+        private readonly QuestsService questsService;
         private readonly LevelCreationWatcher levelCreationWatcher;
-        public Dictionary<QuestProgressUpdater, QuestDataBase > TrackedQuests { get; private set; }
-        
+        private readonly DestroyedObjectsTracker destroyedObjectsTracker;
+        private readonly GameCurrencyTracker gameCurrencyTracker;
 
-        public GameplayQuestTracker(QuestService questService, QuestProgressUpdaterFactory questProgressUpdaterFactory,
-            LevelCreationWatcher levelCreationWatcher)
+
+        public GameplayQuestTracker(QuestsService questsService,
+            LevelCreationWatcher levelCreationWatcher, DestroyedObjectsTracker destroyedObjectsTracker,
+            GameCurrencyTracker gameCurrencyTracker)
         {
-            this.questService = questService;
-            this.questProgressUpdaterFactory = questProgressUpdaterFactory;
+            this.questsService = questsService;
             this.levelCreationWatcher = levelCreationWatcher;
+            this.destroyedObjectsTracker = destroyedObjectsTracker;
+            this.gameCurrencyTracker = gameCurrencyTracker;
 
             this.levelCreationWatcher.OnLevelCreated += TrackQuests;
         }
@@ -30,17 +32,13 @@ namespace DataTrackers
 
         private void TrackQuests()
         {
-            TrackedQuests = new Dictionary<QuestProgressUpdater, QuestDataBase>();
-            
-            foreach (QuestDataBase quest in questService.SelectedQuests)
+            foreach (QuestProgressUpdater questProgressUpdater in questsService.SelectedQuests.Values)
             {
-                
-                QuestProgressUpdater questProgressUpdater =
-                    questProgressUpdaterFactory.CreateQuestProgressUpdaterByQuest(quest);
-
-                TrackedQuests[questProgressUpdater] = quest;
-                
-                questProgressUpdater.Init();
+                questProgressUpdater.StartTracking(new QuestDependencies()
+                {
+                    destroyedObjectsTracker = destroyedObjectsTracker,
+                    gameCurrencyTracker = gameCurrencyTracker
+                });
             }
         }
 
@@ -48,7 +46,6 @@ namespace DataTrackers
         public void Dispose()
         {
             levelCreationWatcher.OnLevelCreated -= TrackQuests;
-            TrackedQuests.Clear();
         }
     }
 }

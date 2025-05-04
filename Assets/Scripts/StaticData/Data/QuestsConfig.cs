@@ -10,6 +10,6 @@ namespace StaticData.Data
     public class QuestsConfig : ScriptableObject
     {
         [AssetList(Path = "StaticData/Quests", AutoPopulate = true)]
-        public List<QuestDataBase> quests;
+        public List<QuestData> quests;
     }
 }

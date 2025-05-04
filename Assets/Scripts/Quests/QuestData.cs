@@ -6,7 +6,7 @@ using UnityEngine;
 
 namespace Quests
 {
-    public class QuestDataBase : ScriptableObject
+    public class QuestData : ScriptableObject
     {
         public int uniqueId;
         public string questTitle;

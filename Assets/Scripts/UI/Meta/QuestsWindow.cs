@@ -15,15 +15,15 @@ namespace UI.Meta
     {
         [SerializeField] private Transform questsContainer;
         [SerializeField] private Canvas canvas;
-        private QuestService questService;
+        private QuestsService questsService;
         private MetaUIFactory metaUIFactory;
 
 
 
         [Inject]
-        private void Construct(QuestService questService, MetaUIFactory metaUIFactory)
+        private void Construct(QuestsService questsService, MetaUIFactory metaUIFactory)
         {
-            this.questService = questService;
+            this.questsService = questsService;
             this.metaUIFactory = metaUIFactory;
         }
 
@@ -38,7 +38,7 @@ namespace UI.Meta
 
         private async UniTaskVoid InitQuests()
         {
-            foreach (QuestDataBase quest in questService.SelectedQuests)
+            foreach (QuestData quest in questsService.SelectedQuests.Keys)
             {
                 QuestUI spawnedQuestUI = await metaUIFactory.CreateQuestUI(questsContainer);
                 spawnedQuestUI.SetQuestData(quest);

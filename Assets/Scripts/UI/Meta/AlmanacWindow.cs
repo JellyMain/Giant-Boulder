@@ -9,6 +9,6 @@ namespace UI.Meta
 {
     public class AlmanacWindow : WindowBase
     {
-        [SerializeField] private List<QuestDataBase> quests;
+        [SerializeField] private List<QuestData> quests;
     }
 }

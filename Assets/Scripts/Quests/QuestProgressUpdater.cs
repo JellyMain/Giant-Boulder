@@ -9,27 +9,27 @@ namespace Quests
     {
         private readonly SaveLoadService saveLoadService;
         protected bool isCompleted;
-        public event Action<QuestProgressUpdater> OnQuestCompleted;
+        public event Action<QuestData> OnQuestCompleted;
 
 
         protected QuestProgressUpdater(SaveLoadService saveLoadService)
         {
             this.saveLoadService = saveLoadService;
         }
+        
+
+        protected void QuestCompleted(QuestData questData)
+        {
+            OnQuestCompleted?.Invoke(questData);
+        }
 
 
-        public virtual void Init()
+        public virtual void StartTracking(QuestDependencies questDependencies)
         {
             saveLoadService.RegisterSceneObject(this);
         }
 
-
-        protected void QuestCompleted()
-        {
-            OnQuestCompleted?.Invoke(this);
-        }
-
-
+        
         public abstract void UpdateQuest();
     }
 }

@@ -60,7 +60,7 @@ namespace Infrastructure.Installers.Global
 
         private void BindQuestService()
         {
-            Container.BindInterfacesAndSelfTo<QuestService>().AsSingle().NonLazy();
+            Container.BindInterfacesAndSelfTo<QuestsService>().AsSingle().NonLazy();
         }
 
 

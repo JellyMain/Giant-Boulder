@@ -10,22 +10,22 @@ namespace Quests.Implementations
 {
     public class DestroyObjectsQuestUpdater : QuestProgressUpdater, IProgressSaver, IProgressUpdater
     {
-        private readonly DestroyedObjectsTracker destroyedObjectsTracker;
         private readonly DestroyObjectsQuestData destroyObjectsQuestData;
+        private DestroyedObjectsTracker destroyedObjectsTracker;
         private int objectsCount;
 
 
-        public DestroyObjectsQuestUpdater(DestroyObjectsQuestData destroyObjectsQuestData, SaveLoadService saveLoadService,
-            DestroyedObjectsTracker destroyedObjectsTracker) : base(saveLoadService)
+        public DestroyObjectsQuestUpdater(DestroyObjectsQuestData destroyObjectsQuestData,
+            SaveLoadService saveLoadService) : base(saveLoadService)
         {
             this.destroyObjectsQuestData = destroyObjectsQuestData;
-            this.destroyedObjectsTracker = destroyedObjectsTracker;
         }
 
 
-        public override void Init()
+        public override void StartTracking(QuestDependencies questDependencies)
         {
-            base.Init();
+            base.StartTracking(questDependencies);
+            destroyedObjectsTracker = questDependencies.destroyedObjectsTracker;
             destroyedObjectsTracker.OnDestroyedObjectAdded += OnDestroyedObjectsAdded;
         }
 
@@ -45,7 +45,7 @@ namespace Quests.Implementations
             if (objectsCount == destroyObjectsQuestData.targetObjectAmount)
             {
                 isCompleted = true;
-                QuestCompleted();
+                QuestCompleted(destroyObjectsQuestData);
             }
         }
 
@@ -95,7 +95,7 @@ namespace Quests.Implementations
         {
             if (progressDictionary.TryGetValue(destroyObjectsQuestData.uniqueId, out QuestProgress questProgress))
             {
-                questProgress.destroyedAmount += objectsCount;
+                questProgress.destroyedAmount = objectsCount;
             }
             else
             {
@@ -140,7 +140,14 @@ namespace Quests.Implementations
 
         private void UpdateMultipleSessionProgress(Dictionary<int, QuestProgress> progressDictionary)
         {
-            objectsCount = 0;
+            if (progressDictionary.TryGetValue(destroyObjectsQuestData.uniqueId, out QuestProgress questProgress))
+            {
+                objectsCount = questProgress.destroyedAmount;
+            }
+            else
+            {
+                objectsCount = 0;
+            }
         }
 
 
