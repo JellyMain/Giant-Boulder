@@ -10,6 +10,6 @@ namespace Progress
     {
         public QuestState questState;
         public int collectedCoins;
-        public int destroyedAmount;
+        public int destroyedObjects;
     }
 }

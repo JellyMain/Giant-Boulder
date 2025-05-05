@@ -3,9 +3,11 @@ using System.Collections.Generic;
 using System.Linq;
 using Factories;
 using Progress;
+using Quests.Enums;
 using Quests.Implementations;
 using StaticData.Services;
 using Structures;
+using UnityEngine;
 using Zenject;
 using Random = UnityEngine.Random;
 
@@ -16,42 +18,118 @@ namespace Quests
     {
         private readonly StaticDataService staticDataService;
         private readonly SaveLoadService saveLoadService;
+        private readonly PersistentPlayerProgress persistentPlayerProgress;
+        private List<QuestData> allQuests;
 
-        public Dictionary<QuestData, QuestProgressUpdater> SelectedQuests { get; private set; }
+        public Dictionary<QuestData, QuestProgressUpdater> SelectedQuests { get; private set; } =
+            new Dictionary<QuestData, QuestProgressUpdater>();
 
 
 
-        public QuestsService(StaticDataService staticDataService, SaveLoadService saveLoadService)
+        public QuestsService(StaticDataService staticDataService, SaveLoadService saveLoadService,
+            PersistentPlayerProgress persistentPlayerProgress)
         {
             this.staticDataService = staticDataService;
             this.saveLoadService = saveLoadService;
+            this.persistentPlayerProgress = persistentPlayerProgress;
         }
 
 
-
-        public void SetRandomQuests()
+        public void SetSavedQuests()
         {
-            SelectedQuests = new Dictionary<QuestData, QuestProgressUpdater>();
+            List<QuestData> savedQuests = TakeSavedQuests();
 
-            List<QuestData> allQuests = staticDataService.QuestsConfig.quests;
-
-            List<QuestData> allQuestsCopy = new List<QuestData>(allQuests);
-
-            for (int i = allQuestsCopy.Count - 1; i > 0; i--)
+            foreach (QuestData questData in savedQuests)
             {
-                int j = Random.Range(0, i + 1);
-                (allQuestsCopy[i], allQuestsCopy[j]) = (allQuestsCopy[j], allQuestsCopy[i]);
-            }
-
-            for (int i = 0; i < 3; i++)
-            {
-                QuestData questData = allQuestsCopy[i];
                 QuestProgressUpdater questProgressUpdater = CreateQuestProgressUpdaterByQuest(questData);
 
                 SelectedQuests[questData] = questProgressUpdater;
             }
         }
 
+        
+        public void SetNewQuests()
+        {
+            allQuests = staticDataService.QuestsConfig.quests;
+
+            for (int i = 0; i < 3; i++)
+            {
+                QuestData questData = TakeNewQuest();
+                QuestProgressUpdater questProgressUpdater = CreateQuestProgressUpdaterByQuest(questData);
+
+                SelectedQuests[questData] = questProgressUpdater;
+            }
+        }
+
+
+        
+        private List<QuestData> TakeSavedQuests()
+        {
+            QuestsIdProgressDictionary questsProgressDictionary =
+                persistentPlayerProgress.PlayerProgress.questsData.questsIdProgressDictionary;
+
+            allQuests = staticDataService.QuestsConfig.quests;
+
+            List<QuestData> questsInProgress = new List<QuestData>(3);
+
+            foreach (QuestData questData in allQuests)
+            {
+                int questId = questData.uniqueId;
+                QuestProgress questProgress = questsProgressDictionary.GetValueOrDefault(questId);
+
+                if (questProgress?.questState == QuestState.InProgress)
+                {
+                    questsInProgress.Add(questData);
+
+                    if (questsInProgress.Count == 3)
+                    {
+                        return questsInProgress;
+                    }
+                }
+            }
+
+            Debug.LogError($"There was found only {questsInProgress.Count} quests in progress");
+            return null;
+        }
+        
+        
+        public QuestData ReplaceQuest(QuestData questToReplace)
+        {
+            QuestData newQuest = TakeNewQuest();
+            SelectedQuests.Remove(questToReplace);
+
+            QuestProgressUpdater newQuestProgressUpdater = CreateQuestProgressUpdaterByQuest(newQuest);
+            SelectedQuests[newQuest] = newQuestProgressUpdater;
+
+            return newQuest;
+        }
+
+
+        private QuestData TakeNewQuest()
+        {
+            QuestsIdProgressDictionary questsProgressDictionary =
+                persistentPlayerProgress.PlayerProgress.questsData.questsIdProgressDictionary;
+
+            foreach (QuestData questData in allQuests)
+            {
+                int questId = questData.uniqueId;
+                QuestProgress questProgress = questsProgressDictionary.GetValueOrDefault(questId);
+
+                if (questProgress == null)
+                {
+                    questProgress = new QuestProgress()
+                    {
+                        questState = QuestState.InProgress
+                    };
+                    questsProgressDictionary[questId] = questProgress;
+
+                    return questData;
+                }
+            }
+
+            Debug.LogError("No free quests were found");
+            return null;
+        }
 
 
         private QuestProgressUpdater CreateQuestProgressUpdaterByQuest(QuestData questData)

@@ -10,11 +10,11 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: ac72eb750975491a905cdbbfefc634d1, type: 3}
-  m_Name: CoinsQuest
+  m_Name: Collect15Coins
   m_EditorClassIdentifier: 
-  uniqueId: 2011714212
+  uniqueId: 1686438160
   questTitle: Collect Coins
-  questDescription: Collect 30 coins in one run
+  questDescription: Collect 15 coins in one run
   reward: {fileID: 0}
   rewardUIObject: {fileID: 6938895415985954369, guid: 90f600ce8e5db324dab48c96d7806976, type: 3}
   questPersistenceProgressType: 1

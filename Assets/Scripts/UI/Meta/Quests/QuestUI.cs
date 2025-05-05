@@ -1,4 +1,6 @@
 using System;
+using System.Collections.Generic;
+using Coffee.UIEffects;
 using Progress;
 using Quests;
 using Quests.Enums;
@@ -18,8 +20,9 @@ namespace UI.Meta.Quests
         [SerializeField] private TMP_Text currentAmount;
         [SerializeField] private Transform rewardObjectParent;
         [SerializeField] private Image progressFill;
+        [SerializeField] private UIEffect progressBarEffect;
         private PersistentPlayerProgress persistentPlayerProgress;
-
+        public QuestData QuestData { get; private set; }
 
 
         [Inject]
@@ -31,6 +34,7 @@ namespace UI.Meta.Quests
 
         public void SetQuestData(QuestData questData)
         {
+            QuestData = questData;
             titleText.text = questData.questTitle;
             descriptionText.text = questData.questDescription;
             Instantiate(questData.rewardUIObject, rewardObjectParent);
@@ -59,38 +63,38 @@ namespace UI.Meta.Quests
                     Debug.LogWarning($"Unhandled quest type: {questData.GetType()}");
                     break;
                 }
-                    
             }
         }
 
 
         private void UpdateObjectsQuest(DestroyObjectsQuestData destroyObjectsQuest)
         {
-            int destroyedAmount = 0;
+            int questId = destroyObjectsQuest.uniqueId;
 
-            if (persistentPlayerProgress.PlayerProgress.questsData.questsIdProgressDictionary.TryGetValue(
-                    destroyObjectsQuest.uniqueId, out QuestProgress questProgress))
-            {
-                destroyedAmount = questProgress.destroyedAmount;
-            }
+            QuestProgress questProgress =
+                persistentPlayerProgress.PlayerProgress.questsData.questsIdProgressDictionary
+                    .GetValueOrDefault(questId);
 
-            currentAmount.text = destroyedAmount.ToString();
+            int destroyedObjects = questProgress?.destroyedObjects ?? 0;
+
+            currentAmount.text = destroyedObjects.ToString();
             targetAmount.text = destroyObjectsQuest.targetObjectAmount.ToString();
 
-            float normalizedProgress = (float)destroyedAmount / destroyObjectsQuest.targetObjectAmount;
+            float normalizedProgress = (float)destroyedObjects / destroyObjectsQuest.targetObjectAmount;
             progressFill.fillAmount = normalizedProgress;
         }
 
 
+
+
         private void UpdateCoinsQuest(CollectCoinsQuestData collectCoinsQuest)
         {
-            int collectedAmount = 0;
+            int questId = collectCoinsQuest.uniqueId;
 
-            if (persistentPlayerProgress.PlayerProgress.questsData.questsIdProgressDictionary.TryGetValue(
-                    collectCoinsQuest.uniqueId, out QuestProgress questProgress))
-            {
-                collectedAmount = questProgress.collectedCoins;
-            }
+            QuestProgress questProgress =
+                persistentPlayerProgress.PlayerProgress.questsData.questsIdProgressDictionary[questId];
+
+            int collectedAmount = questProgress?.collectedCoins ?? 0;
 
             currentAmount.text = collectedAmount.ToString();
             targetAmount.text = collectCoinsQuest.targetCoinsAmount.ToString();

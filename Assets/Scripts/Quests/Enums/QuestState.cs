@@ -4,6 +4,7 @@ namespace Quests.Enums
     {
         Inactive = 0,
         InProgress = 1,
-        Completed = 2
+        Completed = 2,
+        JustCompleted = 3
     }
 }

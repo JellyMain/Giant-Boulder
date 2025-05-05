@@ -5,6 +5,7 @@ using Factories;
 using Infrastructure.GameStates;
 using Infrastructure.Services;
 using Scenes;
+using UI.Meta.Quests;
 using UnityEngine;
 using UnityEngine.UI;
 using Zenject;

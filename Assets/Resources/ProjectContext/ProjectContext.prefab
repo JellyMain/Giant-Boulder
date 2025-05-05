@@ -88,4 +88,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f976cec901864d179e9a77c4290506ab, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  loadingScreen: {fileID: 6152007770490622351, guid: fbe358055102a1543bbc044116302a71, type: 3}
+  sessionSaveServicePrefab: {fileID: 7577784800868494327, guid: 8ba2f0f086d4eec448229dc15d0195ba, type: 3}
+  loadingScreenPrefab: {fileID: 6152007770490622351, guid: fbe358055102a1543bbc044116302a71, type: 3}

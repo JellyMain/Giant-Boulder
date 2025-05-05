@@ -18,7 +18,8 @@ namespace Infrastructure.Installers.Global
 {
     public class InfrastructureInstaller : MonoInstaller
     {
-        [SerializeField] private LoadingScreen loadingScreen;
+        [SerializeField] private SessionSaveService sessionSaveServicePrefab;
+        [SerializeField] private LoadingScreen loadingScreenPrefab;
 
 
         public override void InstallBindings()
@@ -37,14 +38,22 @@ namespace Infrastructure.Installers.Global
             BindAssetProvider();
             BindStatsTracker();
             BindCameraCreator();
+            BindSessionSaveService();
         }
 
-        
+
+        private void BindSessionSaveService()
+        {
+            Container.Bind<SessionSaveService>().FromComponentInNewPrefab(sessionSaveServicePrefab).AsSingle()
+                .NonLazy();
+        }
+
+
         private void BindCameraCreator()
         {
             Container.Bind<CameraCreator>().AsSingle();
         }
-        
+
 
         private void BindStatsTracker()
         {
@@ -92,8 +101,8 @@ namespace Infrastructure.Installers.Global
         {
             Container.Bind<SaveLoadService>().AsSingle();
         }
-        
-        
+
+
         private void BindInputService()
         {
             Container.Bind<IInput>().FromInstance(new PlayerInput.Services.PlayerInput());
@@ -108,7 +117,7 @@ namespace Infrastructure.Installers.Global
 
         private void CreateAndBindLoadingScreen()
         {
-            Container.Bind<LoadingScreen>().FromComponentInNewPrefab(loadingScreen).AsSingle().NonLazy();
+            Container.Bind<LoadingScreen>().FromComponentInNewPrefab(loadingScreenPrefab).AsSingle().NonLazy();
         }
 
 

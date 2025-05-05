@@ -2,7 +2,9 @@ using System;
 using System.Collections.Generic;
 using Factories;
 using GameLoop;
+using Progress;
 using Quests;
+using Quests.Enums;
 using UnityEngine;
 using Zenject;
 
@@ -15,16 +17,18 @@ namespace DataTrackers
         private readonly LevelCreationWatcher levelCreationWatcher;
         private readonly DestroyedObjectsTracker destroyedObjectsTracker;
         private readonly GameCurrencyTracker gameCurrencyTracker;
+        private readonly PersistentPlayerProgress persistentPlayerProgress;
 
 
         public GameplayQuestTracker(QuestsService questsService,
             LevelCreationWatcher levelCreationWatcher, DestroyedObjectsTracker destroyedObjectsTracker,
-            GameCurrencyTracker gameCurrencyTracker)
+            GameCurrencyTracker gameCurrencyTracker, PersistentPlayerProgress persistentPlayerProgress)
         {
             this.questsService = questsService;
             this.levelCreationWatcher = levelCreationWatcher;
             this.destroyedObjectsTracker = destroyedObjectsTracker;
             this.gameCurrencyTracker = gameCurrencyTracker;
+            this.persistentPlayerProgress = persistentPlayerProgress;
 
             this.levelCreationWatcher.OnLevelCreated += TrackQuests;
         }
@@ -32,9 +36,28 @@ namespace DataTrackers
 
         private void TrackQuests()
         {
-            foreach (QuestProgressUpdater questProgressUpdater in questsService.SelectedQuests.Values)
+            QuestsIdProgressDictionary questsProgressDictionary =
+                persistentPlayerProgress.PlayerProgress.questsData.questsIdProgressDictionary;
+
+            List<KeyValuePair<QuestData, QuestProgressUpdater>> questsPairs =
+                new List<KeyValuePair<QuestData, QuestProgressUpdater>>(questsService.SelectedQuests);
+
+            foreach (KeyValuePair<QuestData, QuestProgressUpdater> questPair in questsPairs)
             {
-                questProgressUpdater.StartTracking(new QuestDependencies()
+                QuestData questData = questPair.Key;
+                QuestProgressUpdater questProgressUpdater = questPair.Value;
+                int questId = questData.uniqueId;
+
+                QuestProgress questProgress = questsProgressDictionary.GetValueOrDefault(questId);
+
+
+                if (questProgress?.questState == QuestState.JustCompleted)
+                {
+                    QuestData newQuest = questsService.ReplaceQuest(questData);
+                    questProgressUpdater = questsService.SelectedQuests[newQuest];
+                }
+
+                questProgressUpdater.StartTracking(new QuestDependencies
                 {
                     destroyedObjectsTracker = destroyedObjectsTracker,
                     gameCurrencyTracker = gameCurrencyTracker

@@ -1,13 +1,10 @@
 using Const;
-using Cysharp.Threading.Tasks;
 using Infrastructure.GameStates.Interfaces;
 using Infrastructure.Services;
 using Progress;
 using Quests;
 using Scenes;
 using StaticData.Services;
-using UI;
-using UnityEngine;
 
 
 namespace Infrastructure.GameStates
@@ -39,15 +36,25 @@ namespace Infrastructure.GameStates
         {
             await staticDataService.LoadStaticData();
             LoadSavesOrCreateNew();
-            questsService.SetRandomQuests();
             sceneLoader.Load(RuntimeConstants.Scenes.MAIN_MENU_SCENE, () => gameStateMachine.Enter<LoadMetaState>());
         }
 
 
         private void LoadSavesOrCreateNew()
         {
-            persistentPlayerProgress.PlayerProgress = saveLoadService.LoadProgress() ?? CreateNewProgress();
+            persistentPlayerProgress.PlayerProgress = saveLoadService.LoadProgress();
+
+            if (persistentPlayerProgress.PlayerProgress == null)
+            {
+                persistentPlayerProgress.PlayerProgress = CreateNewProgress();
+                questsService.SetNewQuests();
+            }
+            else
+            {
+                questsService.SetSavedQuests();
+            }
         }
+
 
 
         private PlayerProgress CreateNewProgress()

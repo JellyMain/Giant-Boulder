@@ -95,8 +95,6 @@ namespace Progress
             return PlayerPrefs.GetString(RuntimeConstants.PlayerProgressKeys.PLAYER_PROGRESS_KEY)
                 ?.ToDeserialized<PlayerProgress>();
         }
-
-
-       
+        
     }
 }
