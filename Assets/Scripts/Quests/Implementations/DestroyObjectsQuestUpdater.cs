@@ -54,7 +54,7 @@ namespace Quests.Implementations
         {
             QuestsIdProgressDictionary progressDictionary = playerProgress.questsData.questsIdProgressDictionary;
 
-            int questId = destroyObjectsQuestData.uniqueId;
+            int questId = destroyObjectsQuestData.questId;
 
             QuestProgress updatedProgress = new QuestProgress()
             {
@@ -87,7 +87,7 @@ namespace Quests.Implementations
 
         private void UpdateMultipleSessionProgress(Dictionary<int, QuestProgress> progressDictionary)
         {
-            int questId = destroyObjectsQuestData.uniqueId;
+            int questId = destroyObjectsQuestData.questId;
 
             QuestProgress existingProgress = progressDictionary.GetValueOrDefault(questId);
 

@@ -44,7 +44,7 @@ namespace UI.Meta.Quests
         }
 
 
-        private async UniTaskVoid InitializeQuests()
+        private async UniTask InitializeQuests()
         {
             QuestsIdProgressDictionary questProgressDictionary =
                 persistentPlayerProgress.PlayerProgress.questsData.questsIdProgressDictionary;
@@ -61,7 +61,6 @@ namespace UI.Meta.Quests
                 initializedQuestsUI.Add(questUI);
                 index++;
                 
-                
                 await UniTask.WaitForSeconds(1);
             }
 
@@ -75,7 +74,7 @@ namespace UI.Meta.Quests
 
             foreach (QuestUI questUI in initializedQuestsUICopy)
             {
-                int questId = questUI.QuestData.uniqueId;
+                int questId = questUI.QuestData.questId;
 
                 QuestProgress questProgress = questProgressDictionary.GetValueOrDefault(questId);
 

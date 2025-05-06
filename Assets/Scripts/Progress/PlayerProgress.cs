@@ -1,4 +1,5 @@
 using System;
+using Upgrades;
 
 
 namespace Progress
@@ -10,6 +11,7 @@ namespace Progress
         public ScoreData scoreData;
         public QuestsData questsData;
         public StatsData statsData;
+        public UpgradesData upgradesData;
 
 
         public PlayerProgress()
@@ -18,6 +20,7 @@ namespace Progress
             scoreData = new ScoreData();
             questsData = new QuestsData();
             statsData = new StatsData();
+            upgradesData = new UpgradesData();
         }
         
     }

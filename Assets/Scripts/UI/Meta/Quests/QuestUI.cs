@@ -57,7 +57,6 @@ namespace UI.Meta.Quests
                     UpdateObjectsQuest(destroyObjectsQuestData);
                     break;
                 }
-
                 default:
                 {
                     Debug.LogWarning($"Unhandled quest type: {questData.GetType()}");
@@ -69,7 +68,7 @@ namespace UI.Meta.Quests
 
         private void UpdateObjectsQuest(DestroyObjectsQuestData destroyObjectsQuest)
         {
-            int questId = destroyObjectsQuest.uniqueId;
+            int questId = destroyObjectsQuest.questId;
 
             QuestProgress questProgress =
                 persistentPlayerProgress.PlayerProgress.questsData.questsIdProgressDictionary
@@ -89,7 +88,7 @@ namespace UI.Meta.Quests
 
         private void UpdateCoinsQuest(CollectCoinsQuestData collectCoinsQuest)
         {
-            int questId = collectCoinsQuest.uniqueId;
+            int questId = collectCoinsQuest.questId;
 
             QuestProgress questProgress =
                 persistentPlayerProgress.PlayerProgress.questsData.questsIdProgressDictionary[questId];

@@ -58,6 +58,10 @@ ShaderVariantCollection:
         passType: 0
       - keywords: SAMPLING_RGB_SHIFT
         passType: 0
+      - keywords: TARGET_HUE TRANSITION_PATTERN
+        passType: 0
+      - keywords: TARGET_LUMINANCE TRANSITION_PATTERN
+        passType: 0
       - keywords: TONE_GRAYSCALE
         passType: 0
       - keywords: TRANSITION_DISSOLVE

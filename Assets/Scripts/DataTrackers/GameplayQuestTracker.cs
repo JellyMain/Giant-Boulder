@@ -46,7 +46,7 @@ namespace DataTrackers
             {
                 QuestData questData = questPair.Key;
                 QuestProgressUpdater questProgressUpdater = questPair.Value;
-                int questId = questData.uniqueId;
+                int questId = questData.questId;
 
                 QuestProgress questProgress = questsProgressDictionary.GetValueOrDefault(questId);
 

@@ -8,7 +8,7 @@ namespace Quests
 {
     public class QuestData : ScriptableObject
     {
-        public int uniqueId;
+        public int questId;
         public string questTitle;
         public string questDescription;
         public StructureObject reward;
@@ -21,7 +21,7 @@ namespace Quests
 
         private void OnEnable()
         {
-            uniqueId = Mathf.Abs(name.GetHashCode());
+            questId = Mathf.Abs(name.GetHashCode());
         }
     }
 }

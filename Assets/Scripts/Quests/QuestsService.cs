@@ -74,7 +74,7 @@ namespace Quests
 
             foreach (QuestData questData in allQuests)
             {
-                int questId = questData.uniqueId;
+                int questId = questData.questId;
                 QuestProgress questProgress = questsProgressDictionary.GetValueOrDefault(questId);
 
                 if (questProgress?.questState == QuestState.InProgress)
@@ -112,7 +112,7 @@ namespace Quests
 
             foreach (QuestData questData in allQuests)
             {
-                int questId = questData.uniqueId;
+                int questId = questData.questId;
                 QuestProgress questProgress = questsProgressDictionary.GetValueOrDefault(questId);
 
                 if (questProgress == null)
