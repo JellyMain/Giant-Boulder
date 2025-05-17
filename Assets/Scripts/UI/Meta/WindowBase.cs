@@ -10,12 +10,10 @@ namespace UI.Meta
     public abstract class WindowBase : MonoBehaviour
     {
         [SerializeField] private Button closeButton;
-        protected CancellationToken cancellationToken;
 
         private void Start()
         {
             closeButton.onClick.AddListener(CloseWindow);
-            cancellationToken = this.GetCancellationTokenOnDestroy();
             OnStart();
         }
 

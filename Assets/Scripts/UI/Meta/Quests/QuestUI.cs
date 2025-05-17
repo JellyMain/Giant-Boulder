@@ -21,8 +21,11 @@ namespace UI.Meta.Quests
         [SerializeField] private Transform rewardObjectParent;
         [SerializeField] private Image progressFill;
         [SerializeField] private UIEffect progressBarEffect;
+        [SerializeField] private Button claimButton;
         private PersistentPlayerProgress persistentPlayerProgress;
         public QuestData QuestData { get; private set; }
+        public event Action<QuestUI> OnQuestClaimed;
+        private bool isCompleted;
 
 
         [Inject]
@@ -32,15 +35,28 @@ namespace UI.Meta.Quests
         }
 
 
-        public void SetQuestData(QuestData questData)
+        public void InitQuestData(QuestData questData)
         {
             QuestData = questData;
             titleText.text = questData.questTitle;
             descriptionText.text = questData.questDescription;
             Instantiate(questData.rewardUIObject, rewardObjectParent);
+            claimButton.onClick.AddListener(ClaimReward);
 
             UpdateQuestProgress(questData);
         }
+
+
+
+        private void ClaimReward()
+        {
+            if (isCompleted)
+            {
+                OnQuestClaimed?.Invoke(this);
+            }
+        }
+
+
 
 
         private void UpdateQuestProgress(QuestData questData)
@@ -68,7 +84,7 @@ namespace UI.Meta.Quests
 
         private void UpdateObjectsQuest(DestroyObjectsQuestData destroyObjectsQuest)
         {
-            int questId = destroyObjectsQuest.questId;
+            string questId = destroyObjectsQuest.questId;
 
             QuestProgress questProgress =
                 persistentPlayerProgress.PlayerProgress.questsData.questsIdProgressDictionary
@@ -81,14 +97,14 @@ namespace UI.Meta.Quests
 
             float normalizedProgress = (float)destroyedObjects / destroyObjectsQuest.targetObjectAmount;
             progressFill.fillAmount = normalizedProgress;
+
+            IsQuestCompleted(questProgress);
         }
-
-
 
 
         private void UpdateCoinsQuest(CollectCoinsQuestData collectCoinsQuest)
         {
-            int questId = collectCoinsQuest.questId;
+            string questId = collectCoinsQuest.questId;
 
             QuestProgress questProgress =
                 persistentPlayerProgress.PlayerProgress.questsData.questsIdProgressDictionary[questId];
@@ -100,6 +116,25 @@ namespace UI.Meta.Quests
 
             float normalizedProgress = (float)collectedAmount / collectCoinsQuest.targetCoinsAmount;
             progressFill.fillAmount = normalizedProgress;
+
+            IsQuestCompleted(questProgress);
+        }
+
+
+
+        private void IsQuestCompleted(QuestProgress questProgress)
+        {
+            if (questProgress?.questState == QuestState.JustCompleted)
+            {
+                progressBarEffect.enabled = true;
+                isCompleted = true;
+                Debug.Log("Play effects");
+            }
+            else if (questProgress?.questState == QuestState.Completed)
+            {
+                isCompleted = true;
+                Debug.Log("completed");
+            }
         }
     }
 }

@@ -57,7 +57,5 @@ namespace Coins
             Instantiate(destroyParticlesPrefab, transform.position, Quaternion.identity);
             Destroy(gameObject);
         }
-
-        
     }
 }

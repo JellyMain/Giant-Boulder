@@ -11,7 +11,6 @@ GameObject:
   - component: {fileID: 4461046370434610}
   - component: {fileID: 33354912032407658}
   - component: {fileID: 23132920347365402}
-  - component: {fileID: 64463265645991888}
   m_Layer: 0
   m_Name: tractor-base
   m_TagString: Untagged
@@ -84,28 +83,6 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!64 &64463265645991888
-MeshCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1121716831081394}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 0
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 5
-  m_Convex: 0
-  m_CookingOptions: 30
-  m_Mesh: {fileID: 4300008, guid: 8aa355857bf9f475da1bf9f9fbf6c5ee, type: 3}
 --- !u!1 &1127593925279012
 GameObject:
   m_ObjectHideFlags: 0
@@ -226,7 +203,6 @@ MonoBehaviour:
   rotationModifier: {x: 0, y: 0}
   spawnChance: 100
   snapToGround: 1
-  isKeyObject: 0
 --- !u!65 &5653960880567296112
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -246,8 +222,8 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 1, y: 1, z: 1}
-  m_Center: {x: 0, y: 0, z: 0}
+  m_Size: {x: 2.181612, y: 1, z: 3.9094515}
+  m_Center: {x: 0.09688831, y: 0, z: -0.018815339}
 --- !u!114 &3079498968893805311
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -356,7 +332,6 @@ GameObject:
   - component: {fileID: 4890687058757726}
   - component: {fileID: 33573070630560358}
   - component: {fileID: 23273805272434968}
-  - component: {fileID: 64984514308587568}
   m_Layer: 0
   m_Name: tractor-wheel
   m_TagString: Untagged
@@ -429,28 +404,6 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!64 &64984514308587568
-MeshCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1263251839592838}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 0
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 5
-  m_Convex: 0
-  m_CookingOptions: 30
-  m_Mesh: {fileID: 4300006, guid: 8aa355857bf9f475da1bf9f9fbf6c5ee, type: 3}
 --- !u!1 &1617791984432874
 GameObject:
   m_ObjectHideFlags: 0
@@ -462,7 +415,6 @@ GameObject:
   - component: {fileID: 4651553808393032}
   - component: {fileID: 33596395320281026}
   - component: {fileID: 23506462237259010}
-  - component: {fileID: 64791304512724188}
   m_Layer: 0
   m_Name: tractor-wheel_BL
   m_TagString: Untagged
@@ -535,28 +487,6 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!64 &64791304512724188
-MeshCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1617791984432874}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 0
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 5
-  m_Convex: 0
-  m_CookingOptions: 30
-  m_Mesh: {fileID: 4300004, guid: 8aa355857bf9f475da1bf9f9fbf6c5ee, type: 3}
 --- !u!1 &1780505361166744
 GameObject:
   m_ObjectHideFlags: 0
@@ -568,7 +498,6 @@ GameObject:
   - component: {fileID: 4555194794741938}
   - component: {fileID: 33955741170479732}
   - component: {fileID: 23845395257619782}
-  - component: {fileID: 64450784798095020}
   m_Layer: 0
   m_Name: tractor-wheel_BR
   m_TagString: Untagged
@@ -641,28 +570,6 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!64 &64450784798095020
-MeshCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1780505361166744}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 0
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 5
-  m_Convex: 0
-  m_CookingOptions: 30
-  m_Mesh: {fileID: 4300000, guid: 8aa355857bf9f475da1bf9f9fbf6c5ee, type: 3}
 --- !u!1 &1866159625640092
 GameObject:
   m_ObjectHideFlags: 0
@@ -674,7 +581,6 @@ GameObject:
   - component: {fileID: 4392308396142908}
   - component: {fileID: 33426772736603566}
   - component: {fileID: 23737247844795656}
-  - component: {fileID: 64638401550392848}
   m_Layer: 0
   m_Name: tractor-wheel_FL
   m_TagString: Untagged
@@ -747,28 +653,6 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!64 &64638401550392848
-MeshCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1866159625640092}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 0
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 5
-  m_Convex: 0
-  m_CookingOptions: 30
-  m_Mesh: {fileID: 4300002, guid: 8aa355857bf9f475da1bf9f9fbf6c5ee, type: 3}
 --- !u!1 &1243104363629110217
 GameObject:
   m_ObjectHideFlags: 0

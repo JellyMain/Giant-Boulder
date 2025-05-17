@@ -8,6 +8,9 @@ namespace Upgrades
         public int upgradeId;
         public string upgradeTitle;
         public string upgradeDescription;
+        public UpgradeType upgradeType;
+        public int upgradeLevel;
+        public int upgradePrice;
         
         
         private void OnEnable()

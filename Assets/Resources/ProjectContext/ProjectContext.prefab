@@ -90,3 +90,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   sessionSaveServicePrefab: {fileID: 7577784800868494327, guid: 8ba2f0f086d4eec448229dc15d0195ba, type: 3}
   loadingScreenPrefab: {fileID: 6152007770490622351, guid: fbe358055102a1543bbc044116302a71, type: 3}
+  cheatConsolePrefab: {fileID: 1771600376825082254, guid: 77e029ddcf2423d4496b115838b91c78, type: 3}

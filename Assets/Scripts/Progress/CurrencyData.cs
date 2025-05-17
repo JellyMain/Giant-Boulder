@@ -6,6 +6,6 @@ namespace Progress
     [Serializable]
     public class CurrencyData
     {
-        public int coinsAmount;
+        public int coins;
     }
 }

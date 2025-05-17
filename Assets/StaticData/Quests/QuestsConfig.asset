@@ -1,0 +1,175 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 108cb3bc9def41de9943e82e160bfc83, type: 3}
+  m_Name: QuestsConfig
+  m_EditorClassIdentifier: 
+  serializationData:
+    SerializedFormat: 2
+    SerializedBytes: 
+    ReferencedUnityObjects:
+    - {fileID: 11400000, guid: 49ab244f19f61af4f9b90247e2ba1c07, type: 2}
+    - {fileID: 11400000, guid: 2e12c2227bf3017478aded2f24a56bc1, type: 2}
+    - {fileID: 11400000, guid: 9e2d0aa5f171a2747b732ee8fd6ec27f, type: 2}
+    - {fileID: 11400000, guid: 8e7442fe99e6347469ae58fe68afbd18, type: 2}
+    - {fileID: 11400000, guid: af6fa99ae1660934cb161d784d4000b8, type: 2}
+    - {fileID: 11400000, guid: 0955f8fb1bb3b0d43bb0789f6bf0a8e1, type: 2}
+    - {fileID: 11400000, guid: 598219c6fe59e12459a028822c58a5db, type: 2}
+    - {fileID: 11400000, guid: ff444e3bee957ed4c868bfb1ea608436, type: 2}
+    - {fileID: 11400000, guid: 642fc01cbd8767744941d2953eab6aff, type: 2}
+    - {fileID: 11400000, guid: 95962a0b6128305419a050828815b487, type: 2}
+    - {fileID: 11400000, guid: 649678e0c138e374f961e4954853dfc9, type: 2}
+    - {fileID: 11400000, guid: db664553fd9444a4fb9ba7961a1aa7c6, type: 2}
+    - {fileID: 11400000, guid: 16177509583efb342963ff7bb88ae880, type: 2}
+    - {fileID: 11400000, guid: 13c954558da42c84db0e582c7c41a12c, type: 2}
+    - {fileID: 11400000, guid: 9f1c614e484905940ac5a3ef2557f2b1, type: 2}
+    SerializedBytesString: 
+    Prefab: {fileID: 0}
+    PrefabModificationsReferencedUnityObjects: []
+    PrefabModifications: []
+    SerializationNodes:
+    - Name: quests
+      Entry: 7
+      Data: 0|System.Collections.Generic.Dictionary`2[[Quests.Enums.QuestType, Assembly-CSharp],[System.Collections.Generic.List`1[[Quests.QuestData,
+        Assembly-CSharp]], mscorlib]], mscorlib
+    - Name: comparer
+      Entry: 7
+      Data: 1|System.Collections.Generic.EnumEqualityComparer`1[[Quests.Enums.QuestType,
+        Assembly-CSharp]], mscorlib
+    - Name: 
+      Entry: 12
+      Data: 0
+    - Name: 
+      Entry: 13
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 12
+      Data: 3
+    - Name: 
+      Entry: 7
+      Data: 
+    - Name: $k
+      Entry: 3
+      Data: 0
+    - Name: $v
+      Entry: 7
+      Data: 2|System.Collections.Generic.List`1[[Quests.QuestData, Assembly-CSharp]],
+        mscorlib
+    - Name: 
+      Entry: 12
+      Data: 5
+    - Name: 
+      Entry: 10
+      Data: 0
+    - Name: 
+      Entry: 10
+      Data: 1
+    - Name: 
+      Entry: 10
+      Data: 2
+    - Name: 
+      Entry: 10
+      Data: 3
+    - Name: 
+      Entry: 10
+      Data: 4
+    - Name: 
+      Entry: 13
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 
+    - Name: $k
+      Entry: 3
+      Data: 2
+    - Name: $v
+      Entry: 7
+      Data: 3|System.Collections.Generic.List`1[[Quests.QuestData, Assembly-CSharp]],
+        mscorlib
+    - Name: 
+      Entry: 12
+      Data: 5
+    - Name: 
+      Entry: 10
+      Data: 5
+    - Name: 
+      Entry: 10
+      Data: 6
+    - Name: 
+      Entry: 10
+      Data: 7
+    - Name: 
+      Entry: 10
+      Data: 8
+    - Name: 
+      Entry: 10
+      Data: 9
+    - Name: 
+      Entry: 13
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 
+    - Name: $k
+      Entry: 3
+      Data: 1
+    - Name: $v
+      Entry: 7
+      Data: 4|System.Collections.Generic.List`1[[Quests.QuestData, Assembly-CSharp]],
+        mscorlib
+    - Name: 
+      Entry: 12
+      Data: 5
+    - Name: 
+      Entry: 10
+      Data: 10
+    - Name: 
+      Entry: 10
+      Data: 11
+    - Name: 
+      Entry: 10
+      Data: 12
+    - Name: 
+      Entry: 10
+      Data: 13
+    - Name: 
+      Entry: 10
+      Data: 14
+    - Name: 
+      Entry: 13
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 13
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 

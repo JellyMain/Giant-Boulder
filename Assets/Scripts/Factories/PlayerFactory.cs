@@ -3,7 +3,6 @@ using Assets;
 using Const;
 using Cysharp.Threading.Tasks;
 using PlayerCamera;
-using StaticData.Services;
 using UI;
 using UnityEngine;
 using Zenject;
@@ -16,6 +15,7 @@ namespace Factories
         private readonly DiContainer diContainer;
         private readonly AssetProvider assetProvider;
         public event Action<GameObject> OnPlayerCreated;
+        public GameObject Player { get; private set; }
 
 
         public PlayerFactory(DiContainer diContainer, AssetProvider assetProvider)
@@ -34,8 +34,7 @@ namespace Factories
             Vector3 rayStart = position + Vector3.up * 1000;
 
             int groundLayerMask = 1 << LayerMask.NameToLayer(RuntimeConstants.Layers.GROUND_LAYER);
-            ;
-
+            
             Vector3 spawnPosition = position;
 
             if (Physics.Raycast(rayStart, Vector3.down, out RaycastHit hit, Mathf.Infinity, groundLayerMask))
@@ -55,6 +54,8 @@ namespace Factories
             cameraController.PlayerControlsUI = playerControlsUI;
 
             OnPlayerCreated?.Invoke(spawnedPlayer);
+
+            Player = spawnedPlayer;
 
             return spawnedPlayer;
         }

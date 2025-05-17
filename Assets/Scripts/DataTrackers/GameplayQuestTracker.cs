@@ -17,18 +17,17 @@ namespace DataTrackers
         private readonly LevelCreationWatcher levelCreationWatcher;
         private readonly DestroyedObjectsTracker destroyedObjectsTracker;
         private readonly GameCurrencyTracker gameCurrencyTracker;
-        private readonly PersistentPlayerProgress persistentPlayerProgress;
+        
 
 
         public GameplayQuestTracker(QuestsService questsService,
             LevelCreationWatcher levelCreationWatcher, DestroyedObjectsTracker destroyedObjectsTracker,
-            GameCurrencyTracker gameCurrencyTracker, PersistentPlayerProgress persistentPlayerProgress)
+            GameCurrencyTracker gameCurrencyTracker)
         {
             this.questsService = questsService;
             this.levelCreationWatcher = levelCreationWatcher;
             this.destroyedObjectsTracker = destroyedObjectsTracker;
             this.gameCurrencyTracker = gameCurrencyTracker;
-            this.persistentPlayerProgress = persistentPlayerProgress;
 
             this.levelCreationWatcher.OnLevelCreated += TrackQuests;
         }
@@ -36,27 +35,15 @@ namespace DataTrackers
 
         private void TrackQuests()
         {
-            QuestsIdProgressDictionary questsProgressDictionary =
-                persistentPlayerProgress.PlayerProgress.questsData.questsIdProgressDictionary;
-
-            List<KeyValuePair<QuestData, QuestProgressUpdater>> questsPairs =
-                new List<KeyValuePair<QuestData, QuestProgressUpdater>>(questsService.SelectedQuests);
-
-            foreach (KeyValuePair<QuestData, QuestProgressUpdater> questPair in questsPairs)
+            foreach (KeyValuePair<QuestData, QuestProgressUpdater> questPair in questsService.ActiveQuestsProgressUpdaters)
             {
                 QuestData questData = questPair.Key;
                 QuestProgressUpdater questProgressUpdater = questPair.Value;
-                int questId = questData.questId;
 
-                QuestProgress questProgress = questsProgressDictionary.GetValueOrDefault(questId);
-
-
-                if (questProgress?.questState == QuestState.JustCompleted)
-                {
-                    QuestData newQuest = questsService.ReplaceQuest(questData);
-                    questProgressUpdater = questsService.SelectedQuests[newQuest];
-                }
-
+                string questId = questData.questId;
+                
+                // TODO: Track only uncompleted quests
+                
                 questProgressUpdater.StartTracking(new QuestDependencies
                 {
                     destroyedObjectsTracker = destroyedObjectsTracker,

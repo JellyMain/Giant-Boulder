@@ -8,6 +8,7 @@ using Progress;
 using Quests;
 using Quests.Enums;
 using UnityEngine;
+using UnityEngine.UI;
 using Zenject;
 
 
@@ -16,6 +17,9 @@ namespace UI.Meta.Quests
     public class QuestsWindow : WindowBase
     {
         [SerializeField] private Canvas canvas;
+        [SerializeField] private Button dailyQuestsButton;
+        [SerializeField] private Button mainQuestsButton;
+        [SerializeField] private Button sideQuestsButton;
         [SerializeField] private RectTransform questsContainer;
         [SerializeField] private RectTransform questSpawnPoint;
         [SerializeField] private List<RectTransform> spawnedQuestsEndPoints;
@@ -24,6 +28,8 @@ namespace UI.Meta.Quests
         private MetaUIFactory metaUIFactory;
         private PersistentPlayerProgress persistentPlayerProgress;
         private List<QuestUI> initializedQuestsUI;
+        private QuestType currentSection = QuestType.MainQuest;
+
 
 
         [Inject]
@@ -39,53 +45,66 @@ namespace UI.Meta.Quests
         protected override void OnStart()
         {
             base.OnStart();
+            SetSectionButtons();
             SetCamera();
-            InitializeQuests().Forget();
+            InitializeQuests(QuestType.MainQuest).Forget();
         }
 
 
-        private async UniTask InitializeQuests()
+        private void SetSectionButtons()
+        {
+            mainQuestsButton.onClick.AddListener(ShowMainQuests);
+            sideQuestsButton.onClick.AddListener(ShowSideQuests);
+            dailyQuestsButton.onClick.AddListener(ShowDailyQuests);
+        }
+
+
+        private async UniTask InitializeQuests(QuestType questType)
         {
             QuestsIdProgressDictionary questProgressDictionary =
                 persistentPlayerProgress.PlayerProgress.questsData.questsIdProgressDictionary;
 
             initializedQuestsUI = new List<QuestUI>(3);
 
-            int index = 0;
 
-            foreach (QuestData quest in questsService.SelectedQuests.Keys)
+            foreach (QuestData quest in questsService.SortedActiveQuests[questType])
             {
-                RectTransform endPosition = spawnedQuestsEndPoints[index];
                 QuestUI questUI = await InitQuestUI(quest);
-                AnimateAppear(questUI, endPosition);
+                questUI.OnQuestClaimed += ReplaceClaimedQuest;
                 initializedQuestsUI.Add(questUI);
-                index++;
-                
-                await UniTask.WaitForSeconds(1);
             }
 
-            await ReplaceCompletedQuests(questProgressDictionary);
+            await ArrangeQuests();
         }
 
 
-        private async UniTask ReplaceCompletedQuests(QuestsIdProgressDictionary questProgressDictionary)
+
+        private async void ReplaceClaimedQuest(QuestUI oldQuestUI)
         {
-            List<QuestUI> initializedQuestsUICopy = new List<QuestUI>(initializedQuestsUI);
+            oldQuestUI.OnQuestClaimed -= ReplaceClaimedQuest;
+            QuestData newQuestData = questsService.ReplaceQuest(oldQuestUI.QuestData);
+            QuestUI newQuestUI = await InitQuestUI(newQuestData);
+            initializedQuestsUI.Remove(oldQuestUI);
+            initializedQuestsUI.Add(newQuestUI);
+            await AnimateRemove(oldQuestUI);
 
-            foreach (QuestUI questUI in initializedQuestsUICopy)
+            await ArrangeQuests();
+        }
+
+
+
+
+
+        private async UniTask ArrangeQuests()
+        {
+            for (int i = 0; i < 3; i++)
             {
-                int questId = questUI.QuestData.questId;
+                QuestUI questUI = initializedQuestsUI[i];
+                Vector3 endPoint = spawnedQuestsEndPoints[i].position;
 
-                QuestProgress questProgress = questProgressDictionary.GetValueOrDefault(questId);
+                questUI.transform.DOMove(endPoint, 0.6f).SetEase(Ease.OutExpo);
 
-                if (questProgress?.questState == QuestState.JustCompleted)
-                {
-                    QuestData questData = questsService.ReplaceQuest(questUI.QuestData);
-                    QuestUI newQuestUI = await InitQuestUI(questData);
-                    initializedQuestsUI.Remove(questUI);
-                    initializedQuestsUI.Add(newQuestUI);
-                    AnimateRemove(questUI);
-                }
+                await UniTask.WaitForSeconds(0.1f);
             }
         }
 
@@ -94,20 +113,61 @@ namespace UI.Meta.Quests
         {
             QuestUI spawnedQuestUI = await metaUIFactory.CreateQuestUI(questsContainer);
             spawnedQuestUI.transform.position = questSpawnPoint.position;
-            spawnedQuestUI.SetQuestData(quest);
+            spawnedQuestUI.InitQuestData(quest);
             return spawnedQuestUI;
         }
 
 
-        private void AnimateAppear(QuestUI questUI, RectTransform endPoint)
+        private async void ShowDailyQuests()
         {
-            questUI.transform.DOMove(endPoint.position, 2);
+            if (currentSection != QuestType.DailyQuest)
+            {
+                currentSection = QuestType.DailyQuest;
+                await RemovePreviousSectionQuests();
+                InitializeQuests(QuestType.DailyQuest).Forget();
+            }
         }
 
 
-        private void AnimateRemove(QuestUI questUI)
+        private async void ShowMainQuests()
         {
-            questUI.transform.DOMoveX(removedQuestEndPoint.position.x, 2).OnComplete(() => Destroy(questUI.gameObject));
+            if (currentSection != QuestType.MainQuest)
+            {
+                currentSection = QuestType.MainQuest;
+                await RemovePreviousSectionQuests();
+                InitializeQuests(QuestType.MainQuest).Forget();
+            }
+        }
+
+
+        private async void ShowSideQuests()
+        {
+            if (currentSection != QuestType.SideQuest)
+            {
+                currentSection = QuestType.SideQuest;
+                await RemovePreviousSectionQuests();
+                InitializeQuests(QuestType.SideQuest).Forget();
+            }
+        }
+
+
+        private async UniTask RemovePreviousSectionQuests()
+        {
+            foreach (var questUI in initializedQuestsUI)
+            {
+                AnimateRemove(questUI);
+                await UniTask.WaitForSeconds(0.05f);
+            }
+
+            await UniTask.WaitForSeconds(0.15f);
+        }
+
+
+
+        private async UniTask AnimateRemove(QuestUI questUI)
+        {
+            await questUI.transform.DOMove(removedQuestEndPoint.position, 0.6f).SetEase(Ease.OutExpo)
+                .OnComplete(() => Destroy(questUI.gameObject)).AsyncWaitForCompletion().AsUniTask();
         }
 
 

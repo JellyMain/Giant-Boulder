@@ -1,6 +1,7 @@
 using System;
 using System.Linq;
 using Quests;
+using Quests.Enums;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -26,7 +27,7 @@ namespace UI.Gameplay
         
         public void InitMainQuest()
         {
-            QuestData questData = questsService.SelectedQuests.Keys.First();
+            QuestData questData = questsService.SortedActiveQuests[QuestType.MainQuest].First();
             questDescriptionText.text = questData.questDescription;
         }
 

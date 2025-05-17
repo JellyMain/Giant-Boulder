@@ -62,6 +62,11 @@ MonoBehaviour:
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 5a7512dbdefc5a54eb56d927eb91a0cc
+    m_Address: UpgradesConfig
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 5d26add0455d6f54d93c2f735c7f8f1b
     m_Address: GameTimerUI
     m_ReadOnly: 0
@@ -69,6 +74,11 @@ MonoBehaviour:
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 627c1b67a45a4c941b1e8b30dbe5c279
     m_Address: QuestPopupUI
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 6ea2f3f02687bed468589d3ff6a3929b
+    m_Address: UpgradesWindowUI
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
@@ -90,6 +100,11 @@ MonoBehaviour:
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: c3a6690cdc5fc5a49805147739dc1ff2
     m_Address: UICamera
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: c3f7ddbf938ff5244939bb8f83cb6908
+    m_Address: UpgradeUI
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0

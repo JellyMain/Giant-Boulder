@@ -86,7 +86,6 @@ MonoBehaviour:
   rotationModifier: {x: 0, y: 0}
   spawnChance: 100
   snapToGround: 0
-  isKeyObject: 0
 --- !u!1 &1972358724863008060
 GameObject:
   m_ObjectHideFlags: 0
@@ -138,7 +137,6 @@ MonoBehaviour:
   rotationModifier: {x: 0, y: 0}
   spawnChance: 76
   snapToGround: 0
-  isKeyObject: 0
 --- !u!1 &2889991704979187862
 GameObject:
   m_ObjectHideFlags: 0
@@ -188,7 +186,6 @@ MonoBehaviour:
   rotationModifier: {x: 0, y: 0}
   spawnChance: 53
   snapToGround: 0
-  isKeyObject: 0
 --- !u!1 &3260343160119850494
 GameObject:
   m_ObjectHideFlags: 0
@@ -2020,11 +2017,6 @@ MonoBehaviour:
     - Name: 
       Entry: 8
       Data: 
-  structureKeyObjects:
-  - {fileID: 8758951495774377623}
-  - {fileID: 8868057522269637374}
-  - {fileID: 9199408103132950620}
-  - {fileID: 4451152377127560833}
   structureDestructibleObjects:
   - {fileID: 3264491256158010384}
   - {fileID: 2186546195636297658}
@@ -2206,7 +2198,6 @@ MonoBehaviour:
   rotationModifier: {x: 0, y: 0}
   spawnChance: 100
   snapToGround: 0
-  isKeyObject: 0
 --- !u!1 &4651274956012669844
 GameObject:
   m_ObjectHideFlags: 0
@@ -2257,7 +2248,6 @@ MonoBehaviour:
   rotationModifier: {x: 0, y: 0}
   spawnChance: 82
   snapToGround: 0
-  isKeyObject: 0
 --- !u!1 &6504792554524869899
 GameObject:
   m_ObjectHideFlags: 0
@@ -2310,7 +2300,6 @@ MonoBehaviour:
   rotationModifier: {x: 0, y: 0}
   spawnChance: 100
   snapToGround: 0
-  isKeyObject: 0
 --- !u!1 &7248422095434276453
 GameObject:
   m_ObjectHideFlags: 0
@@ -2362,7 +2351,6 @@ MonoBehaviour:
   rotationModifier: {x: 0, y: 0}
   spawnChance: 100
   snapToGround: 0
-  isKeyObject: 0
 --- !u!1 &8334906106273424345
 GameObject:
   m_ObjectHideFlags: 0
@@ -2427,7 +2415,6 @@ MonoBehaviour:
   rotationModifier: {x: 0, y: 0}
   spawnChance: 100
   snapToGround: 0
-  isKeyObject: 0
 --- !u!1001 &178899518931310403
 PrefabInstance:
   m_ObjectHideFlags: 0

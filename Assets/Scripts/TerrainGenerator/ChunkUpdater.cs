@@ -69,6 +69,7 @@ namespace TerrainGenerator
             grassChunksInViewDistance = grassRenderDistance / (mapGenerationConfig.chunkSize - 1);
             terrainChunks = mapCreator.TerrainChunks;
             mainCamera = Camera.main;
+            SubscribeOnTerrainChunks();
         }
 
 
@@ -83,6 +84,15 @@ namespace TerrainGenerator
             GetVisibleChunks();
             GetGrassChunks();
             UpdateVisibleChunks();
+        }
+
+
+        private void SubscribeOnTerrainChunks()
+        {
+            foreach (TerrainChunk terrainChunk in terrainChunks.Values)
+            {
+                terrainChunk.OnChunkCleared += SpawnNatureStructure;
+            }
         }
 
 
@@ -115,7 +125,7 @@ namespace TerrainGenerator
                 }
             }
         }
-
+        
 
         private void UpdateVisibleChunks()
         {
@@ -168,7 +178,7 @@ namespace TerrainGenerator
 
                             if (!chunk.structuresInstantiated)
                             {
-                                structureSpawner.SpawnStructuresInChunk(terrainChunks[chunkCoord]);
+                                structureSpawner.SpawnStructureInChunk(terrainChunks[chunkCoord]);
                             }
                         }
                     }
@@ -177,7 +187,13 @@ namespace TerrainGenerator
         }
 
 
-        public bool IsInCameraView(Camera currentCamera, Bounds objectBounds)
+        private void SpawnNatureStructure(TerrainChunk terrainChunk)
+        {
+            structureSpawner.SpawnNatureInChunk(terrainChunk);
+        }
+
+
+        private bool IsInCameraView(Camera currentCamera, Bounds objectBounds)
         {
             Plane[] frustumPlanes = GeometryUtility.CalculateFrustumPlanes(currentCamera);
 

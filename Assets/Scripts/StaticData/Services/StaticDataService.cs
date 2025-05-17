@@ -8,6 +8,7 @@ using StaticData.Data;
 using TerrainGenerator;
 using TerrainGenerator.Enums;
 using UnityEngine;
+using Upgrades;
 
 
 namespace StaticData.Services
@@ -21,6 +22,8 @@ namespace StaticData.Services
         public GameConfig GameConfig { get; private set; }
         public QuestsConfig QuestsConfig { get; private set; }
         public AnimationsConfig AnimationsConfig { get; private set; }
+        public Dictionary<UpgradeType, List<UpgradeData>> UpgradesConfig { get; private set; }
+
 
 
         public StaticDataService(AssetProvider assetProvider)
@@ -37,6 +40,7 @@ namespace StaticData.Services
             UniTask loadGameConfigUniTask = LoadGameConfig();
             UniTask loadQuestsConfigUniTask = LoadQuestsConfig();
             UniTask loadAnimationsConfigUniTask = LoadAnimationsConfig();
+            UniTask loadUpgradesConfigUniTask = LoadUpgradesConfig();
 
             UniTask[] loadTasks = new[]
             {
@@ -45,7 +49,8 @@ namespace StaticData.Services
                 loadSoundsConfigUniTask,
                 loadGameConfigUniTask,
                 loadQuestsConfigUniTask,
-                loadAnimationsConfigUniTask
+                loadAnimationsConfigUniTask,
+                loadUpgradesConfigUniTask
             };
 
             await UniTask.WhenAll(loadTasks);
@@ -61,6 +66,37 @@ namespace StaticData.Services
 
             Debug.LogError($"Couldn't find map generation config with key {terrainSeason}");
             return null;
+        }
+
+
+        public UpgradeData UpgradeDataForLevelAndType(UpgradeType upgradeType, int level)
+        {
+            if (UpgradesConfig.TryGetValue(upgradeType, out List<UpgradeData> upgrades))
+            {
+                foreach (UpgradeData upgradeData in upgrades)
+                {
+                    if (upgradeData.upgradeLevel == level)
+                    {
+                        return upgradeData;
+                    }
+                }
+
+                Debug.LogError($"Couldn't find upgrade of level {level}");
+                return null;
+            }
+
+            Debug.LogError($"Couldn't find upgrades of type {upgradeType}");
+
+            return null;
+        }
+
+
+        private async UniTask LoadUpgradesConfig()
+        {
+            UpgradesConfig config =
+                await assetProvider.LoadAsset<UpgradesConfig>(RuntimeConstants.StaticDataAddresses.UPGRADES_CONFIG);
+
+            UpgradesConfig = config.upgradesConfig;
         }
 
 

@@ -8,7 +8,7 @@ namespace Quests
     public abstract class QuestProgressUpdater
     {
         private readonly SaveLoadService saveLoadService;
-        protected bool isCompleted;
+        public bool isCompleted;       //TODO: make protected!!!!!!
         public event Action<QuestData> OnQuestCompleted;
 
 

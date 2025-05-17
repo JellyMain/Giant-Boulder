@@ -42,7 +42,7 @@ namespace UI
         private void Start()
         {
             gameCurrencyTracker.OnCoinAdded += AnimateCollectedCoin;
-            UpdateCoinsAmount(gameCurrencyTracker.Coins);
+            UpdateCoinsAmount(gameCurrencyTracker.SessionCoins);
         }
 
 

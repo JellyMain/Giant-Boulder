@@ -50,7 +50,7 @@ namespace UI.Gameplay
 
         private void SubscribeOnTrackedQuests()
         {
-            foreach (QuestProgressUpdater questProgressUpdater in questsService.SelectedQuests.Values)
+            foreach (QuestProgressUpdater questProgressUpdater in questsService.ActiveQuestsProgressUpdaters.Values)
             {
                 questProgressUpdater.OnQuestCompleted += OnQuestCompleted;
             }
@@ -59,7 +59,7 @@ namespace UI.Gameplay
 
         private void UnsubscribeFromTrackedQuests()
         {
-            foreach (QuestProgressUpdater questProgressUpdater in questsService.SelectedQuests.Values)
+            foreach (QuestProgressUpdater questProgressUpdater in questsService.ActiveQuestsProgressUpdaters.Values)
             {
                 questProgressUpdater.OnQuestCompleted -= OnQuestCompleted;
             }

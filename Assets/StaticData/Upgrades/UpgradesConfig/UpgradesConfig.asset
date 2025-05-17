@@ -17,7 +17,13 @@ MonoBehaviour:
     SerializedBytes: 
     ReferencedUnityObjects:
     - {fileID: 11400000, guid: 1ffdfea4150ec694794fbd5fda033d7b, type: 2}
+    - {fileID: 11400000, guid: 80c9ed5f1e04cfe46b3d9d8749ac2b82, type: 2}
+    - {fileID: 11400000, guid: 53055f81b6ccedc4295296d7c9458f46, type: 2}
+    - {fileID: 11400000, guid: 4762e817cef7ecc478378ad980b49d83, type: 2}
     - {fileID: 11400000, guid: fc21153966240144c89073c751432a97, type: 2}
+    - {fileID: 11400000, guid: 8a7fa80b6c219ba408cbb6851a02306e, type: 2}
+    - {fileID: 11400000, guid: 0a2ea9b5e6521d94fa60d26634cf799b, type: 2}
+    - {fileID: 11400000, guid: 63040ee496d5ebd45bb300d1ad5e4471, type: 2}
     SerializedBytesString: 
     Prefab: {fileID: 0}
     PrefabModificationsReferencedUnityObjects: []
@@ -25,12 +31,18 @@ MonoBehaviour:
     SerializationNodes:
     - Name: upgradesConfig
       Entry: 7
-      Data: 0|System.Collections.Generic.Dictionary`2[[System.Type, mscorlib],[System.Collections.Generic.List`1[[Upgrades.UpgradeData,
+      Data: 0|System.Collections.Generic.Dictionary`2[[Upgrades.UpgradeType, Assembly-CSharp],[System.Collections.Generic.List`1[[Upgrades.UpgradeData,
         Assembly-CSharp]], mscorlib]], mscorlib
     - Name: comparer
       Entry: 7
-      Data: 1|System.Collections.Generic.ObjectEqualityComparer`1[[System.Type, mscorlib]],
-        mscorlib
+      Data: 1|System.Collections.Generic.EnumEqualityComparer`1[[Upgrades.UpgradeType,
+        Assembly-CSharp]], mscorlib
+    - Name: 
+      Entry: 12
+      Data: 0
+    - Name: 
+      Entry: 13
+      Data: 
     - Name: 
       Entry: 8
       Data: 
@@ -41,24 +53,27 @@ MonoBehaviour:
       Entry: 7
       Data: 
     - Name: $k
-      Entry: 7
-      Data: 2|System.RuntimeType, mscorlib
-    - Name: 
-      Entry: 1
-      Data: Upgrades.CoinsMagnetUpgradeData, Assembly-CSharp
-    - Name: 
-      Entry: 8
-      Data: 
+      Entry: 3
+      Data: 0
     - Name: $v
       Entry: 7
-      Data: 3|System.Collections.Generic.List`1[[Upgrades.UpgradeData, Assembly-CSharp]],
+      Data: 2|System.Collections.Generic.List`1[[Upgrades.UpgradeData, Assembly-CSharp]],
         mscorlib
     - Name: 
       Entry: 12
-      Data: 1
+      Data: 4
     - Name: 
       Entry: 10
       Data: 0
+    - Name: 
+      Entry: 10
+      Data: 1
+    - Name: 
+      Entry: 10
+      Data: 2
+    - Name: 
+      Entry: 10
+      Data: 3
     - Name: 
       Entry: 13
       Data: 
@@ -72,24 +87,27 @@ MonoBehaviour:
       Entry: 7
       Data: 
     - Name: $k
-      Entry: 7
-      Data: 4|System.RuntimeType, mscorlib
-    - Name: 
-      Entry: 1
-      Data: Upgrades.PlayerSpeedUpgradeData, Assembly-CSharp
-    - Name: 
-      Entry: 8
-      Data: 
+      Entry: 3
+      Data: 1
     - Name: $v
       Entry: 7
-      Data: 5|System.Collections.Generic.List`1[[Upgrades.UpgradeData, Assembly-CSharp]],
+      Data: 3|System.Collections.Generic.List`1[[Upgrades.UpgradeData, Assembly-CSharp]],
         mscorlib
     - Name: 
       Entry: 12
-      Data: 1
+      Data: 4
     - Name: 
       Entry: 10
-      Data: 1
+      Data: 4
+    - Name: 
+      Entry: 10
+      Data: 5
+    - Name: 
+      Entry: 10
+      Data: 6
+    - Name: 
+      Entry: 10
+      Data: 7
     - Name: 
       Entry: 13
       Data: 

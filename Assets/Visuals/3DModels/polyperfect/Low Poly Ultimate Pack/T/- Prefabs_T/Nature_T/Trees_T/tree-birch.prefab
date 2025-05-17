@@ -246,7 +246,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   maxCoinsAmount: 2
   minCoinsAmount: 1
-  spawnCircleDiameter: 5
+  spawnCircleDiameter: 2
   explosionForce: 40
 --- !u!1 &4122059005558389588
 GameObject:

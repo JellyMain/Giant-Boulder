@@ -24,8 +24,11 @@ namespace TerrainGenerator
         public MeshData meshData;
         public Vector3 position;
         public bool structuresInstantiated;
-        public StructureRoot currentStructure;
-        public StructureRoot structurePrefab;
+        public PollutionStructureRoot currentPollutionStructure;
+        public PollutionStructureRoot pollutionStructurePrefab;
+        public NatureStructureRoot natureStructurePrefab;
+        public NatureStructureRoot currentNatureStructure;
+        public event Action<TerrainChunk> OnChunkCleared;
 
 
         public TerrainChunk(Material material, Vector2 chunkCoord, MeshData meshData,
@@ -59,11 +62,24 @@ namespace TerrainGenerator
         }
 
 
+        public void SubscribeOnPollutionStructure()
+        {
+            currentPollutionStructure.OnPollutionCleared += ChunkCleared;
+        }
+
+
+        private void ChunkCleared()
+        {
+            OnChunkCleared?.Invoke(this);
+            Debug.Log("Chunk Cleared");
+        }
+        
+
         public void Render()
         {
-            if (currentStructure != null)
+            if (currentPollutionStructure != null)
             {
-                currentStructure.EnableAllMeshRenderers();
+                currentPollutionStructure.EnableAllMeshRenderers();
             }
 
             meshRenderer.enabled = true;
@@ -72,9 +88,9 @@ namespace TerrainGenerator
 
         public void DisableRender()
         {
-            if (currentStructure != null)
+            if (currentPollutionStructure != null)
             {
-                currentStructure.DisableAllMeshRenderers();
+                currentPollutionStructure.DisableAllMeshRenderers();
             }
 
             meshRenderer.enabled = false;

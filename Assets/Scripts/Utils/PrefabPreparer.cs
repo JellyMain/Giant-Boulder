@@ -85,9 +85,9 @@ namespace Utils
             AddComponentsToUniqueObjects();
             AddComponentsToRestObjects();
 
-            if (!gameObject.GetComponent<StructureRoot>())
+            if (!gameObject.GetComponent<PollutionStructureRoot>())
             {
-                gameObject.AddComponent<StructureRoot>();
+                gameObject.AddComponent<PollutionStructureRoot>();
             }
         }
 

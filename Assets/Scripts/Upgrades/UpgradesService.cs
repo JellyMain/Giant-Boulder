@@ -1,6 +1,9 @@
 using System;
 using System.Collections.Generic;
 using Progress;
+using StaticData.Data;
+using StaticData.Services;
+using UnityEngine;
 
 
 namespace Upgrades
@@ -8,27 +11,52 @@ namespace Upgrades
     public class UpgradesService
     {
         private readonly PersistentPlayerProgress persistentPlayerProgress;
-        public Dictionary<Type, UpgradeData> ActiveUpgrades { get; private set; } = new Dictionary<Type, UpgradeData>();
+        private readonly StaticDataService staticDataService;
+
+        public Dictionary<UpgradeType, UpgradeData> ActiveUpgrades { get; private set; } =
+            new Dictionary<UpgradeType, UpgradeData>();
 
 
-        public UpgradesService(PersistentPlayerProgress persistentPlayerProgress)
+        public UpgradesService(PersistentPlayerProgress persistentPlayerProgress, StaticDataService staticDataService)
         {
             this.persistentPlayerProgress = persistentPlayerProgress;
+            this.staticDataService = staticDataService;
         }
 
 
-        public void SetActiveUpgrade<T>(UpgradeData upgradeData) where T : UpgradeData
+        public void SetSavedUpgrades()
         {
-            UpgradesIdStatusDictionary upgradesIdStatusDictionary =
-                persistentPlayerProgress.PlayerProgress.upgradesData.upgradesIdStatusDictionary;
-            
-            
-            ActiveUpgrades[typeof(T)] = upgradeData;
+            UpgradesTypeLevelDictionary upgradesTypeLevelDictionary =
+                persistentPlayerProgress.PlayerProgress.upgradesData.upgradesTypeLevelDictionary;
 
-            int upgradeId = upgradeData.upgradeId;
+            Dictionary<UpgradeType, List<UpgradeData>> allUpgrades = staticDataService.UpgradesConfig;
+
+
+            foreach (KeyValuePair<UpgradeType, int> upgradesDataPair in upgradesTypeLevelDictionary)
+            {
+                foreach (UpgradeData upgradeData in allUpgrades[upgradesDataPair.Key])
+                {
+                    if (upgradeData.upgradeLevel == upgradesDataPair.Value)
+                    {
+                        ActiveUpgrades[upgradesDataPair.Key] = upgradeData;
+                    }
+                }
+            }
+        }
+
+
+        public void SetActiveUpgrade(UpgradeData upgradeData)
+        {
+            UpgradesTypeLevelDictionary upgradesTypeLevelDictionary =
+                persistentPlayerProgress.PlayerProgress.upgradesData.upgradesTypeLevelDictionary;
+
+            UpgradeType upgradeType = upgradeData.upgradeType;
+
+            ActiveUpgrades[upgradeType] = upgradeData;
+
+            upgradesTypeLevelDictionary[upgradeType] = upgradeData.upgradeLevel;
             
-            // upgradesIdStatusDictionary[upgradeId] = 
-            
+            Debug.Log($"Set upgrade with type {upgradeType} and level {upgradeData.upgradeLevel}");
         }
     }
 }

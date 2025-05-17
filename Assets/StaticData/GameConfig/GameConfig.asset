@@ -197,7 +197,7 @@ MonoBehaviour:
     - Name: 
       Entry: 8
       Data: 
-  maxTimerTime: 45
+  maxTimerTime: 200
   maxScaleScore: 2000
   superBoulderTime: 5
   maxScoreForObject: 2000

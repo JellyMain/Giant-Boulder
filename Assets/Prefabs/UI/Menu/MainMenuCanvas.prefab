@@ -1398,7 +1398,8 @@ MonoBehaviour:
   playButton: {fileID: 1126639656612890351}
   questsButton: {fileID: 5740939170475376142}
   almanacButton: {fileID: 7103576178221948839}
-  statisticsWindow: {fileID: 678413019992233373}
+  statisticsButton: {fileID: 678413019992233373}
+  upgradesButton: {fileID: 8605271470437864788}
   canvas: {fileID: 3173334762211143654}
 --- !u!1 &5326509621423903047
 GameObject:

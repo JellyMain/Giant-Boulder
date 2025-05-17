@@ -2,8 +2,8 @@ namespace Quests.Enums
 {
     public enum QuestType
     {
-        None = 0,
-        CollectCoins = 1,
-        DestroyObjects = 2
+        DailyQuest = 0,
+        SideQuest = 1,
+        MainQuest = 2
     }
 }

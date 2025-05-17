@@ -10,6 +10,6 @@ namespace StaticData.Data
     [CreateAssetMenu(menuName = "StaticData/UpgradesConfig", fileName = "UpgradesConfig")]
     public class UpgradesConfig : SerializedScriptableObject
     {
-        public Dictionary<Type, List<UpgradeData>> upgradesConfig;
+        public Dictionary<UpgradeType, List<UpgradeData>> upgradesConfig;
     }
 }

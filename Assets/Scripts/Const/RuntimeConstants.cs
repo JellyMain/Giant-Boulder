@@ -27,6 +27,8 @@ namespace Const
             public const string STATISTICS_WINDOW_UI = "StatisticsWindowUI";
             public const string QUESTS_POPUP_WINDOW_UI = "QuestsPopupWindowUI";
             public const string QUEST_POPUP_UI = "QuestPopupUI";
+            public const string UPGRADE_UI = "UpgradeUI";
+            public const string UPGRADES_WINDOW_UI = "UpgradesWindowUI";
         }
 
 
@@ -38,6 +40,7 @@ namespace Const
             public const string MAP_GENERATION_CONFIGS = "MapConfigs";
             public const string SPAWNER_CONFIG = "SpawnerConfig";
             public const string ANIMATIONS_CONFIG = "AnimationsConfig";
+            public const string UPGRADES_CONFIG = "UpgradesConfig";
         }
 
 

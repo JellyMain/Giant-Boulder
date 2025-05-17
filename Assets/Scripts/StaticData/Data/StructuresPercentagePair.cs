@@ -8,7 +8,8 @@ namespace StaticData.Data
     [Serializable]
     public class StructuresPercentagePair
     {
-        public StructureRoot structurePrefab;
+        public PollutionStructureRoot pollutionStructurePrefab;
+        public NatureStructureRoot natureStructurePrefab;
         [Range(0, 100)] public int spawnRate;
     }
 }

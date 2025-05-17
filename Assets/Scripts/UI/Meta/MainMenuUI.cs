@@ -24,7 +24,8 @@ namespace UI.Meta
         [SerializeField] private Button playButton;
         [SerializeField] private Button questsButton;
         [SerializeField] private Button almanacButton;
-        [SerializeField] private Button statisticsWindow;
+        [SerializeField] private Button statisticsButton;
+        [SerializeField] private Button upgradesButton;
         [SerializeField] Canvas canvas;
         private GameStateMachine gameStateMachine;
         private SceneLoader sceneLoader;
@@ -50,7 +51,8 @@ namespace UI.Meta
             playButton.onClick.AddListener(StartGame);
             questsButton.onClick.AddListener(OpenQuestsWindow);
             almanacButton.onClick.AddListener(OpenAlmanac);
-            statisticsWindow.onClick.AddListener(OpenStatisticsWindow);
+            statisticsButton.onClick.AddListener(OpenStatisticsWindow);
+            upgradesButton.onClick.AddListener(OpenUpgradesWindow);
         }
 
 
@@ -92,6 +94,12 @@ namespace UI.Meta
         private void OpenStatisticsWindow()
         {
             metaUIFactory.CreateStatisticsWindow().Forget();
+        }
+
+
+        private void OpenUpgradesWindow()
+        {
+            metaUIFactory.CreateUpgradesWindow().Forget();
         }
     }
 }

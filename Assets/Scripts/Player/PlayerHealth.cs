@@ -1,5 +1,7 @@
 using System;
+using System.Collections.Generic;
 using RayFire;
+using Sirenix.OdinInspector;
 using UnityEngine;
 
 
@@ -23,7 +25,7 @@ namespace Player
             meshRenderer = GetComponent<MeshRenderer>();
             col = GetComponent<Collider>();
         }
-
+        
 
         public void TakeDamage(int damage)
         {

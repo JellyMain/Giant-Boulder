@@ -35,12 +35,18 @@ namespace Infrastructure.Installers.Scene
             BindChunkFactory();
             BindCoinFactory();
             BindGameplayUIFactory();
-            BindGameOverHandler();
             BindScoreTracker();
             BindGameCurrencyTracker();
             BindGameplayQuestTracker();
             BindDestroyedObjectsTracker();
             BindGrassSpawner();
+            BindGameLoopStatesHandler();
+        }
+
+
+        private void BindGameLoopStatesHandler()
+        {
+            Container.BindInterfacesAndSelfTo<GameLoopStatesHandler>().AsSingle().NonLazy();
         }
 
 
@@ -153,12 +159,6 @@ namespace Infrastructure.Installers.Scene
         private void BindChunkUpdater()
         {
             Container.Bind<ChunkUpdater>().FromComponentInNewPrefab(chunkUpdater).AsSingle().NonLazy();
-        }
-
-
-        private void BindGameOverHandler()
-        {
-            Container.BindInterfacesAndSelfTo<GameOverHandler>().AsSingle();
         }
     }
 }

@@ -10,5 +10,6 @@ namespace StaticData.Data
         public RageScaleAnimations rageScaleAnimations;
         public ScoreAnimations scoreAnimations;
         public QuestsPopupAnimations questsPopupAnimations;
+        public NatureObjectsAnimations natureObjectsAnimations;
     }
 }

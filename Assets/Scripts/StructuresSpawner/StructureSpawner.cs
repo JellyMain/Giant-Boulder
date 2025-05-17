@@ -77,9 +77,8 @@ namespace StructuresSpawner
                 {
                     TerrainChunk randomChunk = chunks[Random.Range(0, chunks.Count)];
 
-
-                    randomChunk.structurePrefab = structurePercentagePair.structurePrefab;
-
+                    randomChunk.pollutionStructurePrefab = structurePercentagePair.pollutionStructurePrefab;
+                    randomChunk.natureStructurePrefab = structurePercentagePair.natureStructurePrefab;
 
                     chunks.Remove(randomChunk);
                 }
@@ -87,20 +86,37 @@ namespace StructuresSpawner
         }
 
 
-        public void SpawnStructuresInChunk(TerrainChunk terrainChunk)
+        public void SpawnStructureInChunk(TerrainChunk terrainChunk)
         {
-            if (terrainChunk.structurePrefab != null)
+            if (terrainChunk.pollutionStructurePrefab != null)
             {
-                GameObject spawnedObject = diContainer.InstantiatePrefab(terrainChunk.structurePrefab,
+                GameObject spawnedObject = diContainer.InstantiatePrefab(terrainChunk.pollutionStructurePrefab,
                     terrainChunk.position, Quaternion.identity, terrainChunk.chunkGameObject.transform);
-                StructureRoot spawnedStructureRoot = spawnedObject.GetComponent<StructureRoot>();
-                terrainChunk.currentStructure = spawnedStructureRoot;
+                PollutionStructureRoot spawnedPollutionStructureRoot =
+                    spawnedObject.GetComponent<PollutionStructureRoot>();
+                terrainChunk.currentPollutionStructure = spawnedPollutionStructureRoot;
 
-                ApplyStructureSettings(spawnedStructureRoot.structureChildSettings);
-                spawnedStructureRoot.BatchObjects();
+                ApplyStructureSettings(spawnedPollutionStructureRoot.structureChildSettings);
+                spawnedPollutionStructureRoot.RemoveNotSpawnedObjects();
+                spawnedPollutionStructureRoot.BatchObjects();
+                terrainChunk.SubscribeOnPollutionStructure();
             }
 
             terrainChunk.structuresInstantiated = true;
+        }
+
+
+        public void SpawnNatureInChunk(TerrainChunk terrainChunk)
+        {
+            if (terrainChunk.natureStructurePrefab != null)
+            {
+                GameObject spawnedObject = diContainer.InstantiatePrefab(terrainChunk.natureStructurePrefab,
+                    terrainChunk.position, Quaternion.identity, terrainChunk.chunkGameObject.transform);
+                NatureStructureRoot spawnedNatureStructureRoot = spawnedObject.GetComponent<NatureStructureRoot>();
+                terrainChunk.currentNatureStructure = spawnedNatureStructureRoot;
+
+                ApplyStructureSettings(spawnedNatureStructureRoot.structureChildSettings);
+            }
         }
 
 

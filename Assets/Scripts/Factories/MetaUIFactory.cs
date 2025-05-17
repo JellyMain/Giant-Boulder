@@ -5,6 +5,7 @@ using Progress;
 using Quests;
 using UI.Meta;
 using UI.Meta.Quests;
+using UI.Meta.Upgrades;
 using UnityEngine;
 using Zenject;
 
@@ -69,6 +70,24 @@ namespace Factories
                 await assetProvider.LoadAsset<GameObject>(RuntimeConstants.PrefabAddresses.STATISTICS_WINDOW_UI);
 
             diContainer.InstantiatePrefab(statisticsWindowPrefab, uiRoot);
+        }
+
+
+        public async UniTask<UpgradeUI> CreateUpgradeUI(Transform parent)
+        {
+            GameObject upgradeUIPrefab =
+                await assetProvider.LoadAsset<GameObject>(RuntimeConstants.PrefabAddresses.UPGRADE_UI);
+
+            return diContainer.InstantiatePrefab(upgradeUIPrefab, parent).GetComponent<UpgradeUI>();
+        }
+
+
+        public async UniTaskVoid CreateUpgradesWindow()
+        {
+            GameObject upgradesWindowPrefab =
+                await assetProvider.LoadAsset<GameObject>(RuntimeConstants.PrefabAddresses.UPGRADES_WINDOW_UI);
+
+            diContainer.InstantiatePrefab(upgradesWindowPrefab, uiRoot);
         }
     }
 }

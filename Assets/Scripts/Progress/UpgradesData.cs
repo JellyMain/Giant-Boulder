@@ -6,6 +6,6 @@ namespace Progress
     [Serializable]
     public class UpgradesData
     {
-        public UpgradesIdStatusDictionary upgradesIdStatusDictionary = new UpgradesIdStatusDictionary();
+        public UpgradesTypeLevelDictionary upgradesTypeLevelDictionary = new UpgradesTypeLevelDictionary();
     }
 }

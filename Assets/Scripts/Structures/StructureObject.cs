@@ -11,11 +11,8 @@ namespace Structures
 
         [SerializeField, Range(0, 100)] private int spawnChance = 100;
         public bool snapToGround;
-
-        [SerializeField] private bool isKeyObject;
-
+        
         public Vector2 RotationModifier => rotationModifier;
         public int SpawnChance => spawnChance;
-        public bool IsKeyObject => isKeyObject;
     }
 }

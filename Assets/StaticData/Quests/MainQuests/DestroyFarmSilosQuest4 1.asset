@@ -1,0 +1,23 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 712d753118764ac2b00bccc7c234b73e, type: 3}
+  m_Name: DestroyFarmSilosQuest4 1
+  m_EditorClassIdentifier: 
+  questId: 0ecdbfc2-3457-42a3-8d57-79d01c4c420a
+  questTitle: Farm Silos
+  questDescription: Destroy 50 farm silos
+  questType: 2
+  reward: {fileID: 0}
+  rewardUIObject: {fileID: 2533900169703172442, guid: 737a7a2c7a21bf34fb6a63da937c397f, type: 3}
+  questPersistenceProgressType: 2
+  targetObjectType: 1
+  targetObjectAmount: 50

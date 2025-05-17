@@ -10,6 +10,7 @@ namespace Player
     {
         [SerializeField] private float moveSpeed = 10;
         [SerializeField] private Transform directionPointer;
+        public bool canMove;
         private Rigidbody rb;
         private IInput inputService;
 
@@ -31,7 +32,7 @@ namespace Player
         {
             Vector2 input = inputService.GetNormalizedMoveInput();
 
-            if (input != Vector2.zero)
+            if (input != Vector2.zero && canMove)
             {
                 Vector3 inputDirection = new Vector3(input.x, 0, input.y);
 

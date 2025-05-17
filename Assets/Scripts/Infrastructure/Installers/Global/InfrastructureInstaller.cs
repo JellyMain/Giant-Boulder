@@ -1,4 +1,6 @@
 using Assets;
+using Cheats;
+using Coins;
 using DataTrackers;
 using DG.Tweening;
 using Factories;
@@ -9,8 +11,10 @@ using Quests;
 using Scenes;
 using Sounds;
 using StaticData.Services;
+using Stats;
 using UI;
 using UnityEngine;
+using Upgrades;
 using Zenject;
 
 
@@ -20,6 +24,7 @@ namespace Infrastructure.Installers.Global
     {
         [SerializeField] private SessionSaveService sessionSaveServicePrefab;
         [SerializeField] private LoadingScreen loadingScreenPrefab;
+        [SerializeField] private CheatConsole cheatConsolePrefab;
 
 
         public override void InstallBindings()
@@ -36,13 +41,34 @@ namespace Infrastructure.Installers.Global
             BindLocalContainerPasser();
             BindQuestService();
             BindAssetProvider();
-            BindStatsTracker();
+            BindStatsService();
             BindCameraCreator();
-            BindSessionSaveService();
+            CreateAndBindSessionSaveService();
+            BindCurrencyService();
+            BindUpgradesService();
+            CreateAndBindCheatConsole();
         }
 
 
-        private void BindSessionSaveService()
+        private void CreateAndBindCheatConsole()
+        {
+            Container.Bind<CheatConsole>().FromComponentInNewPrefab(cheatConsolePrefab).AsSingle().NonLazy();
+        }
+
+
+        private void BindUpgradesService()
+        {
+            Container.Bind<UpgradesService>().AsSingle().NonLazy();
+        }
+
+
+        private void BindCurrencyService()
+        {
+            Container.BindInterfacesAndSelfTo<CurrencyService>().AsSingle().NonLazy();
+        }
+
+
+        private void CreateAndBindSessionSaveService()
         {
             Container.Bind<SessionSaveService>().FromComponentInNewPrefab(sessionSaveServicePrefab).AsSingle()
                 .NonLazy();
@@ -55,9 +81,9 @@ namespace Infrastructure.Installers.Global
         }
 
 
-        private void BindStatsTracker()
+        private void BindStatsService()
         {
-            Container.BindInterfacesAndSelfTo<StatsTracker>().AsSingle().NonLazy();
+            Container.BindInterfacesAndSelfTo<StatsService>().AsSingle().NonLazy();
         }
 
 
@@ -125,5 +151,7 @@ namespace Infrastructure.Installers.Global
         {
             Container.Bind<StaticDataService>().AsSingle();
         }
+        
+        
     }
 }

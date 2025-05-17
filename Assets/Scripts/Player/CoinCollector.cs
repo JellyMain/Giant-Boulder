@@ -3,6 +3,7 @@ using Coins;
 using Const;
 using DataTrackers;
 using UnityEngine;
+using Upgrades;
 using Zenject;
 
 
@@ -13,25 +14,25 @@ namespace Player
         [SerializeField] private float coinCollectionRadius = 1;
         [SerializeField] private float magnetRadius = 10;
         [SerializeField] private float maxMagnetPower = 5;
+        private UpgradesService upgradesService;
         private readonly Collider[] magnetCoinsBuffer = new Collider[50];
         private readonly Collider[] collectedCoinsBuffer = new Collider[50];
         private int coinLayerMask;
         public event Action<Vector3> OnCoinCollected;
-        private GameCurrencyTracker gameCurrencyTracker;
 
 
         [Inject]
-        private void Construct(GameCurrencyTracker gameCurrencyTracker)
+        private void Construct(UpgradesService upgradesService)
         {
-            this.gameCurrencyTracker = gameCurrencyTracker;
+            this.upgradesService = upgradesService;
         }
-        
-        
+
 
         private void Start()
         {
             coinLayerMask = LayerMask.NameToLayer(RuntimeConstants.Layers.COIN_LAYER);
             coinLayerMask = 1 << coinLayerMask;
+            ApplyUpgrade();
         }
 
 
@@ -44,6 +45,24 @@ namespace Player
         private void FixedUpdate()
         {
             CollectCoins();
+        }
+
+
+        private void ApplyUpgrade()
+        {
+            float valueToAdd = 0;
+            
+            if (upgradesService.ActiveUpgrades.TryGetValue(UpgradeType.CoinsMagnet, out UpgradeData upgradeData))
+            {
+                CoinsMagnetUpgradeData coinsMagnetUpgradeData =
+                    upgradeData as CoinsMagnetUpgradeData;
+                
+                valueToAdd = magnetRadius / 100 * coinsMagnetUpgradeData.percentUpgrade;
+            }
+            
+            Debug.Log(valueToAdd);
+            
+            magnetRadius += valueToAdd;
         }
 
 

@@ -5,6 +5,7 @@ using Progress;
 using Quests;
 using Scenes;
 using StaticData.Services;
+using Upgrades;
 
 
 namespace Infrastructure.GameStates
@@ -17,11 +18,12 @@ namespace Infrastructure.GameStates
         private readonly PersistentPlayerProgress persistentPlayerProgress;
         private readonly QuestsService questsService;
         private readonly SceneLoader sceneLoader;
+        private readonly UpgradesService upgradesService;
 
 
         public LoadProgressState(GameStateMachine gameStateMachine, StaticDataService staticDataService,
             SaveLoadService saveLoadService, PersistentPlayerProgress persistentPlayerProgress,
-            QuestsService questsService, SceneLoader sceneLoader)
+            QuestsService questsService, SceneLoader sceneLoader, UpgradesService upgradesService)
         {
             this.gameStateMachine = gameStateMachine;
             this.staticDataService = staticDataService;
@@ -29,6 +31,7 @@ namespace Infrastructure.GameStates
             this.persistentPlayerProgress = persistentPlayerProgress;
             this.questsService = questsService;
             this.sceneLoader = sceneLoader;
+            this.upgradesService = upgradesService;
         }
 
 
@@ -52,6 +55,7 @@ namespace Infrastructure.GameStates
             else
             {
                 questsService.SetSavedQuests();
+                upgradesService.SetSavedUpgrades();
             }
         }
 
