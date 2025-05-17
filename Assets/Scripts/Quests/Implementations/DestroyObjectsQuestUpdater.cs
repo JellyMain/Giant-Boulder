@@ -1,4 +1,4 @@
-using System.Collections.Generic;
+using System;
 using DataTrackers;
 using Progress;
 using Quests.Enums;
@@ -8,25 +8,27 @@ using UnityEngine;
 
 namespace Quests.Implementations
 {
-    public class DestroyObjectsQuestUpdater : QuestProgressUpdater, IProgressSaver, IProgressUpdater
+    public class DestroyObjectsQuestUpdater : QuestProgressUpdater, IDisposable
     {
         private readonly DestroyObjectsQuestData destroyObjectsQuestData;
+        private readonly QuestsService questsService;
         private DestroyedObjectsTracker destroyedObjectsTracker;
         private int destroyedObjects;
 
 
-        public DestroyObjectsQuestUpdater(DestroyObjectsQuestData destroyObjectsQuestData,
-            SaveLoadService saveLoadService) : base(saveLoadService)
+        public DestroyObjectsQuestUpdater(DestroyObjectsQuestData destroyObjectsQuestData, QuestsService questsService)
         {
             this.destroyObjectsQuestData = destroyObjectsQuestData;
+            this.questsService = questsService;
         }
 
 
         public override void StartTracking(QuestDependencies questDependencies)
         {
-            base.StartTracking(questDependencies);
             destroyedObjectsTracker = questDependencies.destroyedObjectsTracker;
             destroyedObjectsTracker.OnDestroyedObjectAdded += OnDestroyedObjectsAdded;
+
+            UpdateProgress();
         }
 
 
@@ -42,37 +44,22 @@ namespace Quests.Implementations
 
         public override void UpdateQuest()
         {
+            questsService.AllQuestsProgresses[destroyObjectsQuestData].destroyedObjects = destroyedObjects;
+
             if (destroyedObjects == destroyObjectsQuestData.targetObjectAmount)
             {
-                isCompleted = true;
+                questsService.AllQuestsProgresses[destroyObjectsQuestData].questState = QuestState.JustCompleted;
                 QuestCompleted(destroyObjectsQuestData);
             }
         }
 
 
-        public void SaveProgress(PlayerProgress playerProgress)
+
+        private void UpdateProgress()
         {
-            QuestsIdProgressDictionary progressDictionary = playerProgress.questsData.questsIdProgressDictionary;
-
-            string questId = destroyObjectsQuestData.questId;
-
-            QuestProgress updatedProgress = new QuestProgress()
-            {
-                destroyedObjects = destroyedObjects,
-                questState = isCompleted ? QuestState.JustCompleted : QuestState.InProgress
-            };
-
-            progressDictionary[questId] = updatedProgress;
-        }
-
-
-        public void UpdateProgress(PlayerProgress playerProgress)
-        {
-            QuestsIdProgressDictionary progressDictionary = playerProgress.questsData.questsIdProgressDictionary;
-
             if (destroyObjectsQuestData.questPersistenceProgressType == QuestPersistenceProgressType.MultipleSessions)
             {
-                UpdateMultipleSessionProgress(progressDictionary);
+                UpdateMultipleSessionProgress();
             }
             else if (destroyObjectsQuestData.questPersistenceProgressType == QuestPersistenceProgressType.OneSession)
             {
@@ -85,19 +72,22 @@ namespace Quests.Implementations
         }
 
 
-        private void UpdateMultipleSessionProgress(Dictionary<string, QuestProgress> progressDictionary)
+        private void UpdateMultipleSessionProgress()
         {
-            string questId = destroyObjectsQuestData.questId;
-
-            QuestProgress existingProgress = progressDictionary.GetValueOrDefault(questId);
-
-            destroyedObjects = existingProgress?.destroyedObjects ?? 0;
+            QuestProgress progress = questsService.AllQuestsProgresses[destroyObjectsQuestData];
+            destroyedObjects = progress.destroyedObjects;
         }
 
 
         private void UpdateSingleSessionProgress()
         {
             destroyedObjects = 0;
+        }
+
+
+        public void Dispose()
+        {
+            destroyedObjectsTracker.OnDestroyedObjectAdded -= OnDestroyedObjectsAdded;
         }
     }
 }

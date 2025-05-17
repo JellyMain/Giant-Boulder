@@ -63,7 +63,7 @@ namespace Cheats
             {
                 if (quest.questId == questId)
                 {
-                    questsService.ActiveQuestsProgressUpdaters[quest].isCompleted = true;
+                    // questsService.ActiveQuestsProgressUpdaters[quest].isCompleted = true;
                 }
             }
         }

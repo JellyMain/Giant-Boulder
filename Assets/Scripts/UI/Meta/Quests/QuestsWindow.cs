@@ -26,17 +26,14 @@ namespace UI.Meta.Quests
         [SerializeField] private RectTransform removedQuestEndPoint;
         private QuestsService questsService;
         private MetaUIFactory metaUIFactory;
-        private PersistentPlayerProgress persistentPlayerProgress;
         private List<QuestUI> initializedQuestsUI;
         private QuestType currentSection = QuestType.MainQuest;
 
 
 
         [Inject]
-        private void Construct(QuestsService questsService, MetaUIFactory metaUIFactory,
-            PersistentPlayerProgress persistentPlayerProgress)
+        private void Construct(QuestsService questsService, MetaUIFactory metaUIFactory)
         {
-            this.persistentPlayerProgress = persistentPlayerProgress;
             this.questsService = questsService;
             this.metaUIFactory = metaUIFactory;
         }
@@ -61,12 +58,8 @@ namespace UI.Meta.Quests
 
         private async UniTask InitializeQuests(QuestType questType)
         {
-            QuestsIdProgressDictionary questProgressDictionary =
-                persistentPlayerProgress.PlayerProgress.questsData.questsIdProgressDictionary;
-
             initializedQuestsUI = new List<QuestUI>(3);
-
-
+            
             foreach (QuestData quest in questsService.SortedActiveQuests[questType])
             {
                 QuestUI questUI = await InitQuestUI(quest);

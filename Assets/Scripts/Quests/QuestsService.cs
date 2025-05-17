@@ -14,169 +14,215 @@ using Random = UnityEngine.Random;
 
 namespace Quests
 {
-    public class QuestsService 
+    public class QuestsService : IInitializable, IProgressSaver
     {
-    private readonly StaticDataService staticDataService;
-    private readonly SaveLoadService saveLoadService;
-    private readonly PersistentPlayerProgress persistentPlayerProgress;
-    private Dictionary<QuestType, List<QuestData>> allQuests;
+        private readonly StaticDataService staticDataService;
+        private readonly SaveLoadService saveLoadService;
+        private readonly PersistentPlayerProgress persistentPlayerProgress;
+        private Dictionary<QuestType, List<QuestData>> allQuests;
 
-    public Dictionary<QuestData, QuestProgressUpdater> ActiveQuestsProgressUpdaters { get; private set; } =
-        new Dictionary<QuestData, QuestProgressUpdater>();
+        public Dictionary<QuestData, QuestProgressUpdater> ActiveQuestsProgressUpdaters { get; private set; } =
+            new Dictionary<QuestData, QuestProgressUpdater>();
 
-    public Dictionary<QuestType, List<QuestData>> SortedActiveQuests { get; private set; } =
-        new Dictionary<QuestType, List<QuestData>>();
+        public Dictionary<QuestType, List<QuestData>> SortedActiveQuests { get; private set; } =
+            new Dictionary<QuestType, List<QuestData>>();
 
-    public Dictionary<QuestData, QuestProgress> ActiveQuestsProgresses { get; private set; } =
-        new Dictionary<QuestData, QuestProgress>();
-
-
-
-    public QuestsService(StaticDataService staticDataService, SaveLoadService saveLoadService,
-        PersistentPlayerProgress persistentPlayerProgress)
-    {
-        this.staticDataService = staticDataService;
-        this.saveLoadService = saveLoadService;
-        this.persistentPlayerProgress = persistentPlayerProgress;
-    }
+        public Dictionary<QuestData, QuestProgress> AllQuestsProgresses { get; private set; } =
+            new Dictionary<QuestData, QuestProgress>();
 
 
-    public void SetSavedQuests()
-    {
-        List<QuestData> savedQuests = GetSavedQuests();
+        //TODO: Get all quests progress data from this service and not from PlayerProgress
 
-        foreach (QuestData questData in savedQuests)
+
+        public QuestsService(StaticDataService staticDataService, SaveLoadService saveLoadService,
+            PersistentPlayerProgress persistentPlayerProgress)
         {
-            QuestProgressUpdater questProgressUpdater = CreateQuestProgressUpdaterByQuest(questData);
-
-            ActiveQuestsProgressUpdaters[questData] = questProgressUpdater;
+            this.staticDataService = staticDataService;
+            this.saveLoadService = saveLoadService;
+            this.persistentPlayerProgress = persistentPlayerProgress;
         }
 
-        SortActiveQuests();
-    }
 
-
-    public void SetNewQuests()
-    {
-        allQuests = staticDataService.QuestsConfig.quests;
-
-        foreach (QuestType questType in allQuests.Keys)
+        public void Initialize()
         {
-            for (int i = 0; i < 3; i++)
+            saveLoadService.RegisterGlobalObject(this);
+        }
+
+
+        public void GetQuestsProgresses()
+        {
+            QuestsIdProgressDictionary questsProgressDictionary =
+                persistentPlayerProgress.PlayerProgress.questsData.questsIdProgressDictionary;
+
+            allQuests = staticDataService.QuestsConfig.quests;
+
+            foreach (List<QuestData> quests in allQuests.Values)
             {
-                QuestData questData = TakeNewQuest(questType);
+                foreach (QuestData questData in quests)
+                {
+                    string questId = questData.questId;
+
+                    QuestProgress questProgress = new QuestProgress()
+                    {
+                        questState = QuestState.Inactive
+                    };
+
+                    if (questsProgressDictionary.TryGetValue(questId, out QuestProgress progress))
+                    {
+                        questProgress = progress;
+                    }
+
+                    AllQuestsProgresses[questData] = questProgress;
+                }
+            }
+
+            List<QuestData> savedQuests = GetSavedQuests();
+            
+            SetSavedQuestsOrCreateNew(savedQuests);
+        }
+
+
+        private void SetSavedQuestsOrCreateNew(List<QuestData> savedQuests)
+        {
+            if (savedQuests.Count != 0)
+            {
+                SetSavedQuests(savedQuests);
+            }
+            else
+            {
+                SetNewQuests();
+            }
+        }
+
+
+        private void SetSavedQuests(List<QuestData> savedQuests)
+        {
+            foreach (QuestData questData in savedQuests)
+            {
                 QuestProgressUpdater questProgressUpdater = CreateQuestProgressUpdaterByQuest(questData);
 
                 ActiveQuestsProgressUpdaters[questData] = questProgressUpdater;
             }
+
+            SortActiveQuests();
         }
 
-        SortActiveQuests();
-    }
 
-
-
-    private List<QuestData> GetSavedQuests()
-    {
-        QuestsIdProgressDictionary questsProgressDictionary =
-            persistentPlayerProgress.PlayerProgress.questsData.questsIdProgressDictionary;
-
-        allQuests = staticDataService.QuestsConfig.quests;
-
-        List<QuestData> questsInProgress = new List<QuestData>(9);
-
-        foreach (List<QuestData> quests in allQuests.Values)
+        private void SetNewQuests()
         {
-            foreach (QuestData questData in quests)
+            foreach (QuestType questType in allQuests.Keys)
             {
-                string questId = questData.questId;
-                QuestProgress questProgress = questsProgressDictionary.GetValueOrDefault(questId);
-
-                if (questProgress?.questState == QuestState.InProgress)
+                for (int i = 0; i < 3; i++)
                 {
-                    questsInProgress.Add(questData);
+                    QuestData questData = TakeNewQuest(questType);
+                    QuestProgressUpdater questProgressUpdater = CreateQuestProgressUpdaterByQuest(questData);
+
+                    ActiveQuestsProgressUpdaters[questData] = questProgressUpdater;
+                    AllQuestsProgresses[questData].questState = QuestState.InProgress;
+                }
+            }
+
+            SortActiveQuests();
+        }
+
+
+
+        private List<QuestData> GetSavedQuests()
+        {
+            List<QuestData> questsInProgress = new List<QuestData>(9);
+
+            foreach (KeyValuePair<QuestData, QuestProgress> questProgressPair in AllQuestsProgresses)
+            {
+                if (questProgressPair.Value.questState == QuestState.InProgress)
+                {
+                    questsInProgress.Add(questProgressPair.Key);
+                }
+            }
+            
+            return questsInProgress;
+        }
+
+
+        public QuestData ReplaceQuest(QuestData oldQuestData)
+        {
+            QuestType questType = oldQuestData.questType;
+
+            QuestData newQuest = TakeNewQuest(questType);
+            ActiveQuestsProgressUpdaters.Remove(oldQuestData);
+            SortedActiveQuests[questType].Remove(oldQuestData);
+
+            QuestProgressUpdater newQuestProgressUpdater = CreateQuestProgressUpdaterByQuest(newQuest);
+            ActiveQuestsProgressUpdaters[newQuest] = newQuestProgressUpdater;
+            SortedActiveQuests[questType].Add(newQuest);
+
+            return newQuest;
+        }
+
+
+        private QuestData TakeNewQuest(QuestType questType)
+        {
+            foreach (QuestData questData in allQuests[questType])
+            {
+                QuestProgress questProgress = AllQuestsProgresses[questData];
+
+                if (questProgress.questState == QuestState.Inactive)
+                {
+                    questProgress.questState = QuestState.InProgress;
+                    AllQuestsProgresses[questData] = questProgress;
+
+                    return questData;
+                }
+            }
+
+            Debug.LogError("No free quests were found");
+            return null;
+        }
+
+
+        private void SortActiveQuests()
+        {
+            foreach (QuestData questData in ActiveQuestsProgressUpdaters.Keys)
+            {
+                if (!SortedActiveQuests.ContainsKey(questData.questType))
+                {
+                    SortedActiveQuests[questData.questType] = new List<QuestData>();
+                }
+
+                SortedActiveQuests[questData.questType].Add(questData);
+            }
+        }
+
+
+        private QuestProgressUpdater CreateQuestProgressUpdaterByQuest(QuestData questData)
+        {
+            switch (questData)
+            {
+                case CollectCoinsQuestData collectCoinsQuestData:
+                {
+                    return new CollectCoinsQuestUpdater(collectCoinsQuestData, this);
+                }
+                case DestroyObjectsQuestData destroyObjectsQuestData:
+                {
+                    return new DestroyObjectsQuestUpdater(destroyObjectsQuestData, this);
+                }
+                default:
+                {
+                    return null;
                 }
             }
         }
 
-        return questsInProgress;
-    }
 
-
-    public QuestData ReplaceQuest(QuestData oldQuestData)
-    {
-        QuestType questType = oldQuestData.questType;
-
-        QuestData newQuest = TakeNewQuest(questType);
-        ActiveQuestsProgressUpdaters.Remove(oldQuestData);
-        SortedActiveQuests[questType].Remove(oldQuestData);
-
-        QuestProgressUpdater newQuestProgressUpdater = CreateQuestProgressUpdaterByQuest(newQuest);
-        ActiveQuestsProgressUpdaters[newQuest] = newQuestProgressUpdater;
-        SortedActiveQuests[questType].Add(newQuest);
-
-        return newQuest;
-    }
-
-
-    private QuestData TakeNewQuest(QuestType questType)
-    {
-        QuestsIdProgressDictionary questsProgressDictionary =
-            persistentPlayerProgress.PlayerProgress.questsData.questsIdProgressDictionary;
-
-        foreach (QuestData questData in allQuests[questType])
+        public void SaveProgress(PlayerProgress playerProgress)
         {
-            string questId = questData.questId;
-            QuestProgress questProgress = questsProgressDictionary.GetValueOrDefault(questId);
+            QuestsIdProgressDictionary questsProgressDictionary = playerProgress.questsData.questsIdProgressDictionary;
 
-            if (questProgress == null)
+            foreach (KeyValuePair<QuestData, QuestProgress> questProgressPair in AllQuestsProgresses)
             {
-                questProgress = new QuestProgress()
-                {
-                    questState = QuestState.InProgress
-                };
-                questsProgressDictionary[questId] = questProgress;
+                string questId = questProgressPair.Key.questId;
 
-                return questData;
+                questsProgressDictionary[questId] = questProgressPair.Value;
             }
         }
-
-        Debug.LogError("No free quests were found");
-        return null;
-    }
-
-
-    private void SortActiveQuests()
-    {
-        foreach (QuestData questData in ActiveQuestsProgressUpdaters.Keys)
-        {
-            if (!SortedActiveQuests.ContainsKey(questData.questType))
-            {
-                SortedActiveQuests[questData.questType] = new List<QuestData>();
-            }
-
-            SortedActiveQuests[questData.questType].Add(questData);
-        }
-    }
-
-
-    private QuestProgressUpdater CreateQuestProgressUpdaterByQuest(QuestData questData)
-    {
-        switch (questData)
-        {
-            case CollectCoinsQuestData collectCoinsQuestData:
-            {
-                return new CollectCoinsQuestUpdater(collectCoinsQuestData, saveLoadService);
-            }
-            case DestroyObjectsQuestData destroyObjectsQuestData:
-            {
-                return new DestroyObjectsQuestUpdater(destroyObjectsQuestData, saveLoadService);
-            }
-            default:
-            {
-                return null;
-            }
-        }
-    }
     }
 }

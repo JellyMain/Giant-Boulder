@@ -22,16 +22,16 @@ namespace UI.Meta.Quests
         [SerializeField] private Image progressFill;
         [SerializeField] private UIEffect progressBarEffect;
         [SerializeField] private Button claimButton;
-        private PersistentPlayerProgress persistentPlayerProgress;
+        private QuestsService questsService;
         public QuestData QuestData { get; private set; }
         public event Action<QuestUI> OnQuestClaimed;
         private bool isCompleted;
 
 
         [Inject]
-        private void Construct(PersistentPlayerProgress persistentPlayerProgress)
+        private void Construct( QuestsService questsService)
         {
-            this.persistentPlayerProgress = persistentPlayerProgress;
+            this.questsService = questsService;
         }
 
 
@@ -84,13 +84,9 @@ namespace UI.Meta.Quests
 
         private void UpdateObjectsQuest(DestroyObjectsQuestData destroyObjectsQuest)
         {
-            string questId = destroyObjectsQuest.questId;
+            QuestProgress questProgress = questsService.AllQuestsProgresses[destroyObjectsQuest];
 
-            QuestProgress questProgress =
-                persistentPlayerProgress.PlayerProgress.questsData.questsIdProgressDictionary
-                    .GetValueOrDefault(questId);
-
-            int destroyedObjects = questProgress?.destroyedObjects ?? 0;
+            int destroyedObjects = questProgress.destroyedObjects;
 
             currentAmount.text = destroyedObjects.ToString();
             targetAmount.text = destroyObjectsQuest.targetObjectAmount.ToString();
@@ -104,12 +100,10 @@ namespace UI.Meta.Quests
 
         private void UpdateCoinsQuest(CollectCoinsQuestData collectCoinsQuest)
         {
-            string questId = collectCoinsQuest.questId;
 
-            QuestProgress questProgress =
-                persistentPlayerProgress.PlayerProgress.questsData.questsIdProgressDictionary[questId];
-
-            int collectedAmount = questProgress?.collectedCoins ?? 0;
+            QuestProgress questProgress = questsService.AllQuestsProgresses[collectCoinsQuest];
+            
+            int collectedAmount = questProgress.collectedCoins;
 
             currentAmount.text = collectedAmount.ToString();
             targetAmount.text = collectCoinsQuest.targetCoinsAmount.ToString();

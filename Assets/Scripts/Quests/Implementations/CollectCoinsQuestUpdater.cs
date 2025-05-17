@@ -8,17 +8,18 @@ using UnityEngine;
 
 namespace Quests.Implementations
 {
-    public class CollectCoinsQuestUpdater : QuestProgressUpdater, IDisposable, IProgressSaver, IProgressUpdater
+    public class CollectCoinsQuestUpdater : QuestProgressUpdater, IDisposable
     {
         private readonly CollectCoinsQuestData collectCoinsQuestData;
+        private readonly QuestsService questsService;
         private GameCurrencyTracker gameCurrencyTracker;
         private int collectedCoins;
 
 
-        public CollectCoinsQuestUpdater(CollectCoinsQuestData collectCoinsQuestData, SaveLoadService saveLoadService) :
-            base(saveLoadService)
+        public CollectCoinsQuestUpdater(CollectCoinsQuestData collectCoinsQuestData, QuestsService questsService)
         {
             this.collectCoinsQuestData = collectCoinsQuestData;
+            this.questsService = questsService;
         }
 
 
@@ -30,9 +31,10 @@ namespace Quests.Implementations
 
         public override void StartTracking(QuestDependencies questDependencies)
         {
-            base.StartTracking(questDependencies);
             gameCurrencyTracker = questDependencies.gameCurrencyTracker;
             gameCurrencyTracker.OnCoinAdded += OnCoinAdded;
+
+            UpdateProgress();
         }
 
 
@@ -42,40 +44,24 @@ namespace Quests.Implementations
             UpdateQuest();
         }
 
-        
+
         public override void UpdateQuest()
         {
+            questsService.AllQuestsProgresses[collectCoinsQuestData].collectedCoins = collectedCoins;
+
             if (collectedCoins == collectCoinsQuestData.targetCoinsAmount)
             {
-                isCompleted = true;
+                questsService.AllQuestsProgresses[collectCoinsQuestData].questState = QuestState.JustCompleted;
                 QuestCompleted(collectCoinsQuestData);
             }
         }
 
 
-        public void SaveProgress(PlayerProgress playerProgress)
+        private void UpdateProgress()
         {
-            QuestsIdProgressDictionary progressDictionary = playerProgress.questsData.questsIdProgressDictionary;
-
-            string questId = collectCoinsQuestData.questId;
-
-            QuestProgress updatedProgress = new QuestProgress()
-            {
-                collectedCoins = collectedCoins,
-                questState = isCompleted ? QuestState.JustCompleted : QuestState.InProgress
-            };
-
-            progressDictionary[questId] = updatedProgress;
-        }
-
-
-        public void UpdateProgress(PlayerProgress playerProgress)
-        {
-            QuestsIdProgressDictionary progressDictionary = playerProgress.questsData.questsIdProgressDictionary;
-
             if (collectCoinsQuestData.questPersistenceProgressType == QuestPersistenceProgressType.MultipleSessions)
             {
-                UpdateMultipleSessionProgress(progressDictionary);
+                UpdateMultipleSessionProgress();
             }
             else if (collectCoinsQuestData.questPersistenceProgressType == QuestPersistenceProgressType.OneSession)
             {
@@ -89,13 +75,10 @@ namespace Quests.Implementations
 
 
 
-        private void UpdateMultipleSessionProgress(Dictionary<string, QuestProgress> progressDictionary)
+        private void UpdateMultipleSessionProgress()
         {
-            string questId = collectCoinsQuestData.questId;
-
-            QuestProgress existingProgress = progressDictionary.GetValueOrDefault(questId);
-
-            collectedCoins = existingProgress?.collectedCoins ?? 0;
+            QuestProgress progress = questsService.AllQuestsProgresses[collectCoinsQuestData];
+            collectedCoins = progress.collectedCoins;
         }
 
 

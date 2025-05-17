@@ -7,27 +7,17 @@ namespace Quests
 {
     public abstract class QuestProgressUpdater
     {
-        private readonly SaveLoadService saveLoadService;
-        public bool isCompleted;       //TODO: make protected!!!!!!
         public event Action<QuestData> OnQuestCompleted;
-
-
-        protected QuestProgressUpdater(SaveLoadService saveLoadService)
-        {
-            this.saveLoadService = saveLoadService;
-        }
         
-
+        
         protected void QuestCompleted(QuestData questData)
         {
             OnQuestCompleted?.Invoke(questData);
         }
 
 
-        public virtual void StartTracking(QuestDependencies questDependencies)
-        {
-            saveLoadService.RegisterSceneObject(this);
-        }
+        public abstract void StartTracking(QuestDependencies questDependencies);
+        
 
         
         public abstract void UpdateQuest();

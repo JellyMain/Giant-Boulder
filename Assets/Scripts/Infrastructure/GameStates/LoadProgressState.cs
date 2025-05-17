@@ -45,25 +45,18 @@ namespace Infrastructure.GameStates
 
         private void LoadSavesOrCreateNew()
         {
-            persistentPlayerProgress.PlayerProgress = saveLoadService.LoadProgress();
+            persistentPlayerProgress.PlayerProgress = LoadOrCreateNewProgress();
+            
+            // upgradesService.SetSavedUpgrades();
 
-            if (persistentPlayerProgress.PlayerProgress == null)
-            {
-                persistentPlayerProgress.PlayerProgress = CreateNewProgress();
-                questsService.SetNewQuests();
-            }
-            else
-            {
-                questsService.SetSavedQuests();
-                upgradesService.SetSavedUpgrades();
-            }
+            questsService.GetQuestsProgresses();
         }
 
 
 
-        private PlayerProgress CreateNewProgress()
+        private PlayerProgress LoadOrCreateNewProgress()
         {
-            PlayerProgress playerProgress = new PlayerProgress();
+            PlayerProgress playerProgress = saveLoadService.LoadProgress() ?? new PlayerProgress();
             return playerProgress;
         }
     }
