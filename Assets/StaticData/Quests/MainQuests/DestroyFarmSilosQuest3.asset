@@ -13,11 +13,11 @@ MonoBehaviour:
   m_Name: DestroyFarmSilosQuest3
   m_EditorClassIdentifier: 
   questId: 293b31b1-6998-4af2-81fc-53cafd50eab9
-  questTitle: Farm Silos
-  questDescription: Destroy 20 farm silos
+  questTitle: Hay Piles
+  questDescription: Destroy 20 hay piles
   questType: 2
   reward: {fileID: 0}
-  rewardUIObject: {fileID: 2533900169703172442, guid: 737a7a2c7a21bf34fb6a63da937c397f, type: 3}
+  rewardUIObject: {fileID: 6938895415985954369, guid: 90f600ce8e5db324dab48c96d7806976, type: 3}
   questPersistenceProgressType: 2
-  targetObjectType: 1
+  targetObjectType: 3
   targetObjectAmount: 20

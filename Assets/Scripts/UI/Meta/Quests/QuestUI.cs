@@ -53,6 +53,7 @@ namespace UI.Meta.Quests
             if (isCompleted)
             {
                 OnQuestClaimed?.Invoke(this);
+                questsService.AllQuestsProgresses[QuestData].questState = QuestState.Claimed;
             }
         }
 
@@ -100,7 +101,6 @@ namespace UI.Meta.Quests
 
         private void UpdateCoinsQuest(CollectCoinsQuestData collectCoinsQuest)
         {
-
             QuestProgress questProgress = questsService.AllQuestsProgresses[collectCoinsQuest];
             
             int collectedAmount = questProgress.collectedCoins;

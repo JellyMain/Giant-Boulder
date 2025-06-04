@@ -500,7 +500,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 543.3396, y: 79.1604}
+  m_SizeDelta: {x: 636.7097, y: 79.1604}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &4946107573460077547
 CanvasRenderer:
@@ -530,7 +530,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Title here
+  m_text: Main Quests
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 88a09a3bb0274944885afdf273c45052, type: 2}
   m_sharedMaterial: {fileID: -6773803790561430055, guid: 88a09a3bb0274944885afdf273c45052, type: 2}

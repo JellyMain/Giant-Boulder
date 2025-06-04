@@ -31,9 +31,6 @@ namespace Quests
             new Dictionary<QuestData, QuestProgress>();
 
 
-        //TODO: Get all quests progress data from this service and not from PlayerProgress
-
-
         public QuestsService(StaticDataService staticDataService, SaveLoadService saveLoadService,
             PersistentPlayerProgress persistentPlayerProgress)
         {
@@ -77,7 +74,7 @@ namespace Quests
             }
 
             List<QuestData> savedQuests = GetSavedQuests();
-            
+
             SetSavedQuestsOrCreateNew(savedQuests);
         }
 
@@ -133,12 +130,13 @@ namespace Quests
 
             foreach (KeyValuePair<QuestData, QuestProgress> questProgressPair in AllQuestsProgresses)
             {
-                if (questProgressPair.Value.questState == QuestState.InProgress)
+                if (questProgressPair.Value.questState is QuestState.InProgress or QuestState.Completed
+                    or QuestState.JustCompleted)
                 {
                     questsInProgress.Add(questProgressPair.Key);
                 }
             }
-            
+
             return questsInProgress;
         }
 

@@ -4,6 +4,7 @@ using Infrastructure.GameStates;
 using Infrastructure.Services;
 using Progress;
 using Quests;
+using Quests.Enums;
 using Scenes;
 using Sirenix.OdinInspector;
 using UI;
@@ -57,15 +58,9 @@ namespace Cheats
 
 
         [Button]
-        private void CompleteQuest(string questId)
+        private void CompleteQuest(QuestData questData)
         {
-            foreach (var quest in questsService.ActiveQuestsProgressUpdaters.Keys)
-            {
-                if (quest.questId == questId)
-                {
-                    // questsService.ActiveQuestsProgressUpdaters[quest].isCompleted = true;
-                }
-            }
+            questsService.AllQuestsProgresses[questData].questState = QuestState.JustCompleted;
         }
 
 #endif

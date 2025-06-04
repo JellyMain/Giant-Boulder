@@ -5,6 +5,7 @@ namespace Quests.Enums
         Inactive = 0,
         InProgress = 1,
         Completed = 2,
-        JustCompleted = 3
+        JustCompleted = 3,
+        Claimed = 4
     }
 }
