@@ -1,5 +1,9 @@
 # Unity Game Project
 
+## Authors
+- **Yehor Kuchurin (w68225) - Game Logic** 
+- **Olzhas Kabi (w68635) - Visuals**
+
 ## Overview
 This is a Unity-based game project built with Unity 2022.3.59f1 and targeting .NET Framework 4.7.1. The project implements a game with gameplay, menu systems, quests, player progression, and various game mechanics.
 
